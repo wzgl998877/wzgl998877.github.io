@@ -2,12 +2,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Series on Pure theme for Hugo</title>
-    <link>http://coderzh.github.io/series/</link>
+    <link>https://wzgl998877.github.io/series/</link>
     <description>Recent content in Series on Pure theme for Hugo</description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>CC BY 4.0 CN</copyright>
     
-        <atom:link href="http://coderzh.github.io/series/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="https://wzgl998877.github.io/series/index.xml" rel="self" type="application/rss+xml" />
     
     
   </channel>
