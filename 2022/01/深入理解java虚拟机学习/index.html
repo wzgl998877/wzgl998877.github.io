@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <title>
+        深入理解Java虚拟机 - Pure theme for Hugo
+      </title>
+        <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    
+    <meta name="theme-color" content="#000000" />
+    
+    <meta http-equiv="window-target" content="_top" />
+    
+    
+    <meta name="description" content="深入理解Java虚拟机 第2章 Java内存区域与内存溢出异常 程序计数器 ​ 程序计数器（Program Counter Register）是一块较小的内存空间，它" />
+    <meta name="generator" content="Hugo 0.91.2 with theme pure" />
+    <title>深入理解Java虚拟机 - Pure theme for Hugo</title>
+    
+    
+    <link rel="stylesheet" href="https://wzgl998877.github.io/css/style.min.a85959a41e7abcc0db1f81f44bd264649303417f91b536e87dcde644340fea6d.css">
+    
+    <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/9.15.10/styles/github.min.css" async>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css" async>
+    <meta property="og:title" content="深入理解Java虚拟机" />
+<meta property="og:description" content="深入理解Java虚拟机 第2章 Java内存区域与内存溢出异常 程序计数器 ​ 程序计数器（Program Counter Register）是一块较小的内存空间，它" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wzgl998877.github.io/2022/01/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3java%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AD%A6%E4%B9%A0/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-01-09T11:24:40+08:00" />
+<meta property="article:modified_time" content="2022-01-09T11:24:40+08:00" />
+
+<meta itemprop="name" content="深入理解Java虚拟机">
+<meta itemprop="description" content="深入理解Java虚拟机 第2章 Java内存区域与内存溢出异常 程序计数器 ​ 程序计数器（Program Counter Register）是一块较小的内存空间，它"><meta itemprop="datePublished" content="2022-01-09T11:24:40+08:00" />
+<meta itemprop="dateModified" content="2022-01-09T11:24:40+08:00" />
+<meta itemprop="wordCount" content="14819">
+<meta itemprop="keywords" content="JVM," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="深入理解Java虚拟机"/>
+<meta name="twitter:description" content="深入理解Java虚拟机 第2章 Java内存区域与内存溢出异常 程序计数器 ​ 程序计数器（Program Counter Register）是一块较小的内存空间，它"/>
+
+    <!--[if lte IE 9]>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+      <![endif]-->
+
+    <!--[if lt IE 9]>
+        <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+      <![endif]-->
+  </head>
+
+  
+  
+
+  <body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage"><header class="header" itemscope itemtype="http://schema.org/WPHeader">
+    <div class="slimContent">
+      <div class="navbar-header">
+        <div class="profile-block text-center">
+          <a id="avatar" href="https://github.com/wzgl998877/" target="_blank">
+            <img class="img-circle img-rotate" src="https://wzgl998877.github.io/avatar.png" width="200" height="200">
+          </a>
+          <h2 id="name" class="hidden-xs hidden-sm">microzheng</h2>
+          <h3 id="title" class="hidden-xs hidden-sm hidden-md">努力会说谎，但努力不会白费</h3>
+          <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i>Shenzhen China</small>
+        </div><div class="search" id="search-form-wrap">
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i
+                        class="icon icon-search"></i></button>
+            </span>
+        </div>
+        <div class="ins-search">
+            <div class="ins-search-mask"></div>
+            <div class="ins-search-container">
+                <div class="ins-input-wrapper">
+                    <input type="text" class="ins-search-input" placeholder="想要查找什么..."
+                        x-webkit-speech />
+                    <button type="button" class="close ins-close ins-selectable" data-dismiss="modal"
+                        aria-label="Close"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="ins-section-wrapper">
+                    <div class="ins-section-container"></div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+        <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+        <ul class="nav navbar-nav main-nav">
+            <li class="menu-item menu-item-home">
+                <a href="/">
+                    <i class="icon icon-home-fill"></i>
+                  <span class="menu-title">主页</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-archives">
+                <a href="/posts/">
+                    <i class="icon icon-archives-fill"></i>
+                  <span class="menu-title">归档</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-categories">
+                <a href="/categories/">
+                    <i class="icon icon-folder"></i>
+                  <span class="menu-title">分类</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-tags">
+                <a href="/tags/">
+                    <i class="icon icon-tags"></i>
+                  <span class="menu-title">标签</span>
+                </a>
+            </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+<aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content"><p>enjoy~</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+      <div class="widget">
+    <h3 class="widget-title"> 分类</h3>
+    <div class="widget-body">
+        <ul class="category-list">
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/java/" class="category-list-link">java</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/linux/" class="category-list-link">linux</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/" class="category-list-link">中间件</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E5%B8%B8%E7%94%A8%E6%A1%86%E6%9E%B6/" class="category-list-link">常用框架</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="category-list-link">数据库</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E6%97%A5%E5%B8%B8%E6%80%BB%E7%BB%93/" class="category-list-link">日常总结</a><span class="category-list-count">2</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E7%AE%97%E6%B3%95/" class="category-list-link">算法</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/" class="category-list-link">系统设计</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/" class="category-list-link">网络编程</a><span class="category-list-count">3</span></li>
+        </ul>
+    </div>
+</div>
+      <div class="widget">
+    <h3 class="widget-title"> 标签</h3>
+    <div class="widget-body">
+        <ul class="tag-list">
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/http/" class="tag-list-link">http</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/java%E5%9F%BA%E7%A1%80/" class="tag-list-link">java基础</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/java%E5%B9%B6%E5%8F%91/" class="tag-list-link">java并发</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/jvm/" class="tag-list-link">jvm</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/leetcode/" class="tag-list-link">leetcode</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/linux%E5%91%BD%E4%BB%A4/" class="tag-list-link">linux命令</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/mybatis/" class="tag-list-link">mybatis</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/netty/" class="tag-list-link">netty</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/rpc/" class="tag-list-link">rpc</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/spring/" class="tag-list-link">spring</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/websocket/" class="tag-list-link">websocket</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" class="tag-list-link">消息队列</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="tag-list-link">设计模式</a><span
+                    class="tag-list-count">1</span></li>
+            
+        </ul>
+
+    </div>
+</div>
+      
+<div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+        <ul class="recent-post-list list-unstyled no-thumbnail">
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://wzgl998877.github.io/2022/01/java-%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" class="title">Java 并发编程</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2022-01-09 11:24:40 &#43;0800 CST" itemprop="datePublished">2022-01-09</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://wzgl998877.github.io/2022/01/java-%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3%E5%AD%A6%E4%B9%A0/" class="title">Java 编程思想学习</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2022-01-09 11:24:40 &#43;0800 CST" itemprop="datePublished">2022-01-09</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://wzgl998877.github.io/2022/01/leetcode/" class="title">LeetCode</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2022-01-09 11:24:40 &#43;0800 CST" itemprop="datePublished">2022-01-09</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://wzgl998877.github.io/2022/01/linux%E5%B7%A5%E4%BD%9C%E6%97%A5%E5%B8%B8%E5%91%BD%E4%BB%A4/" class="title">Linux工作日常命令</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2022-01-09 11:24:40 &#43;0800 CST" itemprop="datePublished">2022-01-09</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://wzgl998877.github.io/2022/01/mybatis-%E6%8A%80%E6%9C%AF%E5%86%85%E5%B9%95%E5%AD%A6%E4%B9%A0/" class="title">mybatis 技术内幕学习</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2022-01-09 11:24:40 &#43;0800 CST" itemprop="datePublished">2022-01-09</time>
+                    </p>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+  </div>
+</aside>
+
+    
+    
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <h4 class="toc-title">文章目录</h4>
+    <nav id="toc" class="js-toc toc">
+
+    </nav>
+  </div>
+</aside>
+<main class="main" role="main"><div class="content">
+  <article id="-" class="article article-type-" itemscope
+    itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      <h1 itemprop="name">
+  <a
+    class="article-title"
+    href="/2022/01/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3java%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AD%A6%E4%B9%A0/"
+    >深入理解Java虚拟机</a
+  >
+</h1>
+
+      <div class="article-meta">
+        
+<span class="article-date">
+  <i class="icon icon-calendar-check"></i>&nbsp;
+<a href="https://wzgl998877.github.io/2022/01/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3java%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AD%A6%E4%B9%A0/" class="article-date">
+  <time datetime="2022-01-09 11:24:40 &#43;0800 CST" itemprop="datePublished">2022-01-09</time>
+</a>
+</span>
+<span class="article-category">
+  <i class="icon icon-folder"></i>&nbsp;
+  <a class="article-category-link" href="/categories/java/"> Java </a>
+</span>  
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>&nbsp;
+    <a class="article-tag-link" href="/tags/jvm/"> JVM </a>
+  </span>
+
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 14819字</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 30分 </span>
+      </div>
+    </div>
+    <div class="article-entry marked-body js-toc-content" itemprop="articleBody">
+      <h1 id="深入理解java虚拟机">深入理解Java虚拟机</h1>
+<h2 id="第2章-java内存区域与内存溢出异常">第2章 Java内存区域与内存溢出异常</h2>
+<!-- raw HTML omitted -->
+<h3 id="程序计数器">程序计数器</h3>
+<p>​	程序计数器（Program Counter Register）是一块较小的内存空间，它可以看作是当前线程所执行的字节码的行号指示器。在虚拟机的概念模型里（仅是概念模型，各种虚拟机可能会通过一些更高效的方式去实现），字节码解释器工作时就是通过改变这个计数器的值来选取下一条需要执行的字节码指令，分支、循环、跳转、异常处理、线程恢复等基础功能都需要依赖这个计数器来完成。</p>
+<p>​	由于Java虚拟机的多线程是通过线程轮流切换并分配处理器执行时间的方式来实现的，在任何一个确定的时刻，一个处理器（对于多核处理器来说是一个内核）都只会执行一条线程中的指令。因此，为了线程切换后能恢复到正确的执行位置，每条线程都需要有一个独立的程序计数器，各条线程之间计数器互不影响，独立存储，我们称这类内存区域为“线程私有”的内存。</p>
+<p>​	此内存区域是唯一一个在Java虚拟机规范中没有规定任何OutOfMemoryError情况的区域。</p>
+<h3 id="java虚拟机栈">Java虚拟机栈</h3>
+<p>​	与程序计数器一样，Java虚拟机栈（Java Virtual Machine Stacks）也是线程私有的，它的生命周期与线程相同。虚拟机栈描述的是Java方法执行的内存模型：每个方法在执行的同时都会创建一个栈帧（Stack Frame)用于存储局部变量表、操作数栈、动态链接、方法出口等信息。每一个方法从调用直至执行完成的过程，就对应着一个栈帧在虚拟机栈中入栈到出栈的过程。</p>
+<p>​	局部变量表存放了编译期可知的各种基本数据类型（boolean、byte、char、short、int、float、long、double）、对象引用（reference类型，它不等同于对象本身，可能是一个指向对象起始地址的引用指针，也可能是指向一个代表对象的句柄或其他与此对象相关的位置）和returnAddress类型（指向了一条字节码指令的地址）。</p>
+<p>​	局部变量表所需的内存空间在编译期间完成分配，当进入一个方法时，这个方法需要在帧中分配多大的局部变量空间是完全确定的，在方法运行期间不会改变局部变量表的大小。</p>
+<h3 id="本地方法栈">本地方法栈</h3>
+<p>​	本地方法栈（Native Method Stack）与虚拟机栈所发挥的作用是非常相似的，它们之间的区别不过是虚拟机栈为虚拟机执行Java方法（也就是字节码）服务，而本地方法栈则为虚拟机使用到的Native方法服务。</p>
+<h3 id="java堆">Java堆</h3>
+<p>​	Java堆是被所有线程共享的一块内存区域，在虚拟机启动时创建。此内存区域的唯一目的就是存放对象实例，几乎所有的对象实例都在这里分配内存。</p>
+<h3 id="方法区">方法区</h3>
+<p>​	它用于存储已被虚拟机加载的类信息(又叫对象类型数据，类的全路径名、类的直接超类的全限定名、类(接口)的类型、类的直接接口全限定名的有序列表)、常量、静态变量、即时编译器编译后的代码等数据。</p>
+<h3 id="运行时常量池">运行时常量池</h3>
+<p>​	运行时常量池（Runtime Constant Pool）是方法区的一部分。Class文件中除了有类的版本、字段、方法、接口等描述信息外，还有一项信息是常量池（Constant Pool Table），用于存放编译期生成的各种字面量和符号引用，这部分内容将在类加载后进入方法区的运行时常量池中存放。</p>
+<p>​	运行时常量池相对于Class文件常量池的另外一个重要特征是具备动态性，Java语言并不要求常量一定只有编译期才能产生，也就是并非预置入Class文件中常量池的内容才能进入方法区运行时常量池，运行期间也可能将新的常量放入池中，这种特性被开发人员利用得比较多的便是String类的intern()方法。</p>
+<p>​	在JDK 1.6中，intern()方法会把首次遇到的字符串实例复制到永久代中，返回的也是永久代中这个字符串实例的引用，而由StringBuilder创建的字符串实例在Java堆上，所以必然不是同一个引用，将返回false。而JDK 1.7（以及部分其他虚拟机，例如JRockit）的intern()实现不会再复制实例，只是在运行时常量池中记录首次出现的实例引用，因此intern()返回的引用和由StringBuilder创建的那个字符串实例是同一个。</p>
+<p>几个概念：</p>
+<ol>
+<li>常量池：位于Class文件中，用于存放编译期生成的各种字面量(文本字符串 、八种基本类型的值 、被声明为final的常量等)和符号引用(类和方法的全限定名 、字段的名称和描述符 、方法的名称和描述符)，这部分内容将在类加载后进入方法区的运行时常量池中存放。</li>
+<li>运行时常量池：位于方法区中，用于存放各种字面量和符号引用。</li>
+<li>字符串常量池：从jdk1.7开始，将属于方法区（永久代）中的字符串常量池放入了堆中。</li>
+</ol>
+<pre><code class="language-java">public static void main(String[] args) {
+        // s位于常量池在class文件中，在类加载后就到了运行时常量池，jdk1.6后就属于了字符串常量池，所以是在堆中的
+        String s =&quot;1234&quot;;
+        // 在jvm中第一次出现，于是s.intern会返回一个指向字符串常量池的引用指向s
+        System.out.println(s.intern()==s);
+        // 字符串常量池已经有了,不会新建对象，直接返回引用
+        String s1 = &quot;1234&quot;;
+        // s1不是首次出现的，所以s1返回的就是指向堆里字符串常量池的引用也就是第一次出现的s
+        System.out.println(s1.intern()==s1);
+        // 因为在jvm运行时，java这个字符串就已经在字符串常量池了
+        String s2 = new StringBuilder(&quot;ja&quot;).append(&quot;va&quot;).toString();
+        System.out.println(s2.intern()==s2);
+        // 在jvm中第一次出现，于是s3.intern只会在运行时常量池里保存第一个的引用指向s3
+        String s3 = new StringBuilder(&quot;123456&quot;).append(&quot;789&quot;).toString();
+        // 这已经不是第一次出现了，不会保存这个引用，而是继续指向s3
+        String s4 =  new StringBuilder(&quot;123456&quot;).append(&quot;789&quot;).toString();
+        System.out.println(s3.intern()==s3);
+        System.out.println(s4.intern()==s4);
+        System.out.println(s4.intern()==s3);
+        // 创建了两个对象，在直接new指令前先去字符串常量池去检查是否有这个对象如果没有那么先在字符串常量池创建这个对象然后再去堆上创建对象
+        String s5 = new String(&quot;hello&quot;);
+        // Byte,Short,Integer,Long,Character这5种整型的包装类也实现了常量池技术，很显然在堆上，默认-128 ~ 127 缓存
+        Integer a = 127;
+        Integer b = 127;
+        System.out.println(a==b);
+        Integer c = new Integer(127);
+        System.out.println(c==a);
+        // 超出了包装类的缓存区，所以在常量池里没有
+        Integer d = 128;
+        Integer e = 128;
+        System.out.println(d==e);
+    }
+/**
+	结果
+	ture
+	true
+	fasle
+	true
+	fasle
+	true
+	true
+	false
+	false
+**/
+</code></pre>
+<h3 id="直接内存">直接内存</h3>
+<p>​	直接内存（Direct Memory）并不是虚拟机运行时数据区的一部分，也不是Java虚拟机规范中定义的内存区域。</p>
+<p>​	在JDK 1.4中新加入了NIO（New Input/Output）类，引入了一种基于通道（Channel）与缓冲区（Buffer）的I/O方式，它可以使用Native函数库直接分配堆外内存，然后通过一个存储在Java堆中的DirectByteBuffer对象作为这块内存的引用进行操作。</p>
+<h3 id="对象的创建">对象的创建</h3>
+<p>Java是一门面向对象的编程语言，在Java程序运行过程中无时无刻都有对象被创建出来。在语言层面上，创建对象（例如克隆、反序列化）通常仅仅是一个new关键字而已，而在虚拟机中，对象（文中讨论的对象限于普通Java对象，不包括数组和Class对象等）的创建又是怎样一个过程呢？</p>
+<ol>
+<li>
+<p>虚拟机遇到一条new指令时，首先将去检查这个指令的参数是否能在常量池中定位到一个类的符号引用，并且检查这个符号引用代表的类是否已被加载、解析和初始化过。如果没有，那必须先执行相应的类加载过程。</p>
+</li>
+<li>
+<p>在类加载检查通过后，接下来虚拟机将为新生对象分配内存。</p>
+<p>为对象分配空间的任务等同于把一块确定大小的内存从Java堆中划分出来。假设Java堆中内存是绝对规整的，所有用过的内存都放在一边，空闲的内存放在另一边，中间放着一个指针作为分界点的指示器，那所分配内存就仅仅是把那个指针向空闲空间那边挪动一段与对象大小相等的距离，这种分配方式称为“指针碰撞”（Bump the Pointer）。如果Java堆中的内存并不是规整的，已使用的内存和空闲的内存相互交错，那就没有办法简单地进行指针碰撞了，虚拟机就必须维护一个列表，记录上哪些内存块是可用的，在分配的时候从列表中找到一块足够大的空间划分给对象实例，并更新列表上的记录，这种分配方式称为“空闲列表”（Free List）。</p>
+</li>
+<li>
+<p>内存分配完成后，虚拟机需要将分配到的内存空间都初始化为零值。这一步操作保证了对象的实例字段在Java代码中可以不赋初始值就直接使用，程序能访问到这些字段的数据类型所对应的零值。（零值就是默认值比如int为0）。</p>
+</li>
+<li>
+<p>虚拟机要对对象进行必要的设置。例如这个对象是哪个类的实例、如何才能找到类的元数据信息、对象的哈希码、对象的GC分代年龄等信息。这些信息存放在对象的对象头（Object Header）之中。</p>
+</li>
+<li>
+<p>在上面工作都完成之后，从虚拟机的视角来看，一个新的对象已经产生了，但从Java程序的视角来看，对象创建才刚刚开始——<!-- raw HTML omitted -->方法还没有执行，所有的字段都还为零。所以，一般来说（由字节码中是否跟随invokespecial指令所决定），执行new指令之后会接着执行<!-- raw HTML omitted -->方法，把对象按照程序员的意愿进行初始化，这样一个真正可用的对象才算完全产生出来。</p>
+</li>
+</ol>
+<h3 id="对象的内存布局">对象的内存布局</h3>
+<p>​	在HotSpot虚拟机中，对象在内存中存储的布局可以分为3块区域：对象头（Header）、实例数据（Instance Data）和对齐填充（Padding）。</p>
+<ol>
+<li>对象头：第一部分用于存储对象自身的运行时数据。对象头的另外一部分是类型指针，即对象指向它的类元数据的指针，虚拟机通过这个指针来确定这个对象是哪个类的实例。并不是所有的虚拟机实现都必须在对象数据上保留类型指针，换句话说，查找对象的元数据信息并不一定要经过对象本身，这点将在2.3.3节讨论。另外，如果对象是一个Java数组，那在对象头中还必须有一块用于记录数组长度的数据，因为虚拟机可以通过普通Java对象的元数据信息确定Java对象的大小，但是从数组的元数据中却无法确定数组的大小。</li>
+<li>实例数据：是对象真正存储的有效信息，也是在程序代码中所定义的各种类型的字段内容。无论是从父类继承下来的，还是在子类中定义的，都需要记录起来。</li>
+<li>对齐填充：并不是必然存在的，也没有特别的含义，它仅仅起着占位符的作用。由于HotSpot VM的自动内存管理系统要求对象起始地址必须是8字节的整数倍，换句话说，就是对象的大小必须是8字节的整数倍。而对象头部分正好是8字节的倍数（1倍或者2倍），因此，当对象实例数据部分没有对齐时，就需要通过对齐填充来补全。</li>
+</ol>
+<h3 id="对象的访问定位">对象的访问定位</h3>
+<p>​	建立对象是为了使用对象，我们的Java程序需要通过栈上的reference数据来操作堆上的具体对象。</p>
+<h2 id="第3章-垃圾收集器与内存分配策略">第3章 垃圾收集器与内存分配策略</h2>
+<p>​	程序计数器、虚拟机栈、本地方法栈3个区域随线程而生，随线程而灭。因此这几个区域的内存分配和回收都具备确定性，在这几个区域内就不需要过多考虑回收的问题，因为方法结束或者线程结束时，内存自然就跟随着回收了。而Java堆和方法区则不一样，一个接口中的多个实现类需要的内存可能不一样，一个方法中的多个分支需要的内存也可能不一样，我们只有在程序处于运行期间时才能知道会创建哪些对象，这部分内存的分配和回收都是动态的，垃圾收集器所关注的是这部分内存。</p>
+<h3 id="对象已死吗">对象已死吗</h3>
+<p>​	在堆里面存放着Java世界中几乎所有的对象实例，垃圾收集器在对堆进行回收前，第一件事情就是要确定这些对象之中哪些还“存活”着，哪些已经“死去”（即不可能再被任何途径使用的对象）。</p>
+<h4 id="引用计数算法">引用计数算法</h4>
+<p>​	很多教科书判断对象是否存活的算法是这样的：给对象中添加一个引用计数器，每当有一个地方引用它时，计数器值就加1；当引用失效时，计数器值就减1；任何时刻计数器为0的对象就是不可能再被使用的。但是，至少主流的Java虚拟机里面没有选用引用计数算法来管理内存，其中最主要的原因是它很难解决对象之间<strong>相互循环引用</strong>的问题。</p>
+<h4 id="可达性分析算法">可达性分析算法</h4>
+<p>​	这个算法的基本思路就是通过一系列的称为“GC Roots”的对象作为起始点，从这些节点开始向下搜索，搜索所走过的路径称为引用链（Reference Chain），当一个对象到GC Roots没有任何引用链相连（用图论的话来说，就是从GC Roots到这个对象不可达）时，则证明此对象是不可用的。在Java语言中，可作为GC Roots的对象包括下面几种：</p>
+<ol>
+<li>虚拟机栈（栈帧中的本地变量表）中引用的对象。</li>
+<li>方法区中类静态属性引用的对象。</li>
+<li>方法区中常量引用的对象。</li>
+<li>本地方法栈中JNI（即一般说的Native方法）引用的对象。</li>
+</ol>
+<h3 id="再谈引用">再谈引用</h3>
+<p>​	在JDK 1.2以前，Java中的引用的定义很传统：如果reference类型的数据中存储的数值代表的是另外一块内存的起始地址，就称这块内存代表着一个引用。</p>
+<p>​	在JDK 1.2之后，Java对引用的概念进行了扩充，将引用分为强引用（StrongReference）、软引用（Soft Reference）、弱引用（Weak Reference）、虚引用（Phantom Reference）4种，这4种引用强度依次逐渐减弱。</p>
+<ol>
+<li>强引用就是指在程序代码之中普遍存在的，类似“Object obj = newObject()”这类的引用，只要强引用还存在，垃圾收集器永远不会回收掉被引用的对象。</li>
+<li>软引用是用来描述一些还有用但并非必需的对象。对于软引用关联着的对象，在系统将要发生内存溢出异常之前，将会把这些对象列进回收范围之中进行第二次回收。如果这次回收还没有足够的内存，才会抛出内存溢出异常。在JDK 1.2之后，提供了SoftReference类来实现软引用。</li>
+<li>弱引用也是用来描述非必需对象的，但是它的强度比软引用更弱一些，被弱引用关联的对象只能生存到下一次垃圾收集发生之前。当垃圾收集器工作时，无论当前内存是否足够，都会回收掉只被弱引用关联的对象。在JDK 1.2之后，提供了WeakReference类来实现弱引用。</li>
+<li>虚引用也称为幽灵引用或者幻影引用，它是最弱的一种引用关系。一个对象是否有虚引用的存在，完全不会对其生存时间构成影响，也无法通过虚引用来取得一个对象实例。为一个对象设置虚引用关联的唯一目的就是能在这个对象被收集器回收时收到一个系统通知。在JDK 1.2之后，提供了PhantomReference类来实现虚引用。</li>
+</ol>
+<h3 id="生存还是死亡">生存还是死亡</h3>
+<p>​	即使在可达性分析算法中不可达的对象，也并非是“非死不可”的，这时候它们暂时处于“缓刑”阶段，要真正宣告一个对象死亡，至少要经历两次标记过程：如果对象在进行可达性分析后发现没有与GC Roots相连接的引用链，那它将会被第一次标记并且进行一次筛选，<strong>筛选的条件是此对象是否有必要执行finalize()方法</strong>。当对象没有覆盖finalize()方法，或者finalize()方法已经被虚拟机调用过，虚拟机将这两种情况都视为“没有必要执行”。</p>
+<p>​	如果这个对象被判定为有必要执行finalize()方法，那么这个对象将会放置在一个叫做F-Queue的队列之中，并在稍后由一个由虚拟机自动建立的、低优先级的Finalizer线程去执行它。这里所谓的“执行”是指虚拟机会触发这个方法，但并不承诺会等待它运行结束，这样做的原因是，如果一个对象在finalize()方法中执行缓慢，或者发生了死循环（更极端的情况），将很可能会导致F-Queue队列中其他对象永久处于等待，甚至导致整个内存回收系统崩溃。finalize()方法是对象逃脱死亡命运的最后一次机会，稍后GC将对F-Queue中的对象进行第二次小规模的标记，如果对象要在finalize()中成功拯救自己——只要重新与引用链上的任何一个对象建立关联即可，譬如把自己（this关键字）赋值给某个类变量或者对象的成员变量，那在第二次标记时它将被移除出“即将回收”的集合。如果对象这时候还没有逃脱，那基本上它就真的被回收了。任何一个对象的finalize()方法都只会被系统自动调用一次，如果对象面临下一次回收，它的finalize()方法不会被再次执行。</p>
+<p>判断对象是否已经死亡：</p>
+<ol>
+<li>对象在进行可达性分析后发现没有与GC Roots相连接的引用链.</li>
+<li>判断此对象是否有必要执行finalize()方法。当对象没有覆盖finalize()方法，或者finalize()方法已经被虚拟机调用过都已经没必要执行，此时被回收。</li>
+<li>如果被判定有必要执行finalize()方法，那么这个对象将会放置在一个叫做F-Queue的队列之中，并在稍后由一个由虚拟机自动建立的、低优先级的Finalizer线程去执行它。稍后GC将对F-Queue中的对象进行第二次小规模的标记，如果对象要在finalize()中成功拯救自己——只要重新与引用链上的任何一个对象建立关联即可。若没有自救则被回收。</li>
+</ol>
+<h3 id="回收方法区">回收方法区</h3>
+<p>​	永久代的垃圾收集主要回收两部分内容：废弃常量和无用的类。</p>
+<ol>
+<li>
+<p>回收废弃常量：其与回收Java堆中的对象非常类似，假如一个字符串“abc”已经进入了常量池中，但是当前系统没有任何一个String对象是叫做“abc”的，换句话说，就是没有任何String对象引用常量池中的“abc”常量，也没有其他地方引用了这个字面量，如果这时发生内存回收，而且必要的话，这个“abc”常量就会被系统清理出常量池。常量池中的其他类（接口）、方法、字段的符号引用也与此类似。</p>
+</li>
+<li>
+<p>回收无用的类：类需要同时满足下面3个条件才能算是“无用的类”：</p>
+<ul>
+<li>该类所有的实例都已经被回收，也就是Java堆中不存在该类的任何实例。</li>
+<li>加载该类的ClassLoader已经被回收。</li>
+<li>该类对应的java.lang.Class 对象没有在任何地方被引用，无法在任何地方通过反射访问该类的方法。</li>
+</ul>
+<p>虚拟机可以对满足上述3个条件的无用类进行回收，这里说的仅仅是“可以”，而并不是和对象一样，不使用了就必然会回收。</p>
+</li>
+</ol>
+<h3 id="垃圾收集算法">垃圾收集算法</h3>
+<h4 id="标记-清除算法">标记-清除算法</h4>
+<p>​	最基础的收集算法是“标记-清除”（Mark-Sweep）算法，如同它的名字一样，算法分为“标记”和“清除”两个阶段：首先标记出所有需要回收的对象，在标记完成后统一回收所有被标记的对象。</p>
+<p>​	它的主要不足有两个：一个是效率问题，标记和清除两个过程的效率都不高；另一个是空间问题，标记清除之后会产生大量不连续的内存碎片，空间碎片太多可能会导致以后在程序运行过程中需要分配较大对象时，无法找到足够的连续内存而不得不提前触发另一次垃圾收集动作。</p>
+<h4 id="复制算法">复制算法</h4>
+<p>​	它将可用内存按容量划分为大小相等的两块，每次只使用其中的一块。当这一块的内存用完了，就将还存活着的对象复制到另外一块上面，然后再把已使用过的内存空间一次清理掉。这样使得每次都是对整个半区进行内存回收，内存分配时也就不用考虑内存碎片等复杂情况，只要移动堆顶指针，按顺序分配内存即可，实现简单，运行高效。只是这种算法的代价是将内存缩小为了原来的一半，未免太高了一点。</p>
+<p><strong>现在的商业虚拟机都采用这种收集算法来回收新生代</strong></p>
+<p>新生代中的对象98%是“朝生夕死”的，所以并不需要按照1∶1的比例来划分内存空间，而是将内存分为一块较大的Eden空间和两块较小的Survivor空间，每次使用Eden和其中一块Survivor[插图]。当回收时，将Eden和Survivor中还存活着的对象一次性地复制到另外一块Survivor空间上，最后清理掉Eden和刚才用过的Survivor空间。HotSpot虚拟机默认Eden和Survivor的大小比例是8∶1，也就是每次新生代中可用内存空间为整个新生代容量的90%（80%+10%），只有10%的内存会被“浪费”。当然，98%的对象可回收只是一般场景下的数据，我们没有办法保证每次回收都只有不多于10%的对象存活，当Survivor空间不够用时，需要依赖其他内存（这里指老年代）进行分配担保（Handle Promotion）。</p>
+<h4 id="标记-整理算法">标记-整理算法</h4>
+<p>​	复制收集算法在对象存活率较高时就要进行较多的复制操作，效率将会变低。根据老年代的特点，有人提出了另外一种“标记-整理”（Mark-Compact）算法，标记过程仍然与“标记-清除”算法一样，但后续步骤不是直接对可回收对象进行清理，而是让所有存活的对象都向一端移动，然后直接清理掉端边界以外的内存。</p>
+<h4 id="分代收集算法">分代收集算法</h4>
+<p>​	当前商业虚拟机的垃圾收集都采用“分代收集”（GenerationalCollection）算法，一般是把Java堆分为新生代和老年代，这样就可以根据各个年代的特点采用最适当的收集算法。在新生代中，每次垃圾收集时都发现有大批对象死去，只有少量存活，那就选用复制算法，只需要付出少量存活对象的复制成本就可以完成收集。而老年代中因为对象存活率高、没有额外空间对它进行分配担保，就必须使用“标记—清理”或者“标记—整理”算法来进行回收。</p>
+<h3 id="hotspot的算法实现">HotSpot的算法实现</h3>
+<p>​	可达性分析对执行时间的敏感还体现在GC停顿上，因为这项分析工作必须在一个能确保一致性的快照中进行——这里“一致性”的意思是指在整个分析期间整个执行系统看起来就像被冻结在某个时间点上，不可以出现分析过程中对象引用关系还在不断变化的情况，该点不满足的话分析结果准确性就无法得到保证。这点是导致GC进行时必须停顿所有Java执行线程（Sun将这件事情称为“Stop The World”）的其中一个重要原因，即使是在号称（几乎）不会发生停顿的CMS收集器中，枚举根节点时也是必须要停顿的。</p>
+<p>​	后面这本书中讲了几种虚拟机对这些算法的实现，看不进去。。</p>
+<h3 id="内存分配与回收策略">内存分配与回收策略</h3>
+<p>​	Java技术体系中所提倡的自动内存管理最终可以归结为自动化地解决了两个问题：给对象分配内存以及回收分配给对象的内存。</p>
+<p>​	对象的内存分配，往大方向讲，就是在堆上分配（但也可能经过JIT编译后被拆散为标量类型并间接地栈上分配），对象主要分配在新生代的Eden区上，如果启动了本地线程分配缓冲，将按线程优先在TLAB上分配。</p>
+<p>大多数情况下，对象在新生代Eden区中分配。当Eden区没有足够空间进行分配时，虚拟机将发起一次Minor GC。</p>
+<ol>
+<li>新生代GC（Minor GC):指发生在新生代的垃圾收集动作，因为Java对象大多都具备朝生夕灭的特性，所以Minor GC非常频繁，一般回收速度也比较快。</li>
+<li>老年代GC（Major GC / Full GC）：指发生在老年代的GC，出现了Major GC，经常会伴随至少一次的Minor GC。Major GC的速度一般会比Minor GC慢10倍以上。</li>
+</ol>
+<p><strong>大对象直接进入老年代</strong>，所谓的大对象是指，需要大量连续内存空间的Java对象，最典型的大对象就是那种很长的字符串以及数组</p>
+<p><strong>长期存活的对象将进入老年代</strong></p>
+<p>​	既然虚拟机采用了分代收集的思想来管理内存，那么内存回收时就必须能识别哪些对象应放在新生代，哪些对象应放在老年代中。为了做到这点，虚拟机给每个对象定义了一个对象年龄（Age）计数器。如果对象在Eden出生并经过第一次Minor GC后仍然存活，并且能被Survivor容纳的话，将被移动到Survivor空间中，并且对象年龄设为1。对象在Survivor区中每“熬过”一次Minor GC，年龄就增加1岁，当它的年龄增加到一定程度（默认为15岁），就将会被晋升到老年代中。</p>
+<p>​	为了能更好地适应不同程序的内存状况，虚拟机并不是永远地要求对象的年龄必须达到了MaxTenuringThreshold才能晋升老年代，如果在Survivor空间中相同年龄所有对象大小的总和大于Survivor空间的一半，年龄大于或等于该年龄的对象就可以直接进入老年代，无须等到MaxTenuringThreshold中要求的年龄。</p>
+<h4 id="空间分配担保">空间分配担保</h4>
+<p>​	在发生Minor GC之前，虚拟机会先检查老年代最大可用的连续空间是否大于新生代所有对象总空间，如果这个条件成立，那么Minor GC可以确保是安全的。如果不成立，则虚拟机会查看HandlePromotionFailure设置值是否允许担保失败。如果允许，那么会继续检查老年代最大可用的连续空间是否大于历次晋升到老年代对象的平均大小，如果大于，将尝试着进行一次Minor GC，尽管这次Minor GC是有风险的；如果小于，或者HandlePromotionFailure设置不允许冒险，那这时也要改为进行一次Full GC。</p>
+<p>​	新生代使用复制收集算法，但为了内存利用率，只使用其中一个Survivor空间来作为轮换备份，因此当出现大量对象在Minor GC后仍然存活的情况（最极端的情况就是内存回收后新生代中所有对象都存活），就需要老年代进行分配担保，把Survivor无法容纳的对象直接进入老年代。与生活中的贷款担保类似，老年代要进行这样的担保，前提是老年代本身还有容纳这些对象的剩余空间，一共有多少对象会活下来在实际完成内存回收之前是无法明确知道的，所以只好取之前每一次回收晋升到老年代对象容量的平均大小值作为经验值，与老年代的剩余空间进行比较，决定是否进行Full GC来让老年代腾出更多空间。</p>
+<p>取平均值进行比较其实仍然是一种动态概率的手段，也就是说，如果某次Minor GC存活后的对象突增，远远高于平均值的话，依然会导致担保失败（Handle Promotion Failure）。如果出现了HandlePromotionFailure失败，那就只好在失败后重新发起一次Full GC。</p>
+<h2 id="第6章-类文件结构">第6章 类文件结构</h2>
+<p>​	代码编译的结果从本地机器码转变为字节码，是存储格式发展的一小步，却是编程语言发展的一大步。</p>
+<p>​	计算机只认识0和1，所以我们写的程序需要经编译器翻译成由0和1构成的二进制格式才能由计算机执行，将我们编写的程序编译成二进制本地机器码（Native Code）已不再是唯一的选择，越来越多的程序语言选择了与操作系统和机器指令集无关的、平台中立的格式作为程序编译后的存储格式。</p>
+<h3 id="无关性的基石">无关性的基石</h3>
+<p>​	如果计算机的CPU指令集只有x86一种，操作系统也只有Windows一种，那也许Java语言就不会出现。Java在刚刚诞生之时曾经提出过一个非常著名的宣传口号：“一次编写，到处运行（Write Once，Run Anywhere）”，Sun公司以及其他虚拟机提供商发布了许多可以运行在各种不同平台上的虚拟机，这些虚拟机都可以载入和执行同一种平台无关的字节码，从而实现了程序的“一次编写，到处运行”。</p>
+<p>​	各种不同平台的虚拟机与所有平台都统一使用的程序存储格式——字节码（ByteCode）是构成平台无关性的基石但本节标题中刻意省略了“平台”二字，那是因为笔者注意到虚拟机的另外一种中立特性——语言无关性正越来越被开发者所重视。</p>
+<p>实现语言无关性的基础仍然是虚拟机和字节码存储格式。Java虚拟机不和包括Java在内的任何语言绑定，它只与“Class文件”这种特定的二进制文件格式所关联。</p>
+<!-- raw HTML omitted -->
+<p>后面详细讲了class文件的结构这个就不仔细写了。</p>
+<h2 id="第7章-虚拟机类加载机制">第7章 虚拟机类加载机制</h2>
+<p>​	虚拟机把描述类的数据从Class文件加载到内存，并对数据进行校验、转换解析和初始化，最终形成可以被虚拟机直接使用的Java类型，这就是虚拟机的类加载机制。与那些在编译时需要进行连接工作的语言不同，在Java语言里面，类型的加载、连接和初始化过程都是在程序运行期间完成的。</p>
+<p>​	类从被加载到虚拟机内存中开始，到卸载出内存为止，它的整个生命周期包括：加载（Loading）、验证（Verification）、准备（Preparation）、解析（Resolution）、初始化（Initialization）、使用（Using）和卸载（Unloading）7个阶段。其中验证、准备、解析3个部分统称为连接（Linking）。</p>
+<!-- raw HTML omitted -->
+<p>对于初始化阶段，虚拟机规范则是严格规定了有且只有5种情况必须立即对类进行“初始化”</p>
+<ul>
+<li>遇到new、getstatic、putstatic或invokestatic这4条字节码指令时，如果类没有进行过初始化，则需要先触发其初始化。生成这4条指令的最常见的Java代码场景是：<strong>使用new关键字实例化对象的时候、读取或设置一个类的静态字段（被final修饰、已在编译期把结果放入常量池的静态字段除外）的时候，以及调用一个类的静态方法的时候</strong>。</li>
+<li>使用java.lang.reflect包的方法对类进行反射调用的时候，如果类没有进行过初始化，则需要先触发其初始化。</li>
+<li><strong>当初始化一个类的时候，如果发现其父类还没有进行过初始化，则需要先触发其父类的初始化</strong>。当一个类在初始化时，要求其父类全部都已经初始化过了，但是一个接口在初始化时，并不要求其父接口全部都完成了初始化，只有在真正使用到父接口的时候（如引用接口中定义的常量）才会初始化。</li>
+<li>当虚拟机启动时，用户需要指定一个要执行的主类（包含main()方法的那个类），虚拟机会先初始化这个主类</li>
+<li>当使用JDK 1.7的动态语言支持时，如果一个java.lang.invoke.MethodHandle实例最后的解析结果REF_getStatic、REF_putStatic、REF_invokeStatic的方法句柄，并且这个方法句柄所对应的类没有进行过初始化，则需要先触发其初始化。</li>
+</ul>
+<p>这5种场景中的行为称为对一个类进行主动引用。除此之外，所有引用类的方式都不会触发初始化，称为被动引用。</p>
+<pre><code class="language-java">package com.zt.javastudy.grammar;
+
+import javafx.scene.control.Pagination;
+
+/**
+ * @author zhengtao
+ * @description jvm中对类的加载过程的学习
+ * @date 2021/3/18
+ */
+public class JVMStudyTwo {
+    static {
+        System.out.println(&quot;JVM Study&quot;);
+    }
+    // 用户需要指定一个要执行的主类（包含main()方法的那个类），虚拟机会先初始化这个主类,所以只要运行这个main方法肯定最先初始化这个类
+    public static void main(String[] args) {
+        // 对于静态字段，只有直接定义这个字段的类才会被初始化，因此通过其子类来引用父类中定义的静态字段，只会触发父类的初始化而不会触发子类的初始化
+        System.out.println(SubClass.value);
+        // 数组定义来引用类，不会触发此类的初始化
+        SuperClass[] superClasses = new SuperClass[10];
+        // 常量在编译阶段已经存储到了本类的常量池中去了，其实就相当于自身常量池的引用
+        System.out.println(SubClass.HELLOWORLD);
+        System.out.println(SuperClass.HELLOWORLD == SubClass.HELLOWORLD);
+    }
+}
+class SubClass extends SuperClass{
+    static {
+        System.out.println(&quot;子类初始化&quot;);
+    }
+    public static final String HELLOWORLD = &quot;hello world！&quot;;
+}
+class SuperClass{
+    static {
+        System.out.println(&quot;父类初始化&quot;);
+    }
+    public static int value = 123;
+    public static final String HELLOWORLD = &quot;hello world&quot;;
+}
+
+</code></pre>
+<h3 id="加载">加载</h3>
+<p>在加载阶段，虚拟机需要完成以下3件事情：</p>
+<ol>
+<li>通过一个类的全限定名来获取定义此类的二进制字节流。</li>
+<li>将这个字节流所代表的静态存储结构转化为方法区的运行时数据结构。</li>
+<li>在内存中生成一个代表这个类的java.lang.Class对象，作为方法区这个类的各种数据的访问入口。</li>
+</ol>
+<p>相对于类加载过程的其他阶段，一个非数组类的加载阶段（准确地说，是加载阶段中获取类的二进制字节流的动作）是开发人员可控性最强的，因为加载阶段既可以使用系统提供的引导类加载器来完成，也可以由用户自定义的类加载器去完成，开发人员可以通过定义自己的类加载器去控制字节流的获取方式（即重写一个类加载器的loadClass()方法）。对于数组类而言，情况就有所不同，数组类本身不通过类加载器创建，它是由Java虚拟机直接创建的。</p>
+<p>​	加载阶段完成后，虚拟机外部的二进制字节流就按照虚拟机所需的格式存储在方法区之中,然后在内存中实例化一个java.lang.Class类的对象（并没有明确规定是在Java堆中，对于HotSpot虚拟机而言，Class对象比较特殊，它虽然是对象，但是存放在方法区里面），这个对象将作为程序访问方法区中的这些类型数据的外部接口。</p>
+<h3 id="验证">验证</h3>
+<p>​	验证是连接阶段的第一步，这一阶段的目的是为了确保Class文件的字节流中包含的信息符合当前虚拟机的要求，并且不会危害虚拟机自身的安全。从执行性能的角度上讲，验证阶段的工作量在虚拟机的类加载子系统中又占了相当大的一部分。</p>
+<h3 id="准备">准备</h3>
+<p>​	准备阶段是正式为类变量分配内存并设置类变量初始值的阶段，这些变量所使用的内存都将在方法区中进行分配。首先，这时候进行内存分配的仅包括类变量（被static修饰的变量），而不包括实例变量，实例变量将会在对象实例化时随着对象一起分配在Java堆中。其次，这里所说的初始值“通常情况”下是数据类型的零值。</p>
+<pre><code class="language-java">public static int value = 123;
+// 在准备阶段分配内存，并初始化为0
+</code></pre>
+<p>在“通常情况”下初始值是零值，那相对的会有一些“特殊情况”：如果类字段的字段属性表中存在ConstantValue属性，那在准备阶段变量value就会被初始化为ConstantValue属性所指定的值，也就是final修饰的常量。</p>
+<pre><code>public static int value = 123;
+// 由于是常量直接被初始化为123
+</code></pre>
+<h3 id="解析">解析</h3>
+<p>​	解析阶段是虚拟机将常量池内的符号引用替换为直接引用的过程。</p>
+<ol>
+<li>符号引用（Symbolic References）：符号引用以一组符号来描述所引用的目标，符号可以是任何形式的字面量，只要使用时能无歧义地定位到目标即可。</li>
+<li>直接引用（Direct References）：直接引用可以是直接指向目标的指针、相对偏移量或是一个能间接定位到目标的句柄。</li>
+</ol>
+<h3 id="初始化">初始化</h3>
+<p>​	在准备阶段，变量已经赋过一次系统要求的初始值，而在初始化阶段，则根据程序员通过程序制定的主观计划去初始化类变量和其他资源，或者可以从另外一个角度来表达：初始化阶段是执行类构造器<!-- raw HTML omitted -->()方法的过程。</p>
+<ol>
+<li><!-- raw HTML omitted -->()方法是由编译器自动收集类中的所有类变量的赋值动作和静态语句块（static{}块）中的语句合并产生的，编译器收集的顺序是由语句在源文件中出现的顺序所决定的，静态语句块中只能访问到定义在静态语句块之前的变量，定义在它之后的变量，在前面的静态语句块可以赋值，但是不能访问。</li>
+<li><!-- raw HTML omitted -->()方法与类的构造函数（或者说实例构造器<!-- raw HTML omitted -->()方法）不同，它不需要显式地调用父类构造器，虚拟机会保证在子类的<!-- raw HTML omitted -->()方法执行之前，父类的<!-- raw HTML omitted -->()方法已经执行完毕。因此在虚拟机中第一个被执行的<!-- raw HTML omitted -->()方法的类肯定是java.lang.Object。</li>
+<li>由于父类的<!-- raw HTML omitted -->()方法先执行，也就意味着父类中定义的静态语句块要优先于子类的变量赋值操作</li>
+<li>接口中不能使用静态语句块，但仍然有变量初始化的赋值操作，因此接口与类一样都会生成<!-- raw HTML omitted -->()方法。但接口与类不同的是，执行接口的<!-- raw HTML omitted -->()方法不需要先执行父接口的<!-- raw HTML omitted -->()方法。只有当父接口中定义的变量使用时，父接口才会初始化。另外，接口的实现类在初始化时也一样不会执行接口的<!-- raw HTML omitted -->()方法</li>
+<li>虚拟机会保证一个类的<!-- raw HTML omitted -->()方法在多线程环境中被正确地加锁、同步，如果多个线程同时去初始化一个类，那么只会有一个线程去执行这个类的<!-- raw HTML omitted -->()方法，其他线程都需要阻塞等待，直到活动线程执行<!-- raw HTML omitted -->()方法完毕。</li>
+</ol>
+<h2 id="类加载器">类加载器</h2>
+<p>​	从Java虚拟机的角度来讲，只存在两种不同的类加载器：一种是启动类加载器（Bootstrap ClassLoader），这个类加载器使用C++语言实现，是虚拟机自身的一部分；另一种就是所有其他的类加载器，这些类加载器都由Java语言实现，独立于虚拟机外部，并且全都继承自抽象类java.lang.ClassLoader。</p>
+<ol>
+<li>
+<p>启动类加载器（Bootstrap ClassLoader）：前面已经介绍过，这个类将器负责将存放在&lt;JAVA_HOME&gt;\lib目录中的，或者被-Xbootclasspath参数所指定的路径中的，并且是虚拟机识别的（仅按照文件名识别，如rt.jar，名字不符合的类库即使放在lib目录中也不会被加载）类库加载到虚拟机内存中。</p>
+</li>
+<li>
+<p>扩展类加载器（Extension ClassLoader）：这个加载器由sun.misc.Launcher$ExtClassLoader实现，它负责加载&lt;JAVA_HOME&gt;\lib\ext目录中的，或者被java.ext.dirs系统变量所指定的路径中的所有类库，开发者可以直接使用扩展类加载器。</p>
+</li>
+<li>
+<p>应用程序类加载器（Application ClassLoader）：这个类加载器由sun.misc.Launcher$App-ClassLoader实现。由于这个类加载器是ClassLoader中的getSystemClassLoader()方法的返回值，所以一般也称它为系统类加载器。</p>
+<p>三个加载器的层级为启动类加载器为高层，接下来为扩展类加载器然后应用类加载器，最后是用户自定义的加载器。</p>
+</li>
+</ol>
+<h4 id="双亲委派模型">双亲委派模型</h4>
+<p>​	双亲委派模型要求除了顶层的启动类加载器外，其余的类加载器都应当有自己的父类加载器。这里类加载器之间的父子关系一般不会以继承（Inheritance）的关系来实现，而是都使用组合（Composition）关系来复用父加载器的代码。</p>
+<p>​	双亲委派模型的工作过程是：如果一个类加载器收到了类加载的请求，它首先不会自己去尝试加载这个类，而是把这个请求委派给父类加载器去完成，每一个层次的类加载器都是如此，因此所有的加载请求最终都应该传送到顶层的启动类加载器中，只有当父加载器反馈自己无法完成这个加载请求（它的搜索范围中没有找到所需的类）时，子加载器才会尝试自己去加载。</p>
+<p>​	使用双亲委派模型来组织类加载器之间的关系，有一个显而易见的好处就是Java类随着它的类加载器一起具备了一种带有优先级的层次关系。例如类java.lang.Object，它存放在rt.jar之中，无论哪一个类加载器要加载这个类，最终都是委派给处于模型最顶端的启动类加载器进行加载，因此Object类在程序的各种类加载器环境中都是同一个类。双亲委派模型对于保证Java程序的稳定运作很重要。</p>
+
+    </div>
+    <div class="article-footer">
+<blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接: </strong>
+      <a href="https://wzgl998877.github.io/2022/01/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3java%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AD%A6%E4%B9%A0/" title="深入理解Java虚拟机" target="_blank" rel="external">https://wzgl998877.github.io/2022/01/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3java%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AD%A6%E4%B9%A0/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong>License: </strong>
+        <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN</a>
+    </li>
+  </ul>
+</blockquote>
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/wzgl998877/" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="https://wzgl998877.github.io/avatar.png" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/wzgl998877/" target="_blank"><span class="text-dark">microzheng</span><small class="ml-1x">努力会说谎，但努力不会白费</small></a></h3>
+        <div>不想搬砖的码农</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+    </div>
+  </article>
+</div><nav class="bar bar-footer clearfix" data-stick-bottom>
+    <div class="bar-inner">
+        <ul class="pager pull-left">
+            <li class="prev">
+                <a href="https://wzgl998877.github.io/2022/01/%E7%9F%A5%E8%AF%86%E7%82%B9/" title="知识点"><i
+                        class="icon icon-angle-left"
+                        aria-hidden="true"></i><span>&nbsp;&nbsp;下一篇</span></a>
+            </li>
+            <li class="next">
+                <a href="https://wzgl998877.github.io/2022/01/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/"
+                    title="消息队列介绍"><span>上一篇&nbsp;&nbsp;</span><i
+                        class="icon icon-angle-right" aria-hidden="true"></i></a>
+            </li>
+            
+            <li class="toggle-toc">
+                <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false"
+                    title="文章目录" role="button">
+                    <span>[&nbsp;</span><span>文章目录</span>
+                    <i class="text-collapsed icon icon-anchor"></i>
+                    <i class="text-in icon icon-close"></i>
+                    <span>]</span>
+                </a>
+            </li>
+        </ul>
+        <div class="bar-right">
+            <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter"
+                data-mobile-sites="weibo,qq,qzone"></div>
+        </div>
+    </div>
+</nav>
+
+
+</main><footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+<ul class="social-links">
+    <li><a href="https://github.com/wzgl998877/" target="_blank" title="github" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-github"></i></a></li>
+    <li><a href="https://wzgl998877.github.io/index.xml" target="_blank" title="rss" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-rss"></i></a></li>
+</ul>
+  <div class="copyright">
+    &copy;2022  -
+    2022
+    <div class="publishby">
+        Theme by <a href="https://github.com/wzgl998877/" target="_blank"> microzheng </a>base on<a href="https://github.com/xiaoheiAh/hugo-theme-pure" target="_blank"> pure</a>.
+    </div>
+    
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_SVG"></script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+            showMathMenu: false, //disables context menu
+            tex2jax: {
+            inlineMath: [ ['$','$'], ['\\(','\\)'] ]
+           }
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+<script>
+    window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/highlight.min.js"></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/python.min.js" defer></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/javascript.min.js" defer></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/java.min.js" defer></script><script>
+    hljs.configure({
+        tabReplace: '    ', 
+        classPrefix: ''     
+        
+    })
+    hljs.initHighlightingOnLoad();
+</script>
+<script src="https://wzgl998877.github.io/js/application.min.a94ab19cb63a95c8d7fbd7b85cab3ddeea8c369bdf75b9cab6708787ead123af.js"></script>
+<script src="https://wzgl998877.github.io/js/plugin.min.19c5bcb2fb0789ab4f2b7834e5ceb5e92635645605bab902c1024b25f1502364.js"></script>
+
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(未命名)',
+            },
+            ROOT_URL: 'https:\/\/wzgl998877.github.io\/',
+            CONTENT_URL: 'https:\/\/wzgl998877.github.io\/\/searchindex.json ',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script type="text/javascript" src="https://wzgl998877.github.io/js/insight.min.4a2d52de4bfff73e0c688404fe3d17c9a3ae12d9888e1e1ac9c690e4890de2ded50fe55f2b819c2ba55435a76f396f3ea6805765f0b0af5635cdf74ea459eab0.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+<script>
+    tocbot.init({
+        
+        tocSelector: '.js-toc',
+        
+        contentSelector: '.js-toc-content',
+        
+        headingSelector: 'h1, h2, h3',
+        
+        hasInnerContainers: true,
+    });
+</script>
+
+
+  </body>
+</html>

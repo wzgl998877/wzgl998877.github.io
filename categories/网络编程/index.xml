@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>网络编程 on Pure theme for Hugo</title>
+    <link>https://wzgl998877.github.io/categories/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/</link>
+    <description>Recent content in 网络编程 on Pure theme for Hugo</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>CC BY 4.0 CN</copyright>
+    <lastBuildDate>Sun, 09 Jan 2022 11:24:40 +0800</lastBuildDate>
+    
+        <atom:link href="https://wzgl998877.github.io/categories/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Java 并发编程</title>
+      <link>https://wzgl998877.github.io/2022/01/java-%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/</link>
+      <pubDate>Sun, 09 Jan 2022 11:24:40 +0800</pubDate>
+      
+      <guid>https://wzgl998877.github.io/2022/01/java-%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/</guid>
+      <description>Java 并发编程 ​ 并发编程之美的笔记 什么是线程 ​ 进程是操作系统资源分配的最小单位，而线程是CPU任务调度和执行的最小单位 具体参考 https://blog.csdn.net/ThinkWon/article/details/102021274 五状态进程的主要</description>
+    </item>
+    
+    <item>
+      <title>Java 编程思想学习</title>
+      <link>https://wzgl998877.github.io/2022/01/java-%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3%E5%AD%A6%E4%B9%A0/</link>
+      <pubDate>Sun, 09 Jan 2022 11:24:40 +0800</pubDate>
+      
+      <guid>https://wzgl998877.github.io/2022/01/java-%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3%E5%AD%A6%E4%B9%A0/</guid>
+      <description>Java 编程思想学习 第1章 对象导论 好像看不下去，。。。 第2章 一切都是对象 用引用操作对象：每种编程语言都有自己的操纵内存中元素的方式。java中操纵</description>
+    </item>
+    
+    <item>
+      <title>LeetCode</title>
+      <link>https://wzgl998877.github.io/2022/01/leetcode/</link>
+      <pubDate>Sun, 09 Jan 2022 11:24:40 +0800</pubDate>
+      
+      <guid>https://wzgl998877.github.io/2022/01/leetcode/</guid>
+      <description>LeetCode 链表 链表（Linked list）是一种常见的基础数据结构，是一种线性表，但是并不会按线性的顺序存储数据，而是在每一个节点里存到下一个节点的</description>
+    </item>
+    
+    <item>
+      <title>Linux工作日常命令</title>
+      <link>https://wzgl998877.github.io/2022/01/linux%E5%B7%A5%E4%BD%9C%E6%97%A5%E5%B8%B8%E5%91%BD%E4%BB%A4/</link>
+      <pubDate>Sun, 09 Jan 2022 11:24:40 +0800</pubDate>
+      
+      <guid>https://wzgl998877.github.io/2022/01/linux%E5%B7%A5%E4%BD%9C%E6%97%A5%E5%B8%B8%E5%91%BD%E4%BB%A4/</guid>
+      <description>Linux工作日常命令 jps 命令 jps 查看全部的jvm进程，可以带上grep命令一起使用 jps |grep -e ××× find命令 基本格式：find path expression 1. 按照文件名查</description>
+    </item>
+    
+    <item>
+      <title>mybatis 技术内幕学习</title>
+      <link>https://wzgl998877.github.io/2022/01/mybatis-%E6%8A%80%E6%9C%AF%E5%86%85%E5%B9%95%E5%AD%A6%E4%B9%A0/</link>
+      <pubDate>Sun, 09 Jan 2022 11:24:40 +0800</pubDate>
+      
+      <guid>https://wzgl998877.github.io/2022/01/mybatis-%E6%8A%80%E6%9C%AF%E5%86%85%E5%B9%95%E5%AD%A6%E4%B9%A0/</guid>
+      <description>mybatis 技术内幕学习 Jdbc 复习 通过JDBC查询数据库数据，一般需要以下七个步骤： 加载JDBC驱动； 建立并获取数据库连接； 创建 JDBC Statements 对象； 设置SQL语句的</description>
+    </item>
+    
+    <item>
+      <title>Netty 学习</title>
+      <link>https://wzgl998877.github.io/2022/01/netty-%E5%AD%A6%E4%B9%A0/</link>
+      <pubDate>Sun, 09 Jan 2022 11:24:40 +0800</pubDate>
+      
+      <guid>https://wzgl998877.github.io/2022/01/netty-%E5%AD%A6%E4%B9%A0/</guid>
+      <description>Netty 学习 虽然说netty，用的少但是感觉比较流行，值得研究！！！ Netty 是一个 NIO 客户端-服务器框架，可以快速轻松地开发网络应用程序，例如协议服务器和</description>
+    </item>
+    
+    <item>
+      <title>spring源码学习</title>
+      <link>https://wzgl998877.github.io/2022/01/spring%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0/</link>
+      <pubDate>Sun, 09 Jan 2022 11:24:40 +0800</pubDate>
+      
+      <guid>https://wzgl998877.github.io/2022/01/spring%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0/</guid>
+      <description>spring源码学习 ​ 对于学习spring源码肯定最重要的学习spring的一些理念，比如控制翻转ioc，依赖注入di，面向切面编程aop等</description>
+    </item>
+    
+    <item>
+      <title>thrift&#43;zk RPC调用框架</title>
+      <link>https://wzgl998877.github.io/2022/01/thrift-zk-rpc%E8%B0%83%E7%94%A8%E6%A1%86%E6%9E%B6/</link>
+      <pubDate>Sun, 09 Jan 2022 11:24:40 +0800</pubDate>
+      
+      <guid>https://wzgl998877.github.io/2022/01/thrift-zk-rpc%E8%B0%83%E7%94%A8%E6%A1%86%E6%9E%B6/</guid>
+      <description>thrift+zk RPC调用框架 zk 在这个框架中zk其实只是作为了注册中心来使用 (客户端只需要在zk上获得地址，服务端只需要将自己注册在zk上)，所以先了解一</description>
+    </item>
+    
+    <item>
+      <title>Websocket学习</title>
+      <link>https://wzgl998877.github.io/2022/01/websocket%E5%AD%A6%E4%B9%A0/</link>
+      <pubDate>Sun, 09 Jan 2022 11:24:40 +0800</pubDate>
+      
+      <guid>https://wzgl998877.github.io/2022/01/websocket%E5%AD%A6%E4%B9%A0/</guid>
+      <description>Websocket学习 WebSocket是一种网络传输协议，可在单个TCP连接上进行全双工通信，位于应用层。 全双工： 单工（simplex ） :</description>
+    </item>
+    
+    <item>
+      <title>图解http</title>
+      <link>https://wzgl998877.github.io/2022/01/%E5%9B%BE%E8%A7%A3http/</link>
+      <pubDate>Sun, 09 Jan 2022 11:24:40 +0800</pubDate>
+      
+      <guid>https://wzgl998877.github.io/2022/01/%E5%9B%BE%E8%A7%A3http/</guid>
+      <description>图解http 网络模型 OSI 模型(具体每层的定义还需要看书确定这个只是网上看的，可以回去看计网) 应用层（application）：最接近终端用户的</description>
+    </item>
+    
+    <item>
+      <title>数据库知识</title>
+      <link>https://wzgl998877.github.io/2022/01/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9F%A5%E8%AF%86/</link>
+      <pubDate>Sun, 09 Jan 2022 11:24:40 +0800</pubDate>
+      
+      <guid>https://wzgl998877.github.io/2022/01/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9F%A5%E8%AF%86/</guid>
+      <description>数据库知识 一些函数 orcale中的decode() 函数 ​ decode(条件,值1，返回值1，值2，返回值2,&amp;hellip;.值n，返回值n</description>
+    </item>
+    
+    <item>
+      <title>日常问题总结</title>
+      <link>https://wzgl998877.github.io/2022/01/%E6%97%A5%E5%B8%B8%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/</link>
+      <pubDate>Sun, 09 Jan 2022 11:24:40 +0800</pubDate>
+      
+      <guid>https://wzgl998877.github.io/2022/01/%E6%97%A5%E5%B8%B8%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/</guid>
+      <description>日常问题总结 工作中总是会遇到各种各样的问题，只有总结下来才是一笔财富。 fastjson的一些技巧 在工作中总是遇到给前端的字段需要是下划线的，</description>
+    </item>
+    
+    <item>
+      <title>消息队列介绍</title>
+      <link>https://wzgl998877.github.io/2022/01/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/</link>
+      <pubDate>Sun, 09 Jan 2022 11:24:40 +0800</pubDate>
+      
+      <guid>https://wzgl998877.github.io/2022/01/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/</guid>
+      <description>消息队列介绍 消息队列主要应用场景为异步、削峰、解耦。 异步解耦 场景一：用户注册，注册时需要发送短信及邮件，并且需要写库 串行模式。流程如下： ​ 缺</description>
+    </item>
+    
+    <item>
+      <title>深入理解Java虚拟机</title>
+      <link>https://wzgl998877.github.io/2022/01/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3java%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AD%A6%E4%B9%A0/</link>
+      <pubDate>Sun, 09 Jan 2022 11:24:40 +0800</pubDate>
+      
+      <guid>https://wzgl998877.github.io/2022/01/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3java%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AD%A6%E4%B9%A0/</guid>
+      <description>深入理解Java虚拟机 第2章 Java内存区域与内存溢出异常 程序计数器 ​ 程序计数器（Program Counter Register）是一块较小的内存空间，它</description>
+    </item>
+    
+    <item>
+      <title>知识点</title>
+      <link>https://wzgl998877.github.io/2022/01/%E7%9F%A5%E8%AF%86%E7%82%B9/</link>
+      <pubDate>Sun, 09 Jan 2022 11:24:40 +0800</pubDate>
+      
+      <guid>https://wzgl998877.github.io/2022/01/%E7%9F%A5%E8%AF%86%E7%82%B9/</guid>
+      <description>知识点！！！ 分布式session Nginx 正向代理 正向代理代理的对象是客户端，正向代理 是一个位于客户端和原始服务器(origin server)之间的</description>
+    </item>
+    
+    <item>
+      <title>设计模式</title>
+      <link>https://wzgl998877.github.io/2022/01/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</link>
+      <pubDate>Sun, 09 Jan 2022 11:24:40 +0800</pubDate>
+      
+      <guid>https://wzgl998877.github.io/2022/01/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</guid>
+      <description>设计模式 七大软件设计原则 1 . 开闭原则 ​ 软件实体应当对扩展开放，对修改关闭。当应用的需求改变时，在不修改软件实体的源代码或者二进制代码的前提下</description>
+    </item>
+    
+  </channel>
+</rss>

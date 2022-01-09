@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <title>
+        知识点 - Pure theme for Hugo
+      </title>
+        <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    
+    <meta name="theme-color" content="#000000" />
+    
+    <meta http-equiv="window-target" content="_top" />
+    
+    
+    <meta name="description" content="知识点！！！ 分布式session Nginx 正向代理 正向代理代理的对象是客户端，正向代理 是一个位于客户端和原始服务器(origin server)之间的" />
+    <meta name="generator" content="Hugo 0.91.2 with theme pure" />
+    <title>知识点 - Pure theme for Hugo</title>
+    
+    
+    <link rel="stylesheet" href="https://wzgl998877.github.io/css/style.min.a85959a41e7abcc0db1f81f44bd264649303417f91b536e87dcde644340fea6d.css">
+    
+    <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/9.15.10/styles/github.min.css" async>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css" async>
+    <meta property="og:title" content="知识点" />
+<meta property="og:description" content="知识点！！！ 分布式session Nginx 正向代理 正向代理代理的对象是客户端，正向代理 是一个位于客户端和原始服务器(origin server)之间的" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wzgl998877.github.io/2022/01/%E7%9F%A5%E8%AF%86%E7%82%B9/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-01-09T11:24:40+08:00" />
+<meta property="article:modified_time" content="2022-01-09T11:24:40+08:00" />
+
+<meta itemprop="name" content="知识点">
+<meta itemprop="description" content="知识点！！！ 分布式session Nginx 正向代理 正向代理代理的对象是客户端，正向代理 是一个位于客户端和原始服务器(origin server)之间的"><meta itemprop="datePublished" content="2022-01-09T11:24:40+08:00" />
+<meta itemprop="dateModified" content="2022-01-09T11:24:40+08:00" />
+<meta itemprop="wordCount" content="3354">
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="知识点"/>
+<meta name="twitter:description" content="知识点！！！ 分布式session Nginx 正向代理 正向代理代理的对象是客户端，正向代理 是一个位于客户端和原始服务器(origin server)之间的"/>
+
+    <!--[if lte IE 9]>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+      <![endif]-->
+
+    <!--[if lt IE 9]>
+        <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+      <![endif]-->
+  </head>
+
+  
+  
+
+  <body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage"><header class="header" itemscope itemtype="http://schema.org/WPHeader">
+    <div class="slimContent">
+      <div class="navbar-header">
+        <div class="profile-block text-center">
+          <a id="avatar" href="https://github.com/wzgl998877/" target="_blank">
+            <img class="img-circle img-rotate" src="https://wzgl998877.github.io/avatar.png" width="200" height="200">
+          </a>
+          <h2 id="name" class="hidden-xs hidden-sm">microzheng</h2>
+          <h3 id="title" class="hidden-xs hidden-sm hidden-md">努力会说谎，但努力不会白费</h3>
+          <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i>Shenzhen China</small>
+        </div><div class="search" id="search-form-wrap">
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i
+                        class="icon icon-search"></i></button>
+            </span>
+        </div>
+        <div class="ins-search">
+            <div class="ins-search-mask"></div>
+            <div class="ins-search-container">
+                <div class="ins-input-wrapper">
+                    <input type="text" class="ins-search-input" placeholder="想要查找什么..."
+                        x-webkit-speech />
+                    <button type="button" class="close ins-close ins-selectable" data-dismiss="modal"
+                        aria-label="Close"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="ins-section-wrapper">
+                    <div class="ins-section-container"></div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+        <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+        <ul class="nav navbar-nav main-nav">
+            <li class="menu-item menu-item-home">
+                <a href="/">
+                    <i class="icon icon-home-fill"></i>
+                  <span class="menu-title">主页</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-archives">
+                <a href="/posts/">
+                    <i class="icon icon-archives-fill"></i>
+                  <span class="menu-title">归档</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-categories">
+                <a href="/categories/">
+                    <i class="icon icon-folder"></i>
+                  <span class="menu-title">分类</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-tags">
+                <a href="/tags/">
+                    <i class="icon icon-tags"></i>
+                  <span class="menu-title">标签</span>
+                </a>
+            </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+<aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content"><p>enjoy~</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+      <div class="widget">
+    <h3 class="widget-title"> 分类</h3>
+    <div class="widget-body">
+        <ul class="category-list">
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/java/" class="category-list-link">java</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/linux/" class="category-list-link">linux</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/" class="category-list-link">中间件</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E5%B8%B8%E7%94%A8%E6%A1%86%E6%9E%B6/" class="category-list-link">常用框架</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="category-list-link">数据库</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E6%97%A5%E5%B8%B8%E6%80%BB%E7%BB%93/" class="category-list-link">日常总结</a><span class="category-list-count">2</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E7%AE%97%E6%B3%95/" class="category-list-link">算法</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/" class="category-list-link">系统设计</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/" class="category-list-link">网络编程</a><span class="category-list-count">3</span></li>
+        </ul>
+    </div>
+</div>
+      <div class="widget">
+    <h3 class="widget-title"> 标签</h3>
+    <div class="widget-body">
+        <ul class="tag-list">
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/http/" class="tag-list-link">http</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/java%E5%9F%BA%E7%A1%80/" class="tag-list-link">java基础</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/java%E5%B9%B6%E5%8F%91/" class="tag-list-link">java并发</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/jvm/" class="tag-list-link">jvm</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/leetcode/" class="tag-list-link">leetcode</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/linux%E5%91%BD%E4%BB%A4/" class="tag-list-link">linux命令</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/mybatis/" class="tag-list-link">mybatis</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/netty/" class="tag-list-link">netty</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/rpc/" class="tag-list-link">rpc</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/spring/" class="tag-list-link">spring</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/websocket/" class="tag-list-link">websocket</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" class="tag-list-link">消息队列</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="tag-list-link">设计模式</a><span
+                    class="tag-list-count">1</span></li>
+            
+        </ul>
+
+    </div>
+</div>
+      
+<div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+        <ul class="recent-post-list list-unstyled no-thumbnail">
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://wzgl998877.github.io/2022/01/java-%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" class="title">Java 并发编程</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2022-01-09 11:24:40 &#43;0800 CST" itemprop="datePublished">2022-01-09</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://wzgl998877.github.io/2022/01/java-%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3%E5%AD%A6%E4%B9%A0/" class="title">Java 编程思想学习</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2022-01-09 11:24:40 &#43;0800 CST" itemprop="datePublished">2022-01-09</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://wzgl998877.github.io/2022/01/leetcode/" class="title">LeetCode</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2022-01-09 11:24:40 &#43;0800 CST" itemprop="datePublished">2022-01-09</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://wzgl998877.github.io/2022/01/linux%E5%B7%A5%E4%BD%9C%E6%97%A5%E5%B8%B8%E5%91%BD%E4%BB%A4/" class="title">Linux工作日常命令</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2022-01-09 11:24:40 &#43;0800 CST" itemprop="datePublished">2022-01-09</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://wzgl998877.github.io/2022/01/mybatis-%E6%8A%80%E6%9C%AF%E5%86%85%E5%B9%95%E5%AD%A6%E4%B9%A0/" class="title">mybatis 技术内幕学习</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2022-01-09 11:24:40 &#43;0800 CST" itemprop="datePublished">2022-01-09</time>
+                    </p>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+  </div>
+</aside>
+
+    
+    
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <h4 class="toc-title">文章目录</h4>
+    <nav id="toc" class="js-toc toc">
+
+    </nav>
+  </div>
+</aside>
+<main class="main" role="main"><div class="content">
+  <article id="-" class="article article-type-" itemscope
+    itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      <h1 itemprop="name">
+  <a
+    class="article-title"
+    href="/2022/01/%E7%9F%A5%E8%AF%86%E7%82%B9/"
+    >知识点</a
+  >
+</h1>
+
+      <div class="article-meta">
+        
+<span class="article-date">
+  <i class="icon icon-calendar-check"></i>&nbsp;
+<a href="https://wzgl998877.github.io/2022/01/%E7%9F%A5%E8%AF%86%E7%82%B9/" class="article-date">
+  <time datetime="2022-01-09 11:24:40 &#43;0800 CST" itemprop="datePublished">2022-01-09</time>
+</a>
+</span>
+<span class="article-category">
+  <i class="icon icon-folder"></i>&nbsp;
+  <a class="article-category-link" href="/categories/%E6%97%A5%E5%B8%B8%E6%80%BB%E7%BB%93/"> 日常总结 </a>
+</span>
+
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 3354字</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 7分 </span>
+      </div>
+    </div>
+    <div class="article-entry marked-body js-toc-content" itemprop="articleBody">
+      <h1 id="知识点">知识点！！！</h1>
+<h2 id="分布式session">分布式session</h2>
+<h2 id="nginx">Nginx</h2>
+<h3 id="正向代理">正向代理</h3>
+<p>正向代理代理的对象是客户端，正向代理 是一个位于客户端和原始服务器(origin server)之间的服务器，为了从原始服务器取得内容，客户端向代理发送一个请求并指定目标(原始服务器)，然后代理向原始服务器转交请求并将获得的内容返回给客户端。客户端必须要进行一些特别的设置才能使用正向代理。配置如下：</p>
+<pre><code class="language-shell">1.  server{
+	# dns必须要
+2.  resolver 8.8.8.8;
+3.  resolver_timeout 30s;
+4.  listen 82;
+5.  location / {
+6.  proxy_pass http://$http_host$request_uri;
+7.  proxy_set_header Host $http_host;
+8.  proxy_buffers 256 4k;
+9.  proxy_max_temp_file_size 0;
+10.  proxy_connect_timeout 30;
+11.  proxy_cache_valid 200 302 10m;
+12.  proxy_cache_valid 301 1h;
+13.  proxy_cache_valid any 1m;
+14.  }
+15.  }
+</code></pre>
+<p>配置好后，重启nginx，以浏览器为例，要使用这个代理服务器，必须将浏览器代理设置为<code>http://</code>+<code>服务器ip地址</code>+<code>:</code>+<code>82</code>（82是刚刚设置的端口号）即可使用了，这样就相当于我们访问的是代理服务，代理服务器再去访问我们目标网站。</p>
+<h3 id="反向代理">反向代理</h3>
+<p>反向代理代理的对象是服务端。反向代理正好相反，对于客户端而言它就像是原始服务器，并且客户端不需要进行任何特别的设置。客户端向反向代理的命名空间(name-space)中的内容发送普通请求，接着反向代理将判断向何处(原始服务器)转交请求，并将获得的内容返回给客户端，就像这些内容原本就是它自己的一样。反向代理基本配置：</p>
+<pre><code class="language-shell">1.  http {
+2.  # 省略了前面一般的配置，直接从负载均衡这里开始
+3.  # 设置地址池，后端3台服务器，负载均衡这里是
+4.  upstream http_server_pool {
+5.  server 192.168.1.2:8080 weight=2 max_fails=2 fail_timeout=30s;
+6.  server 192.168.1.3:8080 weight=3 max_fails=2 fail_timeout=30s;
+7.  server 192.168.1.4:8080 weight=4 max_fails=2 fail_timeout=30s;
+8.  }
+9.  # 一个虚拟主机，用来反向代理http_server_pool这组服务器
+10.  server {
+11.  listen 80;
+12.  # 外网访问的域名
+13.  server_name www.test.com;
+14.  location / {
+15.  # 后端服务器返回500 503 404错误，自动请求转发到upstream池中另一台服务器
+16.  proxy_next_upstream error timeout invalid_header http_500 http_503 http_404;
+17.  proxy_pass http://http_server_pool;
+18.  proxy_set_header Host www.test.com;
+19.  proxy_set_header X-Real-IP $remote_addr;
+20.  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+21.  }
+22.  access_log logs/www.test.com.access.log combined;
+23.  }
+24.  }
+</code></pre>
+<p>反向代理就是在请求时，请求这个服务器的请求转发到真正处理的服务器，其中可以加上一些负载均衡之类的，比如现在请求，http://www.test.com, 就会将这个请求重定向到http://http_server_pool ，然后这个是自己定义的，第4行代码，然后就根据权重轮询发送到对应的服务器。</p>
+<p>基本配置 博客 <a href="https://www.cnblogs.com/54chensongxia/p/12938929.html">https://www.cnblogs.com/54chensongxia/p/12938929.html</a></p>
+<p>具体的location指令 博客 <a href="https://www.jianshu.com/p/b010c9302cd0">https://www.jianshu.com/p/b010c9302cd0</a></p>
+<p>生产遇到的问题，调支付宝下单接口总是返回</p>
+<pre><code>org.apache.http.NoHttpResponseException: open-sea.alipay.com:8449 failed to respond
+	at org.apache.http.impl.conn.DefaultHttpResponseParser.parseHead(DefaultHttpResponseParser.java:143)
+	at org.apache.http.impl.conn.DefaultHttpResponseParser.parseHead(DefaultHttpResponseParser.java:57)
+	at org.apache.http.impl.io.AbstractMessageParser.parse(AbstractMessageParser.java:261)
+	at org.apache.http.impl.DefaultBHttpClientConnection.receiveResponseHeader(DefaultBHttpClientConnection.java:165)
+	at org.apache.http.impl.conn.CPoolProxy.receiveResponseHeader(CPoolProxy.java:167)
+	at org.apache.http.protocol.HttpRequestExecutor.doReceiveResponse(HttpRequestExecutor.java:272)
+	at org.apache.http.protocol.HttpRequestExecutor.execute(HttpRequestExecutor.java:124)
+	at org.apache.http.impl.execchain.MainClientExec.execute(MainClientExec.java:271)
+	at org.apache.http.impl.execchain.ProtocolExec.execute(ProtocolExec.java:184)
+	at org.apache.http.impl.execchain.RetryExec.execute(RetryExec.java:88)
+	at org.apache.http.impl.execchain.RedirectExec.execute(RedirectExec.java:110)
+	at org.apache.http.impl.client.InternalHttpClient.doExecute(InternalHttpClient.java:184)
+	at org.apache.http.impl.client.CloseableHttpClient.execute(CloseableHttpClient.java:82)
+	at org.apache.http.impl.client.CloseableHttpClient.execute(CloseableHttpClient.java:107)
+	at com.jlpay.commons.tools.http.HttpServiceImpl.execute(HttpServiceImpl.java:178)
+	at com.taifung.qrcode.chn.alipay.service.trans.OfflinepayService.doOfflinepayCn(OfflinepayService.java:282)
+	at com.taifung.qrcode.chn.alipay.service.trans.OfflinepayService.executeCommand(OfflinepayService.java:52)
+	at com.taifung.qrcode.chn.alipay.service.trans.OfflinepayService.executeCommand(OfflinepayService.java:33)
+	at com.taifung.qrcode.chn.alipay.service.trans.AlipayService.execute(AlipayService.java:28)
+	at com.jlpay.commons.rpc.thrift.server.Dispatcher.invoke(Dispatcher.java:47)
+	at com.jlpay.commons.rpc.thrift.server.RpcAdapterImpl.Invoke(RpcAdapterImpl.java:32)
+	at com.jlpay.commons.rpc.thrift.server.RpcAdapter$Processor$Invoke.getResult(RpcAdapter.java:175)
+	at com.jlpay.commons.rpc.thrift.server.RpcAdapter$Processor$Invoke.getResult(RpcAdapter.java:160)
+	at org.apache.thrift.ProcessFunction.process(ProcessFunction.java:39)
+	at org.apache.thrift.TBaseProcessor.process(TBaseProcessor.java:39)
+	at org.apache.thrift.server.AbstractNonblockingServer$FrameBuffer.invoke(AbstractNonblockingServer.java:518)
+	at org.apache.thrift.server.Invocation.run(Invocation.java:18)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(ScheduledThreadPoolExecutor.java:180)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:293)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+</code></pre>
+<p>观察日志，发现报这个错都是3秒后，报错，然后看ng配置</p>
+<pre><code class="language-java">server {
+        listen 8449;
+        proxy_connect_timeout 1s; // 默认值60s, nginx连接到后端服务器的连接超时时间
+        proxy_timeout 3s; // 默认值为10分钟，nginx接收后端服务器的响应超时时间
+        proxy_pass alipay;
+    }
+
+    upstream alipay {
+        hash $remote_addr consistent;
+        server open.alipaymo.com:443 weight=5 max_fails=3 fail_timeout=30s; //max_fails默认值为1,fail_timeout默认值为10s,max_fails=0表示不做检查
+        // max_fails和fail_timeout参数是配合使用的，按默认值，当某台upstream server挂了，表示在10s(fail_timeout)之内，有1(max_fails)个请求打到这台挂了的服务器，nginx就会把这台upstream server设为down机的状态，时长是10s，在这10s内如果又有请求进来，就不会被转到这台server上，过了10s重新认为这台server又恢复了配置的意义
+    }
+</code></pre>
+<p>所以说，问题就是，调支付宝下单接口三秒后还没返回，所以ng就把连接断开了，解决办法将超时时间调成了5s，这个错误的次数也出现的少了。</p>
+<h2 id="shell">shell</h2>
+<pre><code class="language-shell">#!/bin/bash
+# 不可自行修改脚本，统一管理
+# 开启脚本调试
+#set -x
+
+#设置生效那个环境配置文件
+#---- start.sh stdout 为开启stdout.log
+# 目前有 dev kx.verify kx.prod 这几个环境，对应application-*.yml 的配置文件
+# 定义变量，
+PROFILES_ACTIVE=dev
+
+# 定义日志输出位置，如果没定义的话，在./logs目录 必须/结尾
+LOGPATH=./logs/
+
+#设置 Sentinel 控制台地址 -Dcsp.sentinel.dashboard.server=172.20.21.40:58080
+#SENTINEL_OPTS='-Dcsp.sentinel.dashboard.server=localhost:58080 -Dproject.name=openAccess -Dcsp.sentinel.log.use.pid=true'
+
+JAVA_OPTS=&quot; -Djava.awt.headless=true -Djava.net.preferIPv4Stack=true   &quot;
+# echo 用于字符串的输出，-e开启转义
+# 函数定义方法，函数定义必须放在调用前 \033[032;1m$@\033[0m加颜色用的
+green_echo ()    { echo -e &quot;\033[032;1m$@\033[0m&quot;; }
+# 定位到运行脚本的相对位置
+cd `dirname $0`
+BIN_DIR=`pwd`
+cd ..
+DEPLOY_DIR=`pwd`
+CONF_DIR=$DEPLOY_DIR/config
+
+LOGS_FILE=$DEPLOY_DIR/logs
+# -z 检测字符串长度是否为0，为0返回 true。
+# -n 检测字符串长度是否不为 0，不为 0 返回 true。
+# $ 检测字符串是否为空，不为空返回 true。
+if [ -z &quot;$SERVER_NAME&quot; ]; then
+	# 主机名
+    SERVER_NAME=`hostname`
+fi
+
+PIDS=`ps -f | grep java | grep &quot;.jar&quot; | grep &quot;$CONF_DIR&quot; |awk '{print $2}'`
+if [ -n &quot;$PIDS&quot; ]; then
+    echo &quot;ERROR: The $SERVER_NAME already started!&quot;
+    echo &quot;PID: $PIDS&quot;
+    # exit 退出命令，0为成功，其他为失败情况
+    exit 1
+fi
+
+if [ -n &quot;$SERVER_PORT&quot; ]; then
+    SERVER_PORT_COUNT=`netstat -tln | grep $SERVER_PORT | wc -l`
+    if [ $SERVER_PORT_COUNT -gt 0 ]; then
+        echo &quot;ERROR: The $SERVER_NAME port $SERVER_PORT already used!&quot;
+        exit 1
+    fi
+fi
+
+#LOGS_DIR=&quot;&quot;
+#if [ -n &quot;$LOGS_FILE&quot; ]; then
+#    LOGS_DIR=`dirname $LOGS_FILE`
+#else
+#    LOGS_DIR=$DEPLOY_DIR/logs
+#fi
+LOGS_DIR=$DEPLOY_DIR/logs
+# -d 检测文件是否是目录，如果是,则返回true。
+if [ ! -d $LOGS_DIR ]; then
+    mkdir $LOGS_DIR
+fi
+STDOUT_FILE=$LOGS_DIR/stdout.log
+
+LIB_DIR=$DEPLOY_DIR
+MAIN_JAR=`ls $LIB_DIR|grep .jar |awk '{print &quot;'$LIB_DIR'/&quot;$0}' `
+echo $MAIN_JAR
+#LIB_JARS=`ls $LIB_DIR|grep .jar|awk '{print &quot;'$LIB_DIR'/&quot;$0}'|tr &quot;\n&quot; &quot;:&quot;`
+JAVA_DEBUG_OPTS=&quot;&quot;
+if [ &quot;$1&quot; = &quot;debug&quot; ]; then
+    JAVA_DEBUG_OPTS=&quot; -Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,address=8000,server=y,suspend=n &quot;
+fi
+JAVA_JMX_OPTS=&quot;&quot;
+if [ &quot;$1&quot; = &quot;jmx&quot; ]; then
+    JAVA_JMX_OPTS=&quot; -Dcom.sun.management.jmxremote.port=1099 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false &quot;
+fi
+JAVA_MEM_OPTS=&quot;&quot;
+BITS=`java -version 2&gt;&amp;1 | grep -i 64-bit`
+if [ -n &quot;$BITS&quot; ]; then
+    JAVA_MEM_OPTS=&quot; -server -Xmx1g -Xms1g -Xmn256m -XX:PermSize=128m -Xss256k -XX:+DisableExplicitGC -XX:+UseConcMarkSweepGC -XX:+CMSParallelRemarkEnabled -XX:+UseCMSCompactAtFullCollection -XX:LargePageSizeInBytes=128m -XX:+UseFastAccessorMethods -XX:+UseCMSInitiatingOccupancyOnly -XX:CMSInitiatingOccupancyFraction=70 &quot;
+else
+    JAVA_MEM_OPTS=&quot; -server -Xms1g -Xmx1g -XX:PermSize=128m -XX:SurvivorRatio=2 -XX:+UseParallelGC &quot;
+fi
+
+echo -e &quot;Starting the $SERVER_NAME ...\c&quot;
+# if语法，if condition1 then command1 else command(不能为空) fi
+if [ &quot;$1&quot; == &quot;stdout&quot; ]; then
+	
+	# 0 表示stdin标准输入；1 表示stdout标准输出；2 表示stderr标准错误。
+	# nohup java .....(java 运行期间的配置) -jar $MAIN_JAR &gt; $STDOUT_FILE 2&gt;&amp;1 &amp; 意思就是运行jar文件，并把1标准输出，2 标准错误全部输出到$STDOUT_FILE中去 ，/dev/null这个就为空，代表不输出东西，$MAIN_JAR &gt; $STDOUT_FILE &gt; 表示清空然后重新输入，&gt;&gt;表示追加，所以重新运行，日志会被清空
+    nohup java  $JAVA_OPTS $JAVA_MEM_OPTS $JAVA_DEBUG_OPTS $JAVA_JMX_OPTS  $SENTINEL_OPTS  -Xbootclasspath/a:$CONF_DIR  -DlogPath=$LOGPATH -Dspring.profiles.active=$PROFILES_ACTIVE  -jar $MAIN_JAR &gt; $STDOUT_FILE 2&gt;&amp;1 &amp;
+  else
+     nohup java  $JAVA_OPTS $JAVA_MEM_OPTS $JAVA_DEBUG_OPTS $JAVA_JMX_OPTS  $SENTINEL_OPTS  -Xbootclasspath/a:$CONF_DIR  -DlogPath=$LOGPATH  -Dspring.profiles.active=$PROFILES_ACTIVE  -jar $MAIN_JAR &gt; /dev/null 2&gt;&amp;1 &amp;
+fi
+
+COUNT=0
+# -eq =，-ne !=,-gt &gt;,-lt &lt;,-ge &gt;=,-le &lt;=
+while [ $COUNT -lt 1 ]; do
+    echo -e &quot;.\c&quot;
+    sleep 1
+    if [ -n &quot;$SERVER_PORT&quot; ]; then
+        if [ &quot;$SERVER_PROTOCOL&quot; == &quot;thrift&quot; ]; then
+    	    #COUNT=`echo status | nc -i 1 127.0.0.1 $SERVER_PORT | grep -c OK`
+    	    COUNT=`netstat -an | grep $SERVER_PORT | wc -l`
+        else
+            COUNT=`netstat -an | grep $SERVER_PORT | wc -l`
+        fi
+    else
+    	COUNT=`ps -f | grep java | grep &quot;.jar&quot; | grep &quot;$DEPLOY_DIR&quot; | awk '{print $2}' | wc -l`
+    fi
+    if [ $COUNT -gt 0 ]; then
+        break
+    fi
+done
+
+echo &quot;OK!&quot;
+PIDS=`ps -f | grep java | grep &quot;.jar&quot; | grep &quot;$DEPLOY_DIR&quot; | awk '{print $2}'`
+sleep 2
+green_echo  &quot;------ Prog info PLS check &amp;  dev(开发环境) kx.prod (科兴验证环境) kx.prod (科兴生产环境)  ks.prod (金山生产环境) -----&quot;
+echo &quot;PID: $PIDS&quot;
+echo &quot;PROG_ENV: $PROFILES_ACTIVE&quot;
+echo &quot;LOGS&quot;: `ls -l /proc/$PIDS/fd | grep .log | awk '{print $NF}' | sort |uniq`
+
+</code></pre>
+<h2 id="日志">日志</h2>
+<p>目前java中日志框架主要有<strong>JDKLog、Log4J、LogBack、SLF4J</strong> 其中slf4j相当于是一个接口，log4j和logback相当于是具体实现。</p>
+<p>目前最流行slf4j+logback</p>
+<p>引入依赖，目前springboot默认就是这个组合的日志框架所以不需要额外引入依赖</p>
+<pre><code class="language-java">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+         xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;
+    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+    &lt;parent&gt;
+        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+        &lt;artifactId&gt;spring-boot-starter-parent&lt;/artifactId&gt;
+        &lt;version&gt;2.4.0&lt;/version&gt;
+        &lt;relativePath/&gt; &lt;!-- lookup parent from repository --&gt;
+    &lt;/parent&gt;
+    &lt;groupId&gt;com.zt&lt;/groupId&gt;
+    &lt;artifactId&gt;java-study&lt;/artifactId&gt;
+    &lt;version&gt;0.0.1-SNAPSHOT&lt;/version&gt;
+    &lt;name&gt;java-study&lt;/name&gt;
+    &lt;description&gt;Demo project for Spring Boot&lt;/description&gt;
+
+    &lt;properties&gt;
+        &lt;java.version&gt;1.8&lt;/java.version&gt;
+    &lt;/properties&gt;
+
+    &lt;dependencies&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-starter&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;com.alibaba&lt;/groupId&gt;
+            &lt;artifactId&gt;fastjson&lt;/artifactId&gt;
+            &lt;version&gt;1.2.71&lt;/version&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;junit&lt;/groupId&gt;
+            &lt;artifactId&gt;junit&lt;/artifactId&gt;
+            &lt;scope&gt;test&lt;/scope&gt;
+        &lt;/dependency&gt;
+    &lt;/dependencies&gt;
+
+    &lt;build&gt;
+        &lt;plugins&gt;
+            &lt;plugin&gt;
+                &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+                &lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;
+            &lt;/plugin&gt;
+        &lt;/plugins&gt;
+    &lt;/build&gt;
+
+&lt;/project&gt;
+
+</code></pre>
+<p>加入配置文件,配置文件详解见</p>
+<p><a href="https://www.cnblogs.com/chanshuyi/p/something_about_java_log_framework.html">https://www.cnblogs.com/chanshuyi/p/something_about_java_log_framework.html</a></p>
+<p><a href="https://cloud.tencent.com/developer/article/1698344">https://cloud.tencent.com/developer/article/1698344</a></p>
+<pre><code class="language-java">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;configuration scan=&quot;true&quot; scanPeriod=&quot;10 seconds&quot;&gt;
+	&lt;!--springProperty和property都可以用来表示全局变量但springProperty代表去配置文件去读配置	--&gt;
+	&lt;springProperty scope=&quot;context&quot; name=&quot;springAppName&quot; source=&quot;spring.application.name&quot; defaultValue=&quot;manage-tax&quot;/&gt;
+	&lt;!--那么问题来了，这个logPath配置文件里就没有是怎么读取的呢，没读到就默认是最高目录--&gt;
+	&lt;springProperty scope=&quot;context&quot; name=&quot;logPath&quot; source=&quot;logPath&quot;/&gt;
+	&lt;property name=&quot;logPath&quot; value=&quot;../logs/&quot;/&gt;
+
+	&lt;property name=&quot;CONSOLE_LOG_PATTERN&quot; value=&quot;[%date][%thread][manage-tax][%logger:%line][%M][%-5level][%X{logid}][%X{X-B3-TraceId:-}] =&gt;%msg%n&quot;/&gt;
+
+	&lt;!--生产环境去掉控制台输出--&gt;
+	&lt;appender name=&quot;stdout&quot; class=&quot;ch.qos.logback.core.ConsoleAppender&quot;&gt;
+		&lt;withJansi&gt;true&lt;/withJansi&gt;
+		&lt;encoder&gt;
+			&lt;pattern&gt;${CONSOLE_LOG_PATTERN}&lt;/pattern&gt;
+			&lt;charset&gt;utf8&lt;/charset&gt;
+		&lt;/encoder&gt;
+	&lt;/appender&gt;
+
+	&lt;appender name=&quot;dailyRollingFileAppender&quot; class=&quot;ch.qos.logback.core.rolling.RollingFileAppender&quot;&gt;
+		&lt;File&gt;${logPath}${springAppName}.log&lt;/File&gt;
+		&lt;rollingPolicy class=&quot;ch.qos.logback.core.rolling.TimeBasedRollingPolicy&quot;&gt;
+			&lt;FileNamePattern&gt;${springAppName}.%d{yyyy-MM-dd}-%i.log&lt;/FileNamePattern&gt;
+			&lt;maxHistory&gt;30&lt;/maxHistory&gt;
+			&lt;timeBasedFileNamingAndTriggeringPolicy class=&quot;ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP&quot;&gt;
+				&lt;maxFileSize&gt;100MB&lt;/maxFileSize&gt;
+			&lt;/timeBasedFileNamingAndTriggeringPolicy&gt;
+		&lt;/rollingPolicy&gt;
+		&lt;encoder&gt;
+			&lt;Pattern&gt;${CONSOLE_LOG_PATTERN}&lt;/Pattern&gt;
+		&lt;/encoder&gt;
+		&lt;filter class=&quot;ch.qos.logback.classic.filter.ThresholdFilter&quot;&gt;
+			&lt;level&gt;DEBUG&lt;/level&gt;
+		&lt;/filter&gt;
+	&lt;/appender&gt;
+	&lt;!--	异步打日志AsyncAppender --&gt;
+	&lt;appender name =&quot;ASYNC_FILE&quot; class= &quot;ch.qos.logback.classic.AsyncAppender&quot;&gt;
+		&lt;discardingThreshold&gt;0&lt;/discardingThreshold&gt;
+		&lt;queueSize&gt;1024&lt;/queueSize&gt;
+		&lt;includeCallerData&gt;true&lt;/includeCallerData&gt;
+		&lt;appender-ref ref = &quot;dailyRollingFileAppender&quot;/&gt;
+	&lt;/appender&gt;
+	&lt;appender name =&quot;ASYNC_STDOUT&quot; class= &quot;ch.qos.logback.classic.AsyncAppender&quot;&gt;
+		&lt;discardingThreshold&gt;0&lt;/discardingThreshold&gt;
+		&lt;queueSize&gt;1024&lt;/queueSize&gt;
+		&lt;includeCallerData&gt;true&lt;/includeCallerData&gt;
+		&lt;appender-ref ref = &quot;stdout&quot;/&gt;
+	&lt;/appender&gt;
+	&lt;!-- 多环境日志配置	--&gt;
+	&lt;springProfile name=&quot;dev&quot;&gt;
+		&lt;logger name=&quot;com.jlpay&quot; level=&quot;DEBUG&quot;/&gt;
+		&lt;root level=&quot;info&quot;&gt;
+			&lt;appender-ref ref=&quot;ASYNC_FILE&quot;/&gt;
+			&lt;appender-ref ref=&quot;ASYNC_STDOUT&quot;/&gt;
+		&lt;/root&gt;
+	&lt;/springProfile&gt;
+
+	&lt;root level=&quot;info&quot;&gt;
+		&lt;appender-ref ref=&quot;stdout&quot;/&gt;
+		&lt;appender-ref ref=&quot;ASYNC_FILE&quot;/&gt;
+	&lt;/root&gt;
+
+&lt;/configuration&gt;
+
+</code></pre>
+<p>使用</p>
+<pre><code class="language-Java">package com.zt.javastudy;
+
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+
+/**
+ * @author zhengtao
+ */
+@SpringBootApplication(exclude= {DataSourceAutoConfiguration.class})
+// 引入lombok注解，加上这个注释就可以使用log打印日志了
+@Slf4j
+public class JavaStudyApplication {
+    public static final Logger logger = LoggerFactory.getLogger(JavaStudyApplication.class);
+    public static void main(String[] args) {
+        logger.info(&quot;java-study starting.....&quot;);
+        log.error(&quot;slf4j starting...&quot;);
+        SpringApplication.run(JavaStudyApplication.class, args);
+        logger.info(&quot;java-study ok.....&quot;);
+        log.error(&quot;slf4j ok.........&quot;);
+    }
+
+}
+</code></pre>
+<p>如果是使用log4j只需要引入相应的配置，然后配置对应的配置文件，使用方法是一样的，例如</p>
+<pre><code class="language-java">log4j.rootLogger=INFO,Console,CommonFile
+  
+log4j.appender.Console=org.apache.log4j.ConsoleAppender  
+log4j.appender.Console.Target=System.out
+log4j.appender.Console.Threshold=DEBUG
+log4j.appender.Console.layout = org.apache.log4j.PatternLayout  
+log4j.appender.Console.layout.ConversionPattern=[%d{yyyy-MM-dd HH\:mm\:ss SSSSSS}][%t][(QRCODE_MERCHANT_SERVER)(%C:%L)(%M)][%p][%X{logid}][%X{orderid}]%m%n
+#WARN INFO
+ 
+log4j.appender.CommonFile=org.apache.log4j.RollingFileAppender
+log4j.appender.CommonFile.MaxFileSize = 100MB
+log4j.appender.CommonFile.File=../logs/qrcode_merchant.log
+log4j.appender.CommonFile.MaxBackupIndex=100  
+log4j.appender.CommonFile.Threshold=INFO,ERROR,WARN
+log4j.appender.CommonFile.layout=org.apache.log4j.PatternLayout  
+log4j.appender.CommonFile.layout.ConversionPattern=[%d{yyyy-MM-dd HH\:mm\:ss SSSSSS}][%t][(QRCODE_MERCHANT_SERVER)(%C:%L)(%M)][%p][%X{logid}][%X{orderid}]%m%n
+log4j.appender.CommonFile.Encoding=UTF-8
+log4j.appender.CommonFile.BufferedIO=false
+
+</code></pre>
+<h2 id="单元测试">单元测试</h2>
+<h2 id="一致性哈希">一致性哈希</h2>
+<h2 id="多线程和异步任务">多线程和异步任务</h2>
+<h2 id="transaction和transactionaleventlistener">@Transaction和@TransactionalEventListener</h2>
+<h2 id="file类">file类</h2>
+<h2 id="maven">maven</h2>
+<p>公司项目配置文件读取过程</p>
+<ol>
+<li>通过指定配置文件目录，来使得本地配置读取的为development</li>
+</ol>
+<pre><code class="language-java">                            &lt;resources&gt;
+                                &lt;resource&gt;
+                                    &lt;directory&gt;src/main/resources&lt;/directory&gt;
+                                    &lt;!-- 资源根目录排除各环境的配置，使用单独的资源目录来指定 --&gt;
+                                    &lt;excludes&gt;
+                                        &lt;exclude&gt;test/*&lt;/exclude&gt;
+                                        &lt;exclude&gt;mir/*&lt;/exclude&gt;
+                                        &lt;exclude&gt;verify/*&lt;/exclude&gt;
+                                        &lt;exclude&gt;production/*&lt;/exclude&gt;
+                                        &lt;exclude&gt;development/*&lt;/exclude&gt;
+                                    &lt;/excludes&gt;
+                                &lt;/resource&gt;
+                                &lt;resource&gt;
+                                    &lt;directory&gt;src/main/resources/${profiles.active}&lt;/directory&gt;
+                                &lt;/resource&gt;
+                            &lt;/resources&gt;
+                            &lt;profile&gt;
+                                &lt;!-- 本地开发环境 配置为真--&gt;
+                                &lt;id&gt;development&lt;/id&gt;
+                                &lt;properties&gt;
+                                    &lt;profiles.active&gt;development&lt;/profiles.active&gt;
+                                &lt;/properties&gt;
+                                &lt;activation&gt;
+                                    &lt;activeByDefault&gt;true&lt;/activeByDefault&gt;
+                                &lt;/activation&gt;
+                            &lt;/profile&gt;
+</code></pre>
+<ol start="2">
+<li>
+<p>将配置文件达到jar中</p>
+<pre><code class="language-java">&lt;outputDirectory&gt;
+    target/classes
+&lt;/outputDirectory&gt;
+</code></pre>
+</li>
+<li>
+<p>有了前面两步配合classpath* 就可以读到配置文件中的内容了，而我们线上之所以配置文件不是本地开发的配置文件是因为线上加了这个代码，</p>
+</li>
+</ol>
+<pre><code class="language-java">&lt;resources&gt;
+    &lt;resource&gt;
+        &lt;directory&gt;src/main/resources&lt;/directory&gt;
+        &lt;!-- resources下的所有文件都不打到jar中 --&gt;
+        &lt;excludes&gt;
+            &lt;exclude&gt;**/*.*&lt;/exclude&gt;
+        &lt;/excludes&gt;
+    &lt;/resource&gt;
+&lt;/resources&gt;
+</code></pre>
+<p>从而线上的就会去寻找配置文件。</p>
+<p>把maven配置认真看下。</p>
+<h2 id="幂等">幂等</h2>
+<h2 id="分布式事务">分布式事务</h2>
+
+    </div>
+    <div class="article-footer">
+<blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接: </strong>
+      <a href="https://wzgl998877.github.io/2022/01/%E7%9F%A5%E8%AF%86%E7%82%B9/" title="知识点" target="_blank" rel="external">https://wzgl998877.github.io/2022/01/%E7%9F%A5%E8%AF%86%E7%82%B9/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong>License: </strong>
+        <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN</a>
+    </li>
+  </ul>
+</blockquote>
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/wzgl998877/" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="https://wzgl998877.github.io/avatar.png" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/wzgl998877/" target="_blank"><span class="text-dark">microzheng</span><small class="ml-1x">努力会说谎，但努力不会白费</small></a></h3>
+        <div>不想搬砖的码农</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+    </div>
+  </article>
+</div><nav class="bar bar-footer clearfix" data-stick-bottom>
+    <div class="bar-inner">
+        <ul class="pager pull-left">
+            <li class="prev">
+                <a href="https://wzgl998877.github.io/2022/01/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" title="设计模式"><i
+                        class="icon icon-angle-left"
+                        aria-hidden="true"></i><span>&nbsp;&nbsp;下一篇</span></a>
+            </li>
+            <li class="next">
+                <a href="https://wzgl998877.github.io/2022/01/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3java%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AD%A6%E4%B9%A0/"
+                    title="深入理解Java虚拟机"><span>上一篇&nbsp;&nbsp;</span><i
+                        class="icon icon-angle-right" aria-hidden="true"></i></a>
+            </li>
+            
+            <li class="toggle-toc">
+                <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false"
+                    title="文章目录" role="button">
+                    <span>[&nbsp;</span><span>文章目录</span>
+                    <i class="text-collapsed icon icon-anchor"></i>
+                    <i class="text-in icon icon-close"></i>
+                    <span>]</span>
+                </a>
+            </li>
+        </ul>
+        <div class="bar-right">
+            <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter"
+                data-mobile-sites="weibo,qq,qzone"></div>
+        </div>
+    </div>
+</nav>
+
+
+</main><footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+<ul class="social-links">
+    <li><a href="https://github.com/wzgl998877/" target="_blank" title="github" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-github"></i></a></li>
+    <li><a href="https://wzgl998877.github.io/index.xml" target="_blank" title="rss" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-rss"></i></a></li>
+</ul>
+  <div class="copyright">
+    &copy;2022  -
+    2022
+    <div class="publishby">
+        Theme by <a href="https://github.com/wzgl998877/" target="_blank"> microzheng </a>base on<a href="https://github.com/xiaoheiAh/hugo-theme-pure" target="_blank"> pure</a>.
+    </div>
+    
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_SVG"></script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+            showMathMenu: false, //disables context menu
+            tex2jax: {
+            inlineMath: [ ['$','$'], ['\\(','\\)'] ]
+           }
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+<script>
+    window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/highlight.min.js"></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/python.min.js" defer></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/javascript.min.js" defer></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/java.min.js" defer></script><script>
+    hljs.configure({
+        tabReplace: '    ', 
+        classPrefix: ''     
+        
+    })
+    hljs.initHighlightingOnLoad();
+</script>
+<script src="https://wzgl998877.github.io/js/application.min.a94ab19cb63a95c8d7fbd7b85cab3ddeea8c369bdf75b9cab6708787ead123af.js"></script>
+<script src="https://wzgl998877.github.io/js/plugin.min.19c5bcb2fb0789ab4f2b7834e5ceb5e92635645605bab902c1024b25f1502364.js"></script>
+
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(未命名)',
+            },
+            ROOT_URL: 'https:\/\/wzgl998877.github.io\/',
+            CONTENT_URL: 'https:\/\/wzgl998877.github.io\/\/searchindex.json ',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script type="text/javascript" src="https://wzgl998877.github.io/js/insight.min.4a2d52de4bfff73e0c688404fe3d17c9a3ae12d9888e1e1ac9c690e4890de2ded50fe55f2b819c2ba55435a76f396f3ea6805765f0b0af5635cdf74ea459eab0.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+<script>
+    tocbot.init({
+        
+        tocSelector: '.js-toc',
+        
+        contentSelector: '.js-toc-content',
+        
+        headingSelector: 'h1, h2, h3',
+        
+        hasInnerContainers: true,
+    });
+</script>
+
+
+  </body>
+</html>

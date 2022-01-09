@@ -1,0 +1,1291 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <title>
+        日常问题总结 - Pure theme for Hugo
+      </title>
+        <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    
+    <meta name="theme-color" content="#000000" />
+    
+    <meta http-equiv="window-target" content="_top" />
+    
+    
+    <meta name="description" content="日常问题总结 工作中总是会遇到各种各样的问题，只有总结下来才是一笔财富。 fastjson的一些技巧 在工作中总是遇到给前端的字段需要是下划线的，" />
+    <meta name="generator" content="Hugo 0.91.2 with theme pure" />
+    <title>日常问题总结 - Pure theme for Hugo</title>
+    
+    
+    <link rel="stylesheet" href="https://wzgl998877.github.io/css/style.min.a85959a41e7abcc0db1f81f44bd264649303417f91b536e87dcde644340fea6d.css">
+    
+    <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/9.15.10/styles/github.min.css" async>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css" async>
+    <meta property="og:title" content="日常问题总结" />
+<meta property="og:description" content="日常问题总结 工作中总是会遇到各种各样的问题，只有总结下来才是一笔财富。 fastjson的一些技巧 在工作中总是遇到给前端的字段需要是下划线的，" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wzgl998877.github.io/2022/01/%E6%97%A5%E5%B8%B8%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-01-09T11:24:40+08:00" />
+<meta property="article:modified_time" content="2022-01-09T11:24:40+08:00" />
+
+<meta itemprop="name" content="日常问题总结">
+<meta itemprop="description" content="日常问题总结 工作中总是会遇到各种各样的问题，只有总结下来才是一笔财富。 fastjson的一些技巧 在工作中总是遇到给前端的字段需要是下划线的，"><meta itemprop="datePublished" content="2022-01-09T11:24:40+08:00" />
+<meta itemprop="dateModified" content="2022-01-09T11:24:40+08:00" />
+<meta itemprop="wordCount" content="6169">
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="日常问题总结"/>
+<meta name="twitter:description" content="日常问题总结 工作中总是会遇到各种各样的问题，只有总结下来才是一笔财富。 fastjson的一些技巧 在工作中总是遇到给前端的字段需要是下划线的，"/>
+
+    <!--[if lte IE 9]>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+      <![endif]-->
+
+    <!--[if lt IE 9]>
+        <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+      <![endif]-->
+  </head>
+
+  
+  
+
+  <body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage"><header class="header" itemscope itemtype="http://schema.org/WPHeader">
+    <div class="slimContent">
+      <div class="navbar-header">
+        <div class="profile-block text-center">
+          <a id="avatar" href="https://github.com/wzgl998877/" target="_blank">
+            <img class="img-circle img-rotate" src="https://wzgl998877.github.io/avatar.png" width="200" height="200">
+          </a>
+          <h2 id="name" class="hidden-xs hidden-sm">microzheng</h2>
+          <h3 id="title" class="hidden-xs hidden-sm hidden-md">努力会说谎，但努力不会白费</h3>
+          <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i>Shenzhen China</small>
+        </div><div class="search" id="search-form-wrap">
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i
+                        class="icon icon-search"></i></button>
+            </span>
+        </div>
+        <div class="ins-search">
+            <div class="ins-search-mask"></div>
+            <div class="ins-search-container">
+                <div class="ins-input-wrapper">
+                    <input type="text" class="ins-search-input" placeholder="想要查找什么..."
+                        x-webkit-speech />
+                    <button type="button" class="close ins-close ins-selectable" data-dismiss="modal"
+                        aria-label="Close"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="ins-section-wrapper">
+                    <div class="ins-section-container"></div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+        <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+        <ul class="nav navbar-nav main-nav">
+            <li class="menu-item menu-item-home">
+                <a href="/">
+                    <i class="icon icon-home-fill"></i>
+                  <span class="menu-title">主页</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-archives">
+                <a href="/posts/">
+                    <i class="icon icon-archives-fill"></i>
+                  <span class="menu-title">归档</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-categories">
+                <a href="/categories/">
+                    <i class="icon icon-folder"></i>
+                  <span class="menu-title">分类</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-tags">
+                <a href="/tags/">
+                    <i class="icon icon-tags"></i>
+                  <span class="menu-title">标签</span>
+                </a>
+            </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+<aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content"><p>enjoy~</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+      <div class="widget">
+    <h3 class="widget-title"> 分类</h3>
+    <div class="widget-body">
+        <ul class="category-list">
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/java/" class="category-list-link">java</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/linux/" class="category-list-link">linux</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/" class="category-list-link">中间件</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E5%B8%B8%E7%94%A8%E6%A1%86%E6%9E%B6/" class="category-list-link">常用框架</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="category-list-link">数据库</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E6%97%A5%E5%B8%B8%E6%80%BB%E7%BB%93/" class="category-list-link">日常总结</a><span class="category-list-count">2</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E7%AE%97%E6%B3%95/" class="category-list-link">算法</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/" class="category-list-link">系统设计</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/" class="category-list-link">网络编程</a><span class="category-list-count">3</span></li>
+        </ul>
+    </div>
+</div>
+      <div class="widget">
+    <h3 class="widget-title"> 标签</h3>
+    <div class="widget-body">
+        <ul class="tag-list">
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/http/" class="tag-list-link">http</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/java%E5%9F%BA%E7%A1%80/" class="tag-list-link">java基础</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/java%E5%B9%B6%E5%8F%91/" class="tag-list-link">java并发</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/jvm/" class="tag-list-link">jvm</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/leetcode/" class="tag-list-link">leetcode</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/linux%E5%91%BD%E4%BB%A4/" class="tag-list-link">linux命令</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/mybatis/" class="tag-list-link">mybatis</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/netty/" class="tag-list-link">netty</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/rpc/" class="tag-list-link">rpc</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/spring/" class="tag-list-link">spring</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/websocket/" class="tag-list-link">websocket</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" class="tag-list-link">消息队列</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="tag-list-link">设计模式</a><span
+                    class="tag-list-count">1</span></li>
+            
+        </ul>
+
+    </div>
+</div>
+      
+<div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+        <ul class="recent-post-list list-unstyled no-thumbnail">
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://wzgl998877.github.io/2022/01/java-%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" class="title">Java 并发编程</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2022-01-09 11:24:40 &#43;0800 CST" itemprop="datePublished">2022-01-09</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://wzgl998877.github.io/2022/01/java-%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3%E5%AD%A6%E4%B9%A0/" class="title">Java 编程思想学习</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2022-01-09 11:24:40 &#43;0800 CST" itemprop="datePublished">2022-01-09</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://wzgl998877.github.io/2022/01/leetcode/" class="title">LeetCode</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2022-01-09 11:24:40 &#43;0800 CST" itemprop="datePublished">2022-01-09</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://wzgl998877.github.io/2022/01/linux%E5%B7%A5%E4%BD%9C%E6%97%A5%E5%B8%B8%E5%91%BD%E4%BB%A4/" class="title">Linux工作日常命令</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2022-01-09 11:24:40 &#43;0800 CST" itemprop="datePublished">2022-01-09</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://wzgl998877.github.io/2022/01/mybatis-%E6%8A%80%E6%9C%AF%E5%86%85%E5%B9%95%E5%AD%A6%E4%B9%A0/" class="title">mybatis 技术内幕学习</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2022-01-09 11:24:40 &#43;0800 CST" itemprop="datePublished">2022-01-09</time>
+                    </p>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+  </div>
+</aside>
+
+    
+    
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <h4 class="toc-title">文章目录</h4>
+    <nav id="toc" class="js-toc toc">
+
+    </nav>
+  </div>
+</aside>
+<main class="main" role="main"><div class="content">
+  <article id="-" class="article article-type-" itemscope
+    itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      <h1 itemprop="name">
+  <a
+    class="article-title"
+    href="/2022/01/%E6%97%A5%E5%B8%B8%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/"
+    >日常问题总结</a
+  >
+</h1>
+
+      <div class="article-meta">
+        
+<span class="article-date">
+  <i class="icon icon-calendar-check"></i>&nbsp;
+<a href="https://wzgl998877.github.io/2022/01/%E6%97%A5%E5%B8%B8%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/" class="article-date">
+  <time datetime="2022-01-09 11:24:40 &#43;0800 CST" itemprop="datePublished">2022-01-09</time>
+</a>
+</span>
+<span class="article-category">
+  <i class="icon icon-folder"></i>&nbsp;
+  <a class="article-category-link" href="/categories/%E6%97%A5%E5%B8%B8%E6%80%BB%E7%BB%93/"> 日常总结 </a>
+</span>
+
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 6169字</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 13分 </span>
+      </div>
+    </div>
+    <div class="article-entry marked-body js-toc-content" itemprop="articleBody">
+      <h1 id="日常问题总结">日常问题总结</h1>
+<p>工作中总是会遇到各种各样的问题，只有总结下来才是一笔财富。</p>
+<h3 id="fastjson的一些技巧">fastjson的一些技巧</h3>
+<p>在工作中总是遇到给前端的字段需要是下划线的，这时候可以通过全局配置来实现。</p>
+<p><strong>添加这个配置bean后，所有的http请求都会进行转换，即会将返回参数改为下划线</strong></p>
+<pre><code class="language-java">    @Bean
+    public HttpMessageConverters fastJsonHttpMessageConverters(){
+        FastJsonHttpMessageConverter converter = new FastJsonHttpMessageConverter();
+        FastJsonConfig fastJsonConfig = new FastJsonConfig();
+        // 格式化输出，也就是换行等处理
+        fastJsonConfig.setSerializerFeatures(SerializerFeature.PrettyFormat);
+        SerializeConfig config = new SerializeConfig();
+        // 转为下划线
+        config.propertyNamingStrategy = PropertyNamingStrategy.SnakeCase;
+        fastJsonConfig.setSerializeConfig(config);
+        converter.setFastJsonConfig(fastJsonConfig);
+        return new HttpMessageConverters(converter);
+    }
+    CamelCase策略，Java对象属性：personId，序列化后属性：persionId
+
+    PascalCase策略，Java对象属性：personId，序列化后属性：PersonId
+
+    SnakeCase策略，Java对象属性：personId，序列化后属性：person_id
+
+    KebabCase策略，Java对象属性：personId，序列化后属性：person-id
+</code></pre>
+<p>例子：</p>
+<pre><code class="language-java">@Data
+public class TestResponse {
+    private String userName;
+    private String teacherName;
+}
+</code></pre>
+<pre><code class="language-java">@RequestMapping(&quot;/group/test&quot;)
+    public Object test(HttpServletRequest request, HttpServletResponse response) {
+        TestResponse response1 = new TestResponse();
+        response1.setUserName(&quot;zt&quot;);
+        response1.setTeacherName(&quot;zt&quot;);
+        return response1;
+    }
+// 返回结果就自动转为了下划线了
+{
+  &quot;teacher_name&quot;: &quot;zt&quot;,
+  &quot;user_name&quot;: &quot;zt&quot;
+}
+</code></pre>
+<p>除了这种全局配置的方式，也可以进行代码层面的配置</p>
+<p><strong>转为string</strong></p>
+<pre><code class="language-java"> @RequestMapping(&quot;/test&quot;)
+    public String test(HttpServletRequest request, HttpServletResponse response) {
+        TestResponse response1 = new TestResponse();
+        response1.setUserName(&quot;zt&quot;);
+        response1.setTeacherName(&quot;zt&quot;);
+        SerializeConfig config = new SerializeConfig();
+        config.propertyNamingStrategy = PropertyNamingStrategy.SnakeCase;
+        // 返回的json就是下划线的
+        return JSON.toJSONString(response1, config);
+    }
+{&quot;teacher_name&quot;:&quot;zt&quot;,&quot;user_name&quot;:&quot;zt&quot;}
+</code></pre>
+<p><strong>string转为对象</strong></p>
+<pre><code class="language-java"> @RequestMapping(&quot;/test2&quot;)
+    public Object test2(HttpServletRequest request, HttpServletResponse response) {
+        String response1 = &quot;{\&quot;teacherName\&quot;:\&quot;zt\&quot;,\&quot;userName\&quot;:\&quot;zt\&quot;}&quot;;
+        // 转为下划线
+        ParserConfig parserConfig =  new  ParserConfig();
+        parserConfig.propertyNamingStrategy = PropertyNamingStrategy.SnakeCase;
+        return JSON.parseObject(response1, TestResponse.class, parserConfig);
+    }
+// 很奇怪应该不是这样的
+{
+    &quot;userName&quot;: &quot;zt&quot;,
+    &quot;teacherName&quot;: &quot;zt&quot;
+}
+</code></pre>
+<p>这个本来应该也是的，但是现在有点尴尬，不得行</p>
+<h3 id="java-中是值传递">Java 中是“值传递”</h3>
+<pre><code class="language-java">java中方法参数传递方式是按值传递,只不过值不同。
+如果参数是基本类型，传递的是基本类型的字面量值的拷贝。
+如果参数是引用类型，传递的是该参量所引用的对象在堆中地址值的拷贝。
+</code></pre>
+<p>举例：</p>
+<pre><code class="language-java">package com.zt.javastudy.grammar;
+
+/**
+ * @author zhengtao
+ * @description java中方法参数传递方式是按值传递。
+ * 如果参数是基本类型，传递的是基本类型的字面量值的拷贝。
+ * 如果参数是引用类型，传递的是该参量所引用的对象在堆中地址值的拷贝。
+ * @date 2021/4/25
+ */
+public class QuoteStudy {
+    public static void main(String[] args) {
+        int a = 0;
+        add(a);
+        System.out.println(a);
+        String b = &quot;hello&quot;;
+        add(b);
+        System.out.println(b);
+        StringBuilder c = new StringBuilder(&quot;hello&quot;);
+        add(c);
+        System.out.println(c);
+        StringBuilder d = new StringBuilder(&quot;hello&quot;);
+        move(d);
+        System.out.println(d);
+    }
+
+    /**
+     * 基本类型传递的值的拷贝，所以不影响原值
+     * @param a
+     */
+    private static void add(int a){
+        a = 1;
+    }
+
+    /**
+     * 对象传递的是对象的引用的拷贝，所以如果改变对象的属性是可以改变，如果将引用赋值给另一个对象，则不会改变原对象的引用
+     * @param b
+     */
+    private static void add(String b){
+        // 在字符中 = ，就相当于重新new对象，因为string类型是不可变的，等价于b = new String(&quot;helloWorld&quot;)
+        b = &quot;helloWorld&quot;;
+    }
+
+    /**
+     * 对象传递的是对象的引用的拷贝,改变对象属性可以成功
+     * @param c
+     */
+    private static void add(StringBuilder c){
+       c = c.append(&quot;world!&quot;);
+    }
+
+    /**
+     * 改变引用的指向，不成功
+     * @param c
+     */
+    private static void move(StringBuilder c){
+        c = new StringBuilder(&quot;helloworld!&quot;);
+    }
+}
+// 结果
+0
+hello
+helloworld!
+hello
+</code></pre>
+<h3 id="autowired-的一点发现">@Autowired 的一点发现</h3>
+<p>在日常写代码中基本上都是，写<strong>一个</strong>service，写<strong>一个</strong>impl，然后将@Service注解加在impl类上，在代码中直接使用@Autowired 自动注入。</p>
+<p>@autowired注释可以对类成员变量、方法、构造函数进行标注，完成自动装配功能。@autowired查找bean首先是先通过<strong>byType</strong>查，如果发现找到有很多<strong>bean</strong>，则按照byName方式对比获取，若有名称一样的则可以加上@Qualifier(&ldquo;XXX&rdquo;)配置使用。</p>
+<p>所以说当一个service只有一个一个impl实现时，自动注入根据byType发现只有一个实现，所以就能正确进行装配，但是如果有多个实现则会报错。</p>
+<pre><code class="language-java">public interface TestService {
+    void test();
+}
+@Service
+public class TestServiceImpl implements TestService {
+    @Override
+    public void test() {
+        System.out.println(&quot;实现1&quot;);
+    }
+}
+@Service
+public class TestServiceI2mpl implements TestService {
+    @Override
+    public void test() {
+        System.out.println(&quot;实现2&quot;);
+    }
+}
+</code></pre>
+<p>这时可以使用@Qualifier注解来完成正确的装配</p>
+<pre><code class="language-java">@Slf4j
+@RunWith(SpringRunner.class)
+@SpringBootTest()
+public class AopStudyTest {
+	// 多个实现类，使用@Qudalifier使用byName注入
+    @Qualifier(&quot;testServiceImpl&quot;)
+    @Autowired
+    private TestService testService;
+    @Qualifier(&quot;testServiceI2mpl&quot;)
+    @Autowired
+    private TestService testService2;
+    @Test
+    public void testService(){
+        testService.test();
+        testService2.test();
+    }
+
+}
+</code></pre>
+<h3 id="公司的一套框架">公司的一套框架</h3>
+<h4 id="web容器同步请求">web容器同步请求</h4>
+<p>Web容器（比如tomcat）默认情况下会为每个请求分配一个请求处理线程（在tomcat7/8中，能够同时处理到达的请求的线程数量默认为200），默认情况下，在响应完成前，该线程资源都不会被释放。如图所示：</p>
+<p><img src="https://segmentfault.com/img/remote/1460000018791727?w=709&amp;h=404" alt=""></p>
+<p><strong>处理HTTP请求和执行具体业务代码的线程是同一个线程！</strong></p>
+<p>如果业务代码处理时间比较长，那么请求处理线程将一直被占用，直到任务结束，这种情况下，随着并发请求数量的增加，将可能导致处理请求线程全部被占用，此时tomcat会将后来的请求堆积到内部阻塞队列容器中，如果存放请求的阻塞队列也满了，那么后续的进来请求将会遭遇拒绝服务，直到有线程资源可以处理请求为止。</p>
+<p>实践是检验真理的唯一标准 将工作线程设为1，方便测试</p>
+<pre><code class="language-java">server:
+  port: 19003
+  tomcat:
+    uri-encoding: UTF-8
+    max-threads: 1 #最大工作线程数量
+    min-spare-threads: 1 #最小工作线程数量
+    #max-connections: 10000 #一瞬间最大支持的并发的连接数
+    accept-count: 1 #等待队列长度
+</code></pre>
+<pre><code class="language-java">    @RequestMapping(&quot;/testCommon&quot;)
+    public String testCommon() throws InterruptedException {
+        log.info(&quot;请求开始！&quot;);
+        start = System.currentTimeMillis();
+        Thread.sleep(5000);
+        log.info(&quot;请求处理时间:{}ms&quot;, (System.currentTimeMillis() - start));
+        return &quot;hello world!&quot;;
+    }
+</code></pre>
+<p>返回结果为：</p>
+<p><img src="C:%5CUsers%5Czhengtao%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210924103709581.png" alt="image-20210924103709581"></p>
+<p>很明显的看到当有两个请求过来时，第二个会阻塞，直到第一个请求完成后才会开始处理，而且执行请求的线程和处理业务的线程是同一个线程。</p>
+<h4 id="web容器异步请求">web容器异步请求</h4>
+<p>有同步请求当然就有异步请求，Servlet 3.0开始支持异步处理请求。在接收到请求之后，<strong>Servlet线程可以将耗时的操作委派给另一个线程来完成</strong>，<strong>自己在不生成响应的情况下返回至容器</strong>，以便能处理另一个请求。此时当前请求的响应将被延后，在异步处理完成后时再对客户端进行响应（异步线程拥有 ServletRequest 和 ServletResponse 对象的引用）。开启异步请求处理之后，Servlet 线程不再是一直处于阻塞状态以等待业务逻辑的处理，而是启动异步线程之后可以立即返回。异步处理的特性可以帮助应用节省容器中的线程。如图所示：</p>
+<p><img src="https://segmentfault.com/img/remote/1460000018791728" alt=""></p>
+<p>  <strong>我们还能发现，<code>实际上这里的异步请求处理对于客户端浏览器来说仍然是同步输出，它并没有提升响应速度，用户是没有感知的</code>，但是异步请求处理解放了服务器端的请求处理线程的使用，处理请求线程并没有卡在业务代码那里等待，当前的业务逻辑被转移给其他线程去处理了，能够让tomcat同时接受更多的请求，从而提升了并发处理请求的能力！</strong></p>
+<p>代码说话</p>
+<pre><code class="language-java">package com.zt.javastudy.async;
+
+import brave.Tracing;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.cloud.sleuth.SpanNamer;
+import org.springframework.cloud.sleuth.instrument.async.TraceRunnable;
+import org.springframework.context.annotation.Scope;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+import org.springframework.util.ObjectUtils;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.AsyncContext;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
+/**
+ * 测试异步http请求
+ *
+ * @author zhengtao on 2021/9/23
+ */
+@RestController
+@Slf4j
+@Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+public class AsyncController {
+    @Autowired
+    @Qualifier(&quot;httpWorkThreadPool&quot;)
+    private ThreadPoolTaskExecutor executor;
+    @Autowired
+    private Tracing tracing;
+    @Autowired
+    private SpanNamer defaultSpanNamer;
+//    private static LongAdder start = new LongAdder();
+    private volatile long start;
+
+    @RequestMapping(&quot;/testAsync&quot;)
+    public void test(HttpServletRequest request, HttpServletResponse response) {
+        log.info(&quot;请求开始！&quot;);
+        start = System.currentTimeMillis();
+        AsyncContext asyncContext = request.startAsync(request, response);
+        // 设置监听
+        asyncContext.addListener(new HttpAsyncListener());
+        executor.execute(new TraceRunnable(tracing, defaultSpanNamer, () -&gt; {
+            try {
+                doInvoke(asyncContext);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }));
+    }
+    /**
+     * 处理业务
+     *
+     * @param asyncContext
+     */
+    private void doInvoke(AsyncContext asyncContext) throws InterruptedException {
+        Thread.sleep(5000);
+        completeResponse(&quot;这是一个异步的http请求&quot;, 200, asyncContext);
+    }
+
+    /**
+     * 将
+     * @param context
+     * @param status
+     * @param asyncContext
+     */
+    private void completeResponse(String context, int status, AsyncContext asyncContext) {
+        HttpServletResponse servletResponse = (HttpServletResponse) asyncContext.getResponse();
+        if (!ObjectUtils.isEmpty(context)) {
+            servletResponse.setContentType(asyncContext.getRequest().getContentType());
+            servletResponse.setStatus(status);
+            completeResponse(servletResponse, context);
+        }
+        // 调用了complete方法后才算请求完成
+        asyncContext.complete();
+        log.info(&quot;请求处理时间:{}ms&quot;, (System.currentTimeMillis() - start));
+    }
+
+    private void completeResponse(HttpServletResponse servletResponse, String context) {
+        ServletOutputStream out = null;
+        try {
+            byte[] buff = context.getBytes();
+            servletResponse.setContentLength(buff.length);
+            out = servletResponse.getOutputStream();
+            out.write(buff);
+            out.flush();
+        } catch (IOException e) {
+            log.error(&quot;complete http reqeust error&quot;, e);
+        } finally {
+            if (out != null) {
+                try {
+                    out.close();
+                } catch (Exception e) {
+                    log.error(e.getMessage(), e);
+                }
+            }
+        }
+    }
+}
+
+</code></pre>
+<pre><code>package com.zt.javastudy.async;
+
+import lombok.extern.slf4j.Slf4j;
+
+import javax.servlet.AsyncEvent;
+import javax.servlet.AsyncListener;
+import java.io.IOException;
+
+/**
+ * 异步监听器
+ *
+ * @author zhengtao on 2021/9/23
+ */
+@Slf4j
+public class HttpAsyncListener implements AsyncListener {
+    @Override
+    public void onComplete(AsyncEvent event) throws IOException {
+        log.info(&quot;http异步请求完成&quot;);
+    }
+
+    @Override
+    public void onTimeout(AsyncEvent event) throws IOException {
+        log.info(&quot;http请求超时&quot;);
+    }
+
+    @Override
+    public void onError(AsyncEvent event) throws IOException {
+        log.info(&quot;http请求失败&quot;);
+    }
+
+    @Override
+    public void onStartAsync(AsyncEvent event) throws IOException {
+        log.info(&quot;http异步请求开始&quot;);
+    }
+}
+
+</code></pre>
+<p>测试，同样是发两个请求：</p>
+<p><img src="C:%5CUsers%5Czhengtao%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210924110422530.png" alt="image-20210924110422530"></p>
+<p>可以很明显的看到，请求线程是同一个，但是第一个请求还没结束第二个请求就已经开始处理了。业务代码则是自定义的线程池处理的。</p>
+<p>搞懂这个之后看公司的代码就很简单了</p>
+<p><img src="C:%5CUsers%5Czhengtao%5CDesktop%5C%E5%AD%A6%E4%B9%A0%5C%E6%B5%81%E7%A8%8B%E5%9B%BE%5C%E5%85%AC%E5%8F%B8easy%E6%A1%86%E6%9E%B6.png" alt=""></p>
+<h3 id="静态方法中使用bean">静态方法中使用bean</h3>
+<p>写一些工具类时，可能会用到其他的bean。第一眼是这样写的</p>
+<pre><code class="language-java">@Component
+public class MerchUtils {
+    @Autowired
+    private static IAgentService iAgentService;
+
+    private static ConcurrentHashMap&lt;String, Agent&gt; agentMap = new ConcurrentHashMap&lt;&gt;();
+
+    public static String getAgentName(String agentId) {
+        Agent agent = agentMap.get(agentId);
+        if (agent == null &amp;&amp; !agentMap.containsKey(agentId)) {
+            agent = iAgentService.get(agentId);
+            if (agent != null &amp;&amp; StringUtils.isNotEmpty(agentId)) {
+                agentMap.put(agentId, agent);
+            }
+        }
+        if (agent == null) {
+            return agentId;
+        }
+        return agent.getAgentNameCn();
+    }
+}
+</code></pre>
+<p>这样会报null，因为静态方法优先于bean的注入。</p>
+<p>正确写法为：</p>
+<pre><code class="language-JAVA">public class MerchUtils {
+    private static IAgentService iAgentService;
+
+    @Autowired
+    public MerchUtils(IAgentService iAgentService) {
+        MerchUtils.iAgentService = iAgentService;
+    }
+
+    private static ConcurrentHashMap&lt;String, Agent&gt; agentMap = new ConcurrentHashMap&lt;&gt;();
+
+    public static String getAgentName(String agentId) {
+        Agent agent = agentMap.get(agentId);
+        if (agent == null &amp;&amp; !agentMap.containsKey(agentId)) {
+            agent = iAgentService.get(agentId);
+            if (agent != null &amp;&amp; StringUtils.isNotEmpty(agentId)) {
+                agentMap.put(agentId, agent);
+            }
+        }
+        if (agent == null) {
+            return agentId;
+        }
+        return agent.getAgentNameCn();
+    }
+}
+</code></pre>
+<h3 id="conditionalonproperty">@ConditionalOnProperty</h3>
+<p>有时需要根据配置文件来决定是否创建 bean</p>
+<pre><code class="language-java">package com.zt.javastudy.grammar;
+
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+/**
+ * 注解学习
+ *
+ * @author zhengtao on 2021/10/27
+ */
+@Configuration
+@ConditionalOnProperty(
+        prefix = &quot;test&quot;,
+        name = {&quot;enable&quot;},
+        havingValue = &quot;true&quot;,
+        matchIfMissing = false
+)
+@Slf4j
+public class ConditionalTest {
+    @Bean(initMethod = &quot;start&quot;, destroyMethod = &quot;shutdown&quot;)
+    public ConditionalTest buildProducer() {
+        log.info(&quot;创建bean了&quot;);
+        ConditionalTest conditionalTest = new ConditionalTest();
+        return conditionalTest;
+    }
+
+    private void start() {
+    }
+
+    private void shutdown() {
+    }
+}
+
+</code></pre>
+<p>其中 name 就是配置项的名称，havingValue  就是匹配的值，在这个代码中只有test.enable=true,才会创建bean。</p>
+<h3 id="分布式id解决方案">分布式id解决方案</h3>
+<h4 id="uuid">uuid</h4>
+<p>​	UUID(Universally Unique Identifier)的标准型式包含32个16进制数字，以连字号分为五段，形式为8-4-4-4-12的36个字符，示例：<code>550e8400-e29b-41d4-a716-446655440000</code></p>
+<p>优点：</p>
+<ul>
+<li>性能非常高：本地生成，没有网络消耗。</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>
+<p>不易于存储：UUID太长，16字节128位，通常以36长度的字符串表示，很多场景不适用。</p>
+</li>
+<li>
+<p>信息不安全：基于MAC地址生成UUID的算法可能会造成MAC地址泄露，这个漏洞曾被用于寻找梅丽莎病毒的制作者位置。</p>
+</li>
+<li>
+<p>ID作为主键时在特定的环境会存在一些问题，比如做DB主键的场景下，UUID就非常不适用：</p>
+<p>① MySQL官方有明确的建议主键要尽量越短越好，36个字符长度的UUID不符合要求。</p>
+<p>② 对MySQL索引不利：如果作为数据库主键，在InnoDB引擎下，UUID的无序性可能会引起数据位置频繁变动，严重影响性能。</p>
+</li>
+</ul>
+<h4 id="snowflake雪花算法">snowflake(雪花算法)</h4>
+<p>​	雪花算法（Snowflake）是twitter公司内部分布式项目采用的ID生成算法，具体规则如下：</p>
+<p><img src="https://img-blog.csdnimg.cn/20200921220349644.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxOTc3ODM4,size_16,color_FFFFFF,t_70#pic_center" alt=""></p>
+<ul>
+<li>1位，不用。二进制中最高位为1的都是负数，但是我们生成的id一般都使用整数，所以这个最高位固定是0</li>
+<li>41位，用来记录时间戳（毫秒）。 	- 41位可以表示 2^{41}-1 个数字，
+<ul>
+<li>如果只用来表示正整数（计算机中正数包含0），可以表示的数值范围是：0 至  2^{41}-1，减1是因为可表示的数值范围是从0开始算的，而不是1。 - 也就是说41位可以表示 2^{41}-1 个毫秒的值，转化成单位年则是 (2^{41}-1) / (1000  <em>60</em>  60  <em>24</em>  365) = 69 年</li>
+</ul>
+</li>
+<li>10位，用来记录工作机器id。 	- 可以部署在 2^{10} = 1024 个节点，包括 5位 datacenterId 和 5位 workerId 	- 5位（bit）可以表示的最大正整数是 2^{5}-1 = 31 ，即可以用 0、1、2、3、&hellip;.31 这 32 个数字，来表示不同的 datecenterId 或 workerId</li>
+<li>12位，序列号，用来记录同毫秒内产生的不同id。 	- 12位（bit）可以表示的最大正整数是 2^{12}-1 = 4095 ，即可以用 0、1、2、3、&hellip;.4094 这 4095 个数字，来表示同一机器同一时间截（毫秒)内产生的 4095 个 ID 序号。</li>
+</ul>
+<p>由于在 Java 中 64bit 的整数是 long 类型，所以在 Java 中 SnowFlake 算法生成的 id 就是 long 来存储的。</p>
+<p>优点：</p>
+<ul>
+<li>毫秒数在高位，自增序列在低位，整个ID都是趋势递增的。</li>
+<li>不依赖数据库等第三方系统，以服务的方式部署，稳定性更高，生成ID的性能也是非常高的。</li>
+<li>可以根据自身业务特性分配bit位，非常灵活。</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>强依赖机器时钟，如果机器上时钟回拨，会导致发号重复或者服务会处于不可用状态。</li>
+</ul>
+<h4 id="基于redis模式">基于Redis模式</h4>
+<p><code>Redis</code>也同样可以实现，原理就是利用<code>redis</code>的 <code>incr</code>命令实现ID的原子性自增。</p>
+<pre><code class="language-java">127.0.0.1:6379&gt; set seq_id 1     // 初始化自增ID为1
+OK
+127.0.0.1:6379&gt; incr seq_id      // 增加1，并返回递增后的数值
+(integer) 2
+</code></pre>
+<p>用<code>redis</code>实现需要注意一点，要考虑到redis持久化的问题。<code>redis</code>有两种持久化方式<code>RDB</code>和<code>AOF</code></p>
+<ul>
+<li><code>RDB</code>会定时打一个快照进行持久化，假如连续自增但<code>redis</code>没及时持久化，而这会Redis挂掉了，重启Redis后会出现ID重复的情况。</li>
+<li><code>AOF</code>会对每条写命令进行持久化，即使<code>Redis</code>挂掉了也不会出现ID重复的情况，但由于incr命令的特殊性，会导致<code>Redis</code>重启恢复的数据时间过长。</li>
+</ul>
+<p>简单代码演示：</p>
+<pre><code class="language-java">Long serialNo = RedisTemplateUtil.incrBy(REDIS_KEY_PREFIX + seq.getSequenceName(), seq.getStep());
+public static Long incrBy(String key, long delta){
+    return getRedisTemplate().opsForValue().increment(key, delta);
+}
+</code></pre>
+<h3 id="mybatis---动态数据源">mybatis - 动态数据源</h3>
+<p>动态数据源，主要是为了解决读写分离的场景。</p>
+<p>那么创建一个数据源主要有哪几步呢？</p>
+<ul>
+<li>配置 dao，model(bean)，xml mapper文件的扫描路径</li>
+<li>注入数据源配置属性，创建数据源。</li>
+<li>将数据源设置到SQL会话工厂和事务管理器。</li>
+</ul>
+<p>这样当进行数据库操作时，<strong>就会通过我们创建的动态数据源去获取要操作的数据源了</strong>。一步一步操作完成功能</p>
+<h4 id="创建多个数据源">创建多个数据源</h4>
+<pre><code class="language-java">package com.jlpay.saas.common.db.datasource;
+
+import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceBuilder;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
+
+import javax.sql.DataSource;
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * @Description: 配置多数据源
+ * @Author shuqingzhou
+ * @Date 2021/11/15 9:09
+ * @Version 1.0
+ */
+@Configuration
+@Slf4j
+public class DynamicDataSourceConfig {
+    /**
+	 * 创建 DataSource Bean
+	 */
+    @Primary
+    @Bean(&quot;masterDataSource&quot;)
+    @ConfigurationProperties(prefix = &quot;spring.datasource.druid.master&quot;)
+    public DataSource masterDataSource(){
+        DataSource dataSource = DruidDataSourceBuilder.create().build();
+        return dataSource;
+    }
+
+    /**
+	 * 创建 DataSource Bean
+	 */
+    @Bean(&quot;slaveDataSource&quot;)
+    @ConfigurationProperties(prefix = &quot;spring.datasource.druid.salve&quot;)
+    public DataSource slaveDataSource(){
+        DataSource dataSource = DruidDataSourceBuilder.create().build();
+        return dataSource;
+    }
+
+    /**
+	 * 如果还有数据源,在这继续添加 DataSource Bean
+	 */
+    @Bean(&quot;dynamicDataSource&quot;)
+    @Primary
+    public DynamicDataSource dynamicDataSource(@Qualifier(&quot;masterDataSource&quot;) DataSource masterDataSource, @Qualifier(&quot;slaveDataSource&quot;)DataSource slaveDataSource) {
+        Map&lt;Object, Object&gt; targetDataSources = new HashMap&lt;&gt;(2);
+        targetDataSources.put(DataSourceNames.MASTER, masterDataSource);
+        targetDataSources.put(DataSourceNames.SLAVE, slaveDataSource);
+        // 还有数据源,在targetDataSources中继续添加
+        log.info(&quot;DataSources:{}&quot;, targetDataSources);
+        return new DynamicDataSource(masterDataSource, targetDataSources);
+    }
+}
+</code></pre>
+<h4 id="将数据源设置到sql会话工厂和事务管理器">将数据源设置到SQL会话工厂和事务管理器</h4>
+<pre><code class="language-java">package com.jlpay.saas.common.db.datasource;
+
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.mybatis.spring.SqlSessionFactoryBean;
+import org.mybatis.spring.SqlSessionTemplate;
+import org.mybatis.spring.boot.autoconfigure.MybatisProperties;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.*;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.transaction.PlatformTransactionManager;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+
+/**
+ * @Description: Mybatis数据源配置
+ * @Author shuqingzhou
+ * @Date 2021/11/15 9:09
+ * @Version 1.0
+ */
+@Configuration
+@EnableConfigurationProperties(MybatisProperties.class)
+public class MybatisConfig {
+
+    private MybatisProperties mybatisProperties;
+
+    public MybatisConfig(MybatisProperties properties) {
+        this.mybatisProperties = properties;
+    }
+
+    @Autowired
+    @Qualifier(value = &quot;dynamicDataSource&quot;)
+    private DynamicDataSource dynamicDataSource;
+
+    /**
+     * 配置mybatis的sqlSession连接动态数据源
+     * @throws Exception
+     */
+    @Bean
+    public SqlSessionFactory sqlSessionFactory() throws Exception {
+        SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
+        bean.setDataSource(dynamicDataSource);
+        bean.setMapperLocations(mybatisProperties.resolveMapperLocations());
+        bean.setTypeAliasesPackage(mybatisProperties.getTypeAliasesPackage());
+        Resource resource = new DefaultResourceLoader().getResource(mybatisProperties.getConfigLocation());
+        bean.setConfigLocation(resource);
+        bean.setConfiguration(mybatisProperties.getConfiguration());
+        return bean.getObject();
+    }
+
+    @Bean
+    public SqlSessionTemplate sqlSessionTemplate() throws Exception {
+        return new SqlSessionTemplate(sqlSessionFactory());
+    }
+
+    /**
+     * 将动态数据源添加到事务管理器中，并生成新的bean
+     * @return the platform transaction manager
+     */
+    @Bean
+    public PlatformTransactionManager transactionManager() {
+        return new DataSourceTransactionManager(dynamicDataSource);
+    }
+}
+</code></pre>
+<p>tips：<strong>在访问数据库时会调用 <code>determineCurrentLookupKey()</code> 方法获取数据库实例的 key</strong></p>
+<pre><code class="language-java">
+protected DataSource determineTargetDataSource() {
+    Assert.notNull(this.resolvedDataSources, &quot;DataSource router not initialized&quot;);
+    Object lookupKey = determineCurrentLookupKey();
+    DataSource dataSource = this.resolvedDataSources.get(lookupKey);
+    if (dataSource == null &amp;&amp; (this.lenientFallback || lookupKey == null)) {
+        dataSource = this.resolvedDefaultDataSource;
+    }
+    if (dataSource == null) {
+        throw new IllegalStateException(&quot;Cannot determine target DataSource for lookup key [&quot; + lookupKey + &quot;]&quot;);
+    }
+    return dataSource;
+}
+
+@Nullable
+protected abstract Object determineCurrentLookupKey();
+</code></pre>
+<p>所以我们可以通过重写 <code>determineCurrentLookupKey </code>方法来实现更改数据源</p>
+<pre><code class="language-java">package com.jlpay.saas.common.db.datasource;
+
+import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
+
+import javax.sql.DataSource;
+import java.util.Map;
+
+/**
+ * @Description: 动态多数据源
+ * @Author shuqingzhou
+ * @Date 2021/11/15 9:09
+ * @Version 1.0
+ */
+public class DynamicDataSource extends AbstractRoutingDataSource {
+	private static final ThreadLocal&lt;String&gt; CONTEXT_HOLDER = new ThreadLocal&lt;&gt;();
+
+	/**
+	 * 配置DataSource, defaultTargetDataSource为主数据库
+	 */
+	public DynamicDataSource(DataSource defaultTargetDataSource, Map&lt;Object, Object&gt; targetDataSources) {
+		super.setDefaultTargetDataSource(defaultTargetDataSource);
+		super.setTargetDataSources(targetDataSources);
+		super.afterPropertiesSet();
+	}
+
+	@Override
+	protected Object determineCurrentLookupKey() {
+		return getDataSource();
+	}
+
+	public static void setDataSource(String dataSource) {
+		CONTEXT_HOLDER.set(dataSource);
+	}
+
+	public static String getDataSource() {
+		return CONTEXT_HOLDER.get();
+	}
+
+	public static void remove() {
+		CONTEXT_HOLDER.remove();
+	}
+}
+
+</code></pre>
+<p>这里使用一个ThreadLocal的变量达到每个线程都有自己的数据源的效果。我们只需要在要需要切换数据源时</p>
+<p>DynamicDataSource.setDataSource(),即可动态的更改数据源。</p>
+<p><strong>但是这样做未免太low了，所以运用切面来升级一波！！！</strong></p>
+<ol>
+<li>定义注解</li>
+</ol>
+<pre><code class="language-java">package com.jlpay.saas.common.db.datasource;
+
+import java.lang.annotation.*;
+
+/**
+ * @Description: 数据源注解
+ * @Author shuqingzhou
+ * @Date 2021/11/15 9:09
+ * @Version 1.0
+ */
+@Target({ElementType.METHOD})
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+public @interface DataSource {
+    String value() default DataSourceNames.MASTER;
+}
+package com.jlpay.saas.common.db.datasource;
+
+/**
+ * @Description: 主备库名
+ * @Author shuqingzhou
+ * @Date 2021/11/15 9:09
+ * @Version 1.0
+ */
+public interface DataSourceNames {
+    String MASTER = &quot;master&quot;;
+    String SLAVE = &quot;slave&quot;;
+}
+</code></pre>
+<ol start="2">
+<li><strong>创建一个AOP切面，拦截带 @DataSource 注解的方法，在方法执行前切换至目标数据源，执行完成后恢复到默认数据源。</strong></li>
+</ol>
+<pre><code class="language-java">package com.jlpay.saas.common.db.datasource;
+
+import lombok.extern.slf4j.Slf4j;
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.After;
+import org.aspectj.lang.annotation.AfterThrowing;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.stereotype.Component;
+
+import java.lang.reflect.Method;
+
+/**
+ * @Description: 数据源切面处理
+ * @Author shuqingzhou
+ * @Date 2021/11/15 9:09
+ * @Version 1.0
+ */
+@Aspect
+@Component
+@Slf4j
+public class DataSourceAspect {
+
+	@Before(&quot;execution(* com.jlpay.saas.*.db.service..*(..))&quot;)
+	public void before(JoinPoint point) throws Throwable {
+		MethodSignature signature = (MethodSignature) point.getSignature();
+		Method method = signature.getMethod();
+		DataSource dataSource = method.getAnnotation(DataSource.class);
+		if (dataSource == null) {
+			log.debug(&quot;【默认数据源】，切入点：{}&quot;, signature.toShortString());
+			DynamicDataSource.setDataSource(DataSourceNames.MASTER);
+		} else {
+			log.debug(&quot;【切换数据源】：{}，切入点：{}&quot;, dataSource.value(), signature.toShortString());
+			DynamicDataSource.setDataSource(dataSource.value());
+		}
+	}
+
+	@After(&quot;execution(* com.jlpay.saas.*.db.service..*(..))&quot;)
+	public void after() throws Throwable{
+		DynamicDataSource.remove();
+	}
+
+	@AfterThrowing(&quot;execution(* com.jlpay.saas.*.db.service..*(..))&quot;)
+	public void afterThrowing() {
+		log.info(&quot;数据源异常，切换主库数据源&quot;);
+		DynamicDataSource.remove();
+		DynamicDataSource.setDataSource(DataSourceNames.MASTER);
+	}
+}
+</code></pre>
+<p>到现在如何实现动态数据源已经很透彻了。主要流程有：</p>
+<ul>
+<li>创建数据源</li>
+<li>将数据源设置到SQL会话工厂和事务管理器</li>
+<li>重写 <code>determineCurrentLookupKey </code>方法来更改数据源（到此，其实已经完成了动态数据源的功能，调用set方法即可动态的更改数据源）</li>
+<li>自定义注解，并创建一个切面来调用set方法动态的更改数据源</li>
+</ul>
+
+    </div>
+    <div class="article-footer">
+<blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接: </strong>
+      <a href="https://wzgl998877.github.io/2022/01/%E6%97%A5%E5%B8%B8%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/" title="日常问题总结" target="_blank" rel="external">https://wzgl998877.github.io/2022/01/%E6%97%A5%E5%B8%B8%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong>License: </strong>
+        <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN</a>
+    </li>
+  </ul>
+</blockquote>
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/wzgl998877/" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="https://wzgl998877.github.io/avatar.png" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/wzgl998877/" target="_blank"><span class="text-dark">microzheng</span><small class="ml-1x">努力会说谎，但努力不会白费</small></a></h3>
+        <div>不想搬砖的码农</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+    </div>
+  </article>
+</div><nav class="bar bar-footer clearfix" data-stick-bottom>
+    <div class="bar-inner">
+        <ul class="pager pull-left">
+            <li class="prev">
+                <a href="https://wzgl998877.github.io/2022/01/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" title="消息队列介绍"><i
+                        class="icon icon-angle-left"
+                        aria-hidden="true"></i><span>&nbsp;&nbsp;下一篇</span></a>
+            </li>
+            <li class="next">
+                <a href="https://wzgl998877.github.io/2022/01/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9F%A5%E8%AF%86/"
+                    title="数据库知识"><span>上一篇&nbsp;&nbsp;</span><i
+                        class="icon icon-angle-right" aria-hidden="true"></i></a>
+            </li>
+            
+            <li class="toggle-toc">
+                <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false"
+                    title="文章目录" role="button">
+                    <span>[&nbsp;</span><span>文章目录</span>
+                    <i class="text-collapsed icon icon-anchor"></i>
+                    <i class="text-in icon icon-close"></i>
+                    <span>]</span>
+                </a>
+            </li>
+        </ul>
+        <div class="bar-right">
+            <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter"
+                data-mobile-sites="weibo,qq,qzone"></div>
+        </div>
+    </div>
+</nav>
+
+
+</main><footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+<ul class="social-links">
+    <li><a href="https://github.com/wzgl998877/" target="_blank" title="github" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-github"></i></a></li>
+    <li><a href="https://wzgl998877.github.io/index.xml" target="_blank" title="rss" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-rss"></i></a></li>
+</ul>
+  <div class="copyright">
+    &copy;2022  -
+    2022
+    <div class="publishby">
+        Theme by <a href="https://github.com/wzgl998877/" target="_blank"> microzheng </a>base on<a href="https://github.com/xiaoheiAh/hugo-theme-pure" target="_blank"> pure</a>.
+    </div>
+    
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_SVG"></script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+            showMathMenu: false, //disables context menu
+            tex2jax: {
+            inlineMath: [ ['$','$'], ['\\(','\\)'] ]
+           }
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+<script>
+    window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/highlight.min.js"></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/python.min.js" defer></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/javascript.min.js" defer></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/java.min.js" defer></script><script>
+    hljs.configure({
+        tabReplace: '    ', 
+        classPrefix: ''     
+        
+    })
+    hljs.initHighlightingOnLoad();
+</script>
+<script src="https://wzgl998877.github.io/js/application.min.a94ab19cb63a95c8d7fbd7b85cab3ddeea8c369bdf75b9cab6708787ead123af.js"></script>
+<script src="https://wzgl998877.github.io/js/plugin.min.19c5bcb2fb0789ab4f2b7834e5ceb5e92635645605bab902c1024b25f1502364.js"></script>
+
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(未命名)',
+            },
+            ROOT_URL: 'https:\/\/wzgl998877.github.io\/',
+            CONTENT_URL: 'https:\/\/wzgl998877.github.io\/\/searchindex.json ',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script type="text/javascript" src="https://wzgl998877.github.io/js/insight.min.4a2d52de4bfff73e0c688404fe3d17c9a3ae12d9888e1e1ac9c690e4890de2ded50fe55f2b819c2ba55435a76f396f3ea6805765f0b0af5635cdf74ea459eab0.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+<script>
+    tocbot.init({
+        
+        tocSelector: '.js-toc',
+        
+        contentSelector: '.js-toc-content',
+        
+        headingSelector: 'h1, h2, h3',
+        
+        hasInnerContainers: true,
+    });
+</script>
+
+
+  </body>
+</html>

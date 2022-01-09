@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <title>
+        设计模式 - Pure theme for Hugo
+      </title>
+        <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    
+    <meta name="theme-color" content="#000000" />
+    
+    <meta http-equiv="window-target" content="_top" />
+    
+    
+    <meta name="description" content="设计模式 七大软件设计原则 1 . 开闭原则 ​ 软件实体应当对扩展开放，对修改关闭。当应用的需求改变时，在不修改软件实体的源代码或者二进制代码的前提下" />
+    <meta name="generator" content="Hugo 0.91.2 with theme pure" />
+    <title>设计模式 - Pure theme for Hugo</title>
+    
+    
+    <link rel="stylesheet" href="https://wzgl998877.github.io/css/style.min.a85959a41e7abcc0db1f81f44bd264649303417f91b536e87dcde644340fea6d.css">
+    
+    <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/9.15.10/styles/github.min.css" async>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css" async>
+    <meta property="og:title" content="设计模式" />
+<meta property="og:description" content="设计模式 七大软件设计原则 1 . 开闭原则 ​ 软件实体应当对扩展开放，对修改关闭。当应用的需求改变时，在不修改软件实体的源代码或者二进制代码的前提下" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wzgl998877.github.io/2022/01/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-01-09T11:24:40+08:00" />
+<meta property="article:modified_time" content="2022-01-09T11:24:40+08:00" />
+
+<meta itemprop="name" content="设计模式">
+<meta itemprop="description" content="设计模式 七大软件设计原则 1 . 开闭原则 ​ 软件实体应当对扩展开放，对修改关闭。当应用的需求改变时，在不修改软件实体的源代码或者二进制代码的前提下"><meta itemprop="datePublished" content="2022-01-09T11:24:40+08:00" />
+<meta itemprop="dateModified" content="2022-01-09T11:24:40+08:00" />
+<meta itemprop="wordCount" content="12660">
+<meta itemprop="keywords" content="设计模式," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="设计模式"/>
+<meta name="twitter:description" content="设计模式 七大软件设计原则 1 . 开闭原则 ​ 软件实体应当对扩展开放，对修改关闭。当应用的需求改变时，在不修改软件实体的源代码或者二进制代码的前提下"/>
+
+    <!--[if lte IE 9]>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+      <![endif]-->
+
+    <!--[if lt IE 9]>
+        <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+      <![endif]-->
+  </head>
+
+  
+  
+
+  <body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage"><header class="header" itemscope itemtype="http://schema.org/WPHeader">
+    <div class="slimContent">
+      <div class="navbar-header">
+        <div class="profile-block text-center">
+          <a id="avatar" href="https://github.com/wzgl998877/" target="_blank">
+            <img class="img-circle img-rotate" src="https://wzgl998877.github.io/avatar.png" width="200" height="200">
+          </a>
+          <h2 id="name" class="hidden-xs hidden-sm">microzheng</h2>
+          <h3 id="title" class="hidden-xs hidden-sm hidden-md">努力会说谎，但努力不会白费</h3>
+          <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i>Shenzhen China</small>
+        </div><div class="search" id="search-form-wrap">
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i
+                        class="icon icon-search"></i></button>
+            </span>
+        </div>
+        <div class="ins-search">
+            <div class="ins-search-mask"></div>
+            <div class="ins-search-container">
+                <div class="ins-input-wrapper">
+                    <input type="text" class="ins-search-input" placeholder="想要查找什么..."
+                        x-webkit-speech />
+                    <button type="button" class="close ins-close ins-selectable" data-dismiss="modal"
+                        aria-label="Close"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="ins-section-wrapper">
+                    <div class="ins-section-container"></div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+        <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+        <ul class="nav navbar-nav main-nav">
+            <li class="menu-item menu-item-home">
+                <a href="/">
+                    <i class="icon icon-home-fill"></i>
+                  <span class="menu-title">主页</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-archives">
+                <a href="/posts/">
+                    <i class="icon icon-archives-fill"></i>
+                  <span class="menu-title">归档</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-categories">
+                <a href="/categories/">
+                    <i class="icon icon-folder"></i>
+                  <span class="menu-title">分类</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-tags">
+                <a href="/tags/">
+                    <i class="icon icon-tags"></i>
+                  <span class="menu-title">标签</span>
+                </a>
+            </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+<aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content"><p>enjoy~</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+      <div class="widget">
+    <h3 class="widget-title"> 分类</h3>
+    <div class="widget-body">
+        <ul class="category-list">
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/java/" class="category-list-link">java</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/linux/" class="category-list-link">linux</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/" class="category-list-link">中间件</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E5%B8%B8%E7%94%A8%E6%A1%86%E6%9E%B6/" class="category-list-link">常用框架</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="category-list-link">数据库</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E6%97%A5%E5%B8%B8%E6%80%BB%E7%BB%93/" class="category-list-link">日常总结</a><span class="category-list-count">2</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E7%AE%97%E6%B3%95/" class="category-list-link">算法</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/" class="category-list-link">系统设计</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/" class="category-list-link">网络编程</a><span class="category-list-count">3</span></li>
+        </ul>
+    </div>
+</div>
+      <div class="widget">
+    <h3 class="widget-title"> 标签</h3>
+    <div class="widget-body">
+        <ul class="tag-list">
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/http/" class="tag-list-link">http</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/java%E5%9F%BA%E7%A1%80/" class="tag-list-link">java基础</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/java%E5%B9%B6%E5%8F%91/" class="tag-list-link">java并发</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/jvm/" class="tag-list-link">jvm</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/leetcode/" class="tag-list-link">leetcode</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/linux%E5%91%BD%E4%BB%A4/" class="tag-list-link">linux命令</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/mybatis/" class="tag-list-link">mybatis</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/netty/" class="tag-list-link">netty</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/rpc/" class="tag-list-link">rpc</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/spring/" class="tag-list-link">spring</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/websocket/" class="tag-list-link">websocket</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" class="tag-list-link">消息队列</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="tag-list-link">设计模式</a><span
+                    class="tag-list-count">1</span></li>
+            
+        </ul>
+
+    </div>
+</div>
+      
+<div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+        <ul class="recent-post-list list-unstyled no-thumbnail">
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://wzgl998877.github.io/2022/01/java-%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" class="title">Java 并发编程</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2022-01-09 11:24:40 &#43;0800 CST" itemprop="datePublished">2022-01-09</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://wzgl998877.github.io/2022/01/java-%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3%E5%AD%A6%E4%B9%A0/" class="title">Java 编程思想学习</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2022-01-09 11:24:40 &#43;0800 CST" itemprop="datePublished">2022-01-09</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://wzgl998877.github.io/2022/01/leetcode/" class="title">LeetCode</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2022-01-09 11:24:40 &#43;0800 CST" itemprop="datePublished">2022-01-09</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://wzgl998877.github.io/2022/01/linux%E5%B7%A5%E4%BD%9C%E6%97%A5%E5%B8%B8%E5%91%BD%E4%BB%A4/" class="title">Linux工作日常命令</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2022-01-09 11:24:40 &#43;0800 CST" itemprop="datePublished">2022-01-09</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://wzgl998877.github.io/2022/01/mybatis-%E6%8A%80%E6%9C%AF%E5%86%85%E5%B9%95%E5%AD%A6%E4%B9%A0/" class="title">mybatis 技术内幕学习</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2022-01-09 11:24:40 &#43;0800 CST" itemprop="datePublished">2022-01-09</time>
+                    </p>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+  </div>
+</aside>
+
+    
+    
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <h4 class="toc-title">文章目录</h4>
+    <nav id="toc" class="js-toc toc">
+
+    </nav>
+  </div>
+</aside>
+<main class="main" role="main"><div class="content">
+  <article id="-" class="article article-type-" itemscope
+    itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      <h1 itemprop="name">
+  <a
+    class="article-title"
+    href="/2022/01/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"
+    >设计模式</a
+  >
+</h1>
+
+      <div class="article-meta">
+        
+<span class="article-date">
+  <i class="icon icon-calendar-check"></i>&nbsp;
+<a href="https://wzgl998877.github.io/2022/01/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="article-date">
+  <time datetime="2022-01-09 11:24:40 &#43;0800 CST" itemprop="datePublished">2022-01-09</time>
+</a>
+</span>
+<span class="article-category">
+  <i class="icon icon-folder"></i>&nbsp;
+  <a class="article-category-link" href="/categories/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/"> 系统设计 </a>
+</span>  
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>&nbsp;
+    <a class="article-tag-link" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"> 设计模式 </a>
+  </span>
+
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 12660字</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 26分 </span>
+      </div>
+    </div>
+    <div class="article-entry marked-body js-toc-content" itemprop="articleBody">
+      <h1 id="设计模式">设计模式</h1>
+<h2 id="七大软件设计原则">七大软件设计原则</h2>
+<h3 id="1--开闭原则">1 . 开闭原则</h3>
+<p>​	软件实体应当对扩展开放，对修改关闭。当应用的需求改变时，在不修改软件实体的源代码或者二进制代码的前提下，可以扩展模块的功能，使其满足新的需求，实现方法：可以通过“抽象约束、封装变化”来实现开闭原则，即通过接口或者抽象类为软件实体定义一个相对稳定的抽象层，而将相同的可变因素封装在相同的具体实现类中。</p>
+<h3 id="2-里氏替换原则">2. 里氏替换原则</h3>
+<p>​	继承必须确保超类所拥有的性质在子类中仍然成立。里氏替换原则是实现开闭原则的重要方式之一，子类可以扩展父类的功能，但不能改变父类原有的功能。也就是说：子类继承父类时，除添加新的方法完成新增功能外，尽量不要重写父类的方法。</p>
+<ul>
+<li>当子类的方法重载父类的方法时，方法的前置条件（即方法的输入参数）要比父类的方法更宽松</li>
+<li>当子类的方法实现父类的方法时（重写/重载或实现抽象方法），方法的后置条件（即方法的的输出/返回值）要比父类的方法更严格或相等</li>
+</ul>
+<h3 id="3-依赖倒置原则">3. 依赖倒置原则</h3>
+<p>​	高层模块不应该依赖低层模块，两者都应该依赖其抽象；抽象不应该依赖细节，细节应该依赖抽象。其核心思想是：要面向接口编程，不要面向实现编程，依赖倒置原则是实现开闭原则的重要途径之一，它降低了客户与实现模块之间的耦合。</p>
+<h3 id="4-单一职责原则">4. 单一职责原则</h3>
+<p>​	一个类应该有且仅有一个引起它变化的原因，否则类应该被拆分。单一职责原则的核心就是控制类的粒度大小、将对象解耦、提高其内聚性。如果遵循单一职责原则将有以下优点。</p>
+<ul>
+<li>降低类的复杂度。一个类只负责一项职责，其逻辑肯定要比负责多项职责简单得多。</li>
+<li>提高类的可读性。复杂性降低，自然其可读性会提高。</li>
+<li>提高系统的可维护性。可读性提高，那自然更容易维护了。</li>
+<li>变更引起的风险降低。变更是必然的，如果单一职责原则遵守得好，当修改一个功能时，可以显著降低对其他功能的影响。</li>
+</ul>
+<h3 id="5-接口隔离原则">5. 接口隔离原则</h3>
+<p>​	客户端不应该被迫依赖于它不使用的方法，一个类对另一个类的依赖应该建立在最小的接口上。要为各个类建立它们需要的专用接口，而不要试图去建立一个很庞大的接口供所有依赖它的类去调用。</p>
+<p>​	接口隔离原则和单一职责都是为了提高类的内聚性、降低它们之间的耦合性，体现了封装的思想，但两者是不同的：</p>
+<ul>
+<li>单一职责原则注重的是职责，而接口隔离原则注重的是对接口依赖的隔离。</li>
+<li>单一职责原则主要是约束类，它针对的是程序中的实现和细节；接口隔离原则主要约束接口，主要针对抽象和程序整体框架的构建。</li>
+</ul>
+<p>在具体应用接口隔离原则时，应该根据以下几个规则来衡量。</p>
+<ul>
+<li>接口尽量小，但是要有限度。一个接口只服务于一个子模块或业务逻辑。</li>
+<li>为依赖接口的类定制服务。只提供调用者需要的方法，屏蔽不需要的方法。</li>
+<li>了解环境，拒绝盲从。每个项目或产品都有选定的环境因素，环境不同，接口拆分的标准就不同深入了解业务逻辑。</li>
+<li>提高内聚，减少对外交互。使接口用最少的方法去完成最多的事情。</li>
+</ul>
+<h3 id="6-迪米特法则">6. 迪米特法则</h3>
+<p>​	迪米特法则（Law of Demeter，LoD）又叫作最少知识原则，迪米特法则的定义是：只与你的直接朋友交谈，不跟“陌生人”说话。其含义是：如果两个软件实体无须直接通信，那么就不应当发生直接的相互调用，可以通过第三方转发该调用。其目的是降低类之间的耦合度，提高模块的相对独立性。</p>
+<p>从迪米特法则的定义和特点可知，它强调以下两点：</p>
+<ol>
+<li>从依赖者的角度来说，只依赖应该依赖的对象。</li>
+<li>从被依赖者的角度说，只暴露应该暴露的方法。</li>
+</ol>
+<h3 id="7-合成复用原则">7. 合成复用原则</h3>
+<p>​	合成复用原则又叫组合/聚合复用原则。它要求在软件复用时，要尽量先使用组合或者聚合等关联关系来实现，其次才考虑使用继承关系来实现。</p>
+<h2 id="七大软件设计原则总结">七大软件设计原则总结</h2>
+<p>​		这 7 种设计原则是软件设计模式必须尽量遵循的原则，各种原则要求的侧重点不同。其中，开闭原则是总纲，它告诉我们要对扩展开放，对修改关闭；里氏替换原则告诉我们不要破坏继承体系；依赖倒置原则告诉我们要面向接口编程；单一职责原则告诉我们实现类要职责单一；接口隔离原则告诉我们在设计接口的时候要精简单一；迪米特法则告诉我们要降低耦合度；合成复用原则告诉我们要优先使用组合或者聚合关系复用，少用继承关系复用。</p>
+<h2 id="设计模式的分类和功能">设计模式的分类和功能</h2>
+<h3 id="1-根据目的来分">1. 根据目的来分</h3>
+<p>根据模式是用来完成什么工作来划分，这种方式可分为创建型模式、结构型模式和行为型模式 3 种。</p>
+<ol>
+<li>创建型模式：用于描述“怎样创建对象”，它的主要特点是“将对象的创建与使用分离”。GoF 中提供了单例、原型、工厂方法、抽象工厂、建造者等 5 种创建型模式。</li>
+<li>结构型模式：用于描述如何将类或对象按某种布局组成更大的结构，GoF 中提供了代理、适配器、桥接、装饰、外观、享元、组合等 7 种结构型模式。</li>
+<li>行为型模式：用于描述类或对象之间怎样相互协作共同完成单个对象都无法单独完成的任务，以及怎样分配职责。GoF 中提供了模板方法、策略、命令、职责链、状态、观察者、中介者、迭代器、访问者、备忘录、解释器等 11 种行为型模式。</li>
+</ol>
+<h3 id="2-根据作用范围来分">2. 根据作用范围来分</h3>
+<p>根据模式是主要用于类上还是主要用于对象上来分，这种方式可分为类模式和对象模式两种。</p>
+<ol>
+<li>类模式：用于处理类与子类之间的关系，这些关系通过继承来建立，是静态的，在编译时刻便确定下来了。GoF中的工厂方法、（类）适配器、模板方法、解释器属于该模式。</li>
+<li>对象模式：用于处理对象之间的关系，这些关系可以通过组合或聚合来实现，在运行时刻是可以变化的，更具动态性。GoF 中除了以上 4 种，其他的都是对象模式。</li>
+</ol>
+<p>表 1 介绍了这 23 种设计模式的分类。</p>
+<table>
+<thead>
+<tr>
+<th>范围\目的</th>
+<th>创建型模式</th>
+<th>结构型模式</th>
+<th>行为型模式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>类模式</td>
+<td>工厂方法</td>
+<td>(类）适配器</td>
+<td>模板方法、解释器</td>
+</tr>
+<tr>
+<td>对象模式</td>
+<td>单例 原型 抽象工厂 建造者</td>
+<td>代理 (对象）适配器 桥接 装饰 外观 享元 组合</td>
+<td>策略 命令 职责链 状态 观察者 中介者 迭代器 访问者 备忘录</td>
+</tr>
+</tbody>
+</table>
+<h3 id="3-gof的23种设计模式的功能">3. GoF的23种设计模式的功能</h3>
+<p>前面说明了 GoF 的 23 种设计模式的分类，现在对各个模式的功能进行介绍。</p>
+<ol>
+<li>单例（Singleton）模式：某个类只能生成一个实例，该类提供了一个全局访问点供外部获取该实例，其拓展是有限多例模式。</li>
+<li>原型（Prototype）模式：将一个对象作为原型，通过对其进行复制而克隆出多个和原型类似的新实例。</li>
+<li>工厂方法（Factory Method）模式：定义一个用于创建产品的接口，由子类决定生产什么产品。</li>
+<li>抽象工厂（AbstractFactory）模式：提供一个创建产品族的接口，其每个子类可以生产一系列相关的产品。</li>
+<li>建造者（Builder）模式：将一个复杂对象分解成多个相对简单的部分，然后根据不同需要分别创建它们，最后构建成该复杂对象。</li>
+<li>代理（Proxy）模式：为某对象提供一种代理以控制对该对象的访问。即客户端通过代理间接地访问该对象，从而限制、增强或修改该对象的一些特性。</li>
+<li>适配器（Adapter）模式：将一个类的接口转换成客户希望的另外一个接口，使得原本由于接口不兼容而不能一起工作的那些类能一起工作。</li>
+<li>桥接（Bridge）模式：将抽象与实现分离，使它们可以独立变化。它是用组合关系代替继承关系来实现，从而降低了抽象和实现这两个可变维度的耦合度。</li>
+<li>装饰（Decorator）模式：动态的给对象增加一些职责，即增加其额外的功能。</li>
+<li>外观（Facade）模式：为多个复杂的子系统提供一个一致的接口，使这些子系统更加容易被访问。</li>
+<li>享元（Flyweight）模式：运用共享技术来有效地支持大量细粒度对象的复用。</li>
+<li>组合（Composite）模式：将对象组合成树状层次结构，使用户对单个对象和组合对象具有一致的访问性。</li>
+<li>模板方法（TemplateMethod）模式：定义一个操作中的算法骨架，而将算法的一些步骤延迟到子类中，使得子类可以不改变该算法结构的情况下重定义该算法的某些特定步骤。</li>
+<li>策略（Strategy）模式：定义了一系列算法，并将每个算法封装起来，使它们可以相互替换，且算法的改变不会影响使用算法的客户。</li>
+<li>命令（Command）模式：将一个请求封装为一个对象，使发出请求的责任和执行请求的责任分割开。</li>
+<li>职责链（Chain of Responsibility）模式：把请求从链中的一个对象传到下一个对象，直到请求被响应为止。通过这种方式去除对象之间的耦合。</li>
+<li>状态（State）模式：允许一个对象在其内部状态发生改变时改变其行为能力。</li>
+<li>观察者（Observer）模式：多个对象间存在一对多关系，当一个对象发生改变时，把这种改变通知给其他多个对象，从而影响其他对象的行为。</li>
+<li>中介者（Mediator）模式：定义一个中介对象来简化原有对象之间的交互关系，降低系统中对象间的耦合度，使原有对象之间不必相互了解。</li>
+<li>迭代器（Iterator）模式：提供一种方法来顺序访问聚合对象中的一系列数据，而不暴露聚合对象的内部表示。</li>
+<li>访问者（Visitor）模式：在不改变集合元素的前提下，为一个集合中的每个元素提供多种访问方式，即每个元素有多个访问者对象访问。</li>
+<li>备忘录（Memento）模式：在不破坏封装性的前提下，获取并保存一个对象的内部状态，以便以后恢复它。</li>
+<li>解释器（Interpreter）模式：提供如何定义语言的文法，以及对语言句子的解释方法，即解释器。</li>
+</ol>
+<h2 id="结构型模式概述">结构型模式概述</h2>
+<p>​	结构型模式描述如何将类或对象按某种布局组成更大的结构。它分为类结构型模式和对象结构型模式，前者采用继承机制来组织接口和类，后者釆用组合或聚合来组合对象。由于组合关系或聚合关系比继承关系耦合度低，满足“合成复用原则”，所以对象结构型模式比类结构型模式具有更大的灵活性。</p>
+<h3 id="代理模式">代理模式</h3>
+<p>​	代理模式的定义：由于某些原因需要给某对象提供一个代理以控制对该对象的访问。这时，访问对象不适合或者不能直接引用目标对象，代理对象作为访问对象和目标对象之间的中介。</p>
+<h3 id="适配器模式">适配器模式</h3>
+<p>​	将一个类的接口转换成客户希望的另外一个接口，使得原本由于接口不兼容而不能一起工作的那些类能一起工作。适配器模式分为类结构型模式和对象结构型模式两种，前者类之间的耦合度比后者高，且要求程序员了解现有组件库中的相关组件的内部结构，所以应用相对较少些。</p>
+<h3 id="桥接模式">桥接模式</h3>
+<p>​	将抽象与实现分离，使它们可以独立变化。它是用组合关系代替继承关系来实现，从而降低了抽象和实现这两个可变维度的耦合度。</p>
+<p>​	桥接（Bridge）模式包含以下主要角色。</p>
+<ol>
+<li>抽象化（Abstraction）角色：定义抽象类，并包含一个对实现化对象的引用。这里就相当于是一个桥将一个类与另一个类联系起来了。</li>
+<li>扩展抽象化（Refined Abstraction）角色：是抽象化角色的子类，实现父类中的业务方法，并通过组合关系调用实现化角色中的业务方法。</li>
+<li>实现化（Implementor）角色：定义实现化角色的接口，供扩展抽象化角色调用。</li>
+<li>具体实现化（Concrete Implementor）角色：给出实现化角色接口的具体实现。</li>
+</ol>
+<p><img src="http://c.biancheng.net/uploads/allimg/181115/3-1Q11512532X54.gif" alt="女士皮包选购的结构图"></p>
+<p>客户去买包，有钱包和书包，钱包又分红色和白色，书包也分红色和白色，如果按照普通的设计，那么就是书包继承包，钱包继承包，然后红色的书包继承书包，白色的书包继承书包等等，而桥接模式就是，先把颜色抽象出来成为一个单独的类（接口），红色实现颜色，黄色实现颜色，包将颜色变成属性（桥），书包继承包，钱包继承包，然后书包通过继承包就可以选择响应的颜色。</p>
+<pre><code class="language-Java">Color color = new Yellow();
+Bag bag = new Wallet();
+bag.setColor(color);
+</code></pre>
+<p>桥接模式通常适用于以下场景。</p>
+<ol>
+<li>当一个类存在两个独立变化的维度，且这两个维度都需要进行扩展时。// 包按使用来分分为钱包和书包，按颜色分为红色和黄色</li>
+<li>当一个系统不希望使用继承或因为多层次继承导致系统类的个数急剧增加时。// 因为如果采用多继承的话，增加一个垮包，需要增加三个类，（一个挎包类，一个黄色的挎包类，一个红色的挎包类）</li>
+<li>当一个系统需要在构件的抽象化角色和具体化角色之间增加更多的灵活性时。</li>
+</ol>
+<h3 id="装饰模式">装饰模式</h3>
+<p>​	指在不改变现有对象结构的情况下，动态地给该对象增加一些职责（即增加其额外功能）的模式，它属于对象结构型模式。通常情况下，扩展一个类的功能会使用继承方式来实现。但继承具有静态特征，耦合度高，并且随着扩展功能的增多，子类会很膨胀。如果使用组合关系来创建一个包装对象（即装饰对象）来包裹真实对象，并在保持真实对象的类结构不变的前提下，为其提供额外的功能，这就是装饰模式的目标。下面来分析其基本结构和实现方法。装饰模式主要包含以下角色。</p>
+<p><img src="http://www.yiibai.com/uploads/images/201612/08/758141222_60071.jpg" alt="img"></p>
+<ol>
+<li>
+<p>抽象构件（Component）角色：定义一个抽象接口以规范准备接收附加责任的对象。// 需要增加功能的类，shape类，抽象出了一个画的方法</p>
+</li>
+<li>
+<p>具体构件（ConcreteComponent）角色：实现抽象构件，通过装饰角色为其添加一些职责。// 具体的构件，Circle画圆，Rectangle画长方形，这两个构件需要增加功能，比如画红色的圆。</p>
+</li>
+<li>
+<p>抽象装饰（Decorator）角色：继承抽象构件，并包含具体构件的实例，可以通过其子类扩展具体构件的功能。// 一个可以将具体构件传入的类，ShapeDecorator</p>
+</li>
+<li>
+<p>具体装饰（ConcreteDecorator）角色：实现抽象装饰的相关方法，并给具体构件对象添加附加的责任。// 通过实现抽象装饰，来扩展传入的构件，追加方法，这里追加了一个方法，红色的边框。</p>
+<pre><code class="language-java">Shape circle = new Circle();// 画一个圆
+circle.draw();//画一个圆
+Shape redCircle = new RedShapeDecorator(new Circle());// 将圆传入具体装饰角色追加功能，这里是追加了一个红色边框
+redCircle.draw();//画出了一个红色边框的圆
+</code></pre>
+</li>
+</ol>
+<pre><code>   
+   
+
+装饰模式通常在以下几种情况使用。
+
+- 当需要给一个现有类添加附加职责，而又不能采用生成子类的方法进行扩充时。例如，该类被隐藏或者该类是终极类或者采用继承方式会产生大量的子类。
+- 当需要通过对现有的一组基本功能进行排列组合而产生非常多的功能时，采用继承关系很难实现，而采用装饰模式却很好实现。// 比如既要画红色的圆，又要画红色的长方形，
+- 当对象的功能要求可以动态地添加，也可以再动态地撤销时。
+
+Java I/o 标准库就是采用了装饰模式
+
+![InputStream部分类关系](http://image.laijianfeng.org/20180918InputStream.png)
+
+````Java
+DataInputStream in=new DataInputStream(new BufferedInputStream(new  FileInputStream(&quot;D:\\hello.txt&quot;)));
+</code></pre>
+<h3 id="外观模式">外观模式</h3>
+<p>​	外观（Facade）模式又叫作门面模式，是一种通过为多个复杂的子系统提供一个一致的接口，而使这些子系统更加容易被访问的模式。该模式对外有一个统一接口，外部应用程序不用关心内部子系统的具体细节，这样会大大降低应用程序的复杂度，提高了程序的可维护性。</p>
+<p>外观（Facade）模式是“迪米特法则”的典型应用，它有以下主要优点。</p>
+<ol>
+<li>降低了子系统与客户端之间的耦合度，使得子系统的变化不会影响调用它的客户类。</li>
+<li>对客户屏蔽了子系统组件，减少了客户处理的对象数目，并使得子系统使用起来更加容易。</li>
+<li>降低了大型软件系统中的编译依赖性，简化了系统在不同平台之间的移植过程，因为编译一个子系统不会影响其他的子系统，也不会影响外观对象。</li>
+</ol>
+<p>外观（Facade）模式的主要缺点如下。</p>
+<ol>
+<li>不能很好地限制客户使用子系统类，很容易带来未知风险。</li>
+<li>增加新的子系统可能需要修改外观类或客户端的源代码，违背了“开闭原则”。</li>
+</ol>
+<p>外观（Facade）模式包含以下主要角色。</p>
+<ol>
+<li>外观（Facade）角色：为多个子系统对外提供一个共同的接口。</li>
+<li>子系统（Sub System）角色：实现系统的部分功能，客户可以通过外观角色访问它。</li>
+<li>客户（Client）角色：通过一个外观角色访问各个子系统的功能。</li>
+</ol>
+<p>其结构图如图 2 所示。</p>
+<p><img src="http://c.biancheng.net/uploads/allimg/181115/3-1Q115152143509.gif" alt="外观模式的结构图"></p>
+<h3 id="享元模式">享元模式</h3>
+<p>​	享元（Flyweight）模式的定义：运用共享技术来有效地支持大量细粒度对象的复用。它通过共享已经存在的对象来大幅度减少需要创建的对象数量、避免大量相似类的开销，从而提高系统资源的利用率。享元模式的定义提出了两个要求，细粒度和共享对象。因为要求细粒度，所以不可避免地会使对象数量多且性质相近，此时我们就将这些对象的信息分为两个部分：内部状态和外部状态。</p>
+<ul>
+<li>内部状态指对象共享出来的信息，存储在享元信息内部，并且不会随环境的改变而改变；</li>
+<li>外部状态指对象得以依赖的一个标记，随环境的改变而改变，不可共享。</li>
+</ul>
+<p>享元模式的主要角色有如下。</p>
+<ol>
+<li>
+<p>抽象享元角色（Flyweight）：是所有的具体享元类的基类，为具体享元规范需要实现的公共接口，非享元的外部状态以参数的形式通过方法传入。</p>
+</li>
+<li>
+<p>具体享元（Concrete Flyweight）角色：实现抽象享元角色中所规定的接口。</p>
+</li>
+<li>
+<p>非享元（Unsharable Flyweight)角色：是不可以共享的外部状态，它以参数的形式注入具体享元的相关方法中。</p>
+</li>
+<li>
+<p>享元工厂（Flyweight Factory）角色：负责创建和管理享元角色。当客户对象请求一个享元对象时，享元工厂检査系统中是否存在符合要求的享元对象，如果存在则提供给客户；如果不存在的话，则创建一个新的享元对象。</p>
+<p>我的理解，其实所谓的享元模式就是将可以共享的元素或者方法抽象出来成为一个类，然后通过一个统一的接口传入不可共享的元素，完成工作，共享的方法是在一个工厂中，若此对象不存在则创建，然后加入到map中，若存在则直接从map中取出。</p>
+</li>
+</ol>
+<h3 id="组合模式">组合模式</h3>
+<p>​	组合（Composite Pattern）模式的定义：有时又叫作整体-部分（Part-Whole）模式，它是一种将对象组合成树状的层次结构的模式，用来表示“整体-部分”的关系，使用户对单个对象和组合对象具有一致的访问性。组合模式一般用来描述整体与部分的关系，它将对象组织到树形结构中，顶层的节点被称为根节点，根节点下面可以包含树枝节点和叶子节点，树枝节点下面又可以包含树枝节点和叶子节点，树形结构图如下。</p>
+<p><img src="http://c.biancheng.net/uploads/allimg/201019/5-201019124253553.png" alt="组合模式树形结构图"></p>
+<p>组合模式包含以下主要角色。</p>
+<ol>
+<li>抽象构件（Component）角色：它的主要作用是为树叶构件和树枝构件声明公共接口，并实现它们的默认行为。在透明式的组合模式中抽象构件还声明访问和管理子类的接口；在安全式的组合模式中不声明访问和管理子类的接口，管理工作由树枝构件完成。（总的抽象类或接口，定义一些通用的方法，比如新增、删除）</li>
+<li>树叶构件（Leaf）角色：是组合中的叶节点对象，它没有子节点，用于继承或实现抽象构件。</li>
+<li>树枝构件（Composite）角色 / 中间构件：是组合中的分支节点对象，它有子节点，用于继承和实现抽象构件。它的主要作用是存储和管理子部件，通常包含 Add()、Remove()、GetChild() 等方法</li>
+</ol>
+<h2 id="行为型模式">行为型模式</h2>
+<p>​	行为型模式用于描述程序在运行时复杂的流程控制，即描述多个类或对象之间怎样相互协作共同完成单个对象都无法单独完成的任务，它涉及算法与对象间职责的分配。行为型模式分为类行为模式和对象行为模式，前者采用继承机制来在类间分派行为，后者采用组合或聚合在对象间分配行为。由于组合关系或聚合关系比继承关系耦合度低，满足“合成复用原则”，所以对象行为模式比类行为模式具有更大的灵活性。</p>
+<h3 id="模板方法模式">模板方法模式</h3>
+<p>​	定义一个操作中的算法骨架，而将算法的一些步骤延迟到子类中，使得子类可以不改变该算法结构的情况下重定义该算法的某些特定步骤。它是一种类行为型模式。</p>
+<p>模板方法模式包含以下主要角色。</p>
+<p>1）抽象类/抽象模板（Abstract Class）</p>
+<p>抽象模板类，负责给出一个算法的轮廓和骨架。它由一个模板方法和若干个基本方法构成。这些方法的定义如下。</p>
+<p>① 模板方法：定义了算法的骨架，按某种顺序调用其包含的基本方法。</p>
+<p>② 基本方法：是整个算法中的一个步骤，包含以下几种类型。</p>
+<ul>
+<li>抽象方法：在抽象类中声明，由具体子类实现。</li>
+<li>具体方法：在抽象类中已经实现，在具体子类中可以继承或重写它。</li>
+<li>钩子方法：在抽象类中已经实现，包括用于判断的逻辑方法和需要子类重写的空方法两种。</li>
+</ul>
+<p>2）具体子类/具体实现（Concrete Class）</p>
+<p>具体实现类，实现抽象类中所定义的抽象方法和钩子方法，它们是一个顶级逻辑的一个组成步骤。</p>
+<p>模板方法模式通常适用于以下场景。</p>
+<ol>
+<li>算法的整体步骤很固定，但其中个别部分易变时，这时候可以使用模板方法模式，将容易变的部分抽象出来，供子类实现。</li>
+<li>当多个子类存在公共的行为时，可以将其提取出来并集中到一个公共父类中以避免代码重复。首先，要识别现有代码中的不同之处，并且将不同之处分离为新的操作。最后，用一个调用这些新的操作的模板方法来替换这些不同的代码。</li>
+<li>当需要控制子类的扩展时，模板方法只在特定点调用钩子操作，这样就只允许在这些点进行扩展。</li>
+</ol>
+<p>所以平常写的代码到底是命令模式还是模板方法模式？我们平常的代码有点像命令模式但是没有实现者，具体命令类也没有实现者对象，调用者好像也没有，哈哈</p>
+<h3 id="命令模式">命令模式</h3>
+<p>​	将一个请求封装为一个对象，使发出请求的责任和执行请求的责任分割开。这样两者之间通过命令对象进行沟通，这样方便将命令对象进行储存、传递、调用、增加与管理。</p>
+<p>可以将系统中的相关操作抽象成命令，使调用者与实现者相关分离，其结构如下。</p>
+<p>模式的结构</p>
+<p>命令模式包含以下主要角色。</p>
+<ol>
+<li>抽象命令类（Command）角色：声明执行命令的接口，拥有执行命令的抽象方法 execute()。</li>
+<li>具体命令类（Concrete Command）角色：是抽象命令类的具体实现类，它拥有接收者对象，并通过调用接收者的功能来完成命令要执行的操作。</li>
+<li>实现者/接收者（Receiver）角色：执行命令功能的相关操作，是具体命令对象业务的真正实现者。</li>
+<li>调用者/请求者（Invoker）角色：是请求的发送者，它通常拥有很多的命令对象，并通过访问命令对象来执行相关请求，它不直接访问接收者。</li>
+</ol>
+<p>其结构图如图 1 所示。</p>
+<p><img src="http://c.biancheng.net/uploads/allimg/181116/3-1Q11611335E44.gif" alt="命令模式的结构图"></p>
+<h3 id="策略模式">策略模式</h3>
+<p>​	该模式定义了一系列算法，并将每个算法封装起来，使它们可以相互替换，且算法的变化不会影响使用算法的客户。策略模式属于对象行为模式，它通过对算法进行封装，把使用算法的责任和算法的实现分割开来，并委派给不同的对象对这些算法进行管理。策略模式是准备一组算法，并将这组算法封装到一系列的策略类里面，作为一个抽象策略类的子类。策略模式的重心不是如何实现算法，而是如何组织这些算法，从而让程序结构更加灵活，具有更好的维护性和扩展性，现在我们来分析其基本结构和实现方法。</p>
+<p>策略模式的主要角色如下。</p>
+<ol>
+<li>抽象策略（Strategy）类：定义了一个公共接口，各种不同的算法以不同的方式实现这个接口，环境角色使用这个接口调用不同的算法，一般使用接口或抽象类实现。</li>
+<li>具体策略（Concrete Strategy）类：实现了抽象策略定义的接口，提供具体的算法实现。</li>
+<li>环境（Context）类：持有一个策略类的引用，最终给客户端调用。</li>
+</ol>
+<p><img src="http://c.biancheng.net/uploads/allimg/181116/3-1Q116103K1205.gif" alt="策略模式的结构图"></p>
+<h3 id="责任链模式">责任链模式</h3>
+<p>​	为了避免请求发送者与多个请求处理者耦合在一起，于是将所有请求的处理者通过前一对象记住其下一个对象的引用而连成一条链；当有请求发生时，可将请求沿着这条链传递，直到有对象处理它为止。</p>
+<p>通常情况下，可以通过数据链表来实现职责链模式的<a href="http://c.biancheng.net/data_structure/">数据结构</a>。</p>
+<p>模式的结构</p>
+<p>​	职责链模式主要包含以下角色。</p>
+<ol>
+<li>抽象处理者（Handler）角色：定义一个处理请求的接口，包含抽象处理方法和一个后继连接。</li>
+<li>具体处理者（Concrete Handler）角色：实现抽象处理者的处理方法，判断能否处理本次请求，如果可以处理请求则处理，否则将该请求转给它的后继者。</li>
+<li>客户类（Client）角色：创建处理链，并向链头的具体处理者对象提交请求，它不关心处理细节和请求的传递过程。</li>
+</ol>
+<p><img src="http://c.biancheng.net/uploads/allimg/181116/3-1Q116135Z11C.gif" alt="责任链模式的结构图"></p>
+<p>模式的应用场景</p>
+<ol>
+<li>多个对象可以处理一个请求，但具体由哪个对象处理该请求在运行时自动确定。// 有多个具体处理者，由传入的条件决定使用哪个处理者</li>
+<li>可动态指定一组对象处理请求，或添加新的处理者。</li>
+<li>需要在不明确指定请求处理者的情况下，向多个处理者中的一个提交请求。</li>
+</ol>
+<p>职责链模式存在以下两种情况。</p>
+<ol>
+<li>纯的职责链模式：一个请求必须被某一个处理者对象所接收，且一个具体处理者对某个请求的处理只能采用以下两种行为之一：自己处理（承担责任）；把责任推给下家处理。</li>
+<li>不纯的职责链模式：允许出现某一个具体处理者对象在承担了请求的一部分责任后又将剩余的责任传给下家的情况，且一个请求可以最终不被任何接收端对象所接收。</li>
+</ol>
+<h3 id="状态模式">状态模式</h3>
+<p>​	对有状态的对象，把复杂的“判断逻辑”提取到不同的状态对象中，允许状态对象在其内部状态发生改变时改变其行为。状态模式把受环境改变的对象行为包装在不同的状态对象里，其意图是让一个对象在其内部状态改变的时候，其行为也随之改变。现在我们来分析其基本结构和实现方法。</p>
+<p>模式的结构</p>
+<p>状态模式包含以下主要角色。</p>
+<ol>
+<li>环境类（Context）角色：也称为上下文，它定义了客户端需要的接口，内部维护一个当前状态，并负责具体状态的切换。</li>
+<li>抽象状态（State）角色：定义一个接口，用以封装环境对象中的特定状态所对应的行为，可以有一个或多个行为。</li>
+<li>具体状态（Concrete State）角色：实现抽象状态所对应的行为，并且在需要的情况下进行状态切换。</li>
+</ol>
+<p>其结构图如图 1 所示。</p>
+<p><img src="http://c.biancheng.net/uploads/allimg/181116/3-1Q11615412U55.gif" alt="状态模式的结构图"></p>
+<p>多线程存在 5 种状态，分别为新建状态、就绪状态、运行状态、阻塞状态和死亡状态，各个状态当遇到相关方法调用或事件触发时会转换到其他状态，其状态转换规律如图 3 所示。</p>
+<p><img src="http://c.biancheng.net/uploads/allimg/181116/3-1Q116154332451.gif" alt="线程状态转换图">
+图3 线程状态转换图</p>
+<p>现在先定义一个抽象状态类（TheadState），然后为图 3 所示的每个状态设计一个具体状态类，它们是新建状态（New）、就绪状态（Runnable ）、运行状态（Running）、阻塞状态（Blocked）和死亡状态（Dead），每个状态中有触发它们转变状态的方法，环境类（ThreadContext）中先生成一个初始状态（New），并提供相关触发方法，图 4 所示是线程状态转换程序的结构图。</p>
+<p><img src="http://c.biancheng.net/uploads/allimg/181116/3-1Q116154432352.gif" alt="线程状态转换程序的结构图"></p>
+<h3 id="观察者模式">观察者模式</h3>
+<p>​	指多个对象间存在一对多的依赖关系，当一个对象的状态发生改变时，所有依赖于它的对象都得到通知并被自动更新。这种模式有时又称作发布-订阅模式、模型-视图模式，它是对象行为型模式。实现观察者模式时要注意具体目标对象和具体观察者对象之间不能直接调用，否则将使两者之间紧密耦合起来，这违反了面向对象的设计原则。</p>
+<p>观察者模式的主要角色如下。</p>
+<ol>
+<li>抽象主题（Subject）角色：也叫抽象目标类，它提供了一个用于保存观察者对象的聚集类和增加、删除观察者对象的方法，以及通知所有观察者的抽象方法。</li>
+<li>具体主题（Concrete Subject）角色：也叫具体目标类，它实现抽象目标中的通知方法，当具体主题的内部状态发生改变时，通知所有注册过的观察者对象。</li>
+<li>抽象观察者（Observer）角色：它是一个抽象类或接口，它包含了一个更新自己的抽象方法，当接到具体主题的更改通知时被调用。</li>
+<li>具体观察者（Concrete Observer）角色：实现抽象观察者中定义的抽象方法，以便在得到目标的更改通知时更新自身的状态。</li>
+</ol>
+<p><img src="http://c.biancheng.net/uploads/allimg/181116/3-1Q1161A6221S.gif" alt="观察者模式的结构图"></p>
+<h3 id="中介者模式">中介者模式</h3>
+<p>​	定义一个中介对象来封装一系列对象之间的交互，使原有对象之间的耦合松散，且可以独立地改变它们之间的交互。中介者模式又叫调停模式，它是迪米特法则的典型应用。</p>
+<p>中介者模式实现的关键是找出“中介者”，下面对它的结构和实现进行分析。</p>
+<p>中介者模式包含以下主要角色。</p>
+<ol>
+<li>抽象中介者（Mediator）角色：它是中介者的接口，提供了同事对象注册与转发同事对象信息的抽象方法。</li>
+<li>具体中介者（Concrete Mediator）角色：实现中介者接口，定义一个 List 来管理同事对象，协调各个同事角色之间的交互关系，因此它依赖于同事角色。</li>
+<li>抽象同事类（Colleague）角色：定义同事类的接口，保存中介者对象，提供同事对象交互的抽象方法，实现所有相互影响的同事类的公共功能。</li>
+<li>具体同事类（Concrete Colleague）角色：是抽象同事类的实现者，当需要与其他同事对象交互时，由中介者对象负责后续的交互。</li>
+</ol>
+<p><img src="http://c.biancheng.net/uploads/allimg/181116/3-1Q1161I532V0.gif" alt="中介者模式的结构图"></p>
+<p>前面分析了中介者模式的结构与特点，下面分析其以下应用场景。</p>
+<ul>
+<li>当对象之间存在复杂的网状结构关系而导致依赖关系混乱且难以复用时。</li>
+<li>当想创建一个运行于多个类之间的对象，又不想生成新的子类时。</li>
+</ul>
+<h3 id="迭代器模式">迭代器模式</h3>
+<p>​	提供一个对象来顺序访问聚合对象中的一系列数据，而不暴露聚合对象的内部表示</p>
+<p>迭代器模式是通过将聚合对象的遍历行为分离出来，抽象成迭代器类来实现的，其目的是在不暴露聚合对象的内部结构的情况下，让外部代码透明地访问聚合的内部数据。现在我们来分析其基本结构与实现方法。</p>
+<p>模式的结构</p>
+<p>迭代器模式主要包含以下角色。</p>
+<ol>
+<li>抽象聚合（Aggregate）角色：定义存储、添加、删除聚合对象以及创建迭代器对象的接口。</li>
+<li>具体聚合（ConcreteAggregate）角色：实现抽象聚合类，返回一个具体迭代器的实例。</li>
+<li>抽象迭代器（Iterator）角色：定义访问和遍历聚合元素的接口，通常包含 hasNext()、first()、next() 等方法。</li>
+<li>具体迭代器（Concretelterator）角色：实现抽象迭代器接口中所定义的方法，完成对聚合对象的遍历，记录遍历的当前位置。</li>
+</ol>
+<p><img src="http://c.biancheng.net/uploads/allimg/181116/3-1Q1161PU9528.gif" alt="迭代器模式的结构图"></p>
+<p>不是很懂</p>
+<h3 id="访问者模式">访问者模式</h3>
+<p>​	将作用于某种数据结构中的各元素的操作分离出来封装成独立的类，使其在不改变数据结构的前提下可以添加作用于这些元素的新的操作，为数据结构中的每个元素提供多种访问方式。它将对数据的操作与数据结构进行分离，是行为类模式中最复杂的一种模式。</p>
+<p>访问者模式包含以下主要角色。</p>
+<ol>
+<li>抽象访问者（Visitor）角色：定义一个访问具体元素的接口，为每个具体元素类对应一个访问操作 visit() ，该操作中的参数类型标识了被访问的具体元素。</li>
+<li>具体访问者（ConcreteVisitor）角色：实现抽象访问者角色中声明的各个访问操作，确定访问者访问一个元素时该做什么。</li>
+<li>抽象元素（Element）角色：声明一个包含接受操作 accept() 的接口，被接受的访问者对象作为 accept() 方法的参数。</li>
+<li>具体元素（ConcreteElement）角色：实现抽象元素角色提供的 accept() 操作，其方法体通常都是 visitor.visit(this) ，另外具体元素中可能还包含本身业务逻辑的相关操作。</li>
+<li>对象结构（Object Structure）角色：是一个包含元素角色的容器，提供让访问者对象遍历容器中的所有元素的方法，通常由 List、Set、Map 等聚合类实现。// 数据结构，需要包含元素</li>
+</ol>
+<p><img src="http://c.biancheng.net/uploads/allimg/181119/3-1Q11910135Y25.gif" alt="访问者（Visitor）模式的结构图"></p>
+<p>访问者模式的核心思想是为了访问比较复杂的数据结构，不去改变数据结构，而是把对数据的操作抽象出来，在“访问”的过程中以回调形式在访问者中处理操作逻辑。如果要新增一组操作，那么只需要增加一个新的访问者。</p>
+<h3 id="备忘录模式">备忘录模式</h3>
+<p>​	在不破坏封装性的前提下，捕获一个对象的内部状态，并在该对象之外保存这个状态，以便以后当需要时能将该对象恢复到原先保存的状态。该模式又叫快照模式。备忘录模式的核心是设计备忘录类以及用于管理备忘录的管理者类，现在我们来学习其结构与实现。</p>
+<p>模式的结构</p>
+<p>备忘录模式的主要角色如下。</p>
+<ol>
+<li>发起人（Originator）角色：记录当前时刻的内部状态信息，提供创建备忘录和恢复备忘录数据的功能，实现其他业务功能，它可以访问备忘录里的所有信息。</li>
+<li>备忘录（Memento）角色：负责存储发起人的内部状态，在需要的时候提供这些内部状态给发起人。</li>
+<li>管理者（Caretaker）角色：对备忘录进行管理，提供保存与获取备忘录的功能，但其不能对备忘录的内容进行访问与修改。</li>
+</ol>
+<p><img src="http://c.biancheng.net/uploads/allimg/181119/3-1Q119130413927.gif" alt="备忘录模式的结构图"></p>
+<p>自己的理解，备忘录模式其实就是发起人将自己的状态通过自身的方法保存在备忘录中，而这个备忘录是管理者的属性，也就是说，发起人将自己的状态保存在管理者的备忘录属性中，当发起人状态改变，但还未保存想要回滚时就可以从管理者这里取出自己保存的状态然后更新自己的状态，这就达到了回滚的效果。</p>
+<p>下面介绍备忘录模式如何同<a href="http://c.biancheng.net/view/1343.html">原型模式</a>混合使用。在备忘录模式中，通过定义“备忘录”来备份“发起人”的信息，而原型模式的 clone() 方法具有自备份功能，所以，如果让发起人实现 Cloneable 接口就有备份自己的功能，这时可以删除备忘录类。也就是说将管理者直接管理发起人，当发起人状态改变，并保存时就把自己通过原型模式也就是克隆一份给到管理者，当需要回滚时，只需要将管理者中永远的发起人的状态更新给真正的发起人即可。</p>
+<p><img src="http://c.biancheng.net/uploads/allimg/181119/3-1Q119130HW56.gif" alt="带原型的备忘录模式的结构图"></p>
+<h3 id="解释器模式">解释器模式</h3>
+
+    </div>
+    <div class="article-footer">
+<blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接: </strong>
+      <a href="https://wzgl998877.github.io/2022/01/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" title="设计模式" target="_blank" rel="external">https://wzgl998877.github.io/2022/01/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong>License: </strong>
+        <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN</a>
+    </li>
+  </ul>
+</blockquote>
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/wzgl998877/" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="https://wzgl998877.github.io/avatar.png" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/wzgl998877/" target="_blank"><span class="text-dark">microzheng</span><small class="ml-1x">努力会说谎，但努力不会白费</small></a></h3>
+        <div>不想搬砖的码农</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+    </div>
+  </article>
+</div><nav class="bar bar-footer clearfix" data-stick-bottom>
+    <div class="bar-inner">
+        <ul class="pager pull-left">
+            <li class="next">
+                <a href="https://wzgl998877.github.io/2022/01/%E7%9F%A5%E8%AF%86%E7%82%B9/"
+                    title="知识点"><span>上一篇&nbsp;&nbsp;</span><i
+                        class="icon icon-angle-right" aria-hidden="true"></i></a>
+            </li>
+            
+            <li class="toggle-toc">
+                <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false"
+                    title="文章目录" role="button">
+                    <span>[&nbsp;</span><span>文章目录</span>
+                    <i class="text-collapsed icon icon-anchor"></i>
+                    <i class="text-in icon icon-close"></i>
+                    <span>]</span>
+                </a>
+            </li>
+        </ul>
+        <div class="bar-right">
+            <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter"
+                data-mobile-sites="weibo,qq,qzone"></div>
+        </div>
+    </div>
+</nav>
+
+
+</main><footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+<ul class="social-links">
+    <li><a href="https://github.com/wzgl998877/" target="_blank" title="github" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-github"></i></a></li>
+    <li><a href="https://wzgl998877.github.io/index.xml" target="_blank" title="rss" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-rss"></i></a></li>
+</ul>
+  <div class="copyright">
+    &copy;2022  -
+    2022
+    <div class="publishby">
+        Theme by <a href="https://github.com/wzgl998877/" target="_blank"> microzheng </a>base on<a href="https://github.com/xiaoheiAh/hugo-theme-pure" target="_blank"> pure</a>.
+    </div>
+    
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_SVG"></script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+            showMathMenu: false, //disables context menu
+            tex2jax: {
+            inlineMath: [ ['$','$'], ['\\(','\\)'] ]
+           }
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+<script>
+    window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/highlight.min.js"></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/python.min.js" defer></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/javascript.min.js" defer></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/java.min.js" defer></script><script>
+    hljs.configure({
+        tabReplace: '    ', 
+        classPrefix: ''     
+        
+    })
+    hljs.initHighlightingOnLoad();
+</script>
+<script src="https://wzgl998877.github.io/js/application.min.a94ab19cb63a95c8d7fbd7b85cab3ddeea8c369bdf75b9cab6708787ead123af.js"></script>
+<script src="https://wzgl998877.github.io/js/plugin.min.19c5bcb2fb0789ab4f2b7834e5ceb5e92635645605bab902c1024b25f1502364.js"></script>
+
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(未命名)',
+            },
+            ROOT_URL: 'https:\/\/wzgl998877.github.io\/',
+            CONTENT_URL: 'https:\/\/wzgl998877.github.io\/\/searchindex.json ',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script type="text/javascript" src="https://wzgl998877.github.io/js/insight.min.4a2d52de4bfff73e0c688404fe3d17c9a3ae12d9888e1e1ac9c690e4890de2ded50fe55f2b819c2ba55435a76f396f3ea6805765f0b0af5635cdf74ea459eab0.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+<script>
+    tocbot.init({
+        
+        tocSelector: '.js-toc',
+        
+        contentSelector: '.js-toc-content',
+        
+        headingSelector: 'h1, h2, h3',
+        
+        hasInnerContainers: true,
+    });
+</script>
+
+
+  </body>
+</html>

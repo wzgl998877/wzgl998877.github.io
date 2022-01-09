@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <title>
+        图解http - Pure theme for Hugo
+      </title>
+        <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    
+    <meta name="theme-color" content="#000000" />
+    
+    <meta http-equiv="window-target" content="_top" />
+    
+    
+    <meta name="description" content="图解http 网络模型 OSI 模型(具体每层的定义还需要看书确定这个只是网上看的，可以回去看计网) 应用层（application）：最接近终端用户的" />
+    <meta name="generator" content="Hugo 0.91.2 with theme pure" />
+    <title>图解http - Pure theme for Hugo</title>
+    
+    
+    <link rel="stylesheet" href="https://wzgl998877.github.io/css/style.min.a85959a41e7abcc0db1f81f44bd264649303417f91b536e87dcde644340fea6d.css">
+    
+    <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/9.15.10/styles/github.min.css" async>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css" async>
+    <meta property="og:title" content="图解http" />
+<meta property="og:description" content="图解http 网络模型 OSI 模型(具体每层的定义还需要看书确定这个只是网上看的，可以回去看计网) 应用层（application）：最接近终端用户的" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wzgl998877.github.io/2022/01/%E5%9B%BE%E8%A7%A3http/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-01-09T11:24:40+08:00" />
+<meta property="article:modified_time" content="2022-01-09T11:24:40+08:00" />
+
+<meta itemprop="name" content="图解http">
+<meta itemprop="description" content="图解http 网络模型 OSI 模型(具体每层的定义还需要看书确定这个只是网上看的，可以回去看计网) 应用层（application）：最接近终端用户的"><meta itemprop="datePublished" content="2022-01-09T11:24:40+08:00" />
+<meta itemprop="dateModified" content="2022-01-09T11:24:40+08:00" />
+<meta itemprop="wordCount" content="9511">
+<meta itemprop="keywords" content="http," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="图解http"/>
+<meta name="twitter:description" content="图解http 网络模型 OSI 模型(具体每层的定义还需要看书确定这个只是网上看的，可以回去看计网) 应用层（application）：最接近终端用户的"/>
+
+    <!--[if lte IE 9]>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+      <![endif]-->
+
+    <!--[if lt IE 9]>
+        <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+      <![endif]-->
+  </head>
+
+  
+  
+
+  <body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage"><header class="header" itemscope itemtype="http://schema.org/WPHeader">
+    <div class="slimContent">
+      <div class="navbar-header">
+        <div class="profile-block text-center">
+          <a id="avatar" href="https://github.com/wzgl998877/" target="_blank">
+            <img class="img-circle img-rotate" src="https://wzgl998877.github.io/avatar.png" width="200" height="200">
+          </a>
+          <h2 id="name" class="hidden-xs hidden-sm">microzheng</h2>
+          <h3 id="title" class="hidden-xs hidden-sm hidden-md">努力会说谎，但努力不会白费</h3>
+          <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i>Shenzhen China</small>
+        </div><div class="search" id="search-form-wrap">
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i
+                        class="icon icon-search"></i></button>
+            </span>
+        </div>
+        <div class="ins-search">
+            <div class="ins-search-mask"></div>
+            <div class="ins-search-container">
+                <div class="ins-input-wrapper">
+                    <input type="text" class="ins-search-input" placeholder="想要查找什么..."
+                        x-webkit-speech />
+                    <button type="button" class="close ins-close ins-selectable" data-dismiss="modal"
+                        aria-label="Close"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="ins-section-wrapper">
+                    <div class="ins-section-container"></div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+        <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+        <ul class="nav navbar-nav main-nav">
+            <li class="menu-item menu-item-home">
+                <a href="/">
+                    <i class="icon icon-home-fill"></i>
+                  <span class="menu-title">主页</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-archives">
+                <a href="/posts/">
+                    <i class="icon icon-archives-fill"></i>
+                  <span class="menu-title">归档</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-categories">
+                <a href="/categories/">
+                    <i class="icon icon-folder"></i>
+                  <span class="menu-title">分类</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-tags">
+                <a href="/tags/">
+                    <i class="icon icon-tags"></i>
+                  <span class="menu-title">标签</span>
+                </a>
+            </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+<aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content"><p>enjoy~</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+      <div class="widget">
+    <h3 class="widget-title"> 分类</h3>
+    <div class="widget-body">
+        <ul class="category-list">
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/java/" class="category-list-link">java</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/linux/" class="category-list-link">linux</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/" class="category-list-link">中间件</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E5%B8%B8%E7%94%A8%E6%A1%86%E6%9E%B6/" class="category-list-link">常用框架</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="category-list-link">数据库</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E6%97%A5%E5%B8%B8%E6%80%BB%E7%BB%93/" class="category-list-link">日常总结</a><span class="category-list-count">2</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E7%AE%97%E6%B3%95/" class="category-list-link">算法</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/" class="category-list-link">系统设计</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/" class="category-list-link">网络编程</a><span class="category-list-count">3</span></li>
+        </ul>
+    </div>
+</div>
+      <div class="widget">
+    <h3 class="widget-title"> 标签</h3>
+    <div class="widget-body">
+        <ul class="tag-list">
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/http/" class="tag-list-link">http</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/java%E5%9F%BA%E7%A1%80/" class="tag-list-link">java基础</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/java%E5%B9%B6%E5%8F%91/" class="tag-list-link">java并发</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/jvm/" class="tag-list-link">jvm</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/leetcode/" class="tag-list-link">leetcode</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/linux%E5%91%BD%E4%BB%A4/" class="tag-list-link">linux命令</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/mybatis/" class="tag-list-link">mybatis</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/netty/" class="tag-list-link">netty</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/rpc/" class="tag-list-link">rpc</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/spring/" class="tag-list-link">spring</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/websocket/" class="tag-list-link">websocket</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" class="tag-list-link">消息队列</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="tag-list-link">设计模式</a><span
+                    class="tag-list-count">1</span></li>
+            
+        </ul>
+
+    </div>
+</div>
+      
+<div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+        <ul class="recent-post-list list-unstyled no-thumbnail">
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://wzgl998877.github.io/2022/01/java-%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" class="title">Java 并发编程</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2022-01-09 11:24:40 &#43;0800 CST" itemprop="datePublished">2022-01-09</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://wzgl998877.github.io/2022/01/java-%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3%E5%AD%A6%E4%B9%A0/" class="title">Java 编程思想学习</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2022-01-09 11:24:40 &#43;0800 CST" itemprop="datePublished">2022-01-09</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://wzgl998877.github.io/2022/01/leetcode/" class="title">LeetCode</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2022-01-09 11:24:40 &#43;0800 CST" itemprop="datePublished">2022-01-09</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://wzgl998877.github.io/2022/01/linux%E5%B7%A5%E4%BD%9C%E6%97%A5%E5%B8%B8%E5%91%BD%E4%BB%A4/" class="title">Linux工作日常命令</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2022-01-09 11:24:40 &#43;0800 CST" itemprop="datePublished">2022-01-09</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://wzgl998877.github.io/2022/01/mybatis-%E6%8A%80%E6%9C%AF%E5%86%85%E5%B9%95%E5%AD%A6%E4%B9%A0/" class="title">mybatis 技术内幕学习</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2022-01-09 11:24:40 &#43;0800 CST" itemprop="datePublished">2022-01-09</time>
+                    </p>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+  </div>
+</aside>
+
+    
+    
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <h4 class="toc-title">文章目录</h4>
+    <nav id="toc" class="js-toc toc">
+
+    </nav>
+  </div>
+</aside>
+<main class="main" role="main"><div class="content">
+  <article id="-" class="article article-type-" itemscope
+    itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      <h1 itemprop="name">
+  <a
+    class="article-title"
+    href="/2022/01/%E5%9B%BE%E8%A7%A3http/"
+    >图解http</a
+  >
+</h1>
+
+      <div class="article-meta">
+        
+<span class="article-date">
+  <i class="icon icon-calendar-check"></i>&nbsp;
+<a href="https://wzgl998877.github.io/2022/01/%E5%9B%BE%E8%A7%A3http/" class="article-date">
+  <time datetime="2022-01-09 11:24:40 &#43;0800 CST" itemprop="datePublished">2022-01-09</time>
+</a>
+</span>
+<span class="article-category">
+  <i class="icon icon-folder"></i>&nbsp;
+  <a class="article-category-link" href="/categories/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/"> 网络编程 </a>
+</span>  
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>&nbsp;
+    <a class="article-tag-link" href="/tags/http/"> http </a>
+  </span>
+
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 9511字</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 19分 </span>
+      </div>
+    </div>
+    <div class="article-entry marked-body js-toc-content" itemprop="articleBody">
+      <h1 id="图解http">图解http</h1>
+<h3 id="网络模型">网络模型</h3>
+<ol>
+<li>
+<p>OSI 模型(具体每层的定义还需要看书确定这个只是网上看的，可以回去看计网)</p>
+<ul>
+<li>
+<p>应用层（application）：最接近终端用户的OSI层，这就意味着OSI应用层与用户之间是通过应用软件直接相互作用的。网络进程访问应用层；提供接口服务。</p>
+</li>
+<li>
+<p>表示层（presention）：数据表现形式；特定功能的实现-比如加密模式确保原始设备上加密的数据可以在目标设备上正确地解密。</p>
+</li>
+<li>
+<p>会话层（session）：主机间通信；对应用会话管理，同步。</p>
+</li>
+<li>
+<p>传输层（transport）:实现端到端传输；分可靠与不可靠传输；在传输前实现错误检测与流量控制，定义端口号（标记相应的服务）。</p>
+</li>
+<li>
+<p>网络层（network）（单位类型：报文）：数据传输；提供逻辑地址，选择路由数据包，负责在源和终点之间建立连接。</p>
+</li>
+<li>
+<p>数据链路层（date link）（单位类型：帧）：访问介质；数据在该层封装成帧；用MAC地址作为访问媒介；具有错误检测与修正功能。MAC描述在共享介质环境中如何进行站的调度、发生和接收数据。MAC确保信息跨链路的可靠传输，对数据传输进行同步，识别错误和控制数据的流向。一般地讲，MAC只在共享介质环境中才是重要的，只有在共享介质环境中多个节点才能连接到同一传输介质上。</p>
+</li>
+<li>
+<p>物理层（physical）（单位类型：比特）：实现比特流的透明传输，物理接口，具有电气特性。</p>
+</li>
+</ul>
+</li>
+<li>
+<p>TCP/IP 四层模型</p>
+<ul>
+<li><strong>应用层</strong>：应用层决定了向用户提供应用服务时通信的活动。TCP/IP协议族内预存了各类通用的应用服务。比如，FTP（File Transfer Protocol，文件传输协议）和DNS（Domain Name System，域名系统）服务就是其中两类。HTTP协议也处于该层。</li>
+<li><strong>传输层</strong>：传输层对上层应用层，提供处于网络连接中的两台计算机之间的数据传输。在传输层有两个性质不同的协议：TCP（Transmission Control Protocol，传输控制协议）和UDP（User Data Protocol，用户数据报协议）。</li>
+<li><strong>网络层</strong>：（又名网络互连层）网络层用来处理在网络上流动的数据包。数据包是网络传输的最小数据单位。该层规定了通过怎样的路径（所谓的传输路线）到达对方计算机，并把数据包传送给对方。与对方计算机之间通过多台计算机或网络设备进行传输时，网络层所起的作用就是在众多的选项内选择一条传输路线。</li>
+<li><strong>链路层</strong>：（又名数据链路层，网络接口层）用来处理连接网络的硬件部分。包括控制操作系统、硬件的设备驱动、NIC（Network InterfaceCard，网络适配器，即网卡），及光纤等物理可见部分（还包括连接器等一切传输媒介）。硬件上的范畴均在链路层的作用范围之内。</li>
+</ul>
+</li>
+<li>
+<p>五层模型</p>
+<p>OSI是一个完整的、完善的宏观理论模型;而TCP/IP(参考)模型，更加侧重的是互联网通信核心(也是就是围绕TCP/IP协议展开的一系列通信协议)的分层，因此它不包括物理层，以及其他一些不想干的协议; 而五层模型就是将物理层加进来了而已。</p>
+</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">OSI</th>
+<th style="text-align:center">TCP/IP</th>
+<th style="text-align:center">五层模型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">应用层</td>
+<td style="text-align:center">应用层</td>
+<td style="text-align:center">应用层</td>
+</tr>
+<tr>
+<td style="text-align:center">表示层</td>
+<td style="text-align:center">应用层</td>
+<td style="text-align:center">应用层</td>
+</tr>
+<tr>
+<td style="text-align:center">会话层</td>
+<td style="text-align:center">应用层</td>
+<td style="text-align:center">应用层</td>
+</tr>
+<tr>
+<td style="text-align:center">传输层</td>
+<td style="text-align:center">传输层</td>
+<td style="text-align:center">传输层</td>
+</tr>
+<tr>
+<td style="text-align:center">网络层</td>
+<td style="text-align:center">网络层</td>
+<td style="text-align:center">网络层</td>
+</tr>
+<tr>
+<td style="text-align:center">数据链路层</td>
+<td style="text-align:center">数据链路层</td>
+<td style="text-align:center">数据链路层</td>
+</tr>
+<tr>
+<td style="text-align:center">物理层</td>
+<td style="text-align:center">数据链路层 并没有给出具体的物理层的实现</td>
+<td style="text-align:center">物理层</td>
+</tr>
+</tbody>
+</table>
+<h3 id="ip协议">IP协议</h3>
+<p>​	是TCP/IP协议栈中最核心的协议之一，通过IP地址，保证了联网设备的唯一性，实现了网络通信的面向无连接和不可靠的传输功能。</p>
+<h3 id="arp-地址解析协议">ARP 地址解析协议</h3>
+<p>​	网络层使用的是IP地址，但在实际网络的链路上传送数据帧时，最终还是必须使用该网络的硬件地址，ARP协议就 <strong>实现了从 IP 地址到 MAC 地址的映射，即询问目标 IP 对应的 MAC 地址</strong></p>
+<h3 id="tcpudp-协议">TCP/UDP 协议</h3>
+<p>​	TCP协议全称是传输控制协议是一种<strong>面向连接的</strong>、<strong>可靠的</strong>、<strong>基于字节流</strong>的传输层通信协议。</p>
+<p>​	UDP协议全称是用户数据报协议是<strong>面向无连接</strong>、<strong>不可靠的</strong>、<strong>基于报文的</strong>的传输层通信协议。</p>
+<p>​	<img src="C:%5CUsers%5Czhengtao%5CDesktop%5C%E5%AD%A6%E4%B9%A0%5C%E6%B5%81%E7%A8%8B%E5%9B%BE%5Ctcp_udp%E5%8C%BA%E5%88%AB.jpg" alt=""></p>
+<p><img src="C:%5CUsers%5Czhengtao%5CDesktop%5C%E5%AD%A6%E4%B9%A0%5C%E6%B5%81%E7%A8%8B%E5%9B%BE%5Ctcp_udp%E4%BD%BF%E7%94%A8%E6%83%85%E5%86%B5.png" alt=""></p>
+<p>经典知识点：<strong>三次握手，四次挥手</strong></p>
+<p><img src="C:%5CUsers%5Czhengtao%5CDesktop%5C%E5%AD%A6%E4%B9%A0%5C%E6%B5%81%E7%A8%8B%E5%9B%BE%5C%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B.png" alt=""></p>
+<ol>
+<li>B的TCP服务器进程先创建传输控制块 TCB，准备接受客户进程的连接请求。然后服务器进程就处于LISTEN（收听）状态，等待客户的连接请求。如有，即作出响应。A的TCP客户进程也是首先创建传输控制模块TCB，然后向B发出连接请求报文段，这时首部中的同步位SYN = 1，同时选择一个初始序号seq = x。TCP规定，SYN报文段（即SYN = 1的报文段）不能携带数据，但要消耗掉一个序号。这时，TCP客户进程进入SYN-SENT（同步已发送）状态。</li>
+<li>B收到连接请求报文段后，如同意建立连接，则向A发送确认。在确认报文段中应把SYN位和ACK位都置1，确认号是ack = x + 1，同时也为自己选择一个初始序号seq = y。请注意，这个报文段也不能携带数据，但同样要消耗掉一个序号。这时TCP服务器进程进入SYN-RCVD（同步收到）状态。</li>
+<li>TCP客户进程收到B的确认后，还要向B给出确认。确认报文段的ACK置1，确认号ack = y + 1，而自己的序号seq = x + 1。TCP的标准规定，ACK报文段可以携带数据。但如果不携带数据则不消耗序号，在这种情况下，下一个数据报文段的序号仍是seq = x + 1。这时，TCP连接已经建立，A进入ESTABLISHED（已建立连接）状态。当B收到A的确认后，也进入ESTABLISHED状态。</li>
+</ol>
+<p>为什么要三次握手？</p>
+<p>​	这主要是为了防止已失效的连接请求报文段突然又传送到了B，因而产生错误。</p>
+<p>所谓“已失效的连接请求报文段”是这样产生的。考虑一种正常情况。A发出连接请求，但因连接请求报文丢失而未收到确认。于是A再重传一次连接请求。后来收到了确认，建立了连接。数据传输完毕后，就释放了连接。A共发送了两个连接请求报文段，其中第一个丢失，第二个到达了B。没有“已失效的连接请求报文段”。现假定出现一种异常情况，即A发出的第一个连接请求报文段并没有丢失，而是在某些网络结点长时间滞留了，以致延误到连接释放以后的某个时间才到达B。本来这是一个早已失效的报文段。但B收到此失效的连接请求报文段后，就误认为是A又发出一次新的连接请求。于是就向A发出确认报文段，同意建立连接。假定不采用三次握手，那么只要B发出确认，新的连接就建立了。由于现在A并没有发出建立连接的请求，因此不会理睬B的确认，也不会向B发送数据。但B却以为新的运输连接已经建立了，并一直等待A发来数据。B的许多资源就这样白白浪费了。</p>
+<p><img src="C:%5CUsers%5Czhengtao%5CDesktop%5C%E5%AD%A6%E4%B9%A0%5C%E6%B5%81%E7%A8%8B%E5%9B%BE%5C%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B.png" alt=""></p>
+<ol>
+<li>数据传输结束后，通信的双方都可释放连接。现在A和B都处于ESTABLISHED状态（图5-32）。A的应用进程先向其TCP发出连接释放报文段，并停止再发送数据，主动关闭TCP连接。A把连接释放报文段首部的终止控制位FIN置1，其序号seq = u，它等于前面已传送过的数据的最后一个字节的序号加1。这时A进入FIN-WAIT-1（终止等待1）状态，等待B的确认。请注意，TCP规定，FIN报文段即使不携带数据，它也消耗掉一个序号。</li>
+<li>B收到连接释放报文段后即发出确认，确认号是ack = u + 1，而这个报文段自己的序号是v，等于B前面已传送过的数据的最后一个字节的序号加1。然后B就进入CLOSE-WAIT（关闭等待）状态。TCP服务器进程这时应通知高层应用进程，因而从A到B这个方向的连接就释放了，这时的TCP连接处于半关闭(half-close)状态，即A已经没有数据要发送了，但B若发送数据，A仍要接收。也就是说，从B到A这个方向的连接并未关闭，这个状态可能会持续一些时间。</li>
+<li>A收到来自B的确认后，就进入FIN-WAIT-2（终止等待2）状态，等待B发出的连接释放报文段。若B已经没有要向A发送的数据，其应用进程就通知TCP释放连接。这时B发出的连接释放报文段必须使FIN = 1。现假定B的序号为w（在半关闭状态B可能又发送了一些数据）。B还必须重复上次已发送过的确认号ack = u + 1。这时B就进入LAST-ACK（最后确认）状态，等待A的确认。</li>
+<li>A在收到B的连接释放报文段后，必须对此发出确认。在确认报文段中把ACK置1，确认号ack = w + 1，而自己的序号是seq = u + 1（根据TCP标准，前面发送过的FIN报文段要消耗一个序号）。然后进入到TIME-WAIT（时间等待）状态。请注意，现在TCP连接还没有释放掉。必须经过时间等待计时器(TIME-WAIT timer)设置的时间2MSL后，A才进入到CLOSED状态。</li>
+</ol>
+<p>为什么A在TIME-WAIT状态必须等待2MSL的时间呢？这有两个理由。</p>
+<p>第一，为了保证A发送的最后一个ACK报文段能够到达B。这个ACK报文段有可能丢失，因而使处在LAST-ACK状态的B收不到对已发送的FIN + ACK报文段的确认。B会超时重传这个FIN + ACK报文段，而A就能在2MSL时间内收到这个重传的FIN + ACK报文段。接着A重传一次确认，重新启动2MSL计时器。最后，A和B都正常进入到CLOSED状态。如果A在TIME-WAIT状态不等待一段时间，而是在发送完ACK报文段后立即释放连接，那么就无法收到B重传的FIN + ACK报文段，因而也不会再发送一次确认报文段。这样，B就无法按照正常步骤进入CLOSED状态。第二，防止上一节提到的“已失效的连接请求报文段”出现在本连接中。A在发送完最后一个ACK报文段后，再经过时间2MSL，就可以使本连接持续的时间内所产生的所有报文段都从网络中消失。这样就可以使下一个新的连接中不会出现这种旧的连接请求报文段。B只要收到了A发出的确认，就进入CLOSED状态。同样，B在撤销相应的传输控制块TCB后，就结束了这次的TCP连接。我们注意到，B结束TCP连接的时间要比A早一些。</p>
+<p>除时间等待计时器外，TCP还设有一个保活计时器(keepalive timer)。设想有这样的情况：客户已主动与服务器建立了TCP连接。但后来客户端的主机突然出故障。显然，服务器以后就不能再收到客户发来的数据。因此，应当有措施使服务器不要再白白等待下去。这就是使用保活计时器。服务器每收到一次客户的数据，就重新设置保活计时器，时间的设置通常是两小时。若两小时没有收到客户的数据，服务器就发送一个探测报文段，以后则每隔75分钟发送一次。若一连发送10个探测报文段后仍无客户的响应，服务器就认为客户端出了故障，接着就关闭这个连接。</p>
+<h3 id="tcp-重传滑动窗口流量控制拥塞控制">TCP 重传、滑动窗口、流量控制、拥塞控制</h3>
+<p>TCP 实现可靠传输的方式之一，是通过序列号与确认应答。</p>
+<p>在 TCP 中，当发送端的数据到达接收主机时，接收端主机会返回一个确认应答消息，表示已收到消息。当上一个数据包收到了应答了， 再发送下一个。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/xiaolincoder/ImageHost2/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCP-%E5%8F%AF%E9%9D%A0%E7%89%B9%E6%80%A7/4.jpg" alt=""></p>
+<p>这个模式就有点像我和你面对面聊天，你一句我一句。但这种方式的缺点是效率比较低的。</p>
+<p>如果你说完一句话，我在处理其他事情，没有及时回复你，那你不是要干等着我做完其他事情后，我回复你，你才能说下一句话，很显然这不现实。</p>
+<p>所以，这样的传输方式有一个缺点：数据包的<strong>往返时间越长，通信的效率就越低</strong>。</p>
+<p>为了解决这个问题，tcp使用了窗口的概念。</p>
+<h4 id="滑动窗口">滑动窗口</h4>
+<p>有了窗口，就可以指定窗口大小，窗口大小就是指<strong>无需等待确认应答，而可以继续发送数据的最大值</strong>。</p>
+<p><strong>发送窗口</strong>表示：在没有收到B的确认的情况下，A可以连续把窗口内的数据都发送出去。凡是已经发送过的数据，在未收到确认之前都必须暂时保留（p1~p2），以便在超时重传时使用。</p>
+<p><strong>接收窗口</strong>大小是20。在接收窗口外面，到30号为止的数据是已经发送过确认，并且已经交付主机了。因此在B可以不再保留这些数据。接收窗口内的序号（31～50）是允许接收的。B收到了序号为32和33的数据。<strong>这些数据没有按序到达，因为序号为31的数据没有收到</strong>（也许丢失了，也许滞留在网络中的某处）。请注意，<strong>B只能对按序收到的数据中的最高序号给出确认，因此B发送的确认报文段中的确认号仍然是31（即期望收到的序号），而不能是32或33</strong>。</p>
+<p><img src="https://res.weread.qq.com/wrepub/epub_655484_267" alt=""></p>
+<p>现在假定B收到了<strong>序号为31</strong>的数据，并把序号为31～33的数据交付主机，然后B删除这些数据。接着把接收窗口向前移动3个序号，同时给A发送确认，其中窗口值仍为20，但确认号是34。这表明B已经收到了到序号33为止的数据。我们注意到，B还收到了序号为37, 38和40的数据，但这些都没有按序到达，只能先暂存在接收窗口中。A收到B的确认后，就可以把发送窗口向前滑动3个序号，但指针P2不动。可以看出，现在A的可用窗口增大了，可发送的序号范围是42～53。</p>
+<p><img src="https://res.weread.qq.com/wrepub/epub_655484_268" alt=""></p>
+<p>这就是所谓的<strong>滑动窗口</strong>。</p>
+<h4 id="重传方式">重传方式</h4>
+<p>TCP 针对数据包丢失的情况，会用<strong>重传机制</strong>解决，重传方式有：</p>
+<ul>
+<li>超时重传：就是在发送数据时，设定一个定时器，当超过指定的时间后，没有收到对方的 <code>ACK</code> 确认应答报文，就会重发该数据。</li>
+<li>快速重传：是当收到三个相同的 ACK 报文时，会在定时器过期之前，重传丢失的报文段。</li>
+<li>SACK 方法：这种方式需要在 TCP 头部「选项」字段里加一个 <code>SACK</code> 的东西，它<strong>可以将缓存的地图发送给发送方</strong>，这样发送方就可以知道哪些数据收到了，哪些数据没收到，知道了这些信息，就可以<strong>只重传丢失的数据</strong>。</li>
+<li>Duplicate SACK： 又称 <code>D-SACK</code>，其主要<strong>使用了 SACK 来告诉「发送方」有哪些数据被重复接收了</strong>。</li>
+</ul>
+<p>具体文章参考博文：https://www.cnblogs.com/xiaolincoding/p/12732052.html</p>
+<h4 id="流量控制">流量控制</h4>
+<p>一般说来，我们总是希望数据传输得更快一些。<strong>但如果发送方把数据发送得过快，接收方就可能来不及接收，这就会造成数据的丢失</strong>。所谓<strong>流量控制(flow control)就是让发送方的发送速率不要太快，要让接收方来得及接收</strong>。</p>
+<p>利用滑动窗口机制可以很方便地在TCP连接上实现对发送方的流量控制。</p>
+<p>设A向B发送数据。在连接建立时，B告诉了A：“我的接收窗口rwnd = 400”（这里rwnd表示receiver window）。因此，发送方的发送窗口不能超过接收方给出的接收窗口的数值。请注意，TCP的窗口单位是字节，不是报文段。TCP连接建立时的窗口协商过程在图中没有显示出来。再设每一个报文段为100字节长，而数据报文段序号的初始值设为1（见图中第一个箭头上面的序号seq =1。图中右边的注释可帮助理解整个的过程）。请注意，图中箭头上面大写ACK表示首部中的确认位ACK，小写ack表示确认字段的值。</p>
+<p><img src="https://res.weread.qq.com/wrepub/epub_655484_276" alt=""></p>
+<p>我们应注意，接收方的主机B进行了<strong>三次流量控制</strong>。第一次把窗口减小到rwnd = 300，第二次又减到rwnd = 100，最后减到rwnd = 0，即不允许发送方再发送数据了。<strong>这种使发送方暂停发送的状态将持续到主机B重新发出一个新的窗口值为止</strong>。我们还应注意到，B向A发送的三个报文段都设置了ACK= 1，只有在ACK = 1时确认号字段才有意义。现在我们考虑一种情况。在图5-22中，B向A发送了零窗口的报文段后不久，B的接收缓存又有了一些存储空间。于是B向A发送了rwnd = 400的报文段。然而这个报文段在传送过程中丢失了。A一直等待收到B发送的非零窗口的通知，而B也一直等待A发送的数据。如果没有其他措施，这种互相等待的死锁局面将一直延续下去。为了解决这个问题，<strong>TCP为每一个连接设有一个持续计时器(persistence timer)</strong>。只要TCP连接的一方收到对方的零窗口通知，就启动持续计时器。若持续计时器设置的时间到期，就发送一个零窗口探测报文段（仅携带1字节的数据），而对方就在确认这个探测报文段时给出了现在的窗口值[插图]。如果窗口仍然是零，那么收到这个报文段的一方就重新设置持续计时器。如果窗口仍然是零，那么收到这个报文段的一方就重新设置持续计时器。如果窗口不是零，那么死锁的僵局就可以打破了。</p>
+<h4 id="拥塞控制">拥塞控制</h4>
+<p>在计算机网络中的链路容量（即带宽）、交换结点中的缓存和处理机等，都是网络的资源。在某段时间，若对网络中某一资源的需求超过了该资源所能提供的可用部分，网络的性能就要变坏。这种情况就叫做拥塞(congestion)。</p>
+<p>拥塞控制就是防止过多的数据注入到网络中，这样可以使网络中的路由器或链路不致过载。拥塞窗口 cwnd是发送方维护的一个的状态变量，它会根据网络的拥塞程度动态变化的。</p>
+<p>发送窗口 swnd 和接收窗口 rwnd 是约等于的关系，那么由于加入了拥塞窗口的概念后，此时发送窗口的值是swnd = min(cwnd, rwnd)，也就是拥塞窗口和接收窗口中的最小值。</p>
+<p>拥塞控制的具体方法有：</p>
+<ul>
+<li>
+<p>慢开始(slow-start)：由小到大逐渐增大拥塞窗口数值，通常在刚刚开始发送报文段时，先把拥塞窗口cwnd设置为一个最大报文段MSS的数值[插图]。而在每收到一个对新的报文段的确认后，把拥塞窗口增加至多一个MSS的数值。</p>
+</li>
+<li>
+<p>拥塞避免(congestion avoidance)：是让拥塞窗口cwnd缓慢地增大，即每经过一个往返时间RTT就把发送方的拥塞窗口cwnd加1</p>
+</li>
+<li>
+<p>快重传(fast retransmit)：首先要求接收方每收到一个失序的报文段后就立即发出重复确认（为的是使发送方及早知道有报文段没有到达对方）而不要等待自己发送数据时才进行捎带确认，发送方只要一连收到三个重复确认就应当立即重传对方尚未收到的报文段，由于发送方能尽早重传未被确认的报文段，因此采用快重传后可以使整个网络的吞吐量提高约20%。</p>
+</li>
+<li>
+<p>快恢复(fast recovery)：(1) 当发送方连续收到三个重复确认时，就执行“乘法减小”算法，把慢开始门限ssthresh减半。这是为了预防网络发生拥塞。请注意，接下去不执行慢开始算法。(2) 由于发送方现在认为网络很可能没有发生拥塞（如果网络发生了严重的拥塞，就不会一连有好几个报文段连续到达接收方，也就不会导致接收方连续发送重复确认），因此与慢开始不同之处是现在不执行慢开始算法（即拥塞窗口cwnd现在不设置为1），而是把cwnd值设置为慢开始门限ssthresh减半后的数值，然后开始执行拥塞避免算法（“加法增大”），使拥塞窗口缓慢地线性增大。<strong>不懂</strong></p>
+</li>
+</ul>
+<h3 id="dns-域名解析服务">DNS 域名解析服务</h3>
+<h3 id="输入网址需要经过哪些协议">输入网址需要经过哪些协议</h3>
+<p>​	从输入URL到页面加载发生了什么？</p>
+<ol>
+<li>
+<p>DNS解析 ，将域名解析为ip地址</p>
+</li>
+<li>
+<p>TCP连接，与服务器建立tcp连接，将http报文分割成报文段，并把每个报文段可靠地传给服务器</p>
+</li>
+<li>
+<p>发送HTTP请求</p>
+</li>
+<li>
+<p>服务器处理请求并返回HTTP报文</p>
+</li>
+<li>
+<p>浏览器解析渲染页面</p>
+</li>
+<li>
+<p>连接结束</p>
+<p>具体可以参考 <a href="https://segmentfault.com/a/1190000006879700">https://segmentfault.com/a/1190000006879700</a></p>
+</li>
+</ol>
+<p>​	<img src="C:%5CUsers%5Czhengtao%5CDesktop%5C%E5%AD%A6%E4%B9%A0%5C%E6%B5%81%E7%A8%8B%E5%9B%BE%5C%E5%90%84%E7%A7%8D%E5%8D%8F%E8%AE%AE%E4%B8%8EHTTP%E5%8D%8F%E8%AE%AE%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB.png" alt=""></p>
+<p>​	表格版</p>
+<p>​	<img src="C:%5CUsers%5Czhengtao%5CDesktop%5C%E5%AD%A6%E4%B9%A0%5C%E6%B5%81%E7%A8%8B%E5%9B%BE%5C%E5%85%B7%E4%BD%93%E5%8D%8F%E8%AE%AE%E4%BD%9C%E7%94%A8.png" alt=""></p>
+<p>上图有一个错误，请注意，是OSPF不是OPSF。 OSPF（Open Shortest Path First，ospf）开放最短路径优先协议,是由Internet工程任务组开发的路由选择协议</p>
+<p><img src="C:%5CUsers%5Czhengtao%5CDesktop%5C%E5%AD%A6%E4%B9%A0%5C%E6%B5%81%E7%A8%8B%E5%9B%BE%5Cip%E5%8D%8F%E8%AE%AE.png" alt=""></p>
+<h3 id="https">https</h3>
+<p>http的缺点：</p>
+<ul>
+<li>通信使用明文（不加密），内容可能会被窃听</li>
+<li>不验证通信方的身份，因此有可能遭遇伪装</li>
+<li>无法证明报文的完整性，所以有可能已遭篡改</li>
+</ul>
+<p>为了统一解决上述这些问题，我们把添加了<strong>加密及认证机制</strong>的HTTP称为HTTPS（HTTP Secure）。</p>
+<p>HTTPS并非是应用层的一种新协议。只是HTTP<strong>通信接口部分用SSL（SecureSocket Layer）和TLS（Transport Layer Security）协议代替而已</strong>。通常，<strong>HTTP直接和TCP通信。当使用SSL时，则演变成先和SSL通信，再由SSL和TCP通信了</strong>。简言之，所谓HTTPS，其实就是身披SSL协议这层外壳的HTTP。</p>
+<p><img src="https://res.weread.qq.com/wrepub/epub_907764_172" alt=""></p>
+<p>SSL是独立于HTTP的协议，所以不光是HTTP协议，其他运行在应用层的SMTP和Telnet等协议均可配合SSL协议使用。可以说SSL是当今世界上应用最为广泛的网络安全技术。</p>
+<h4 id="加密方式">加密方式</h4>
+<ul>
+<li>
+<p>对称加密：加密和解密同用一个密钥的方式称为共享密钥加密（Common key cryptosystem），也被叫做对称密钥加密。优点：速度快 缺点：不安全</p>
+</li>
+<li>
+<p>非对称加密：公开密钥加密使用一对非对称的密钥。一把叫做私有密钥（private key），另一把叫做公开密钥（public key）。优点：安全 缺点：速度慢。</p>
+</li>
+<li>
+<p>HTTPS采用共享密钥加密和公开密钥加密两者并用的混合加密机制，在交换密钥环节使用公开密钥加密方式，之后的建立通信交换报文阶段则使用共享密钥加密方式。</p>
+</li>
+</ul>
+<p><img src="https://res.weread.qq.com/wrepub/epub_907764_176" alt=""></p>
+<p>遗憾的是，公开密钥加密方式还是存在一些问题的。那就是无法证明公开密钥本身就是货真价实的公开密钥。</p>
+<p>比如，<strong>正准备和某台服务器建立公开密钥加密方式下的通信时，如何证明收到的公开密钥就是原本预想的那台服务器发行的公开密钥。或许在公开密钥传输途中，真正的公开密钥已经被攻击者替换掉了</strong>。</p>
+<p>为了解决上述问题，可以使用由数字证书认证机构（CA,CertificateAuthority）和其相关机关颁发的公开密钥证书。数字证书认证机构的业务流程：</p>
+<ol>
+<li>
+<p>首先，服务器的运营人员向数字证书认证机构提出公开密钥的申请。数字证书认证机构在判明提出申请者的身份之后，会对已申请的公开密钥做数字签名，然后分配这个已签名的公开密钥，并将该公开密钥放入公钥证书后绑定在一起。</p>
+</li>
+<li>
+<p>服务器会将这份由数字证书认证机构颁发的公钥证书发送给客户端，以进行公开密钥加密方式通信。公钥证书也可叫做数字证书或直接称为证书。</p>
+</li>
+<li>
+<p>接到证书的客户端可使用数字证书认证机构的公开密钥，对那张证书上的数字签名进行验证，一旦验证通过，客户端便可明确两件事：一，认证服务器的公开密钥的是真实有效的数字证书认证机构。二，服务器的公开密钥是值得信赖的。</p>
+</li>
+</ol>
+<p>此处认证机关的公开密钥必须安全地转交给客户端。使用通信方式时，如何安全转交是一件很困难的事，因此，多数浏览器开发商发布版本时，会事先在内部植入常用认证机关的公开密钥。</p>
+<p><img src="https://res.weread.qq.com/wrepub/epub_907764_177" alt=""></p>
+<h4 id="https的安全通信机制">HTTPS的安全通信机制</h4>
+<p><img src="https://res.weread.qq.com/wrepub/epub_907764_181" alt=""></p>
+<p>步骤1： 客户端通过发送Client Hello报文开始SSL通信。报文中包含客户端支持的SSL的指定版本、加密组件（Cipher Suite）列表（所使用的加密算法及密钥长度等）。</p>
+<p>步骤2： 服务器可进行SSL通信时，会以Server Hello报文作为应答。和客户端一样，在报文中包含SSL版本以及加密组件。服务器的加密组件内容是从接收到的客户端加密组件内筛选出来的。</p>
+<p>步骤3： 之后服务器发送Certificate报文。报文中包含公开密钥证书。</p>
+<p>步骤4： 最后服务器发送Server Hello Done报文通知客户端，最初阶段的SSL握手协商部分结束。</p>
+<p>步骤5: SSL第一次握手结束之后，客户端以Client Key Exchange报文作为回应。报文中包含通信加密中使用的一种被称为Pre-master secret的随机密码串。该报文已用步骤3中的公开密钥进行加密。</p>
+<p>步骤6： 接着客户端继续发送Change Cipher Spec报文。该报文会提示服务器，在此报文之后的通信会采用Pre-master secret密钥加密。</p>
+<p>步骤7： 客户端发送Finished报文。该报文包含连接至今全部报文的整体校验值。这次握手协商是否能够成功，要以服务器是否能够正确解密该报文作为判定标准。</p>
+<p>步骤8： 服务器同样发送Change Cipher Spec报文。</p>
+<p>步骤9： 服务器同样发送Finished报文。</p>
+<p>步骤10： 服务器和客户端的Finished报文交换完毕之后，SSL连接就算建立完成。当然，通信会受到SSL的保护。从此处开始进行应用层协议的通信，即发送HTTP请求。</p>
+<p>步骤11： 应用层协议通信，即发送HTTP响应。</p>
+<p>步骤12： 最后由客户端断开连接。断开连接时，发送close_notify报文。上图做了一些省略，这步之后再发送TCP FIN报文来关闭与TCP的通信。在以上流程中，应用层发送数据。</p>
+<p><img src="https://res.weread.qq.com/wrepub/epub_907764_182" alt=""></p>
+<p><strong>master key 就是https通信中使用的共享密钥</strong></p>
+<h4 id="https的问题">https的问题</h4>
+<ul>
+<li>一种是指通信慢。和使用HTTP相比，网络负载可能会变慢2到100倍。除去和TCP连接、发送HTTP请求·响应以外，还必须进行SSL通信，因此整体上处理通信量不可避免会增加。</li>
+<li>另一种是指由于大量消耗CPU及内存等资源，导致处理速度变慢。SSL必须进行加密处理。在服务器和客户端都需要进行加密和解密的运算处理。因此从结果上讲，比起HTTP会更多地消耗服务器和客户端的硬件资源，导致负载增强。</li>
+</ul>
+
+    </div>
+    <div class="article-footer">
+<blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接: </strong>
+      <a href="https://wzgl998877.github.io/2022/01/%E5%9B%BE%E8%A7%A3http/" title="图解http" target="_blank" rel="external">https://wzgl998877.github.io/2022/01/%E5%9B%BE%E8%A7%A3http/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong>License: </strong>
+        <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN</a>
+    </li>
+  </ul>
+</blockquote>
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/wzgl998877/" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="https://wzgl998877.github.io/avatar.png" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/wzgl998877/" target="_blank"><span class="text-dark">microzheng</span><small class="ml-1x">努力会说谎，但努力不会白费</small></a></h3>
+        <div>不想搬砖的码农</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+    </div>
+  </article>
+</div><nav class="bar bar-footer clearfix" data-stick-bottom>
+    <div class="bar-inner">
+        <ul class="pager pull-left">
+            <li class="prev">
+                <a href="https://wzgl998877.github.io/2022/01/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9F%A5%E8%AF%86/" title="数据库知识"><i
+                        class="icon icon-angle-left"
+                        aria-hidden="true"></i><span>&nbsp;&nbsp;下一篇</span></a>
+            </li>
+            <li class="next">
+                <a href="https://wzgl998877.github.io/2022/01/websocket%E5%AD%A6%E4%B9%A0/"
+                    title="Websocket学习"><span>上一篇&nbsp;&nbsp;</span><i
+                        class="icon icon-angle-right" aria-hidden="true"></i></a>
+            </li>
+            
+            <li class="toggle-toc">
+                <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false"
+                    title="文章目录" role="button">
+                    <span>[&nbsp;</span><span>文章目录</span>
+                    <i class="text-collapsed icon icon-anchor"></i>
+                    <i class="text-in icon icon-close"></i>
+                    <span>]</span>
+                </a>
+            </li>
+        </ul>
+        <div class="bar-right">
+            <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter"
+                data-mobile-sites="weibo,qq,qzone"></div>
+        </div>
+    </div>
+</nav>
+
+
+</main><footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+<ul class="social-links">
+    <li><a href="https://github.com/wzgl998877/" target="_blank" title="github" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-github"></i></a></li>
+    <li><a href="https://wzgl998877.github.io/index.xml" target="_blank" title="rss" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-rss"></i></a></li>
+</ul>
+  <div class="copyright">
+    &copy;2022  -
+    2022
+    <div class="publishby">
+        Theme by <a href="https://github.com/wzgl998877/" target="_blank"> microzheng </a>base on<a href="https://github.com/xiaoheiAh/hugo-theme-pure" target="_blank"> pure</a>.
+    </div>
+    
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_SVG"></script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+            showMathMenu: false, //disables context menu
+            tex2jax: {
+            inlineMath: [ ['$','$'], ['\\(','\\)'] ]
+           }
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+<script>
+    window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/highlight.min.js"></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/python.min.js" defer></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/javascript.min.js" defer></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/java.min.js" defer></script><script>
+    hljs.configure({
+        tabReplace: '    ', 
+        classPrefix: ''     
+        
+    })
+    hljs.initHighlightingOnLoad();
+</script>
+<script src="https://wzgl998877.github.io/js/application.min.a94ab19cb63a95c8d7fbd7b85cab3ddeea8c369bdf75b9cab6708787ead123af.js"></script>
+<script src="https://wzgl998877.github.io/js/plugin.min.19c5bcb2fb0789ab4f2b7834e5ceb5e92635645605bab902c1024b25f1502364.js"></script>
+
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(未命名)',
+            },
+            ROOT_URL: 'https:\/\/wzgl998877.github.io\/',
+            CONTENT_URL: 'https:\/\/wzgl998877.github.io\/\/searchindex.json ',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script type="text/javascript" src="https://wzgl998877.github.io/js/insight.min.4a2d52de4bfff73e0c688404fe3d17c9a3ae12d9888e1e1ac9c690e4890de2ded50fe55f2b819c2ba55435a76f396f3ea6805765f0b0af5635cdf74ea459eab0.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+<script>
+    tocbot.init({
+        
+        tocSelector: '.js-toc',
+        
+        contentSelector: '.js-toc-content',
+        
+        headingSelector: 'h1, h2, h3',
+        
+        hasInnerContainers: true,
+    });
+</script>
+
+
+  </body>
+</html>
