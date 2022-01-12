@@ -12,6 +12,15 @@
     
     
     <item>
+      <title>Mysql是怎样运行的</title>
+      <link>https://wzgl998877.github.io/2022/01/mysql%E6%98%AF%E6%80%8E%E6%A0%B7%E8%BF%90%E8%A1%8C%E7%9A%84/</link>
+      <pubDate>Wed, 12 Jan 2022 11:24:40 +0800</pubDate>
+      
+      <guid>https://wzgl998877.github.io/2022/01/mysql%E6%98%AF%E6%80%8E%E6%A0%B7%E8%BF%90%E8%A1%8C%E7%9A%84/</guid>
+      <description>[TOC] 本篇文章是(Mysql是怎样运行的)阅读笔记，这本书网上很多人的评价都很高，看了下书也不是很厚，所以读读。 MySQL的架构 mysql 工作的整体流程</description>
+    </item>
+    
+    <item>
       <title>Java 并发编程</title>
       <link>https://wzgl998877.github.io/2022/01/java-%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/</link>
       <pubDate>Sun, 09 Jan 2022 11:24:40 +0800</pubDate>

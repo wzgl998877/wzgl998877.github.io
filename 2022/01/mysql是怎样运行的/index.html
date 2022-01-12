@@ -1,0 +1,1458 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <title>
+        Mysql是怎样运行的 - Pure theme for Hugo
+      </title>
+        <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    
+    <meta name="theme-color" content="#000000" />
+    
+    <meta http-equiv="window-target" content="_top" />
+    
+    
+    <meta name="description" content="[TOC] 本篇文章是(Mysql是怎样运行的)阅读笔记，这本书网上很多人的评价都很高，看了下书也不是很厚，所以读读。 MySQL的架构 mysql 工作的整体流程" />
+    <meta name="generator" content="Hugo 0.91.2 with theme pure" />
+    <title>Mysql是怎样运行的 - Pure theme for Hugo</title>
+    
+    
+    <link rel="stylesheet" href="https://wzgl998877.github.io/css/style.min.e64d754037c0ee0ec4e20ab1d6f07740ace61729bc03850559b8caa21ae4a597.css">
+    
+    <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/9.15.10/styles/github.min.css" async>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css" async>
+    <meta property="og:title" content="Mysql是怎样运行的" />
+<meta property="og:description" content="[TOC] 本篇文章是(Mysql是怎样运行的)阅读笔记，这本书网上很多人的评价都很高，看了下书也不是很厚，所以读读。 MySQL的架构 mysql 工作的整体流程" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wzgl998877.github.io/2022/01/mysql%E6%98%AF%E6%80%8E%E6%A0%B7%E8%BF%90%E8%A1%8C%E7%9A%84/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-01-12T11:24:40+08:00" />
+<meta property="article:modified_time" content="2022-01-12T11:24:40+08:00" />
+
+<meta itemprop="name" content="Mysql是怎样运行的">
+<meta itemprop="description" content="[TOC] 本篇文章是(Mysql是怎样运行的)阅读笔记，这本书网上很多人的评价都很高，看了下书也不是很厚，所以读读。 MySQL的架构 mysql 工作的整体流程"><meta itemprop="datePublished" content="2022-01-12T11:24:40+08:00" />
+<meta itemprop="dateModified" content="2022-01-12T11:24:40+08:00" />
+<meta itemprop="wordCount" content="22858">
+<meta itemprop="keywords" content="mysql," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Mysql是怎样运行的"/>
+<meta name="twitter:description" content="[TOC] 本篇文章是(Mysql是怎样运行的)阅读笔记，这本书网上很多人的评价都很高，看了下书也不是很厚，所以读读。 MySQL的架构 mysql 工作的整体流程"/>
+
+    <!--[if lte IE 9]>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+      <![endif]-->
+
+    <!--[if lt IE 9]>
+        <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+      <![endif]-->
+  </head>
+
+  
+  
+
+  <body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage"><header class="header" itemscope itemtype="http://schema.org/WPHeader">
+    <div class="slimContent">
+      <div class="navbar-header">
+        <div class="profile-block text-center">
+          <a id="avatar" href="https://github.com/wzgl998877/" target="_blank">
+            <img class="img-circle img-rotate" src="https://wzgl998877.github.io/avatar.png" width="200" height="200">
+          </a>
+          <h2 id="name" class="hidden-xs hidden-sm">microzheng</h2>
+          <h3 id="title" class="hidden-xs hidden-sm hidden-md">努力会说谎，但努力不会白费</h3>
+          <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i>Shenzhen China</small>
+        </div><div class="search" id="search-form-wrap">
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i
+                        class="icon icon-search"></i></button>
+            </span>
+        </div>
+        <div class="ins-search">
+            <div class="ins-search-mask"></div>
+            <div class="ins-search-container">
+                <div class="ins-input-wrapper">
+                    <input type="text" class="ins-search-input" placeholder="想要查找什么..."
+                        x-webkit-speech />
+                    <button type="button" class="close ins-close ins-selectable" data-dismiss="modal"
+                        aria-label="Close"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="ins-section-wrapper">
+                    <div class="ins-section-container"></div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+        <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+        <ul class="nav navbar-nav main-nav">
+            <li class="menu-item menu-item-home">
+                <a href="/">
+                    <i class="icon icon-home-fill"></i>
+                  <span class="menu-title">主页</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-archives">
+                <a href="/posts/">
+                    <i class="icon icon-archives-fill"></i>
+                  <span class="menu-title">归档</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-categories">
+                <a href="/categories/">
+                    <i class="icon icon-folder"></i>
+                  <span class="menu-title">分类</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-tags">
+                <a href="/tags/">
+                    <i class="icon icon-tags"></i>
+                  <span class="menu-title">标签</span>
+                </a>
+            </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+<aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content"><p>enjoy~</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+      <div class="widget">
+    <h3 class="widget-title"> 分类</h3>
+    <div class="widget-body">
+        <ul class="category-list">
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/java/" class="category-list-link">java</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/linux/" class="category-list-link">linux</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/" class="category-list-link">中间件</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E5%B8%B8%E7%94%A8%E6%A1%86%E6%9E%B6/" class="category-list-link">常用框架</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="category-list-link">数据库</a><span class="category-list-count">2</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E6%97%A5%E5%B8%B8%E6%80%BB%E7%BB%93/" class="category-list-link">日常总结</a><span class="category-list-count">2</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E7%AE%97%E6%B3%95/" class="category-list-link">算法</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/" class="category-list-link">系统设计</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/" class="category-list-link">网络编程</a><span class="category-list-count">3</span></li>
+        </ul>
+    </div>
+</div>
+      <div class="widget">
+    <h3 class="widget-title"> 标签</h3>
+    <div class="widget-body">
+        <ul class="tag-list">
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/http/" class="tag-list-link">http</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/java%E5%9F%BA%E7%A1%80/" class="tag-list-link">java基础</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/java%E5%B9%B6%E5%8F%91/" class="tag-list-link">java并发</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/jvm/" class="tag-list-link">jvm</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/leetcode/" class="tag-list-link">leetcode</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/linux%E5%91%BD%E4%BB%A4/" class="tag-list-link">linux命令</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/mybatis/" class="tag-list-link">mybatis</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/mysql/" class="tag-list-link">mysql</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/netty/" class="tag-list-link">netty</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/rpc/" class="tag-list-link">rpc</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/spring/" class="tag-list-link">spring</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/websocket/" class="tag-list-link">websocket</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" class="tag-list-link">消息队列</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="tag-list-link">设计模式</a><span
+                    class="tag-list-count">1</span></li>
+            
+        </ul>
+
+    </div>
+</div>
+      
+<div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+        <ul class="recent-post-list list-unstyled no-thumbnail">
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://wzgl998877.github.io/2022/01/mysql%E6%98%AF%E6%80%8E%E6%A0%B7%E8%BF%90%E8%A1%8C%E7%9A%84/" class="title">Mysql是怎样运行的</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2022-01-12 11:24:40 &#43;0800 CST" itemprop="datePublished">2022-01-12</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://wzgl998877.github.io/2022/01/java-%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" class="title">Java 并发编程</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2022-01-09 11:24:40 &#43;0800 CST" itemprop="datePublished">2022-01-09</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://wzgl998877.github.io/2022/01/java-%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3%E5%AD%A6%E4%B9%A0/" class="title">Java 编程思想学习</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2022-01-09 11:24:40 &#43;0800 CST" itemprop="datePublished">2022-01-09</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://wzgl998877.github.io/2022/01/leetcode/" class="title">LeetCode</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2022-01-09 11:24:40 &#43;0800 CST" itemprop="datePublished">2022-01-09</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://wzgl998877.github.io/2022/01/linux%E5%B7%A5%E4%BD%9C%E6%97%A5%E5%B8%B8%E5%91%BD%E4%BB%A4/" class="title">Linux工作日常命令</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2022-01-09 11:24:40 &#43;0800 CST" itemprop="datePublished">2022-01-09</time>
+                    </p>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+  </div>
+</aside>
+
+    
+    
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <h4 class="toc-title">文章目录</h4>
+    <nav id="toc" class="js-toc toc">
+
+    </nav>
+  </div>
+</aside>
+<main class="main" role="main"><div class="content">
+  <article id="-" class="article article-type-" itemscope
+    itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      <h1 itemprop="name">
+  <a
+    class="article-title"
+    href="/2022/01/mysql%E6%98%AF%E6%80%8E%E6%A0%B7%E8%BF%90%E8%A1%8C%E7%9A%84/"
+    >Mysql是怎样运行的</a
+  >
+</h1>
+
+      <div class="article-meta">
+        
+<span class="article-date">
+  <i class="icon icon-calendar-check"></i>&nbsp;
+<a href="https://wzgl998877.github.io/2022/01/mysql%E6%98%AF%E6%80%8E%E6%A0%B7%E8%BF%90%E8%A1%8C%E7%9A%84/" class="article-date">
+  <time datetime="2022-01-12 11:24:40 &#43;0800 CST" itemprop="datePublished">2022-01-12</time>
+</a>
+</span>
+<span class="article-category">
+  <i class="icon icon-folder"></i>&nbsp;
+  <a class="article-category-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"> 数据库 </a>
+</span>  
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>&nbsp;
+    <a class="article-tag-link" href="/tags/mysql/"> mysql </a>
+  </span>
+
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 22858字</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 46分 </span>
+      </div>
+    </div>
+    <div class="article-entry marked-body js-toc-content" itemprop="articleBody">
+      <p>[TOC]</p>
+<p>本篇文章是(Mysql是怎样运行的)阅读笔记，这本书网上很多人的评价都很高，看了下书也不是很厚，所以读读。</p>
+<h2 id="mysql的架构">MySQL的架构</h2>
+<p>mysql 工作的整体流程为，客户端进程向服务器进程发送一段文本（MySQL语句），服务器进程处理后再向客户端进程发送一段文本（处理结果）。如图：</p>
+<p><img src="../img/image-20220111152436653.png" alt="image-20220111152436653"></p>
+<h3 id="连接管理">连接管理</h3>
+<p>​	客户端进程可以采用我们上边介绍的TCP/IP 、命名管道或共享内存、Unix域套接字这几种方式之一来与服务
+器进程建立连接，每当有一个客户端进程连接到服务器进程时，服务器进程都会创建一个线程来专门处理与这个
+客户端的交互，当该客户端退出时会与服务器断开连接，服务器并不会立即把与该客户端交互的线程销毁掉，而
+是把它缓存起来，在另一个新的客户端再进行连接时，把这个缓存的线程分配给该新客户端。这样就起到了不频
+繁创建和销毁线程的效果，从而节省开销。
+​	<strong>当连接建立后，与该客户端关联的服务器线程会一直等待客户端发送过来的请求， MySQL 服务器接收到的请求只是一个文本消息</strong>，该文本消息还要经过各种处理，才能转化为mysql能识别的语句。</p>
+<h3 id="解析与优化">解析与优化</h3>
+<p>​	 MySQL 服务器获得了文本形式的请求后，接着 还要经过九九八十一难的处理，其中的几个比较重要的部分分别是查询缓存、语法解析和查询优化。</p>
+<h4 id="查询缓存">查询缓存</h4>
+<p>​	<strong>MySQL  服务器程序处理查询请求时，会把刚刚处理过的查询请求和结果缓存起来，如果下一次有一模一样的请求过来，直接从缓存中查找结果就好了</strong>，就不用再傻呵呵的去底层的表中查找了。这个查询缓存可以在不同客户端之间共享，也就是说如果客户端A刚刚查询了一个语句，而客户端B之后发送了同样的查询请求，那么客户端B的这次查询就可以直接使用查询缓存中的数据。
+​	当然， MySQL 服务器并没有人聪明，如果两个查询请求在任何字符上的不同（例如：空格、注释、大小写），都会导致缓存不会命中。另外，如果查询请求中包含某些系统函数、用户自定义变量和函数、一些系统表，如
+mysql 、information_schema、 performance_schema 数据库中的表，那这个请求就不会被缓存。以某些系统函数举例，可能同样的函数的两次调用会产生不一样的结果，比如函数NOW ，每次调用都会产生最新的当前时间，如果在一个查询请求中调用了这个函数，那即使查询请求的文本信息都一样，那不同时间的两次查询也应该得到不同的结果，如果在第一次查询时就缓存了，那第二次查询的时候直接使用第一次查询的结果就是错误的！
+不过既然是缓存，那就有它缓存失效的时候。</p>
+<p>​	<strong>MySQL的缓存系统会监测涉及到的每张表，只要该表的结构或者数据被修改</strong>，如对该表使用了INSERT 、 UPDATE 、DELETE 、TRUNCATE TABLE 、ALTER TABLE 、DROP TABLE 或 DROP DATABASE 语句，<strong>那使用该表的所有高速缓存查询都将变为无效并从高速缓存中删除</strong>！</p>
+<blockquote>
+<p>虽然查询缓存有时可以提升系统性能，但也不得不因维护这块缓存而造成一些开销，比如<strong>每次都要去查</strong>
+<strong>询缓存中检索，查询请求处理完需要更新查询缓存，维护该查询缓存对应的内存区域</strong>。从MySQL 5.7.20
+开始，不推荐使用查询缓存，并在MySQL 8.0中删除。</p>
+</blockquote>
+<h4 id="语法解析">语法解析</h4>
+<p>​	如果查询缓存没有命中，接下来就需要进入正式的查询阶段了。因为客户端程序发送过来的请求只是一段文本而已，所以MySQL 服务器程序首先要对这段文本做分析，判断请求的语法是否正确，然后从文本中将要查询的表、各种查询条件都提取出来放到MySQL 服务器内部使用的一些数据结构上来。</p>
+<h4 id="查询优化">查询优化</h4>
+<p>​	语法解析之后，服务器程序获得到了需要的信息，比如要查询的列是哪些，表是哪个，搜索条件是什么等等，但光有这些是不够的，<strong>因为我们写的MySQL 语句执行起来效率可能并不是很高， MySQL 的优化程序会对我们的语句做一些优化</strong>，如外连接转换为内连接、表达式简化、子查询转为连接等。<strong>优化的结果就是生成一个执行计划，这个执行计划表明了应该使用哪些索引进行查询，表之间的连接顺序是啥样的。我们可以使用EXPLAIN 语句来查看某个语句的执行计划</strong></p>
+<h3 id="存储引擎">存储引擎</h3>
+<p>​	截止到服务器程序完成了查询优化为止，还没有真正的去访问真实的数据表， MySQL 服务器把数据的存储和提取操作都封装到了一个叫存储引擎的模块里。我们知道表是由一行一行的记录组成的，但这只是一个逻辑上的概
+念，物理上如何表示记录，怎么从表中读取数据，怎么把数据写入具体的物理存储器上，这都是存储引擎负责
+的事情。为了实现不同的功能， MySQL 提供了各式各样的存储引擎，不同存储引擎管理的表具体的存储结构
+可能不同，采用的存取算法也可能不同。</p>
+<p>​	为了管理方便，人们把连接管理、查询缓存、语法解析、查询优化这些并不涉及真实数据存储的功能划分
+为MySQL server 的功能，把真实存取数据的功能划分为存储引擎的功能。<strong>各种不同的存储引擎向上边的MySQL</strong>
+<strong>server 层提供统一的调用接口（也就是存储引擎API）</strong>，包含了几十个底层函数，像&quot;读取索引第一条内容&quot;、&ldquo;读
+取索引下一条内容&rdquo;、&ldquo;插入记录&quot;等等。</p>
+<p>​	常用的存储引擎有：ARCHIVE、BLACKHOLE、InnoDB、MyISAM等，最常用的就是InnoDB 和MyISAM，<strong>其中InnoDB 是MySQL 默认的存储引擎</strong>。</p>
+<h2 id="深入研究innodb">深入研究InnoDB</h2>
+<p>​	<strong>InnoDB 是一个将表中的数据存储到磁盘上的存储引擎，所以即使关机后重启我们的数据还是存在的</strong>。<strong>而真正处</strong>
+<strong>理数据的过程是发生在内存中的，所以需要把磁盘中的数据加载到内存中，如果是处理写入或修改请求的话，还</strong>
+<strong>需要把内存中的内容刷新到磁盘上</strong>。而我们知道读写磁盘的速度非常慢，和内存读写差了几个数量级，所以当我
+们想从表中获取某些记录时， InnoDB 存储引擎需要一条一条的把记录从磁盘上读出来么？不，那样会慢死，
+<strong>InnoDB 采取的方式是：将数据划分为若干个页，以页作为磁盘和内存之间交互的基本单位，InnoDB中页的大小</strong>
+<strong>一般为 16 KB。也就是在一般情况下，一次最少从磁盘中读取16KB的内容到内存中，一次最少把内存中的16KB</strong>
+<strong>内容刷新到磁盘中</strong></p>
+<h3 id="innodb行格式">InnoDB行格式</h3>
+<p>​	我们平时是以记录为单位来向表中插入数据的，这些记录在磁盘上的存放方式也被称为<strong>行格式或者记录格式</strong>。
+设计InnoDB 存储引擎的大叔们到现在为止设计了4种不同类型的行格式，分别是Compact 、Redundant 、
+Dynamic 和Compressed 行格式。</p>
+<h4 id="compact">Compact</h4>
+<p><img src="../img/image-20220111160208062.png" alt="image-20220111160208062"></p>
+<p>​	从图中可以看出来，一条完整的记录其实可以被分为记录的<strong>额外信息</strong>和记录的<strong>真实数据</strong>两大部分，下边我
+们详细看一下这两部分的组成。</p>
+<h5 id="记录的额外信息">记录的额外信息</h5>
+<p>​	这部分信息是服务器为了描述这条记录而不得不额外添加的一些信息，这些额外信息分为3类，分别是<strong>变长字段</strong>
+<strong>长度列表、NULL值列表和记录头信息</strong>，我们分别看一下。</p>
+<p><strong>变长字段长度列表</strong></p>
+<p>​	<strong>MySQL 支持一些变长的数据类型，比如VARCHAR(M) 、VARBINARY(M) 、各种TEXT 类型，各种BLOB 类型</strong>，我们也可以把拥有这些数据类型的列称为变长字段，<strong>变长字段中存储多少字节的数据是不固定的</strong>，所以我
+们在存储真实数据的时候需要顺便把<strong>这些数据占用的字节数也存起来</strong>，这样才不至于把MySQL 服务器搞懵，所以
+这些变长字段占用的存储空间分为两部分：</p>
+<ol>
+<li>真正的数据内容</li>
+<li>占用的字节数</li>
+</ol>
+<p>在Compact 行格式中，<strong>把所有变长字段的真实数据占用的字节长度都存放在记录的开头部位，从而形成一个变长</strong>
+<strong>字段长度列表，各变长字段数据占用的字节数按照列的顺序逆序存放，我们再次强调一遍，是逆序存放</strong>！</p>
+<p>我们拿record_format_demo 表中的第一条记录来举个例子。因为record_format_demo 表的c1 、c2 、c4 列
+<strong>都是VARCHAR(10) 类型的，也就是变长的数据类型，所以这三个列的值的长度都需要保存在记录开头处</strong>，因为
+record_format_demo 表中的各个列都使用的是ascii 字符集，所以每个字符只需要1个字节来进行编码，来看
+一下第一条记录各变长字段内容的长度：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">列名</th>
+<th style="text-align:center">存储内容</th>
+<th style="text-align:center">内容长度（十进制表示）</th>
+<th style="text-align:center">内容长度（十六进制表示）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">c1</td>
+<td style="text-align:center">&lsquo;aaaa&rsquo;</td>
+<td style="text-align:center">4</td>
+<td style="text-align:center">0x04</td>
+</tr>
+<tr>
+<td style="text-align:center">c2</td>
+<td style="text-align:center">&lsquo;bbb&rsquo;</td>
+<td style="text-align:center">3</td>
+<td style="text-align:center">0x03</td>
+</tr>
+<tr>
+<td style="text-align:center">c4</td>
+<td style="text-align:center">&rsquo;d'</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">0x01</td>
+</tr>
+</tbody>
+</table>
+<p>又因为这些长度值需要按照列的逆序存放，所以最后变长字段长度列表的字节串用十六进制表示的效果就是
+（各个字节之间实际上没有空格，用空格隔开只是方便理解）：
+01 03 04
+把这个字节串组成的变长字段长度列表填入上边的示意图中的效果就是：</p>
+<p><img src="../img/image-20220111163920752.png" alt="image-20220111163920752"></p>
+<p>由于第一行记录中c1 、c2 、c4 列中的字符串都比较短，<strong>也就是说内容占用的字节数比较小，用1个字节就可</strong>
+<strong>以表示</strong>，但是如果变长列的内容占用的字节数比较多，可能就需要用2个字节来表示。具体用1个还是2个字节来
+表示真实数据占用的字节数， InnoDB 有它的一套规则，我们首先声明一下W 、M 和L 的意思：</p>
+<ol>
+<li>假设某个字符集中表示一个字符最多需要使用的字节数为W ，也就是使用SHOW CHARSET 语句的结果中的
+Maxlen 列，比方说utf8 字符集中的W 就是3 ， gbk 字符集中的W 就是2 ， ascii 字符集中的W 就是1 。</li>
+<li>对于变长类型VARCHAR(M) 来说，这种类型表示能存储最多M 个字符（注意是字符不是字节），所以这个类
+型能表示的字符串最多占用的字节数就是M×W 。</li>
+<li>假设它实际存储的字符串占用的字节数是L 。</li>
+</ol>
+<blockquote>
+<p>所以确定使用1个字节还是2个字节表示真正字符串占用的字节数的规则就是这样：
+如果M×W &lt;= 255 ，那么使用1个字节来表示真正字符串占用的字节数，为什么呢？很简单因为一个字节由8位二进制构成而8位二进制最多也只能表示256这个数，（<strong>但还有一位是标志位所以就是255</strong>）。</p>
+<p>​	如果M×W &gt; 255 ，则分为两种情况：
+​	如果L &lt;= 127 ，则用1个字节来表示真正字符串占用的字节数。
+​	如果L &gt; 127 ，则用2个字节来表示真正字符串占用的字节数。
+InnoDB在读记录的变长字段长度列表时先查看表结构，如果某个变长字段允许存储的最大字节
+数大于255时，该怎么区分它正在读的某个字节是一个单独的字段长度还是半个字段长度呢？
+设计InnoDB的大叔使用该<strong>字节的第一个二进制位作为标志位：如果该字节的第一个位为0，那</strong>
+**该字节就是一个单独的字段长度（**使用一个字节表示不大于127的二进制的第一个位都为0），
+<strong>如果该字节的第一个位为1，那该字节就是半个字段长度</strong>。
+对于一些占用字节数非常多的字段，比方说某个字段长度大于了16KB，那么如果该记录在单个
+页面中无法存储时，InnoDB会把一部分数据存放到所谓的溢出页中（我们后边会唠叨），在变
+长字段长度列表处只存储留在本页面中的长度，所以使用两个字节也可以存放下来。</p>
+</blockquote>
+<p>总结一下就是说：<strong>如果该可变字段允许存储的最大字节数（ M×W ）超过255字节并且真实存储的字节数（ L ）</strong>
+<strong>超过127字节，则使用2个字节，否则使用1个字节</strong>。</p>
+<p><strong>NULL值列表</strong></p>
+<p>​	我们知道表中的某些列可能存储NULL 值，如果把这些NULL 值都放到记录的真实数据中存储会很占地方，所
+以Compact 行格式把这些值为NULL 的列统一管理起来，存储到NULL 值列表中，它的处理过程是这样的</p>
+<ol>
+<li>首先统计表中允许存储NULL 的列有哪些。
+我们前边说过，主键列、被NOT NULL 修饰的列都是不可以存储NULL 值的，所以在统计的时候不会把这些列
+算进去。比方说表record_format_demo 的3个列c1 、c3 、c4 都是允许存储NULL 值的，而c2 列是被
+NOT NULL 修饰，不允许存储NULL 值。</li>
+<li><strong>如果表中没有允许存储 NULL 的列，则 NULL值列表 也不存在了</strong>，否则将每个允许存储NULL 的列对应一个
+二进制位，二进制位按照列的顺序逆序排列，二进制位表示的意义如下：
+<strong>二进制位的值为1 时，代表该列的值为NULL 。</strong>
+<strong>二进制位的值为0 时，代表该列的值不为NULL 。</strong>
+再一次强调，二进制位按照列的顺序逆序排列，所以第一个列c1 和最后一个二进制位对应。：</li>
+</ol>
+<p><img src="../img/image-20220111172042816.png" alt="image-20220111172042816"></p>
+<ol start="3">
+<li><strong>MySQL 规定NULL值列表必须用整数个字节的位表示</strong>，如果使用的二进制位个数不是整数个字节，则在字节
+的高位补0 。表record_format_demo 只有3个值允许为NULL 的列，对应3个二进制位，不足一个字节，所以在字节的高位补0 ，效果就是这样：</li>
+</ol>
+<p><img src="../img/image-20220111172201192.png" alt="image-20220111172201192"></p>
+<p>知道了规则后，再看看null值列表应该怎么存储，因为只有c1 、c3 、c4 都是允许存储NULL 值的所以只需要一个字节。</p>
+<p>对于第一条记录来说， c1 、c3 、c4 这3个列的值都不为NULL ，所以它们对应的二进制位都是0 ，用十六进制表示就是0x00 
+对于第二条记录来说， c1 、c3 、c4 这3个列中c3 和c4 的值都为NULL ，用十六进制表示就是： 0x06 。所以添加后为</p>
+<p><img src="../img/image-20220111172546954.png" alt="image-20220111172546954"></p>
+<p><strong>记录头信息</strong></p>
+<p>​	除了变长字段长度列表、NULL值列表之外，还有一个用于描述记录的记录头信息，它是由固定的5 个字节组
+成。5 个字节也就是40 个二进制位，不同的位代表不同的意思</p>
+<h5 id="记录的真实数据">记录的真实数据</h5>
+<p>​	对于record_format_demo 表来说， 记录的真实数据除了c1 、c2 、c3 、c4 这几个我们自己定义的列的数据
+以外， MySQL 会为每个记录默认的添加一些列（也称为隐藏列），具体的列如下：
+实际上这几个列的真正名称其实是：DB_ROW_ID （行ID唯一标识一条记录）、DB_TRX_ID（事务ID）、DB_ROLL_PTR（回滚指针）。
+这里需要提一下InnoDB 表对主键的生成策略：优<strong>先使用用户自定义主键作为主键，如果用户没有定义主键，则</strong>
+<strong>选取一个Unique 键作为主键，如果表中连Unique 键都没有定义的话，则InnoDB 会为表默认添加一个名为</strong>
+<strong>row_id 的隐藏列作为主键</strong>。所以我们从上表中可以看出：InnoDB存储引擎会为每条记录都添加 transaction_id
+和 roll_pointer 这两个列，但是 row_id 是可选的（在没有自定义主键以及Unique键的情况下才会添加该列）。
+这些隐藏列的值不用我们操心， InnoDB 存储引擎会自己帮我们生成的。加上记录的真实数据的两个记录为：</p>
+<p><img src="../img/image-20220111181502066.png" alt="image-20220111181502066"></p>
+<p>看这个图的时候我们需要注意几点：</p>
+<ol>
+<li>表record_format_demo 使用的是ascii 字符集，所以0x61616161 就表示字符串&rsquo;aaaa' ， 0x626262 就表
+示字符串&rsquo;bbb' ，以此类推。</li>
+<li><strong>注意第1条记录中c3 列的值，它是CHAR(10) 类型的，它实际存储的字符串是： &lsquo;cc&rsquo; ，而ascii 字符集中</strong>
+<strong>的字节表示是'0x6363' ，虽然表示这个字符串只占用了2个字节</strong>，但整个c3 列仍然占用了10个字节的空
+间，<strong>除真实数据以外的8个字节的统统都用空格字符填充，空格字符在ascii 字符集的表示就是0x20</strong> 。</li>
+<li>注意第2条记录中c3 和c4 列的值都为NULL ，它们被存储在了前边的NULL值列表处，在记录的真实数据处
+就不再冗余存储，从而节省存储空间。</li>
+</ol>
+<p>对于 CHAR(M) 类型的列来说，当列采用的是定长字符集时，该列占用的字节数不会被加到变长字段长度列表，<strong>而如果采用变长字符集时，该列占用的字节数也会被加到变长字段长度列表。</strong></p>
+<p>​	另外有一点还需要注意，变长字符集的CHAR(M) 类型的列要求至少占用M 个字节，而VARCHAR(M) 却没有这个要求。比方说对于使用u<strong>tf8 字符集的CHAR(10) 的列来说，该列存储的数据字节长度的范围是10～30个字节</strong>。即
+使我们向该列中存储一个空字符串也会占用10 个字节，<strong>这是怕将来更新该列的值的字节长度大于原有值的字节</strong>
+<strong>长度而小于10个字节时，可以在该记录处直接更新，而不是在存储空间中重新分配一个新的记录空间，导致原有</strong>
+<strong>的记录空间成为所谓的碎片。</strong></p>
+<h5 id="行溢出数据">行溢出数据</h5>
+<p>​	我们知道对于<strong>VARCHAR(M) 类型的列最多可以占用65535 个字节</strong>。其中的M 代表该类型最多存储的字符数量，如果我们使用ascii 字符集的话，一个字符就代表一个字节。为什么最多是65535呢？很简单，因为前面讲过的</p>
+<p><strong>如果该可变字段允许存储的最大字节数（ M×W ）超过255字节并且真实存储的字节数（ L ）</strong>
+<strong>超过127字节，则使用2个字节，否则使用1个字节</strong>。<strong>也就是说一个可变字段允许存储的最大字节数的长度最多只能用2个字节存储，而两个字节能表示的最大长度就是256*256=65536然后需要减去一个标志位</strong>。</p>
+<p>​	MySQL 对一条记录占用的最大存储空间是有限制的，除了BLOB 或者TEXT 类型的列之外，其他所有的列（不包括隐藏列和记录头信息）占用的字节长度加起来不能超过65535 个字节。所以MySQL 服务器建议我们把存储类型改为TEXT 或者BLOB 的类型。这个65535 个字节除了列本身的数据之外，还包括一些其他的数据（ storage overhead ），比如说我们为了存储一个VARCHAR(M) 类型的列，其实需要占用3部分存储空间：</p>
+<ul>
+<li>真实数据</li>
+<li>真实数据占用字节的长度(<strong>变长字段长度列表最多为两个字节</strong>)</li>
+<li>NULL 值标识，如果该列有NOT NULL 属性则可以没有这部分存储空间（<strong>NULL值列表，一个字节</strong>）</li>
+</ul>
+<blockquote>
+<p>因此，如果该VARCHAR(M)类型的列没有NOT NULL 属性，那最多只能存储65532 个字节的数据（65535-2-1），而根据字符集的不同，最大能存储的字符数也不同，比如gbk 字符集表示一个字符最多需要2 个字
+节，那在该字符集下， M 的最大取值就是32766 （也就是：65532/2），也就是说最多能存储32766 个字符；utf8 字符集表示一个字符最多需要3 个字节，那在该字符集下， M 的最大取值就是21844 ，就是说最多能存储21844 （也就是：65532/3）个字符。</p>
+</blockquote>
+<h5 id="记录中的数据太多产生的溢出">记录中的数据太多产生的溢出</h5>
+<p>​	MySQL 中磁盘和内存交互的基本单位是页，也就是说MySQL 是以页为基本单位来管理存储空间的，我们的记录都会被分配到某个页中存储。<strong>而一个页的大小一般是16KB ，也就是16384 字节，而一个VARCHAR(M) 类</strong>
+<strong>型的列就最多可以存储65532 个字节，这样就可能造成一个页存放不了一条记录</strong>的尴尬情况</p>
+<p>​	对于Compact 和Reduntant 行格式来说，<strong>如果某一列中的数据非常多的话，在本记录的真实数据处只会存储该列的前768 个字节的数据和一个指向其他页的地址，然后把剩下的数据存放到其他页中，这个过程也叫做行溢出，存储超出768 字节的那些页面也被称为溢出页</strong></p>
+<p><strong><img src="../img/image-20220112104651557.png" alt="image-20220112104651557"></strong></p>
+<blockquote>
+<p>不只是 VARCHAR(M) 类型的列，其他的 TEXT、BLOB 类型的列在存储数据非常多的时候也会发生行溢出。</p>
+</blockquote>
+<p>总结：<strong>对于Compact 来说，所占用的额外信息最多为27 字节</strong>：</p>
+<ul>
+<li>
+<p>2个字节用于存储真实数据的长度（最多）</p>
+</li>
+<li>
+<p>1个字节用于存储列是否是NULL值（如果该列有NOT NULL 属性则可以没有这部分存储空间）</p>
+</li>
+<li>
+<p>5个字节大小的头信息</p>
+</li>
+<li>
+<p>6个字节的row_id 列（在没有自定义主键以及Unique键的情况下）</p>
+</li>
+<li>
+<p>6个字节的transaction_id 列</p>
+</li>
+<li>
+<p>7个字节的roll_pointer 列</p>
+</li>
+</ul>
+<h4 id="dynamic和compressed行格式">Dynamic和Compressed行格式</h4>
+<p>​	Dynamic 和Compressed 行格式 ，这俩行格式和Compact 行格式挺像，只不过在处理行溢出数据时有点儿分歧，它们不会在记录的真实数据处存储字段真实数据的前768 个字节，而是把所有的字节都存储到其他页面中，只在记录的真实数据处存储其他页面的地址，就像这样：</p>
+<p><img src="../img/image-20220112105546186.png" alt="image-20220112105546186"></p>
+<p><strong>其中mysql5.6 默认使用 Compact，mysql 5.7 默认使用Dynamic</strong></p>
+<h3 id="innodb数据页结构">InnoDB数据页结构</h3>
+<p>​	<strong>页是InnoDB 管理存储空间的基本单位，一个页的大小一般是16KB</strong> 。InnoDB 为了不同的目的而设计了许多种不同类型的页，比如存放表空间头部信息的页，存放Insert Buffer信息的页，存放INODE 信息的页，存放undo 日志信息的页等。我们聚焦的是那些<strong>存放我们表中记录的那种类型的页，官方称这种存放记录的页为索引（ INDEX ）页</strong>。数据页代表的这块16KB 大小的存储空间可以被划分为多个部分，不同部分有不同的功能，各个部分如图所示：</p>
+<p><img src="../img/image-20220112112222964.png" alt="image-20220112112222964"></p>
+<h4 id="记录在页中的存储">记录在页中的存储</h4>
+<p>​	在页的7个组成部分中，我们自己存储的记录会按照我们指定的<strong>行格式</strong>存储到<strong>User Records</strong> 部分。但是在一开
+始生成页的时候，其实并没有User Records 这个部分，每当我们插入一条记录，都会从Free Space 部分，也就
+是尚未使用的存储空间中申请一个记录大小的空间划分到User Records 部分，当Free Space 部分的空间全部
+被User Records 部分替代掉之后，也就意味着这个页使用完了，如果还有新的记录插入的话，就需要去申请新
+的页了，这个过程的图示如下：</p>
+<p><img src="../img/image-20220112112438399.png" alt="image-20220112112438399"></p>
+<p>为了更好的管理在User Records 中的这些记录， InnoDB 可费了一番力气呢，在哪费力气了呢？不就是把记录按
+照指定的行格式一条一条摆在User Records 部分么？其实这话还得从记录行格式的记录头信息中说起。</p>
+<h5 id="记录头信息的秘密">记录头信息的秘密</h5>
+<p><img src="../img/image-20220112140213884.png" alt="image-20220112140213884"></p>
+<p>由上图可以看出记录头信息中共有5个字节的数据，记录头信息中各个属性的大体意思为（基于Compact 行格式）：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">名称</th>
+<th style="text-align:center">大小（单位：bit 位）</th>
+<th style="text-align:center">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">预留位1</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">没有使用</td>
+</tr>
+<tr>
+<td style="text-align:center">预留位2</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">没有使用</td>
+</tr>
+<tr>
+<td style="text-align:center">delete_mask</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">标记该记录是否被删除</td>
+</tr>
+<tr>
+<td style="text-align:center">min_rec_mask</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">B+树的每层非叶子节点中的最小记录都会添加该标记</td>
+</tr>
+<tr>
+<td style="text-align:center">n_owned</td>
+<td style="text-align:center">4</td>
+<td style="text-align:center">表示当前记录拥有的记录数</td>
+</tr>
+<tr>
+<td style="text-align:center">heap_no</td>
+<td style="text-align:center">13</td>
+<td style="text-align:center">表示当前记录在记录堆的位置信息</td>
+</tr>
+<tr>
+<td style="text-align:center">record_type</td>
+<td style="text-align:center">3</td>
+<td style="text-align:center">表示当前记录的类型， 0 表示普通记录， 1 表示B+树非叶节点记录， 2 表示最小记录， 3表示最大记录</td>
+</tr>
+<tr>
+<td style="text-align:center">next_record</td>
+<td style="text-align:center">16</td>
+<td style="text-align:center">表示下一条记录的相对位置</td>
+</tr>
+</tbody>
+</table>
+<p>下面，根据几个实例一起分析下</p>
+<p><img src="../img/image-20220112140826146.png" alt="image-20220112140826146"></p>
+<ul>
+<li>
+<p>delete_mask
+这个属性标记着当前记录是否被删除，占用1个二进制位，<strong>值为0 的时候代表记录并没有被删除，为1 的时</strong>
+<strong>候代表记录被删除掉了</strong>。这些被删除的记录之所以不立即从磁盘上移除，是因为移除它们之后把其他的记录在磁盘上重新排列需要性能消耗，所以只是打一个删除标记而已，所有被删除掉的记录都会组成一个所谓的垃圾链表，在这个链表中的记录占用的空间称之为所谓的可重用空间，之后如果有新记录插入到表中的话，可能把这些被删除的记录占用的存储空间覆盖掉。</p>
+</li>
+<li>
+<p>heap_no</p>
+<p>这个属性表示当前记录在本页中的位置，从图中可以看出来，我们插入的4条记录在本页中的位置分别
+是： 2 、3 、4 、5 。是不是少了点啥？是的，怎么不见heap_no 值为0 和1 的记录呢？这其实是设计InnoDB 的大叔们玩的一个小把戏，他们自动给每个页里边儿加了两个记录，由于这两个记录并不是我们自己插入的，所以有时候也称为伪记录或者虚拟记录。这两个伪记录一个代表最小记录，一个代表最大记录，等一下哈~，记录可以比大小么？是的，记录也可以比大小，对于一条完整的记录来说，比较记录的大小就是比较主键的大小。比方说我们插入的4行记录的主键值分别是： 1 、2 、3 、4 ，这也就意味着这4条记录的大小从小到大依次递增。但是不管我们向页中插入了多少自己的记录，设计InnoDB 的大叔们都规定他们定义的两条伪记录分别为最小记录与最大记录。这两条记录的构造十分简单，都是由5字节大小的记录头信息和8字节大小的一个固定的部分组成的，如图所示</p>
+</li>
+</ul>
+<p><img src="../img/image-20220112141308901.png" alt="image-20220112141308901"></p>
+<p>​	由于这两条记录不是我们自己定义的记录，所以它们并不存放在页的User Records 部分，他们被单独放在
+​	一个称为Infimum + Supremum 的部分。</p>
+<ul>
+<li>
+<p>next_record</p>
+<p>它表示从当前记录的真实数据到下一条记录的真实数据的地址偏移量。比方说第一条记录的next_record 值为32 ，意味着从第一条记录的真实数据的地址处向后找32 个字节便是下一条记录的真实数据。如果你熟悉数据结构的话，就立即明白了，这其实是个链表，可以通过一条记录找到它的下一条记录。但是需要注意注意再注意的一点是， <strong>下一条记录指得并不是按照我们插入顺序的下一条记录，而是按照主键值由小到大的顺序的下一条记录</strong>。<strong>而且规定 Infimum记录（也就是最小记录） 的下一条记录就是本页中主键值最小的用户记录，而本页中主键值最大的用户记录的下一条记录就是 Supremum记录（也就是最大记录）</strong> ，为了更形象的表示一下这个next_record 起到的作用，我们用箭头来替代一下next_record 中的地址偏移量</p>
+</li>
+</ul>
+<p><img src="../img/image-20220112141631745.png" alt="image-20220112141631745"></p>
+<p>从图中可以看出来，<strong>我们的记录按照主键从小到大的顺序形成了一个单链表</strong>。最大记录的next_record 的
+值为0 ，这也就是说最大记录是没有下一条记录了，它是这个单链表中的最后一个节点。如果从中删除掉
+一条记录，这个链表也是会跟着变化的，比如我们把第2条记录删掉：</p>
+<p><img src="../img/image-20220112141731352.png" alt="image-20220112141731352"></p>
+<p>从图中可以看出来，删除第2条记录前后主要发生了这些变化：</p>
+<ol>
+<li>
+<p>第2条记录并没有从存储空间中移除，而是把该条记录的delete_mask 值设置为1 。</p>
+</li>
+<li>
+<p>第2条记录的next_record 值变为了0，意味着该记录没有下一条记录了。</p>
+</li>
+<li>
+<p>第1条记录的next_record 指向了第3条记录。</p>
+</li>
+<li>
+<p>还有一点你可能忽略了，就是最大记录的n_owned 值从5 变成了4 ，关于这一点的变化我们稍后会详
+细说明的。所以，<strong>不论我们怎么对页中的记录做增删改操作，InnoDB始终会维护一条记录的单链表，链表中的各个节点是按照主键值由小到大的顺序连接起来的</strong>。</p>
+</li>
+</ol>
+<h4 id="page-directory页目录">Page Directory（页目录）</h4>
+<p>现在我们了解了记录在页中按照主键值由小到大顺序串联成一个单链表，那如果我们想根据主键值查找页中的某
+条记录该咋办呢？比如说这样的查询语句：
+SELECT * FROM page_demo WHERE c1 = 3;</p>
+<p>我们平常想从一本书中查找某个内容的时候，一般会先看目录，找到需要查找的内容对应的书的页码，然后到对
+应的页码查看内容。设计InnoDB 的大叔们为我们的记录也制作了一个类似的目录，他们的制作过程是这样的：</p>
+<ol>
+<li>将所有正常的记录（包括最大和最小记录，<strong>不包括标记为已删除的记录</strong>）划分为几个组。</li>
+<li>每个组的最后一条记录（也就是组内最大的那条记录）的头信息中的<strong>n_owned 属性表示该记录拥有多少条记</strong>
+<strong>录，也就是该组内共有几条记录</strong>。</li>
+<li><strong>将每个组的最后一条记录的地址偏移量单独提取出来按顺序存储到靠近页的尾部的地方，这个地方就是所</strong>
+<strong>谓的Page Directory ，也就是页目录</strong>（此时应该返回头看看页面各个部分的图）。<strong>页面目录中的这些地址</strong>
+<strong>偏移量被称为槽（英文名： Slot ），所以这个页面目录就是由槽组成的</strong>。</li>
+</ol>
+<p>比方说现在的page_demo 表中正常的记录共有6条， InnoDB 会把它们分成两组，第一组中只有一个最小记录，
+第二组中是剩余的5条记录，看下边的示意图：</p>
+<p><img src="../img/image-20220112142955993.png" alt="image-20220112142955993"></p>
+<p>从这个图中我们需要注意这么几点：</p>
+<ul>
+<li>现在页目录部分中有两个槽，也就意味着我们的记录被分成了两个组， 槽1 中的值是112 ，代表最大记录
+的地址偏移量（就是从页面的0字节开始数，数112个字节）； 槽0 中的值是99 ，代表最小记录的地址偏移
+量。</li>
+<li>注意最小和最大记录的头信息中的n_owned 属性
+<ul>
+<li>最小记录的n_owned 值为1 ，这就代表着以最小记录结尾的这个分组中只有1 条记录，也就是最小记录
+本身。</li>
+<li>最大记录的n_owned 值为5 ，这就代表着以最大记录结尾的这个分组中只有5 条记录，包括最大记录本
+身还有我们自己插入的4 条记录。</li>
+</ul>
+</li>
+</ul>
+<p>用图表示就是：</p>
+<p><img src="../img/image-20220112143150317.png" alt="image-20220112143150317"></p>
+<p>为什么最小记录的n_owned 值为1，而最大记录的n_owned 值为5 呢，这里头有什么猫腻么？
+是的，设计InnoDB 的大叔们对每个分组中的记录条数是有规定的：<strong>对于最小记录所在的分组只能有 1 条记录，</strong>
+<strong>最大记录所在的分组拥有的记录条数只能在 1~8 条之间，剩下的分组中记录的条数范围只能在是 4~8 条之间</strong>。
+所以分组是按照下边的步骤进行的：</p>
+<ul>
+<li>初始情况下一个数据页里只有最小记录和最大记录两条记录，它们分属于两个分组。</li>
+<li>之后每插入一条记录，都会从页目录中找到主键值比本记录的主键值大并且差值最小的槽，然后把该槽对
+应的记录的n_owned 值加1，表示本组内又添加了一条记录，直到该组中的记录数等于8个。</li>
+<li>在一个组中的记录数等于8个后再插入一条记录时，会将组中的记录拆分成两个组，一个组中4条记录，另一
+个5条记录。这个过程会在页目录中新增一个槽来记录这个新增分组中最大的那条记录的偏移量。</li>
+</ul>
+<p>了解了页目录的组成后，那么怎么就加快查找速度的过程呢？看下这个例子</p>
+<p><img src="../img/image-20220112144050515.png" alt="image-20220112144050515"></p>
+<p>比方说我们想找主键值为6 的记录，过程是这样的：</p>
+<ol>
+<li>计算中间槽的位置： (0+4)/2=2 ，所以查看槽2 对应记录的主键值为8 ，又因为8 &gt; 6 ，所以设置
+high=2 ， low 保持不变。</li>
+<li>重新计算中间槽的位置： (0+2)/2=1 ，所以查看槽1 对应的主键值为4 ，又因为4 &lt; 6 ，所以设置
+low=1 ， high 保持不变。</li>
+<li>因为high - low 的值为1，所以确定主键值为5 的记录在槽2 对应的组中。此刻我们需要找到槽2 中主键
+值最小的那条记录，然后沿着单向链表遍历槽2 中的记录。但是我们前边又说过，每个槽对应的记录都是该
+组中主键值最大的记录，这里槽2 对应的记录是主键值为8 的记录，怎么定位一个组中最小的记录呢？别忘
+了各个槽都是挨着的，我们可以很轻易的拿到槽1 对应的记录（主键值为4 ），该条记录的下一条记录就
+是槽2 中主键值最小的记录，该记录的主键值为5 。所以我们可以从这条主键值为5 的记录出发，遍历槽
+2 中的各条记录，直到找到主键值为6 的那条记录即可。由于一个组中包含的记录条数只能是1~8条，所以
+遍历一个组中的记录的代价是很小的。</li>
+</ol>
+<p>这就是典型的二分法哈哈，总结：</p>
+<ol>
+<li>通过二分法确定该记录所在的槽，并找到该槽中主键值最小的那条记录。</li>
+<li>通过记录的next_record 属性遍历该槽所在的组中的各个记录。</li>
+</ol>
+<p><strong>这个就是索引为什么这么快的理由吗？？？</strong></p>
+<h4 id="page-header页面头部">Page Header（页面头部）</h4>
+<p>设计InnoDB 的大叔们为了能得到一个数据页中存储的记录的状态信息，比如本页中已经存储了多少条记录，第
+一条记录的地址是什么，页目录中存储了多少个槽等等，特意在页中定义了一个叫Page Header 的部分，它是
+页结构的第二部分，这个部分占用固定的56 个字节，专门存储各种状态信息，具体各个字节都是干嘛的看下</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">名称</th>
+<th style="text-align:center">占用空间大小</th>
+<th style="text-align:center">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">PAGE_N_DIR_SLOTS</td>
+<td style="text-align:center">2 字节</td>
+<td style="text-align:center">在页目录中的槽数量</td>
+</tr>
+<tr>
+<td style="text-align:center">PAGE_HEAP_TOP</td>
+<td style="text-align:center">2 字节</td>
+<td style="text-align:center">还未使用的空间最小地址，也就是说从该地址之后就是Free Space</td>
+</tr>
+<tr>
+<td style="text-align:center">PAGE_N_HEAP</td>
+<td style="text-align:center">2 字节</td>
+<td style="text-align:center">本页中的记录的数量（包括最小和最大记录以及标记为删除的记录）</td>
+</tr>
+<tr>
+<td style="text-align:center">PAGE_FREE</td>
+<td style="text-align:center">2 字节</td>
+<td style="text-align:center">第一个已经标记为删除的记录地址（各个已删除的记录通过next_record 也会组成一个单链表，这个单链表中的记录可以被重新利用）</td>
+</tr>
+<tr>
+<td style="text-align:center">PAGE_GARBAGE</td>
+<td style="text-align:center">2 字节</td>
+<td style="text-align:center">已删除记录占用的字节数</td>
+</tr>
+<tr>
+<td style="text-align:center">PAGE_LAST_INSERT</td>
+<td style="text-align:center">2 字节</td>
+<td style="text-align:center">最后插入记录的位置</td>
+</tr>
+<tr>
+<td style="text-align:center">PAGE_DIRECTION</td>
+<td style="text-align:center">2 字节</td>
+<td style="text-align:center">记录插入的方向</td>
+</tr>
+<tr>
+<td style="text-align:center">PAGE_N_DIRECTION</td>
+<td style="text-align:center">2 字节</td>
+<td style="text-align:center">一个方向连续插入的记录数量</td>
+</tr>
+<tr>
+<td style="text-align:center">PAGE_N_RECS</td>
+<td style="text-align:center">2 字节</td>
+<td style="text-align:center">该页中记录的数量（不包括最小和最大记录以及被标记为删除的记录）</td>
+</tr>
+<tr>
+<td style="text-align:center">PAGE_MAX_TRX_ID</td>
+<td style="text-align:center">8 字节</td>
+<td style="text-align:center">修改当前页的最大事务ID，该值仅在二级索引中定义</td>
+</tr>
+<tr>
+<td style="text-align:center">PAGE_LEVEL</td>
+<td style="text-align:center">2 字节</td>
+<td style="text-align:center">当前页在B+树中所处的层级</td>
+</tr>
+<tr>
+<td style="text-align:center">PAGE_INDEX_ID</td>
+<td style="text-align:center">8 字节</td>
+<td style="text-align:center">索引ID，表示当前页属于哪个索引</td>
+</tr>
+<tr>
+<td style="text-align:center">PAGE_BTR_SEG_LEAF</td>
+<td style="text-align:center">10 字节</td>
+<td style="text-align:center">B+树叶子段的头部信息，仅在B+树的Root页定义</td>
+</tr>
+<tr>
+<td style="text-align:center">PAGE_BTR_SEG_TOP</td>
+<td style="text-align:center">10 字节</td>
+<td style="text-align:center">B+树非叶子段的头部信息，仅在B+树的Root页定义</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>PAGE_DIRECTION
+<strong>假如新插入的一条记录的主键值比上一条记录的主键值大，我们说这条记录的插入方向是右边，反之则是左</strong>
+<strong>边</strong>。用来表示最后一条记录插入方向的状态就是PAGE_DIRECTION 。</li>
+<li>PAGE_N_DIRECTION
+<strong>假设连续几次插入新记录的方向都是一致的， InnoDB 会把沿着同一个方向插入记录的条数记下来，这个条</strong>
+<strong>数就用PAGE_N_DIRECTION 这个状态表示。当然，如果最后一条记录的插入方向改变了的话，这个状态的值</strong>
+<strong>会被清零重新统计</strong>。</li>
+</ul>
+<h4 id="file-header文件头部">File Header（文件头部）</h4>
+<p>​	Page Header 是专门针对数据页记录的各种状态信息，比方说页里头有多少个记录了呀，有多少个槽了呀。我们现在描述的File Header 针对各种类型的页都通用，也就是说不同类型的页都会以File Header 作为第一个组成部分，它描述了一些针对各种页都通用的一些信息，比方说这个页的编号是多少，它的上一个页、下一个页 这个部分占用固定的38 个字节，是由下边这些内容组成的</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">名称</th>
+<th style="text-align:center">占用空间大小</th>
+<th style="text-align:center">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">FIL_PAGE_SPACE_OR_CHKSUM</td>
+<td style="text-align:center">4 字节</td>
+<td style="text-align:center">页的校验和（checksum值）</td>
+</tr>
+<tr>
+<td style="text-align:center">FIL_PAGE_OFFSET</td>
+<td style="text-align:center">4 字节</td>
+<td style="text-align:center">页号，InnoDB 通过页号来可以唯一定位一个页</td>
+</tr>
+<tr>
+<td style="text-align:center">FIL_PAGE_PREV</td>
+<td style="text-align:center">4 字节</td>
+<td style="text-align:center">上一个页的页号</td>
+</tr>
+<tr>
+<td style="text-align:center">FIL_PAGE_NEXT</td>
+<td style="text-align:center">4 字节</td>
+<td style="text-align:center">下一个页的页号</td>
+</tr>
+<tr>
+<td style="text-align:center">FIL_PAGE_LSN</td>
+<td style="text-align:center">8 字节</td>
+<td style="text-align:center">页面被最后修改时对应的日志序列位置（英文名是：Log SequenceNumber）</td>
+</tr>
+<tr>
+<td style="text-align:center">FIL_PAGE_TYPE</td>
+<td style="text-align:center">2 字节</td>
+<td style="text-align:center">该页的类型</td>
+</tr>
+<tr>
+<td style="text-align:center">FIL_PAGE_FILE_FLUSH_LSN</td>
+<td style="text-align:center">8 字节</td>
+<td style="text-align:center">仅在系统表空间的一个页中定义，代表文件至少被刷新到了对应的LSN值</td>
+</tr>
+<tr>
+<td style="text-align:center">FIL_PAGE_ARCH_LOG_NO_OR_SPACE_ID</td>
+<td style="text-align:center">4 字节</td>
+<td style="text-align:center">页属于哪个表空间</td>
+</tr>
+</tbody>
+</table>
+<p>详解：</p>
+<ul>
+<li>
+<p>FIL_PAGE_SPACE_OR_CHKSUM</p>
+<p>这个代表当前页面的校验和（checksum）。啥是个校验和？就是对于一个很长很长的字节串来说，我们会
+通过某种算法来计算一个比较短的值来代表这个很长的字节串，这个比较短的值就称为校验和。这样在比
+较两个很长的字节串之前先比较这两个长字节串的校验和，如果校验和都不一样两个长字节串肯定是不同
+的，所以省去了直接比较两个比较长的字节串的时间损耗。</p>
+</li>
+<li>
+<p>FIL_PAGE_TYPE</p>
+<p>这个代表当前页的类型，我们前边说过， InnoDB 为了不同的目的而把页分为不同的类型，我们上边介绍的
+其实都是存储记录的数据页，其实还有很多别的类型的页，我们存放记录的数据页的类型其实是FIL_PAGE_INDEX ，也就是所谓的索引页。</p>
+</li>
+<li>
+<p>FIL_PAGE_PREV 和FIL_PAGE_NEXT</p>
+<p>我们前边强调过， <strong>InnoDB 都是以页为单位存放数据的，有时候我们存放某种类型的数据占用的空间非常大</strong>
+（比方说一张表中可以有成千上万条记录）， InnoDB 可能不可以一次性为这么多数据分配一个非常大的存
+储空间，<strong>如果分散到多个不连续的页中存储的话需要把这些页关联起来</strong>， FIL_PAGE_PREV 和FIL_PAGE_NEXT
+就分别代表本页的上一个和下一个页的页号。<strong>这样通过建立一个双向链表把许许多多的页就都串联起来了，</strong>
+<strong>而无需这些页在物理上真正连着</strong></p>
+</li>
+</ul>
+<p><img src="../img/image-20220112161911667.png" alt="image-20220112161911667"></p>
+<h4 id="file-trailer">File Trailer</h4>
+<p>我们知道InnoDB 存储引擎会把<strong>数据存储到磁盘</strong>上，但是<strong>磁盘速度太慢，需要以页为单位把数据加载到内存中处</strong>
+<strong>理</strong>，<strong>如果该页中的数据在内存中被修改了，那么在修改后的某个时间需要把数据同步到磁盘中</strong>。但是在同步了一
+半的时候中断电了咋办，这不是莫名尴尬么？为了检测一个页是否完整（也就是在同步的时候有没有发生只同步
+一半的尴尬情况），设计InnoDB 的大叔们在每个页的尾部都加了一个File Trailer 部分，这个部分由8 个字
+节组成，可以分成2个小部分：</p>
+<ul>
+<li>前4个字节代表页的校验和
+这个部分是和<strong>File Header 中的校验和相对应的</strong>。每当一个页面在内存中修改了，在同步之前就要把它的校
+验和算出来，因为File Header 在页面的前边，所以校验和会被首先同步到磁盘，<strong>当完全写完时，校验和也</strong>
+<strong>会被写到页的尾部，如果完全同步成功，则页的首部和尾部的校验和应该是一致的</strong>。如果写了一半儿断电
+了，那么在File Header 中的校验和就代表着已经修改过的页，而在File Trialer 中的校验和代表着原先
+的页，二者不同则意味着同步中间出了错。</li>
+<li>后4个字节代表页面被最后修改时对应的日志序列位置（LSN）
+这个部分也是为了校验页的完整性的</li>
+</ul>
+<p>这个File Trailer 与File Header 类似，都是所有<strong>类型的页通用的</strong>。</p>
+<h4 id="总结">总结</h4>
+<ol>
+<li>InnoDB为了不同的目的而设计了<strong>不同类型的页</strong>，我们把用于存放记录的页叫做数据页。</li>
+<li>一个数据页可以被大致划分为7个部分，分别是</li>
+</ol>
+<ul>
+<li>File Header ，表示页的一些通用信息，占固定的38字节。</li>
+<li>Page Header ，表示数据页专有的一些信息，占固定的56个字节。</li>
+<li>Infimum + Supremum ，两个虚拟的伪记录，分别表示页中的最小和最大记录，占固定的26 个字节。
+User Records ：真实存储我们插入的记录的部分，大小不固定。</li>
+<li>Free Space ：页中尚未使用的部分，大小不确定。</li>
+<li>Page Directory ：页中的某些记录相对位置，也就是各个槽在页面中的地址偏移量，大小不固定，插
+入的记录越多，这个部分占用的空间越多。</li>
+<li>File Trailer ：用于检验页是否完整的部分，占用固定的8个字节。</li>
+</ul>
+<ol start="3">
+<li>每个记录的头信息中都有一个next_record 属性，<strong>从而使页中的所有记录串联成一个单链表</strong>。</li>
+<li><strong>InnoDB 会为把页中的记录划分为若干个组，每个组的最后一个记录的地址偏移量作为一个槽，存放在</strong>
+<strong>Page Directory 中，所以在一个页中根据主键查找记录是非常快的</strong>，分为两步：</li>
+</ol>
+<ul>
+<li>通过二分法确定该记录所在的槽。</li>
+<li>通过记录的next_record属性遍历该槽所在的组中的各个记录。</li>
+</ul>
+<ol start="5">
+<li>每个数据页的File Header 部分都有上一个和下一个页的编号，所以<strong>所有的数据页会组成一个双链表</strong>。</li>
+<li><strong>为保证从内存中同步到磁盘的页的完整性，在页的首部和尾部都会存储页中数据的校验和和页面最后修改时</strong>
+<strong>对应的LSN 值，如果首部和尾部的校验和和LSN 值校验不成功的话，就说明同步过程出现了问题</strong>。</li>
+</ol>
+<h2 id="深入研究b树索引">深入研究B+树索引</h2>
+<p>前边我们详细唠叨了InnoDB 数据页的<strong>7个组成部分</strong>，知道了各个数据页可以组成一个<strong>双向链表</strong>，而每个数据页
+中的记录<strong>会按照主键值从小到大的顺序组成一个单向链表</strong>，每个数据页都会为存储在它里边儿的记录生成一个
+页目录，<strong>在通过主键查找某条记录的时候可以在页目录中使用二分法快速定位到对应的槽，然后再遍历该槽对</strong>
+<strong>应分组中的记录即可快速找到指定的记录</strong>。页和记录的关系示意图如下：</p>
+<p><img src="../img/image-20220112163512527.png" alt="image-20220112163512527"></p>
+<h3 id="没有索引的查找">没有索引的查找</h3>
+<p>我们先了解一下没有索引的时候是怎么查找记录的。为了方便大家理解，我们下边先只唠叨搜索条件为对某个列精确匹配的情况，所谓精确匹配，就是搜索条件中用等于= 连接起的表达式，比如这样：</p>
+<pre><code class="language-sql">SELECT [列名列表] FROM 表名 WHERE 列名 = xxx;
+</code></pre>
+<h4 id="在一个页中的查找">在一个页中的查找</h4>
+<p>假设目前表中的记录比较少，所有的记录都可以被存放到一个页中，在查找记录的时候可以根据搜索条件的不同
+分为两种情况：</p>
+<ul>
+<li>以主键为搜索条件
+这个查找过程我们已经很熟悉了，可以在页目录中使用二分法快速定位到对应的槽，然后再遍历该槽对应
+分组中的记录即可快速找到指定的记录。
+以其他列作为搜索条件</li>
+<li>对非主键列的查找的过程可就不这么幸运了，因为在数据页中并没有对非主键列建立所谓的页目录，所以
+我们无法通过二分法快速定位相应的槽。<strong>这种情况下只能从最小记录开始依次遍历单链表中的每条记录，</strong>
+<strong>然后对比每条记录是不是符合搜索条件。很显然，这种查找的效率是非常低的</strong>。</li>
+</ul>
+<h4 id="在很多页中查找">在很多页中查找</h4>
+<p>大部分情况下我们表中存放的记录都是非常多的，需要好多的数据页来存储这些记录。在很多页中查找记录的话
+可以分为两个步骤：</p>
+<ol>
+<li>定位到记录所在的页。</li>
+<li>从所在的页内中查找相应的记录。</li>
+</ol>
+<p>在没有索引的情况下，<strong>不论是根据主键列或者其他列的值进行查找，由于我们并不能快速的定位到记录所在的</strong>
+<strong>页，所以只能从第一个页沿着双向链表一直往下找，在每一个页中根据我们刚刚唠叨过的查找方式去查找指定的</strong>
+<strong>记录</strong>。<strong>因为要遍历所有的数据页</strong>，所以这种方式显然是超级耗时的。</p>
+<h3 id="索引">索引</h3>
+<p>新建一个index_demo 表，该表有2个INT 类型的列，1个CHAR(1) 类型的列，而且我们规定了c1 列为主键，这个
+表使用Compact 行格式来实际存储记录的。为了我们理解上的方便，我们简化了一下index_demo 表的行格式示
+意图：</p>
+<p><img src="../img/image-20220112165103356.png" alt="image-20220112165103356"></p>
+<p>把一些记录放到页里边的示意图就是：</p>
+<p><img src="../img/image-20220112165138344.png" alt="image-20220112165138344"></p>
+<h4 id="一个简单的索引方案">一个简单的索引方案</h4>
+<p>​	<strong>我们在根据某个搜索条件查找一些记录时为什么要遍历所有的数据页呢</strong>？<code>因为各个页中的记录并没有 规律，我们并不知道我们的搜索条件匹配哪些页中的记录，所以不得不依次遍历所有的数据页</code></p>
+<p>​	所以如果我们想快速的定位到需要查找的记录在哪些数据页中该咋办？还记得我们<strong>为根据主键值快速定位一条记录在页中的位置而设立的页目录</strong>么？我们也可以想办法为快速定位记录所在的数据页而建立一个别的目录，建这个目录必须完成下边这些事儿：</p>
+<ul>
+<li>
+<p>下一个数据页中用户记录的主键值必须大于上一个页中用户记录的主键值。</p>
+<p>我们这里需要做一个假设：假设我们的每个数据页最多能存放3条记录（实际上一个
+数据页非常大，可以存放下好多记录）。有了这个假设之后我们向index_demo 表插入3条记录：</p>
+<pre><code class="language-sql">mysql&gt; INSERT INTO index_demo VALUES(1, 4, 'u'), (3, 9, 'd'), (5, 3, 'y');
+</code></pre>
+<p>那么这些记录已经按照主键值的大小串联成一个单向链表了，如图所示：</p>
+</li>
+</ul>
+<p><img src="../img/image-20220112165538703.png" alt="image-20220112165538703"></p>
+<p>此时我们再来插入一条记录:</p>
+<pre><code class="language-sql">INSERT INTO index_demo VALUES(4, 4, 'a');
+</code></pre>
+<p>因为页10 最多只能放3条记录，所以我们不得不再分配<strong>一个新页</strong>：</p>
+<p><img src="../img/image-20220112165642310.png" alt="image-20220112165642310"><strong>新分配的数据页编号可能并不是连续的，也就是说我们使用的这些页在存储空间里可能并不挨着</strong>。它们只是通过维护着上一个页和下一个页的编号而建立了链表关系</p>
+<p>页10 中用户记录最大的主键值是5 ，而页28 中有一条记录的主键值是4 ，因为5&gt;4 ，所以这就不符合下一个数据页中用户记录的主键值必须大于上一个页中用户记录的主键值的要求，所以<strong>在插入主键值为4 的记录的时候需要伴随着一次记录移动，也就是把主键值为5 的记录移动到页28 中，然后再把主键值为4 的记录插入到页10 中</strong>，这个过程的示意图如下:</p>
+<p><img src="../img/image-20220112170056420.png" alt="image-20220112170056420"></p>
+<p>这个过程表明了在对页中的记录进行增删改操作的过程中，我们必须通过一些诸如记录移动的操作来始终保
+证这个状态一直成立：<strong>下一个数据页中用户记录的主键值必须大于上一个页中用户记录的主键值</strong>。这个过程
+我们也可以称为<code>页分裂</code>。</p>
+<ul>
+<li>
+<p>给所有的页建立一个目录项</p>
+<p>由于<strong>数据页的编号可能并不是连续的</strong>，所以在向index_demo 表中插入许多条记录后，可能是这样的效果：</p>
+</li>
+</ul>
+<p><img src="../img/image-20220112170338739.png" alt="image-20220112170338739"></p>
+<p>​	因为这些16KB 的页在物理存储上可能并不挨着，所以如果想从这么多页中根据主键值快速定位某些记录所
+在的页，<strong>我们需要给它们做个目录，每个页对应一个目录项</strong>，每个目录项包括下边两个部分：</p>
+<ul>
+<li>页的用户记录中最小的主键值，我们用key 来表示。</li>
+<li>页号，我们用page_no 表示。</li>
+</ul>
+<p>所以我们为上边几个页做好的目录就像这样子：</p>
+<p><img src="../img/image-20220112170501286.png" alt="image-20220112170501286"></p>
+<p>以页28 为例，它对应目录项2 ，这个目录项中包含着该页的页号28 以及该页中用户记录的最小主键值5 。我们只需要把几个目录项在物理存储器上连续存储，比如把他们放到一个数组里，就可以实现根据主键值快速查找某条记录的功能了。比方说我们想找主键值为20 的记录，具体查找过程分两步：</p>
+<ul>
+<li>先从目录项中根据二分法快速确定出主键值为20 的记录在目录项3 中（因为 12 &lt; 20 &lt; 209 ），它对应的页是页9 。</li>
+<li>再根据前边说的<a href="#%E5%9C%A8%E4%B8%80%E4%B8%AA%E9%A1%B5%E4%B8%AD%E7%9A%84%E6%9F%A5%E6%89%BE">在页中查找记录</a>的方式去页9 中定位具体的记录。</li>
+</ul>
+<p>至此，针对数据页做的简易目录就搞定了。不过忘了说了，这个<strong>目录</strong>有一个别名，称为<strong>索引</strong></p>
+<h4 id="innodb中的索引方案">InnoDB中的索引方案</h4>
+<p>上边之所以称为一个简易的<strong>索引方案</strong>，<em>是因为我们为了在根据主键值进行查找时使用二分法快速定位具体的目录</em>
+<em>项而假设所有目录项都可以在物理存储器上连续存储</em>，但是这样做有几个问题：</p>
+<ul>
+<li>InnoDB 是使用<strong>页来作为管理存储空间的基本单位</strong>，也就是最多能保证16KB 的连续存储空间，而随着表中记
+录数量的增多，<strong>需要非常大的连续的存储空间才能把所有的目录项都放下，这对记录数量非常多的表是不现</strong>
+<strong>实的</strong>。</li>
+<li>我们时常会对记录进行增删，<strong>假设我们把页28 中的记录都删除了</strong>， 页28 也就没有存在的必要了，<strong>那意味</strong>
+<strong>着目录项2 也就没有存在的必要了，这就需要把目录项2 后的目录项都向前移动一下</strong>，这种牵一发而动全身
+的设计不是什么好主意～</li>
+</ul>
+<p>所以，设计InnoDB 的大叔们需要一种可以灵活管理所有目录项的方式。他们灵光乍现，忽然发现这些目录项
+其实长得跟我们的用户记录差不多，只不过目录项中的两个列是主键和页号而已，所以他们复用了之前存储
+用户记录的数据页来存储目录项，为了和用户记录做一下区分，我们把这些用来表示目录项的记录称为目录项记
+录。那InnoDB 怎么区分一条记录是普通的用户记录还是目录项记录呢？别忘了记录头信息里的
+record_type 属性，它的各个取值代表的意思如下：</p>
+<ul>
+<li>0 ：普通的用户记录</li>
+<li>1 ：<strong>目录项记录</strong></li>
+<li>2 ：最小记录</li>
+<li>3 ：最大记录
+哈哈，原来这个值为1 的record_type 是这个意思呀，我们把前边使用到的目录项放到数据页中的样子就是这
+样：</li>
+</ul>
+<p><img src="../img/image-20220112171623872.png" alt="image-20220112171623872"></p>
+<p>从图中可以看出来，我们<strong>新分配了一个编号为30 的页来专门存储目录项记录</strong>。这里再次强调一遍目录项记录
+和普通的用户记录的不同点：</p>
+<ul>
+<li>目录项记录的record_type 值是1，而普通用户记录的record_type 值是0。</li>
+<li>目录项记录只有主键值和页的编号两个列，而普通的用户记录的列是用户自己定义的，可能包含很多列，
+另外还有InnoDB 自己添加的隐藏列。</li>
+<li>还记得我们之前在唠叨记录头信息的时候说过一个叫<a href="#%E8%AE%B0%E5%BD%95%E5%A4%B4%E4%BF%A1%E6%81%AF%E7%9A%84%E7%A7%98%E5%AF%86">min_rec_mask</a> 的属性么，只有在存储目录项记录的页
+中的主键值最小的目录项记录的min_rec_mask 值为1 ，其他别的记录的min_rec_mask 值都是0 。</li>
+</ul>
+<p>除了上述几点外，这两者就没啥差别了，它们用的是一样的数据页，页的组成结构也是一样一样的（就是我们前边介绍过的7个部分），都会为主键值生成Page Directory （页目录），从而在按照主键值进行查找时可以使用二分法来加快查询速度。现在以查找主键为20 的记录为例，根据某个主键值去查找记录的步骤就可以大致拆分成下边两步:</p>
+<ul>
+<li>先到存储<strong>目录项记录</strong>的页，也就是页30 中通过二分法快速定位到对应目录项，因为12 &lt; 20 &lt; 209 ，所
+以定位到对应的记录所在的页就是页9 。</li>
+<li>再到存储<strong>用户记录</strong>的页9 中根据二分法快速定位到主键值为20 的用户记录</li>
+</ul>
+<p>虽然说目录项记录中只存储主键值和对应的页号，比用户记录需要的存储空间小多了，但是不论怎么说一个页
+只有16KB 大小，能存放的目录项记录也是有限的，那如果表中的数据太多，以至于一个数据页不足以存放所有
+的目录项记录，该咋办呢？</p>
+<p>当然是再多整一个存储目录项记录的页喽～ 为了大家更好的理解新分配一个目录项记录页的过程，我们假设
+一个存储目录项记录的页最多只能存放4条目录项记录，所以如果此时我们再向上图中插入一条主键值为320 的用户记录的话，那就需要分配一个新的存储目录项记录的页喽：</p>
+<p><img src="../img/image-20220112172433014.png" alt="image-20220112172433014"></p>
+<p>从图中可以看出，我们插入了一条主键值为320 的用户记录之后需要两个新的数据页：</p>
+<ul>
+<li>为存储该用户记录而新生成了页31 。</li>
+<li>因为原先存储目录项记录的页30 的容量已满（我们前边假设只能存储4条目录项记录），所以不得不需
+要一个新的页32 来存放页31 对应的目录项。</li>
+</ul>
+<p>现在因为存储目录项记录的页不止一个，所以如果我们想根据主键值查找一条用户记录大致需要3个步骤，以查
+找主键值为20 的记录为例：</p>
+<ol>
+<li>确定目录项记录页
+我们现在的存储目录项记录的页有两个，即页30 和页32 ，又因为页30 表示的目录项的主键值的范围是
+[1, 320) ， 页32 表示的目录项的主键值不小于320 ，所以主键值为20 的记录对应的目录项记录在页30
+中。</li>
+<li>通过目录项记录页确定用户记录真实所在的页。</li>
+<li>在真实存储用户记录的页中定位到具体的记录。</li>
+</ol>
+<p>那么问题来了，在这个查询步骤的第1步中我们需要<strong>定位存储目录项记录的页</strong>，但是这些页在存储空间中也可能
+不挨着，如果我们表中的数据非常多则会产生很多<strong>存储目录项记录的页</strong>，那我们怎么根据主键值快速定位一个
+存储目录项记录的页呢？其实也简单，<strong>为这些存储目录项记录的页再生成一个更高级的目录，就像是一个多级</strong>
+<strong>目录一样，大目录里嵌套小目录，小目录里才是实际的数据</strong>，所以现在各个页的示意图就是这样子</p>
+<p><img src="../img/image-20220112172841839.png" alt="image-20220112172841839"></p>
+<p>如图，我们生成了一个存储更高级目录项的页33 ，这个页中的两条记录分别代表页30 和页32 ，如果用户记录
+的主键值在[1, 320) 之间，则到页30 中查找更详细的目录项记录，如果主键值不小于320 的话，就到页32
+中查找更详细的目录项记录。随着表中记录的增加，这个目录的层级会继续增加，如果简化一下，那么我们可以用下边这个图来描述它:</p>
+<p><img src="../img/image-20220112173054335.png" alt="image-20220112173054335"></p>
+<p><strong>这他妈的就是B+树了！！！</strong></p>
+<p>不论是存放用户记录的数据页，还是存放目录项记录的数据页，我们都把它们存放到<strong>B+ 树</strong>这个数据结构中了，
+所以我们也称这些数据页为节点。从图中可以看出来，<strong>我们的实际用户记录其实都存放在B+树的最底层的节点</strong>
+<strong>上</strong>，<strong>这些节点也被称为叶子节点或叶节点</strong>，<strong>其余用来存放目录项的节点称为非叶子节点或者内节点，其</strong>
+<strong>中B+ 树最上边的那个节点也称为根节点</strong>。</p>
+<p>从图中可以看出来，一个B+ 树的节点其实可以分成好多层，设计InnoDB 的大叔们为了讨论方便，规定最下边的
+那层，也就是存放我们用户记录的那层为<strong>第0 层</strong>，之后依次往上加。之前的讨论我们做了一个非常极端的假设：
+存放用户记录的页最多存放3条记录，存放目录项记录的页最多存放4条记录。其实真实环境中一个页存放的记录
+数量是非常大的，假设，假设，假设所有存放用户记录的叶子节点代表的数据页可以存放100条用户记录，所有
+存放目录项记录的内节点代表的数据页可以存放1000条目录项记录，那么：</p>
+<ul>
+<li>如果B+ 树只有1层，也就是只有1个用于存放用户记录的节点，最多能存放100 条记录。</li>
+<li>如果B+ 树有2层，最多能存放1000×100=100000 条记录。</li>
+<li>如果B+ 树有3层，最多能存放1000×1000×100=100000000 条记录。</li>
+<li>如果B+ 树有4层，最多能存放1000×1000×1000×100=100000000000 条记录。</li>
+</ul>
+<p>你的表里能存放100000000000 条记录么？所以一般情况下，<strong>我们用到的B+ 树都不会超过4层</strong>，那我们通过主键
+值去查找某条记录最多只需要做4个页面内的查找（查找3个目录项页和一个用户记录页），又因为在每个页面内
+有所谓的Page Directory （页目录），所以在页面内也可以通过二分法实现快速定位记录。</p>
+<h4 id="聚簇索引">聚簇索引</h4>
+<p>我们上边介绍的B+ 树本身就是一个目录，或者说本身就是一个<strong>索引</strong>。它有两个特点：</p>
+<ol>
+<li>使用记录主键值的大小进行记录和页的排序，这包括三个方面的含义：</li>
+</ol>
+<ul>
+<li>页内的记录是按照主键的大小顺序排成一个单向链表。</li>
+<li>各个存放用户记录的页也是根据页中用户记录的主键大小顺序排成一个双向链表。</li>
+<li>存放目录项记录的页分为不同的层次，在同一层次中的页也是根据页中目录项记录的主键大小顺序排成
+一个双向链表。</li>
+</ul>
+<ol start="2">
+<li>B+ 树的叶子节点存储的是完整的用户记录。
+所谓完整的用户记录，就是指这个记录中存储了所有列的值（包括隐藏列）。</li>
+</ol>
+<p><strong>我们把具有这两种特性的B+ 树称为聚簇索引</strong>，所有完整的用户记录都存放在这个<strong>聚簇索引的叶子节点</strong>处。这
+种聚簇索引并不需要我们在MySQL 语句中显式的使用INDEX 语句去创建（后边会介绍索引相关的语句），
+InnoDB 存储引擎会<strong>自动的为我们创建聚簇索引</strong>。另外有趣的一点是，在InnoDB 存储引擎中， <strong>聚簇索引就是数</strong>
+<strong>据的存储方式（所有的用户记录都存储在了叶子节点），也就是所谓的索引即数据，数据即索引</strong>。</p>
+<h4 id="二级索引">二级索引</h4>
+<p>​	大家有木有发现，上边介绍的<strong>聚簇索引</strong>只能在<strong>搜索条件是主键值时</strong>才能发挥作用，因为B+ 树中的数据都是按照
+主键进行排序的。那如果我们想以别的列作为搜索条件该咋办呢？难道只能从头到尾沿着链表依次遍历记录么？
+不，我们可以<strong>多建几棵B+ 树</strong>，不同的B+ 树中的数据采用不同的排序规则。比方说我们用c2 列的大小作为数据
+页、页中记录的排序规则，再建一棵B+ 树，效果如下图所示：</p>
+<p><img src="../img/image-20220112195520555.png" alt="image-20220112195520555"></p>
+<p>这个B+ 树与上边介绍的聚簇索引有几处不同：</p>
+<ul>
+<li>使用记录c2 列的大小进行记录和页的排序，这包括三个方面的含义：
+<ul>
+<li>页内的记录是按照<strong>c2 列的大小</strong>顺序排成一个单向链表。</li>
+<li>各个存放用户记录的页也是根据页中记录的<strong>c2 列大小</strong>顺序排成一个双向链表。</li>
+<li>存放目录项记录的页分为不同的层次，在同一层次中的页也是根据页中目录项记录的<strong>c2 列大小顺序</strong>排
+成一个双向链表。</li>
+</ul>
+</li>
+<li>B+ 树的叶子节点存储的并不是完整的用户记录，而只是c2列+主键这两个列的值。</li>
+<li>目录项记录中不再是主键+页号的搭配，而变成了c2列+页号的搭配。</li>
+</ul>
+<p>所以如果我们现在想通过c2 列的值查找某些记录的话就可以使用我们刚刚建好的这个B+ 树了。以查找c2 列的
+值为4 的记录为例，查找过程如下：</p>
+<ol>
+<li>确定目录项记录页
+根据根页面，也就是页44 ，可以快速定位到目录项记录所在的页为页42 （因为2 &lt; 4 &lt; 9 ）。</li>
+<li>通过目录项记录页确定用户记录真实所在的页。
+在页42 中可以快速定位到实际存储用户记录的页，但是由于c2 列并没有唯一性约束，所以c2 列值为4 的
+记录可能分布在多个数据页中，又因为2 &lt; 4 ≤ 4 ，所以确定实际存储用户记录的页在页34 和页35 中。</li>
+<li>在真实存储用户记录的页中定位到具体的记录。
+到页34 和页35 中定位到具体的记录。</li>
+<li>但是这个B+ 树的叶子节点中的记录只存储了c2 和c1 （也就是主键）两个列，所以<strong>我们必须再根据主键</strong>
+<strong>值去聚簇索引中再查找一遍完整的用户记录</strong>。</li>
+</ol>
+<p>我们根据这个以c2 列大小排序的B+ 树<strong>只能确定我们要查找记录的主键值</strong>，所以如果我们想根据c2 列的值查找到完整的用户记录的话，仍然需要到<strong>聚簇索引</strong>中再查一遍，这个过程也被称为<strong>回表</strong>。也就是根据c2 列的值查询一条完整的用户记录需要使用到2 棵B+ 树！！！</p>
+<p>因为这种按照<strong>非主键列</strong>建立的<strong>B+ 树</strong>需要<strong>一次回表</strong>操作才可以定位到<strong>完整的用户记录</strong>，所以这种B+ 树也被称为<strong>二级索引</strong>（英文名secondary index ），或者辅助索引。由于我们使用的是c2 列的大小作为B+ 树的排序规则，所以我们也称这个B+ 树为为<strong>c2列建立的索引</strong>。</p>
+<h4 id="联合索引">联合索引</h4>
+<p>我们也可以同时以多个列的大小作为排序规则，也就是同时为<strong>多个列建立索引</strong>，比方说我们想让B+ 树按照c2
+和c3 列的大小进行排序，这个包含两层含义：</p>
+<ul>
+<li>先把各个记录和页按照c2 列进行排序。</li>
+<li>在记录的c2 列相同的情况下，采用c3 列进行排序</li>
+</ul>
+<p><img src="../img/image-20220112200830399.png" alt="image-20220112200830399"></p>
+<p>如图所示，我们需要注意一下几点：</p>
+<ul>
+<li>每条目录项记录都由<strong>c2 、c3 、页号</strong>这三个部分组成，各条记录先按照c2 列的值进行排序，如果记录
+的c2 列相同，则按照c3 列的值进行排序。</li>
+<li>B+ 树叶子节点处的用户记录由<strong>c2 、c3 和主键c1 列</strong>组成。</li>
+</ul>
+<p>千万要注意一点，<strong>以c2和c3列的大小为排序规则建立的B+树称为联合索引，本质上也是一个二级索引</strong>。它的意思
+与分别为c2和c3列分别建立索引的表述是不同的，不同点如下：</p>
+<ul>
+<li>建立联合索引只会建立如上图一样的1棵B+ 树。</li>
+<li>为c2和c3列分别建立索引会分别以c2 和c3 列的大小为排序规则建立2棵B+ 树。</li>
+</ul>
+<h4 id="b树索引的注意事项">B+树索引的注意事项</h4>
+<h5 id="根页面万年不动窝">根页面万年不动窝</h5>
+<p>我们前边介绍B+ 树索引的时候，为了大家理解上的方便，先把存储用户记录的叶子节点都画出来，然后接着画
+存储目录项记录的内节点，实际上B+ 树的形成过程是这样的：</p>
+<ul>
+<li>每当为某个表创建一个B+ 树索引（<strong>聚簇索引不是人为创建的，默认就有</strong>）的时候，都会为这个索引创建一
+个<strong>根节点页面</strong>。最开始表中没有数据的时候，每个B+ 树索引对应的根节点中既没有用户记录，也没有目
+录项记录。</li>
+<li>随后向表中插入用户记录时，先把用户记录存储到这个根节点中。</li>
+<li>当根节点中的可用空间用完时继续插入记录，此时会将根节点中的所有记录复制到一个新分配的页，比
+如页a 中，然后对这个新页进行页分裂的操作，得到另一个新页，比如页b 。这时新插入的记录根据键值
+（也就是聚簇索引中的主键值，二级索引中对应的索引列的值）的大小就会被分配到页a 或者页b 中，而
+根节点便升级为存储目录项记录的页。</li>
+</ul>
+<p>这个过程需要大家特别注意的是：<strong>一个B+树索引的根节点自诞生之日起，便不会再移动</strong>。这样只要我们对某个表
+建立一个索引，那么它的根节点的页号便会被记录到某个地方，然后凡是InnoDB 存储引擎需要用到这个索引的
+时候，都会从那个固定的地方取出根节点的页号，从而来访问这个索引。</p>
+<h5 id="内节点中目录项记录的唯一性">内节点中目录项记录的唯一性</h5>
+<p>我们知道B+ 树索引的内节点中目录项记录的内容是索引列 + 页号的搭配，但是这个搭配对于二级索引来说有
+点儿不严谨。还拿index_demo 表为例，假设这个表中的数据是这样的</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">c1</th>
+<th style="text-align:center">c2</th>
+<th style="text-align:center">c3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">&lsquo;u&rsquo;</td>
+</tr>
+<tr>
+<td style="text-align:center">3</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">&rsquo;d'</td>
+</tr>
+<tr>
+<td style="text-align:center">5</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">&lsquo;y&rsquo;</td>
+</tr>
+<tr>
+<td style="text-align:center">7</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">&lsquo;a&rsquo;</td>
+</tr>
+</tbody>
+</table>
+<p>如果二级索引中目录项记录的内容只是索引列 + 页号的搭配的话，那么为c2 列建立索引后的B+ 树应该长这
+样：</p>
+<p><img src="../img/image-20220112202226583.png" alt="image-20220112202226583"></p>
+<p>如果我们想新插入一行记录，其中c1 、c2 、c3 的值分别是： 9 、1 、&lsquo;c&rsquo; ，那么在修改这个为c2 列建立
+的二级索引对应的B+ 树时便碰到了个大问题：由于页3 中存储的目录项记录是由c2列 + 页号的值构成的，
+页3 中的两条目录项记录对应的c2 列的值都是1 ，而我们新插入的这条记录的c2 列的值也是1 ，那我们这条
+新插入的记录到底应该放到页4 中，还是应该放到页5 中啊？</p>
+<p>为了让新插入记录能找到自己在哪个页里，<strong>我们需要保证在B+树的同一层内节点的目录项记录除页号这个字段</strong>
+<strong>以外是唯一的</strong>。所以对于二级索引的内节点的目录项记录的内容实际上是由三个部分构成的：</p>
+<ul>
+<li>索引列的值</li>
+<li>主键值</li>
+<li>页号</li>
+</ul>
+<p>也就是我们把<code>主键值</code>也添加到二级索引内节点中的<code>目录项记录</code>了，这样就能保证B+ 树每一层节点中各条目录项
+记录除<code>页号</code>这个字段外是唯一的，所以我们为c2 列建立二级索引后的示意图实际上应该是这样子的</p>
+<p><img src="../img/image-20220112202541069.png" alt="image-20220112202541069"></p>
+<h5 id="一个页面最少存储2条记录">一个页面最少存储2条记录</h5>
+<p>​	我们前边说过一个B+树只需要很少的层级就可以轻松存储数亿条记录，查询速度杠杠的！<strong>这是因为B+树本质上</strong>
+<strong>就是一个大的多层级目录，每经过一个目录时都会过滤掉许多无效的子目录，直到最后访问到存储真实数据的目</strong>
+<strong>录</strong>。<strong>那如果一个大的目录中只存放一个子目录是个啥效果呢？那就是目录层级非常非常非常多，而且最后的那个</strong>
+<strong>存放真实数据的目录中只能存放一条记录</strong>。所以InnoDB 的一个数据页至少可以存放两条记录，这也是我们之前唠叨记录行格式的时候说过一个结论（我们当时依据这个结论推导了表中只有一个列时该列在不发生行溢出的情况下最多能存储多少字节，忘了的话回去看看吧）。</p>
+<h4 id="myisam中的索引方案简单介绍">MyISAM中的索引方案简单介绍</h4>
+<p>​	至此，我们介绍的都是InnoDB 存储引擎中的索引方案，我们有必要再简单介绍一下MyISAM 存储引擎中的索引方案。我们知道InnoDB 中<strong>索引即数据</strong>，也就是聚<strong>簇索引的那棵B+ 树的叶子节点中已经把所有完整的用户记录都包含了</strong>，而MyISAM 的索引方案虽然也使用树形结构，但是却将索引和数据分开存储：</p>
+<ul>
+<li><strong>将表中的记录按照记录的插入顺序单独存储在一个文件中，称之为数据文件。这个文件并不划分为若干个</strong>
+<strong>数据页，有多少记录就往这个文件中塞多少记录就成了</strong>。<strong>我们可以通过行号而快速访问到一条记录</strong>。
+MyISAM 记录也需要记录头信息来存储一些额外数据，我们以上边唠叨过的index_demo 表为例，看一下这个
+表中的记录使用MyISAM 作为存储引擎在存储空间中的表示：</li>
+</ul>
+<p><img src="../img/image-20220112203638552.png" alt="image-20220112203638552"></p>
+<p>​	由于在插入数据的时候并没有刻意按照主键大小排序，所以我们并不能在这些数据上使用二分法进行查找。</p>
+<ul>
+<li>
+<p>使用MyISAM 存储引擎的表会把<strong>索引信息另外存储到一个称为索引文件的另一个文件中</strong>。<strong>MyISAM 会单独为</strong>
+<strong>表的主键创建一个索引，只不过在索引的叶子节点中存储的不是完整的用户记录，而是主键值 + 行号的组</strong>
+<strong>合。<strong>也就是先通过索引找到对应的行号，再通过行号去找对应的记录！
+这一点和InnoDB 是完全不相同的，<strong>在InnoDB 存储引擎中，我们只需要根据主键值对聚簇索引进行一次查</strong>
+<strong>找就能找到对应的记录</strong>，而在</strong>MyISAM 中却需要进行一次回表操作，意味着MyISAM 中建立的索引相当于全</strong>
+<strong>部都是二级索引</strong></p>
+</li>
+<li>
+<p>如果有需要的话，我们也可以对其它的列分别建立索引或者建立联合索引，原理和InnoDB 中的索引差不
+多，不过在叶子节点处存储的是相应的列 + 行号。这些索引也全部都是二级索引</p>
+</li>
+</ul>
+<h4 id="mysql中创建和删除索引的语句">MySQL中创建和删除索引的语句</h4>
+<p>建表时</p>
+<pre><code class="language-sql">CREATE TALBE 表名 (
+各种列的信息 ··· ,
+[KEY|INDEX] 索引名 (需要被索引的单个列或多个列)
+)
+</code></pre>
+<p>其中的KEY 和INDEX 是同义词，任意选用一个就可以</p>
+<p>添加索引</p>
+<pre><code class="language-sql">ALTER TABLE 表名 ADD [INDEX|KEY] 索引名 (需要被索引的单个列或多个列);
+</code></pre>
+<p>删除索引</p>
+<pre><code class="language-sql">ALTER TABLE 表名 DROP [INDEX|KEY] 索引名
+</code></pre>
+<p>索引名建议：以idx_ 为前缀，后边跟着需要建立索引的列名，多个列名之间用下划线_ 分隔开。</p>
+
+    </div>
+    <div class="article-footer">
+<blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接: </strong>
+      <a href="https://wzgl998877.github.io/2022/01/mysql%E6%98%AF%E6%80%8E%E6%A0%B7%E8%BF%90%E8%A1%8C%E7%9A%84/" title="Mysql是怎样运行的" target="_blank" rel="external">https://wzgl998877.github.io/2022/01/mysql%E6%98%AF%E6%80%8E%E6%A0%B7%E8%BF%90%E8%A1%8C%E7%9A%84/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong>License: </strong>
+        <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN</a>
+    </li>
+  </ul>
+</blockquote>
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/wzgl998877/" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="https://wzgl998877.github.io/avatar.png" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/wzgl998877/" target="_blank"><span class="text-dark">microzheng</span><small class="ml-1x">努力会说谎，但努力不会白费</small></a></h3>
+        <div>不想搬砖的码农</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+    </div>
+  </article>
+</div><nav class="bar bar-footer clearfix" data-stick-bottom>
+    <div class="bar-inner">
+        <ul class="pager pull-left">
+            <li class="prev">
+                <a href="https://wzgl998877.github.io/2022/01/java-%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" title="Java 并发编程"><i
+                        class="icon icon-angle-left"
+                        aria-hidden="true"></i><span>&nbsp;&nbsp;下一篇</span></a>
+            </li>
+            
+            <li class="toggle-toc">
+                <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false"
+                    title="文章目录" role="button">
+                    <span>[&nbsp;</span><span>文章目录</span>
+                    <i class="text-collapsed icon icon-anchor"></i>
+                    <i class="text-in icon icon-close"></i>
+                    <span>]</span>
+                </a>
+            </li>
+        </ul>
+        <div class="bar-right">
+            <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter"
+                data-mobile-sites="weibo,qq,qzone"></div>
+        </div>
+    </div>
+</nav>
+
+
+</main><footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+<ul class="social-links">
+    <li><a href="https://github.com/wzgl998877/" target="_blank" title="github" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-github"></i></a></li>
+    <li><a href="https://wzgl998877.github.io/index.xml" target="_blank" title="rss" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-rss"></i></a></li>
+</ul>
+  <div class="copyright">
+    &copy;2022  -
+    2022
+    <div class="publishby">
+        Theme by <a href="https://github.com/wzgl998877/" target="_blank"> microzheng </a>base on<a href="https://github.com/xiaoheiAh/hugo-theme-pure" target="_blank"> pure</a>.
+    </div>
+    
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_SVG"></script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+            showMathMenu: false, //disables context menu
+            tex2jax: {
+            inlineMath: [ ['$','$'], ['\\(','\\)'] ]
+           }
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+<script>
+    window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/highlight.min.js"></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/python.min.js" defer></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/javascript.min.js" defer></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/java.min.js" defer></script><script>
+    hljs.configure({
+        tabReplace: '    ', 
+        classPrefix: ''     
+        
+    })
+    hljs.initHighlightingOnLoad();
+</script>
+<script src="https://wzgl998877.github.io/js/application.min.a94ab19cb63a95c8d7fbd7b85cab3ddeea8c369bdf75b9cab6708787ead123af.js"></script>
+<script src="https://wzgl998877.github.io/js/plugin.min.19c5bcb2fb0789ab4f2b7834e5ceb5e92635645605bab902c1024b25f1502364.js"></script>
+
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(未命名)',
+            },
+            ROOT_URL: 'https:\/\/wzgl998877.github.io\/',
+            CONTENT_URL: 'https:\/\/wzgl998877.github.io\/\/searchindex.json ',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script type="text/javascript" src="https://wzgl998877.github.io/js/insight.min.4a2d52de4bfff73e0c688404fe3d17c9a3ae12d9888e1e1ac9c690e4890de2ded50fe55f2b819c2ba55435a76f396f3ea6805765f0b0af5635cdf74ea459eab0.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+<script>
+    tocbot.init({
+        
+        tocSelector: '.js-toc',
+        
+        contentSelector: '.js-toc-content',
+        
+        headingSelector: 'h1, h2, h3',
+        
+        hasInnerContainers: true,
+    });
+</script>
+
+
+  </body>
+</html>
