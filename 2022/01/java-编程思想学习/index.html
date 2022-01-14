@@ -1,0 +1,1670 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <title>
+        Java 编程思想学习 - Pure theme for Hugo
+      </title>
+        <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    
+    <meta name="theme-color" content="#000000" />
+    
+    <meta http-equiv="window-target" content="_top" />
+    
+    
+    <meta name="description" content="Java 编程思想学习 第1章 对象导论 好像看不下去，。。。 第2章 一切都是对象 用引用操作对象：每种编程语言都有自己的操纵内存中元素的方式。java中操纵" />
+    <meta name="generator" content="Hugo 0.91.2 with theme pure" />
+    <title>Java 编程思想学习 - Pure theme for Hugo</title>
+    
+    
+    <link rel="stylesheet" href="https://wzgl998877.github.io/css/style.min.e64d754037c0ee0ec4e20ab1d6f07740ace61729bc03850559b8caa21ae4a597.css">
+    
+    <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/9.15.10/styles/github.min.css" async>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css" async>
+    <meta property="og:title" content="Java 编程思想学习" />
+<meta property="og:description" content="Java 编程思想学习 第1章 对象导论 好像看不下去，。。。 第2章 一切都是对象 用引用操作对象：每种编程语言都有自己的操纵内存中元素的方式。java中操纵" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wzgl998877.github.io/2022/01/java-%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3%E5%AD%A6%E4%B9%A0/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-01-09T11:24:40+08:00" />
+<meta property="article:modified_time" content="2022-01-09T11:24:40+08:00" />
+
+<meta itemprop="name" content="Java 编程思想学习">
+<meta itemprop="description" content="Java 编程思想学习 第1章 对象导论 好像看不下去，。。。 第2章 一切都是对象 用引用操作对象：每种编程语言都有自己的操纵内存中元素的方式。java中操纵"><meta itemprop="datePublished" content="2022-01-09T11:24:40+08:00" />
+<meta itemprop="dateModified" content="2022-01-09T11:24:40+08:00" />
+<meta itemprop="wordCount" content="14457">
+<meta itemprop="keywords" content="Java基础," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Java 编程思想学习"/>
+<meta name="twitter:description" content="Java 编程思想学习 第1章 对象导论 好像看不下去，。。。 第2章 一切都是对象 用引用操作对象：每种编程语言都有自己的操纵内存中元素的方式。java中操纵"/>
+
+    <!--[if lte IE 9]>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+      <![endif]-->
+
+    <!--[if lt IE 9]>
+        <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+      <![endif]-->
+  </head>
+
+  
+  
+
+  <body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage"><header class="header" itemscope itemtype="http://schema.org/WPHeader">
+    <div class="slimContent">
+      <div class="navbar-header">
+        <div class="profile-block text-center">
+          <a id="avatar" href="https://github.com/wzgl998877/" target="_blank">
+            <img class="img-circle img-rotate" src="https://wzgl998877.github.io/avatar.png" width="200" height="200">
+          </a>
+          <h2 id="name" class="hidden-xs hidden-sm">microzheng</h2>
+          <h3 id="title" class="hidden-xs hidden-sm hidden-md">努力会说谎，但努力不会白费</h3>
+          <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i>Shenzhen China</small>
+        </div><div class="search" id="search-form-wrap">
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i
+                        class="icon icon-search"></i></button>
+            </span>
+        </div>
+        <div class="ins-search">
+            <div class="ins-search-mask"></div>
+            <div class="ins-search-container">
+                <div class="ins-input-wrapper">
+                    <input type="text" class="ins-search-input" placeholder="想要查找什么..."
+                        x-webkit-speech />
+                    <button type="button" class="close ins-close ins-selectable" data-dismiss="modal"
+                        aria-label="Close"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="ins-section-wrapper">
+                    <div class="ins-section-container"></div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+        <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+        <ul class="nav navbar-nav main-nav">
+            <li class="menu-item menu-item-home">
+                <a href="/">
+                    <i class="icon icon-home-fill"></i>
+                  <span class="menu-title">主页</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-archives">
+                <a href="/posts/">
+                    <i class="icon icon-archives-fill"></i>
+                  <span class="menu-title">归档</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-categories">
+                <a href="/categories/">
+                    <i class="icon icon-folder"></i>
+                  <span class="menu-title">分类</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-tags">
+                <a href="/tags/">
+                    <i class="icon icon-tags"></i>
+                  <span class="menu-title">标签</span>
+                </a>
+            </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+<aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content"><p>enjoy~</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+      <div class="widget">
+    <h3 class="widget-title"> 分类</h3>
+    <div class="widget-body">
+        <ul class="category-list">
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/java/" class="category-list-link">java</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/linux/" class="category-list-link">linux</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/" class="category-list-link">中间件</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E5%B8%B8%E7%94%A8%E6%A1%86%E6%9E%B6/" class="category-list-link">常用框架</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="category-list-link">数据库</a><span class="category-list-count">2</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E6%97%A5%E5%B8%B8%E6%80%BB%E7%BB%93/" class="category-list-link">日常总结</a><span class="category-list-count">2</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E7%AE%97%E6%B3%95/" class="category-list-link">算法</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/" class="category-list-link">系统设计</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/" class="category-list-link">网络编程</a><span class="category-list-count">3</span></li>
+        </ul>
+    </div>
+</div>
+      <div class="widget">
+    <h3 class="widget-title"> 标签</h3>
+    <div class="widget-body">
+        <ul class="tag-list">
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/http/" class="tag-list-link">http</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/java%E5%9F%BA%E7%A1%80/" class="tag-list-link">java基础</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/java%E5%B9%B6%E5%8F%91/" class="tag-list-link">java并发</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/jvm/" class="tag-list-link">jvm</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/leetcode/" class="tag-list-link">leetcode</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/linux%E5%91%BD%E4%BB%A4/" class="tag-list-link">linux命令</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/mybatis/" class="tag-list-link">mybatis</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/mysql/" class="tag-list-link">mysql</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/netty/" class="tag-list-link">netty</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/rpc/" class="tag-list-link">rpc</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/spring/" class="tag-list-link">spring</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/websocket/" class="tag-list-link">websocket</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" class="tag-list-link">消息队列</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="tag-list-link">设计模式</a><span
+                    class="tag-list-count">1</span></li>
+            
+        </ul>
+
+    </div>
+</div>
+      
+<div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+        <ul class="recent-post-list list-unstyled no-thumbnail">
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://wzgl998877.github.io/2022/01/mysql%E6%98%AF%E6%80%8E%E6%A0%B7%E8%BF%90%E8%A1%8C%E7%9A%84/" class="title">Mysql是怎样运行的</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2022-01-12 11:24:40 &#43;0800 CST" itemprop="datePublished">2022-01-12</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://wzgl998877.github.io/2022/01/java-%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" class="title">Java 并发编程</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2022-01-09 11:24:40 &#43;0800 CST" itemprop="datePublished">2022-01-09</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://wzgl998877.github.io/2022/01/java-%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3%E5%AD%A6%E4%B9%A0/" class="title">Java 编程思想学习</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2022-01-09 11:24:40 &#43;0800 CST" itemprop="datePublished">2022-01-09</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://wzgl998877.github.io/2022/01/leetcode/" class="title">LeetCode</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2022-01-09 11:24:40 &#43;0800 CST" itemprop="datePublished">2022-01-09</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://wzgl998877.github.io/2022/01/linux%E5%B7%A5%E4%BD%9C%E6%97%A5%E5%B8%B8%E5%91%BD%E4%BB%A4/" class="title">Linux工作日常命令</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2022-01-09 11:24:40 &#43;0800 CST" itemprop="datePublished">2022-01-09</time>
+                    </p>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+  </div>
+</aside>
+
+    
+    
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <h4 class="toc-title">文章目录</h4>
+    <nav id="toc" class="js-toc toc">
+
+    </nav>
+  </div>
+</aside>
+<main class="main" role="main"><div class="content">
+  <article id="-" class="article article-type-" itemscope
+    itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      <h1 itemprop="name">
+  <a
+    class="article-title"
+    href="/2022/01/java-%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3%E5%AD%A6%E4%B9%A0/"
+    >Java 编程思想学习</a
+  >
+</h1>
+
+      <div class="article-meta">
+        
+<span class="article-date">
+  <i class="icon icon-calendar-check"></i>&nbsp;
+<a href="https://wzgl998877.github.io/2022/01/java-%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3%E5%AD%A6%E4%B9%A0/" class="article-date">
+  <time datetime="2022-01-09 11:24:40 &#43;0800 CST" itemprop="datePublished">2022-01-09</time>
+</a>
+</span>
+<span class="article-category">
+  <i class="icon icon-folder"></i>&nbsp;
+  <a class="article-category-link" href="/categories/java/"> Java </a>
+</span>  
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>&nbsp;
+    <a class="article-tag-link" href="/tags/java%E5%9F%BA%E7%A1%80/"> Java基础 </a>
+  </span>
+
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 14457字</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 29分 </span>
+      </div>
+    </div>
+    <div class="article-entry marked-body js-toc-content" itemprop="articleBody">
+      <h1 id="java-编程思想学习">Java 编程思想学习</h1>
+<h2 id="第1章---对象导论">第1章   对象导论</h2>
+<p>好像看不下去，。。。</p>
+<h2 id="第2章---一切都是对象">第2章   一切都是对象</h2>
+<ol>
+<li>
+<p>用引用操作对象：每种编程语言都有自己的操纵内存中元素的方式。java中操纵的标识符是对象的一个“引用”，可以理解为用遥控器（引用）来操作电视机（对象），只要握住这个遥控器就能保持与电视机的连接，没有电视机，遥控器也可以存在，也就是说你拥有一个引用，并不一定需要有对象与他相关联。</p>
+</li>
+<li>
+<p>存储到什么地方</p>
+<ol>
+<li>
+<p>寄存器：这是最快的存储区，位于处理器内部数量极其有限，不能直接控制</p>
+</li>
+<li>
+<p>堆栈：位于通用 RAM（随机访问存储器）中，但通过堆栈指针可以从处理器那里获得直接支持，堆栈指针若向下移动则分配新的内存，向上移动则释放那些内存，创建程序时，Java 系统必须知道存储在堆栈内所有项的确切生命周期，所以虽然某些 Java 数据存储于堆栈中，特别是对象引用，但Java对象并不存储于其中</p>
+</li>
+<li>
+<p>堆:一种通用的内存池（位于 RAM 中），用于存放所有的 Java 对象，相对于堆栈，编译器不需要知道存储的数据在堆里存活多久，需要一个对象时，只需要 new 一个对象，便会自动在堆里进行存储分配</p>
+</li>
+<li>
+<p>常量存储：常量值通常被直接存放在程序代码内部，这样做是安全的，因为它们永远不会被改变</p>
+</li>
+<li>
+<p>非 RAM 存储：如果数据完全存活于程序之外，那么它可以不受程序的任何控制，在程序没有运行时也可以存在，典型例子流对象和持久化对象，流对象转化为字节流，通常被发送给另一台机器，持久化对象被存放于磁盘上</p>
+</li>
+</ol>
+</li>
+<li>
+<p>特例：基本类型。在程序设计中经常要用到一系列类型，它们需要特殊对待，可以把它们想象成基本类型，之所以特殊对待，是因为 new 将对象存储在堆中，故用 new 创建一个对象特别是小的简单的变量，往往不是很有效，因此对于这些类型，Java 采用了和 c 相同的方法，也就是说不用 new 来创建变量，而是创建一个并非是引用的自动变量，<strong>这个变量直接存储值，并置于堆栈中</strong>，因此更加高效。Java 要确定每种基本类型所占存储空间的大小，它们的大小并不像其他大多数语言那样随机器硬件架构的变化而变化，这种所占存储空间大小的不变性是 Java 程序比其他程序更具有可移植性的原因之一。但boolean类型所占存储空间的大小没有明确指定，仅定义为能够取字面值true或false</p>
+</li>
+<li>
+<p>基本成员默认值。 若类的某个成员是基本数据类型，即使没有进行初始化，Java 也会确保它获得一个默认值</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">基本类型</th>
+<th style="text-align:center">默认值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">boolean</td>
+<td style="text-align:center">false</td>
+</tr>
+<tr>
+<td style="text-align:center">char</td>
+<td style="text-align:center">&lsquo;\uoooo&rsquo;(null)</td>
+</tr>
+<tr>
+<td style="text-align:center">byte</td>
+<td style="text-align:center">(byte)0</td>
+</tr>
+<tr>
+<td style="text-align:center">short</td>
+<td style="text-align:center">(short)0</td>
+</tr>
+<tr>
+<td style="text-align:center">int</td>
+<td style="text-align:center">0</td>
+</tr>
+<tr>
+<td style="text-align:center">long</td>
+<td style="text-align:center">oL</td>
+</tr>
+<tr>
+<td style="text-align:center">float</td>
+<td style="text-align:center">0.0f</td>
+</tr>
+<tr>
+<td style="text-align:center">double</td>
+<td style="text-align:center">0.0d</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>static 关键字。当声明一个事物是 static 时，就意味着这个域或者方法不会与包含它的那个类的任何对象实例关联在一起，所以，即使从未创建某个类的任何对象，也可以调用其 static 方法或访问其 static 域，使用类名是引用 static 变量的首选，这不仅强调变量的 static 结构，而且还为编译器进行优化提供了更好的机会，尽管当 static 作用于某个字段时，肯定会改变数据创建的方式（因为一个 static 字段对于每个类来说都只有一份存储空间，而非 static 字段是每一个对象就有一个存储空间）</p>
+</li>
+</ol>
+<h2 id="第3章---操作符">第3章   操作符</h2>
+<ol>
+<li>
+<p>赋值操作符=，它的意思是取右边的值复制给左边，在为对象赋值时，我们真正操作的是对对象的引用，所以倘若将一个对象赋值给另一个对象，实际上是将引用从一个地方复制到另一个地方，这意味着若对对象使用c=d，那么c和d都将指向原本d指向的那个对象，此时改变c属性的值，d中属性也会发生变化（指向同一个对象）</p>
+<pre><code class="language-java">package com.zt.activemq_springboot.config;
+public class Example {
+    int i;
+    public int getI() {
+        return i;
+    }
+
+    public void setI(int i) {
+        this.i = i;
+    }
+}
+
+@Test
+void test9(){
+
+    Example a=new Example();
+    Example b=new Example();
+    a.setI(1);
+    b.setI(2);
+    System.out.println(&quot;a: &quot;+a.getI()+&quot;   b: &quot;+b.getI());
+    a=b;
+    System.out.println(&quot;a: &quot;+a.getI()+&quot;   b: &quot;+b.getI());
+    a.setI(3);
+    System.out.println(&quot;a: &quot;+a.getI()+&quot;   b: &quot;+b.getI());
+    int i=0;
+    f(i);
+    d(a);
+    System.out.println(&quot;常量： &quot;+i+&quot; 对象：&quot;+a.getI());
+}
+static void f(int i){
+    i=4;
+}
+static void d(Example example){
+    example.setI(4);
+}
+//结果
+a: 1   b: 2
+a: 2   b: 2
+a: 3   b: 3
+常量： 0 对象：4
+</code></pre>
+</li>
+<li>
+<p>自动递增和自动递减。++ 就意味则增加一个单位，&ndash; 就意味着减少一个单位，( ++a , &ndash;a )先执行运算再生成值，( a++, a&ndash; )先生成值，再执行运算</p>
+</li>
+<li>
+<p>逻辑操作符：与（&amp;&amp;）、或（||) 、非（ ！），<strong>当时用逻辑操作符时，会出现短路现象</strong>，即一旦能够明确无误地确定整个表达式的值后面就不再计算表达式余下部分了。</p>
+</li>
+<li>
+<p>按位操作符：按位操作符是用来操作整数基本数据类型中的单个bit的，即二进制位，按位操作符会对两个参数中对应的位执行布尔代数运算，并最终生成一个结果，按位与（&amp;）、按位或（|）、按位非（~），按位异或（^）,<strong>按位操作符与逻辑操作符有同样的效果，只是不会短路</strong></p>
+</li>
+</ol>
+<h2 id="第4章---控制执行流程">第4章   控制执行流程</h2>
+<p>noting</p>
+<h2 id="第5章-初始化与清理">第5章 初始化与清理</h2>
+<ol>
+<li>
+<p>方法重载。构造器 (构造方法) 是强制重载方法名的一个原因，构造器的名字已经由类名所决定，所以就只能有一个构造器名，那么如果想要多种方式创建一个对象该怎么办呢？ 为了让方法名相同而形式参数不同的构造器同时存在，必须要有方法重载。</p>
+<ol>
+<li>区分重载方法。通过参数列表区分，为什么不能以返回值区分重载方法？<strong>因为有时你并不关心方法的返回值，你想要的是方法调用的其他效果</strong>。</li>
+</ol>
+</li>
+<li>
+<p>this 关键字。如果有同一个类型的两个对象，分别是 a 和 b ，那么如何才能让这两个对象都能调用 peel() 方法呢？</p>
+<pre><code class="language-java">package com.zt.activemq_springboot.config;
+public class Example {
+    void peel(int i){}
+}
+@Test
+void test13(){
+    Example a=new Example();
+    Example b=new Example();
+    a.peel(1);
+    b.peel(2);
+}
+//在java中他暗自把所操作对象的引用作为参数传递给peel();
+//即java内部为
+ Example.peel(a,1)
+ Example.peel(b,2)
+</code></pre>
+<p>如果要在方法的内部获得对当前对象的引用，由于这个引用是由编译器 “偷偷” 传入的，所以没有标识符可以用，为此有个专门的关键字： this。<strong>this关键字只能在方法内部使用 ,表示对 “调用方法的那个对象” 的引用</strong> 但是如果在方法内部调用同一个类的另一个方法，就不必使用 this，直接调用即可，这是因为方法中的<strong>this引用会自动应用于同一个类中的其他方法。</strong></p>
+</li>
+<li>
+<p>static 的含义。static 方法就是没有this的方法。 <strong>在 static 方法的内部不能调用非静态方法，反过来则可以</strong>。</p>
+</li>
+<li>
+<p>清理：终结处理和垃圾回收。一旦垃圾回收器准备好释放对象占用的存储空间，将首先调用其 finalize() 方法，并且在下一次垃圾回收动作发生时，才会真正回收对象占用的内存。与 c++ 相比，Java 中：<strong>对象可能不被垃圾回收；垃圾回收并不等于析构</strong> 。这意味着在你不再需要某个对象之前，如果必须执行某些动作，那么你得自己去做，要做类似的清理工作，必须自己动手创建一个执行清理工作的普通方法。例如，假设某个对象在创建过程中会将自己绘制到屏幕上，如果不是明确地从屏幕上将其檫除，它有可能永远得不到清理，<strong>想要将其檫除应该定义一个檫除的普通方法</strong>，如果在 finalize() 中加入某种檫除的话，只有当垃圾回收发生时（不能保证一定会发生）finalize() 得到了调用图像才会被檫除。所以<strong>不该将 finalize()作为通用的清理方法</strong>。</p>
+</li>
+<li>
+<p>finalize() 的用途何在。<strong>垃圾回收只与内存有关</strong> 也就是说，使用垃圾回收器的唯一原因是为了回收程序不再使用的内存。无论对象是如何创建的（对象中含有其他对象或者是其他情况）垃圾回收器都会负责释放对象所占据的所有内存。这就将 finalize() 的需求限制到一种特殊情况，即通过某种创建对象方式以外的方式为对象分配了存储空间，这种情况主要发生在使用 “本地方法” 的情况下，本地方法是一种在 Java 中调用非 Java 代码的方式，在非 Java 代码中，也许会调用 C 的 malloc() 函数系列来分配存储空间，而且除非调用了 free() 方法，否则存储空间得不到释放，从而造成内存泄漏，当然 free() 是非 Java 代码，所以需要在 finalize() 中用 “本地方法” 调用。</p>
+</li>
+<li>
+<p>垃圾回收器如何工作。有点复杂。。。。</p>
+</li>
+<li>
+<p>初始化顺序。在类的内部，变量定义的先后顺序决定了初始化的顺序。即使变量定义散布于方法定义间，它们仍旧会在任何方法（包括构造方法）被调用之前得到初始化。</p>
+</li>
+<li>
+<p>静态数据的初始化。static 关键字不能应用于局部变量，因此它只能作用于域。如果一个域是静态的基本类型域，且没有初始化，那么它就会获得基本类型的标准初值，如果它是一个对象的引用，那么默认初始化值则为 null，静态初始化只有在必要时刻才会进行，<strong>并且静态初始化只会进行一次，在首次生成这个类的一个对象时或者首次访问属于这个类的静态变量或方法时</strong>。</p>
+<p>初始化的顺序是 <strong>父类静态变量</strong> &ndash;&gt; <strong>子类静态变量</strong> &ndash;&gt; <strong>父类实例变量</strong> &ndash;&gt; <strong>子类实例变量</strong> &ndash;&gt; <strong>父类构造函数</strong> &ndash;&gt; <strong>子类构造函数</strong></p>
+</li>
+<li>
+<p>对象的创建过程，假设有个Dog类</p>
+<ol>
+<li>
+<p>即使没有显示地使用 static 关键字，构造器实际上也是静态方法。当首次创建类型为 Dog 的对象时（构造器可以看成静态方法），或者 Dog 类的静态方法/静态域首次被访问时 Java 解释器必须查找类路径，以定位 Dog.class 文件。</p>
+</li>
+<li>
+<p>然后载入 Dog.class (这将创建一个 Class 对象)，有关静态初始化的所有动作都会执行。因此，<strong>静态初始化只在 Class 对象首次加载的时候进行一次</strong>。</p>
+</li>
+<li>
+<p>当用 new Dog() 创建对象时，首先在堆上为 Dog 对象分配足够的存储空间。</p>
+</li>
+<li>
+<p>这块存储空间将会被清零，这就自动地将 Dog 对象中的所有基本类型数据都设置成了默认值，而引用则被设置成了 null。</p>
+</li>
+<li>
+<p>执行所有出现于字段定义处的初始化动作。</p>
+</li>
+<li>
+<p>执行构造器。</p>
+</li>
+</ol>
+</li>
+<li>
+<p>数组初始化。数组只是相同类型的、用一个标识符名称封装到一起的一个对象序列或基本类型数据序列。</p>
+<pre><code class="language-java">   void test14(){
+//      这两种是等价的
+        int[] a=new int[]{1,2,3};
+        int[] a1={1,2,3};
+    }
+</code></pre>
+<p>可变参数列表，应用于参数个数或类型未知的场合。</p>
+<pre><code class="language-java">    @Test
+    void test14(){
+        printArray(1,2,3);
+        printArray(&quot;可变&quot;,&quot;参数&quot;,&quot;列表&quot;);
+    }
+    /**
+     *
+     * @param args 类型加... 就代表了可变参数列表,可以使用任何类型的参数，包括基本类型
+     */
+    static void printArray(Object... args){
+        for(Object object:args){
+            System.out.print(object+&quot; &quot;);
+        }
+    }
+</code></pre>
+</li>
+<li>
+<p>枚举类。在你创建 enum 时，编译器会自动添加一些有用的特性。例如，它会创建 toString() 方法，以便你可以很方便地显示某个 enum 实例的name，编译器还会创建 ordinal() 方法，用来表示某个特定 enum 常量的声明顺序，以及 static values() 方法，用来按照 enum 常量的声明顺序，产生由这些常量值构成的数组。</p>
+<pre><code class="language-java">public enum Fruit {
+    APPLE,BANANA,PEAR;
+}
+ @Test
+void test16(){
+    System.out.println(Fruit.APPLE);//默认的toString 打印出他的name
+    for(Fruit fruit:Fruit.values()){
+        System.out.println(fruit+&quot;, ordinal &quot;+fruit.ordinal());
+    }
+}
+/**
+结果
+APPLE
+APPLE, ordinal 0
+BANANA, ordinal 1
+PEAR, ordinal 2
+**/
+</code></pre>
+</li>
+</ol>
+<h2 id="第6章---访问权限控制">第6章   访问权限控制</h2>
+<ol>
+<li>
+<p>当编写一个 Java 源代码文件时，此文件通常被称为编译单元（转译单元）。每个编译单元必须有后缀名 .java,在编译单元内可以有一个 public 类，该类的名称必须与文件的名称相同，每一个编译单元只能有一个 public 类。</p>
+</li>
+<li>
+<p>当编译一个 .java 文件时，在 .java 文件中的每个类都会有一个后缀名为 .class 的输出文件。</p>
+</li>
+</ol>
+<h2 id="第7章---复用类">第7章   复用类</h2>
+<p><strong>tips:</strong>  foreach 的一些注意事项，结论：<strong>foreach 循环迭代数组元素时，不能改变“基本数组类型元素”的值，因此不要对 foreach 的循环变量进行赋值，引用类型数组（除 String 类型）可以改变</strong>。 举例：</p>
+<p>​	foreach 不可以改变变量，即使使用集合存变量也不可以，foreach 循环中，是把容器中的数据交给了	那个element相当于一个<strong>临时变量</strong>，系统会把数组元素依次赋给这个临时变量，而这个临时变量并不是	数组元素，它只是保存了数组元素的值。因此当容器中装的是变量时，foreach是改变不了元数据的，	想改变只能通过for循环</p>
+<pre><code class="language-java">  @Test
+    void test15(){
+        int[] a={1,2,3};
+        for(int i:a){
+            i++;
+        }
+        for(int i:a){
+            System.out.print(i+&quot; &quot;);
+        }
+        System.out.println();
+    }
+//结果
+//1 2 3 
+</code></pre>
+<p>​	<strong>foreach可以改变对象的值，但不能删除或添加对象</strong>（ foreach 循环中，是把容器中的数据交给了那个element，当容器中装的是对象时，对象的赋值（赋的是引用，即给的是原对象所在的地址））</p>
+<p>为什么不能删除或者添加变量，因为每次进入foreach是，就会调用java.util.LinkedList.Listltr.next()方法，方法对集合的长度进行了判断，所以会出现异常。</p>
+<pre><code class="language-java">@Test
+    void test15(){
+        List&lt;Value&gt; list=new ArrayList();
+        list.add(new Value(1));
+        list.add(new Value(2));
+        list.add(new Value(3));
+        for(Value value:list){
+            value.setI(value.getI()+1);
+        }
+        for (Value value:list){
+            System.out.print(value.getI()+&quot; &quot;);
+        }
+        //结果
+		//2 3 4
+       for(Value value:list){
+            list.remove(value);//报ConcurrentModificationException错
+        }
+    }
+
+</code></pre>
+<ol>
+<li>
+<p>final 关键字。通常它指的是“这是无法改变的”，一个既是 static 又是 final 的 域只占据一段不能被改变的存储空间。</p>
+<ol>
+<li>final 数据。对于基本类型，final 使数值恒定不变；而对于对象，final 使引用恒定不变，一旦引用被初始化指向一个对象，就无法再把它改为指向另一个对象，然而，对象其自身却是可以被修改的，这一限制同样适用于数组，它也是对象。</li>
+</ol>
+<pre><code class="language-java">   package com.zt.activemq_springboot.config;
+
+   import java.util.Random;
+
+   public class FinalData {
+       private static Random random=new Random(47);
+       private String id;
+       public FinalData(String id){
+           this.id=id;
+       }
+       private final int valueOne=9;
+       private static final int ValueTwo=99;
+       public static final int ValueThree=39;
+       private final int i4= random.nextInt(20);
+       static final int INT_5=random.nextInt(20);
+       private Value v1=new Value(11);
+       private final Value v2=new Value(22);
+       public static final Value VAL_3=new Value(33);
+       private final int[] a={1,2,3};
+       @Override
+       public String toString(){
+           return id+&quot;:&quot;+&quot;i4:&quot;+i4+&quot;,INT_5=&quot;+INT_5;
+       }
+
+       public static void main(String[] args) {
+           FinalData fd1=new FinalData(&quot;fd1&quot;);
+   //       final的基本类型不能改变
+   //        fd1.valueOne++;
+           fd1.v2.i++;
+           fd1.v1=new Value(9);
+           for (int i=0;i&lt;fd1.a.length;i++) {
+               fd1.a[i]++;
+           }
+           for(int i:fd1.a) {
+               System.out.print(i+&quot; &quot;);
+           }
+           System.out.println();
+           System.out.println(fd1.v2.i);
+           System.out.println(fd1.toString());
+           FinalData fd2=new FinalData(&quot;fd2&quot;);
+           System.out.println(fd1.toString());
+           System.out.println(fd2.toString());
+       }
+   }
+   /**
+   结果
+   2 3 4 证明final类型的数组，值可以改变
+   23
+   fd1:i4:15,INT_5=18 因为i4 是final 的所以是不变的，只针对于当前对象，而对于INT_5是static的所以只会初始化一次所以不变，static可以参考第5章
+   fd1:i4:15,INT_5=18
+   fd2:i4:13,INT_5=18
+
+
+   **/
+</code></pre>
+<p>对于   valueOne，ValueTwo 都是带有编译时数值的 final 基本类型，称为编译期常量，对于 ValueThree 定义为 public ，则可以被用于包之外；定义为 static，强调只有一份；定义为 final 说明是个常量。<strong>我们不能因为某数据是 final 的就认为在编译时可以知道它的值</strong></p>
+<ol start="2">
+<li>
+<p>final 方法。使用 final 方法的原因：1、把方法锁定，以防任何继承类修改它的含义；2、出于效率，现在已经慢慢不用这种方式提高效率了。类中所有的 private 方法都隐式地指定为是 final 的。final 类 就表明了你不打算继承该类，而且也不允许别人这么做。final 类中的所有方法都隐式指定为 final 的。</p>
+</li>
+<li>
+<p>初始化及类的加载。因为 Java 中的所有事物都是对象，每个类的编译代码都存在于它自己的独立文件中。该文件<strong>只在需要使用程序代码时</strong> 才会被加载。可以说，类的代码在初次使用时才加载，这通常是指加载发生于创建类的第一个对象之时，但是当访问 static 域 或方法时，也会发生加载，**初次使用之处也是 static 初始化发生之处。所有的 static 对象和 static 代码段都会在加载时，依程序的顺序（即，定义类时的书写顺序）而依次初始化。当然定义为 static 的东西只会被初始化一次。**构造器也是 static 方法，所以准确讲类是在其任何 static 成员被访问时加载的。</p>
+</li>
+<li>
+<p>初始化全过程。</p>
+<pre><code class="language-java">package com.zt.activemq_springboot.config;
+
+class Insect {
+    private int i=9;//4初始化父类实例变量，此时i=9，而j还是0
+    protected int j;
+    Insect(){//5执行父类构造方法
+        System.out.println(&quot;我是父类构造方法&quot;);
+        System.out.println(&quot;i= &quot;+i+&quot;, j= &quot;+j);
+        j=39;
+    }
+    private static int x1=printInit(&quot;我是父类静态变量&quot;);//1父类static初始化
+    static int printInit(String s){
+        System.out.println(s);
+        return 47;
+    }
+}
+public class Bettle extends Insect{
+    private int k=printInit(&quot;我是子类变量&quot;);//6初始化子类实例变量
+    public Bettle(){//7执行子类构造方法
+        System.out.println(&quot;我是子类构造方法&quot;);
+        System.out.println(&quot;k= &quot;+k);
+        System.out.println(&quot;j= &quot;+j);
+    }
+    private static int x2=printInit(&quot;我是子类静态变量&quot;);//2 子类static初始化
+    //3 将所有基本类型设为默认值，对象引用被设为null，这里是k，j，i都被初始化为0
+    public static void main(String[] args) {
+        System.out.println(&quot;请开始你的表演&quot;);
+        Bettle b=new Bettle();
+    }
+}
+/**
+结果
+我是父类静态变量
+我是子类静态变量
+请开始你的表演
+我是父类构造方法
+i= 9, j= 0
+我是子类变量
+我是子类构造方法
+k= 47
+j= 39
+**/
+</code></pre>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="第8章---多态">第8章   多态</h2>
+<ol>
+<li>
+<p>将一个方法调用同一个方法主体关联起来被称为绑定，若在程序执行前进行绑定，叫前期绑定，后期绑定：在运行时根据对象的类型进行绑定，后期绑定也叫做<strong>动态绑定或运行时绑定</strong> 编译器一直不知道对象的类型，但是方法调用机制能找到正确的方法。Java 中除了 static 方法和 final 方法（private 方法属于final方法）之外，所有方法都是后期绑定。</p>
+</li>
+<li>
+<p>覆盖私有方法。由于 private 方法被自动认为就是一个全新的方法，而且对导出类是屏蔽的，如果在子类中覆盖 private 方法此时此方法就是一个<strong>全新</strong>的方法,</p>
+<p>如果某个方法是静态的，它的行为就不具有多态性。</p>
+</li>
+<li>
+<p>通过组合和继承方法来创建新类时，永远不必担心对象的清理问题，子对象通常都会留给垃圾回收器进行处理，所以万一某个子对象要依赖于其他对象，销毁的顺序应该和初始化顺序相反，对于字段，则意味着于声明的顺序相反，对于基类应该先对其导出类进行清理然后才是基类。</p>
+</li>
+</ol>
+<h2 id="第-9章---接口">第 9章   接口</h2>
+<ol>
+<li>
+<p>包含抽象方法的类叫做抽象类。如果一个类包含一个或多个抽象方法，该类必须被限定为抽象的。从一个抽象类继承，并想创建该新类的对象，那么就必须为基类中的所有抽象方法提供方法定义。如果不这样做，那么导出类也是抽象类，抽象类可以不包含抽象方法。</p>
+</li>
+<li>
+<p>interface 这个关键字产生一个完全抽象的类，没有提供任何具体实现，接口被用来建立类与类之间的协议。接口是实现多重继承的途径。</p>
+</li>
+<li>
+<p>生成遵循某个接口的对象的典型方式就是工厂方法设计模式</p>
+</li>
+</ol>
+<h2 id="第10章---内部类">第10章   内部类</h2>
+<ol>
+<li>
+<p>可以将一个类的定义放在另一个类的定义内部，这就是内部类。内部类他能访问其外围对象的所有成员。当某个外围类的对象创建了一个内部类对象时，此内部类对象必定会秘密的捕获一个指向那个外围类对象的引用。在拥有外部类对象之前是不可能创建内部类对象的，这是因为内部类对象会暗暗的连接到创建它的外部类对象上，但是如果是静态内部类，则不需要对外部类对象的引用。</p>
+</li>
+<li>
+<p>在方法的作用域内创建一个完整的类，称为局部内部类：</p>
+<pre><code class="language-java">//用到的类
+public class Wrapping {
+    private int i;
+    public Wrapping(int x){ i = x ;}
+    public int value(){ return i;}
+}
+
+public interface Destination {
+    String readLabel();
+}
+
+public interface Contents {
+    int value();
+}
+</code></pre>
+<pre><code class="language-java">public class InnerClass {
+    public Destination destination(String s){
+        class PDestionation implements Destination{
+            private String label;
+            private PDestionation(String whereTo){
+                label = whereTo;
+            }
+            @Override
+            public String readLabel(){return  label;}
+        }
+        return new PDestionation(s);
+    }
+
+    public static void main(String[] args) {
+        InnerClass p = new InnerClass();
+        Destination d = p.destination(&quot;bob&quot;);
+        System.out.println(d.readLabel());
+    }
+}
+
+</code></pre>
+<p>PDestionation 是 destination 方法的一部分，而不是类的一部分，所以在方法外不能访问该类。</p>
+</li>
+<li>
+<p>匿名内部类，将返回值的生成与表示这个返回值的类的定义结合在一起</p>
+</li>
+</ol>
+<pre><code class="language-java">package com.zt.activemq_springboot;
+
+/**
+ * @author zhengtao
+ * @description 内部类测试
+ * @date 2020/10/13
+ */
+public class InnerClass {
+    // 匿名内部类
+    public Contents contents(){
+        return new Contents() {
+            private int i=11;
+            @Override
+            public int value() {
+                return i;
+            }
+        };
+    }
+    // 相当于以下两段代码
+    class Mycontents implements Contents{
+        private int i=11;
+        @Override
+        public int value() {
+            return i;
+        }
+    }
+    public Contents contents1(){
+        return new Mycontents();
+    }
+    public static void main(String[] args) {
+        InnerClass p = new InnerClass();
+        Contents c = p.contents();
+        System.out.println(c.value());
+        Destination d = p.destination(&quot;bob&quot;);
+        System.out.println(d.readLabel());
+    }
+}
+
+</code></pre>
+<p>有参数的构造器使用匿名内部类</p>
+<pre><code class="language-java">package com.zt.activemq_springboot;
+
+/**
+ * @author zhengtao
+ * @description 内部类测试
+ * @date 2020/10/13
+ */
+public class InnerClass {
+    public Wrapping wrapping(int x){
+        return new Wrapping(x){
+            @Override
+            public int value(){
+                return  super.value()*10;
+            }
+        };
+    }
+    public static void main(String[] args) {
+        InnerClass p = new InnerClass();
+        Wrapping w = p.wrapping(10);
+        System.out.println(w.value());//100
+    }
+}
+
+</code></pre>
+<p>如果定义一个匿名内部类，并且希望它使用一个在其外部定义的对象，那么编译器会要求其参数引用是 final 的。匿名内部类不能同时实现接口，继承类，而且如果是实现接口也只能实现一个接口</p>
+<pre><code class="language-java">package com.zt.activemq_springboot;
+
+/**
+ * @author zhengtao
+ * @description 内部类测试
+ * @date 2020/10/13
+ */
+public class InnerClass {
+    //在JDK8之前，如果我们在匿名内部类中需要访问局部变量，那么这个局部变量必须用final修饰符修饰
+    //在JDK8中如果我们在匿名内部类中需要访问局部变量，那么这个局部变量不需要用final修饰符修饰。看似是一种编译机制的改变，实际上就是一个语法糖（底层还是帮你加了final）。但通过反编译没有看到底层为我们加上final，但我们无法改变这个局部变量的引用值，如果改变就会编译报错。
+    public Destination destination1( final String dest){
+        return new Destination() {
+            private String label=dest;
+            @Override
+            public String readLabel() {
+                return label;
+            }
+        };
+    }
+    public static void main(String[] args) {
+        InnerClass p = new InnerClass();
+        Destination D=p.destination1(&quot;alice&quot;);
+        System.out.println(D.readLabel()); 
+    }
+}
+
+</code></pre>
+<ol start="4">
+<li>为什么需要内部类。 内部类有效的实现了 <strong>多重继承</strong> 它允许继承多个非接口类型 (类或抽象类)。</li>
+</ol>
+<pre><code class="language-java">package com.zt.activemq_springboot;
+/**
+ * @author zhengtao
+ * @description 测试内部类解决多继承
+ * @date 2020/10/13
+ */
+class D{}
+abstract class E{}
+class Z extends D{
+    E makeE(){
+        return new E() {
+        };
+    }
+}
+public class MultiImplementation {
+    static void takesD(D d){}
+    static void takesE(E e){}
+
+    public static void main(String[] args) {
+        Z z=new Z();
+        takesD(z);
+        takesE(z.makeE());
+    }
+}
+
+</code></pre>
+<ol start="5">
+<li>
+<p>由于每个类都会产生一个.class文件，其中包含了如何创建该类型的对象的全部信息（此信息产生一个 “meta-class”，叫做 Class 对象）内部类也必须生成一个  .class 文件以包含它们的 Class 对象信息。这些类文件的命名有严格的规则： 外围类的名字，加上 $ 再加上内部类的名字。如果是匿名内部类，就产生一个数字作为其标识符。</p>
+<pre><code class="language-java">package com.zt.activemq_springboot;
+
+/**
+ * @author zhengtao
+ * @description 测试内部类解决多继承
+ * @date 2020/10/13
+ */
+
+class Egg2{
+    protected class Yolk{
+        public Yolk(){
+            System.out.println(&quot;egg2.yolk&quot;);
+        }
+        public void f(){
+            System.out.println(&quot;egg2.yolk.f&quot;);
+        }
+    }
+    private Yolk y = new Yolk();
+    public  Egg2(){
+        System.out.println(&quot;new Egg2&quot;);
+    }
+    public void insertYolk(Yolk y) {
+        this.y = y;
+    }
+    public void g(){
+        y.f();
+    }
+}
+public class MultiImplementation extends Egg2{
+
+    public class Yolk extends Egg2.Yolk{
+        public Yolk(){
+            System.out.println(&quot;newegg2.yolk&quot;);
+        }
+        public void f(){
+            System.out.println(&quot;newegg2.yolk.f&quot;);
+        }
+    }
+    public MultiImplementation(){
+        insertYolk(new Yolk());
+    }
+    public static void main(String[] args) {
+        Egg2 egg2=new MultiImplementation();
+        egg2.g();
+    }
+}
+/*
+打印出来为
+egg2.yolk
+new Egg2
+egg2.yolk
+newegg2.yolk
+newegg2.yolk.f
+
+生成的class文件为 Egg2.class Egg2$Yolk.class  MultiImplementation$Yolk.class MultiImplementation.class
+*/
+</code></pre>
+</li>
+</ol>
+<h2 id="第11章---持有对象">第11章   持有对象</h2>
+<ol>
+<li>迭代器是一个对象，它的工作是遍历并选择序列中的对象，而不需要知道或关心该序列底层的结构。</li>
+</ol>
+<pre><code class="language-java">    @Test
+    void test34(){
+        List&lt;Integer&gt; list = new ArrayList();
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        Iterator&lt;Integer&gt; iterator=list.iterator();// iterator()要求容器返回一个Iterator
+        while (iterator.hasNext()){// 检查序列中是否还有元素
+            Integer a = iterator.next();// 获得序列中的下一个元素
+            iterator.remove();// 将迭代器新近返回的元素删除,必须先调用next方法
+            System.out.println(a);
+        }
+    }
+</code></pre>
+<ol start="2">
+<li>Stack 栈 后进先出，peek() 方法提供栈顶元素，pop() 将移除并返回栈顶元素。不能使用基本类型的容器。</li>
+</ol>
+<h2 id="第12章---通过异常处理错误">第12章   通过异常处理错误</h2>
+<ol>
+<li>
+<p><strong>Java 的基本理念是 “结构不佳的代码不能运行”</strong></p>
+</li>
+<li>
+<p>异常情形是指阻止当前方法或作用域继续执行的问题。异常情形在当前环境下无法获得必要的信息来解决问题。你所能做的就是从当前环境跳出，并且把问题提交给上一级，这就是抛出异常的时候所发生的事情。当抛出异常后，有几件事情会随之发生。首先，同 Java 中其他对象的创建一样，将使用 new 在堆上创建异常对象，然后当前的执行路劲被终止，并且从当前的环境中弹出对异常对象的引用。此时，异常处理机制接管程序，并开始寻找一个恰当的地方来继续执行程序。这个恰当的地方就是异常处理程序，它的任务是将程序从错误状态中恢复，以使程序要么能换一种方式运行，要么继续运行下去。</p>
+</li>
+<li>
+<p>try块。如果在方法内部抛出了异常（或者在方法内部调用的其他方法抛出了异常），这个方法将在抛出异常的过程中结束，要是不希望方法就此结束，可以在方法内设置一个特殊的块来捕获异常。因为在这个块里尝试各种可能产生异常的方法调用，所以称为 try 块。</p>
+</li>
+<li>
+<p>异常处理程序。当然，抛出的异常必须在某处得到处理。这个地点就是异常处理程序，就是catch内的内容，每个 catch 子句看起来就像是接受一个且仅接受一个特殊类型的参数的方法，异常处理程序必须紧跟在 try 块之后，当异常被抛出时，异常处理机制将负责搜寻参数与异常类型相匹配的<strong>第一个</strong>处理程序，然后进入 catch 子句执行，此时认为异常得到了处理，一旦 catch 子句结束，则处理程序的查找过程结束。</p>
+</li>
+<li>
+<p>终止与恢复。异常处理理论上有两种基本模型，终止模型，将假设错误非常关键，以至于程序无法返回到异常发生的地方继续执行。一旦异常被抛出，就表明错误已经无法挽回，也不难回来执行。恢复模型，意思是异常处理程序的工作是修订错误，通常希望异常被处理之后能继续执行程序。</p>
+</li>
+<li>
+<p>自定义异常。printStackTrace方法将打印“从方法调用处直到异常抛出处”的方法调用序列，将被输出到标准错误流。</p>
+<pre><code class="language-java">package com.zt.activemq_springboot;
+
+/**
+ * @author zhengtao
+ * @description 自定义异常类
+ * @date 2020/10/15
+ */
+public class MyException extends Exception{
+    private String code;
+    public MyException(String code,String msg){
+        super(msg);
+        this.code=code;
+    }
+    public MyException(){
+
+    }
+    public String getCode() {
+        return code;
+    }
+    public void setCode(String code) {
+        this.code = code;
+    }
+}
+
+
+@Test
+void test36(){
+    try {
+        int a = 1/0;
+    } catch (Exception e) {
+        MyException myException = new MyException(&quot;zz&quot;,e.getMessage());
+        System.out.println(myException.getMessage());
+        myException.printStackTrace(System.out);//将其发送到了标准输出流：System.out，所以不会报错
+        myException.printStackTrace();
+    }
+}
+</code></pre>
+<p>结果</p>
+</li>
+</ol>
+<p><img src="C:%5CUsers%5Czhengtao%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20201015165642804.png" alt="image-20201015165642804"></p>
+<ol start="7">
+<li>
+<p>异常说明， java  鼓励人们把方法可能会抛出的异常告知使用此方法的调用者，java 提供了相应的语法（并强制使用这个语法），它属于方法声明的一部分，紧跟在形式参数列表之后，使用附加的关键字 throws，后面接一个所有潜在异常类型的列表。代码必须与异常说明保持一致。如果方法里的代码产生了异常却没有进行处理，编译器会发现问题并提醒你：要么处理这个异常，要么就在异常说明中表明此方法将产生异常。但可以声明方法将抛出异常，实际上却不抛出，编译器相信这个声明，并强制此方法的用户像真的抛出异常那样使用这个方法。这样做的好处是，为异常先占个位置，以后就可以抛出这种异常而不用修改已有的代码，在定义抽象基类和接口时这种能力很重要，这样派生类或接口实现就能够抛出这些预先声明的异常。</p>
+</li>
+<li>
+<p>异常链，常常会想要在捕获一个异常后抛出另一个异常，并且希望把原始异常的信息保存下来，这被称为异常链，JDK 1.4 后 所有 Throwable 的子类在构造器中都可以接受一个cause对象作为参数，这个cause就表示原始异常，这样通过把原始异常传递给新的异常，使得即使在当前位置创建并抛出了新的异常，也能通过这个异常链追踪到异常最初发生的地方。只有Error，Exception，RuntimeException这三个类提供了带cause的构造方法。</p>
+</li>
+<li>
+<p>java 标准异常，RuntimeException 运行时异常，它们会自动被 Java 虚拟机抛出，所以不必在异常说明中把它们列出来。但是可以在代码中抛出RuntimeException 异常而且不需要异常说明，因为它直接到达了main方法,再程序退出前将调用异常的printStackTrace方法。</p>
+<pre><code class="language-java">    @Test
+    void test36() throws MyException {
+//         throw new MyException();//必须要异常说明或处理异常
+            throw new RuntimeException();//不需要
+        }
+
+</code></pre>
+</li>
+</ol>
+<h2 id="第13章字符串">第13章	字符串</h2>
+<ol>
+<li>
+<p>String 类中每一个看起来会修改 String 值的方法，实际上都是创建了一个全新的 String 对象，以包含修改后的字符串内容。而最初的 String 对象则丝毫未动</p>
+</li>
+<li>
+<p>重载的 “+” 操作符，重载操作符的意思是，一个操作符在应用于特定的类时，被赋予了特殊的意义（用于 String 的 “+” 和 “+=” 是 Java 中仅有的两个重载过的操作符，而 Java 不允许程序员重载任何操作符）重载 + 操作符其实是使用了 StringBuilder的 append() 方法，然后在 toString，但是在循环体中使用 “+” 每次循环都会 new 出一个 StringBuilder 对象， 然后进行 append 操作，最后通过 toString 方法返回 String 对象，造成内存资源浪费。 所有循环体中建议直接使用 StringBuilder。</p>
+</li>
+</ol>
+<h2 id="第15章泛型">第15章	泛型</h2>
+<p>​																																							只有知道了某个技术不能做到什么，你才能更好的做到所能做到的。</p>
+<ol>
+<li>
+<p>泛型类，我们更喜欢暂时不指定类型，而是稍后再决定具体使用什么类型，要达到这个目的，需要使用类型参数，用尖括号括住，放在类名后，然后在使用这个类的时候，再用实际的类型替换此参数类型。</p>
+<pre><code class="language-java">package com.zt.activemq_springboot;
+
+/**
+ * @author zhengtao
+ * @description 泛型
+ * @date 2020/10/20
+ */
+class Automobile{
+
+}
+public class Holder&lt;T&gt; {// T 为类型参数
+    private T a;
+    public Holder(T a){
+        this.a=a;
+    }
+
+    public T getA() {
+        return a;
+    }
+
+    public void setA(T a) {
+        this.a = a;
+    }
+
+    public static void main(String[] args) {
+        Holder&lt;Automobile&gt; holder = new Holder&lt;&gt;(new Automobile());//创建对象时必须要指定想持有什么类型的对象，然后就只能在其中存入该类型或其子类，这就是 java 泛型的核心概念: 告诉编译器想使用什么类型，然后编译器帮你处理一切细节。
+    }
+}
+
+</code></pre>
+</li>
+<li>
+<p>泛型接口， Java 泛型的局限性：基本类型无法作为类型参数。</p>
+</li>
+<li>
+<p>泛型方法，是否拥有泛型方法，与其所在的类是不是泛型类没有关系，要定义泛型方法，只需将泛型参数列表置于返回值之前</p>
+<pre><code class="language-java">package com.zt.activemq_springboot;
+
+import sun.nio.cs.Surrogate;
+
+/**
+ * @author zhengtao
+ * @description 泛型
+ * @date 2020/10/20
+ */
+class Automobile{
+
+}
+public class Holder&lt;T&gt;  {// T 为类型参数
+    private T a;
+    public Holder(T a){
+        this.a=a;
+    }
+
+    public T getA() {
+        return a;
+    }
+
+    public void setA(T a) {
+        this.a = a;
+    }
+
+    public static void main(String[] args) {
+        Holder&lt;Automobile&gt; holder = new Holder&lt;&gt;(new Automobile());
+        holder.f(new Automobile());
+        holder.f(holder);
+        holder.f(1);
+    }
+    public &lt;s&gt; void f(s x){// s是泛型参数，可用任何字符代替,一般用T
+        System.out.println(x.getClass().getName());
+    }
+}
+
+</code></pre>
+</li>
+<li>
+<p>可变参数与泛型方法</p>
+<pre><code class="language-java">public static &lt;T&gt; List&lt;T&gt; makeList(T... args){
+        List&lt;T&gt; result = new ArrayList&lt;&gt;();
+        for(T t:args){
+            result.add(t);
+        }
+        return result;
+    }
+</code></pre>
+</li>
+<li>
+<p>檫除，在泛型代码内部，无法获得任何有关泛型参数类型的信息，Java的泛型是通过擦除来实现的，这意味着当你使用泛型时，任何具体的类型信息都被擦除了，你唯一知道的就是你在使用一个对象。</p>
+<pre><code class="language-java">List&lt;String&gt; l1 = new ArrayList&lt;String&gt;();
+List&lt;Integer&gt; l2 = new ArrayList&lt;Integer&gt;();
+// 这两种形式都被檫除成它们的原生类型，即List
+System.out.println(l1.getClass() == l2.getClass());// true
+</code></pre>
+<pre><code class="language-java">package com.zt.activemq_springboot;
+
+/**
+ * @author zhengtao
+ * @description 擦除
+ * @date 2020/10/20
+ */
+class HasF{
+    public void f(){
+        System.out.println(&quot;HasF.f()&quot;);
+    }
+}
+class Manipulator&lt;T&gt;{
+    private T obj;
+    public Manipulator(T x){
+        obj=x;
+    }
+    public void manipulate(){
+        obj.f(); //因为擦除所以不知道这里是什么类型。
+    }
+}
+class Manipulator2&lt;T extends HasF&gt;{ // 指定了T 必须是HasF或者从HasF导出的类
+    private T obj;
+    public Manipulator2(T x){
+        obj=x;
+    }
+    public void manipulate(){
+        obj.f(); // 可以正确调用
+    }
+}
+public class Manipulation {
+}
+
+</code></pre>
+</li>
+<li>
+<p>在基于檫除的实现中，泛型类型被当作第二类类型处理，即不能在某些重要的上下文环境中使用的类型，泛型类型只有在静态类型检查期间才出现，在此之后，程序中的所有泛型类型都将被檫除，替换为他们的非泛型上界，例如 List<!-- raw HTML omitted --> 被檫除为 List。</p>
+</li>
+<li>
+<p>檫除的问题，泛型不能用于显式地引用运行时类型的操作之中，例如转型、instanceof、new等，因为所有关于参数的类型信息都丢失了。</p>
+</li>
+<li>
+<p>泛型数组，不能创建泛型的数组（T[] array = new T[10] 错滴） ，解决方案是在任何想要创建泛型数组的地方都是用 ArrayList</p>
+</li>
+<li>
+<p>边界，因为檫除移除了类型信息，所以，可以用无界泛型参数调用的方法只是那些可以用 Object 调用的方法，但是，如果能够将这个参数限制为某个类型子集，那么你就可以用这些类型子集来调用方法，为了执行这种限制，Java 泛型重用了 extends 关键字。</p>
+</li>
+<li>
+<p>通配符，数组的一种特殊行为：可以向导出类型的数组赋予其类型的数组引用</p>
+<pre><code class="language-java">package com.zt.activemq_springboot.config;
+class Fruit1{}
+class Apple extends Fruit1{}
+class Jonathan extends Apple{}
+class Orange extends Fruit1{}
+public class Example {
+    public static void main(String[] args) {
+        Fruit1[] fruit = new Apple[10];// 此时创建了一个 Apple 数组，并将其赋值给一个 Fruit 数组引用
+        fruit[0] = new Apple();// 可以放置Apple或Apple的子类型
+        fruit[1] = new Jonathan();
+        fruit[2] = new Fruit1();// Apple有一个 Fruit[] 引用，所以编译器允许你将 fruit或fruit的子类 放置到这个数组中所以不会报错，但在运行时，数组机制知道它处理的是 Apple[] 所以就会抛出异常
+        fruit[3] = new Orange();
+    }
+}
+
+</code></pre>
+<p>使用泛型的主要目标之一是将这种错误检测移入到编译期。</p>
+<pre><code class="language-java">List&lt;Fruit1&gt; fruits = new ArrayList&lt;Apple&gt;();//直接报错，
+// 不能将一个涉及 Apple的泛型赋值给一个涉及 Fruit1的泛型。如果就像在数组中的情况一样，编译器对代码的了解足够多，可以确定所涉及到的容器，但是它不知道任何有关这方面的信息，因此它拒绝向上转型。但是这根本不是向上转型，Apple的list将持有Apple和apple的子类型;fruit的list将持有任何类型的fruit，虽然他包括apple，真正的问题在于我们是在谈论容器的类型而不是容器持有的类型，所以 fruit的list 在类型上不等价于Apple的list
+</code></pre>
+<p>但是，有时你想在两个类型之间建立某种类型的向上转型关系，这正是通配符所允许的</p>
+<pre><code class="language-java">//你可以将其读作 : 具有任何从 Fruit继承的类型的列表。但是,这实际上并不意味着这个List 将持有任何类型的 Fruit。
+//通配符引用的是明确的类型,因此它意味着 某种fruit引用没有指定的具体类型。因此这个被复制的List 必须持有诸如 Fruit 或 Apple 这样的某种执行类型,但是为了向上转型为 list ,这个类型是什么并没有人关心
+List&lt;? extends Fruit1&gt; fruit = new ArrayList&lt;Apple&gt;();
+// 你可能会认为,事情变得有点走极端了,因为现在你甚至不能向刚刚声明过将持有 Apple 对对象的List 中放置一个 Apple 对象了。是的,但是编译器并不知道这一点。 List&lt;? extends Fruit&gt; 可以合法地指向一个 List&lt;Orange&gt; 。一旦执行这种类型的向上转型,你就将丢失掉向其中传递任何对象的能力,甚至是传递Object 也不行。
+fruit.add(new Apple());// 错误
+fruit.add(new Fruit1());// 错误
+fruit.add(new Object());// 错误
+fruit.add(null);
+// 另一方面,如果你调用一个返回Fruit 的方法,则是安全的,因为你知道在这个List中的任何对象至少具有Fruit 类型,因此编译器将允许这么做。
+Fruit1 fruit1 = fruit.get(0);
+Apple apple = fruit.get(0);
+</code></pre>
+<pre><code class="language-java">public class Holder&lt;T&gt; {
+    private T t;
+    public Holder(T t) {
+        this.t = t;
+    }
+    public Holder() {
+    }
+    public T getT() {
+        return t;
+    }
+    public void setT(T t) {
+        this.t = t;
+    }
+    @Override
+    public boolean equals(Object object) {
+        return t.equals(object);
+    }
+
+    public static void main(String[] args) {
+        Holder&lt;Apple&gt; holder = new Holder&lt;&gt;(new Apple());
+        Apple apple = holder.getT();
+        holder.setT(apple);
+
+        //Holder&lt;Fruit&gt; fruitHolder=holder;  无法向上转型
+        Holder&lt;? extends Fruit&gt; fruit = holder;
+        Fruit fruit1 = fruit.getT();// 如果调用 getT() ,它只会返回一个 Fruit 这就是在给定任何扩展自Fruit的对象这一边界之后,它所能知道的一切了
+        //返回的结果是 object
+        apple= (Apple) fruit.getT();
+        try {
+            Orange orange = (Orange) fruit.getT();
+        }catch (Exception e){
+            System.out.println(e);
+        }
+        //fruit.setT(new Apple()); setT() 方法不能工作于 Apple 或 Fruit ,因为 setT() 的参数也是 ? extends Fruit 这意味着它可以是任何事物,而编译器无法验证任何事物的类型安全性
+        //fruit.setT(new Fruit());
+        System.out.println(fruit.equals(apple));
+    }
+}
+
+//运行结果为
+java.lang.ClassCastException: generic.Apple cannot be cast to generic.Orange
+true
+</code></pre>
+<ol start="11">
+<li>逆变，使用超类型通配符，可以声明通配符是由某个特定类的任何基类来界定的如&lt;? super Fruit&gt;</li>
+<li>无界通配符，List 实际上表示持有任何 Object 类型的原生 List ，而 List&lt;?&gt; 表示 具有某种特定类型的非原生List，只是我们不知道那种类型是什么。</li>
+</ol>
+</li>
+</ol>
+<h2 id="第16章----数组">第16章    数组</h2>
+<ol>
+<li>Java 中数组是一种效率最高的存储和随机访问对象引用序列的方式</li>
+<li>数组是第一级对象，无论使用哪种类型的数组，数组标识符其实只是一个引用，指向在堆中创建的一个真实对象，这个数组对象用以保存指向其他对象的引用，可以作为数组初始化语法的一部分隐式地创建此对象，或者用 new 表达式显示地创建。只读成员 length 是数组对象的一部分，事实上，这是唯一一个可以访问的字段或方法，表示此数组对象可以存储多少元素，“[]” 语法是访问对象唯一的方式。对象数组保存的是引用，基本类型数组直接保存基本类型的值。</li>
+</ol>
+<h2 id="第17章容器深入研究">第17章	容器深入研究</h2>
+<h2 id="第18章java-io系统">第18章	Java I/O系统</h2>
+<h2 id="第19章枚举类型">第19章	枚举类型</h2>
+<ol>
+<li>编译器为你创建的 enum 类都继承自 Enum 类， 所以枚举类不能继承其他类，编译器会将枚举类标记为 final 类，所以无法继承自 enum。但枚举类仍然可以实现一个或多个接口。</li>
+</ol>
+<h2 id="第21章并发">第21章	并发</h2>
+<ol>
+<li>线程可以驱动任务，因此你需要一种描述任务的方式，这可以由 Runnable 接口来提供，要想定义任务，只需实现 Runnable 接口并编写 run() 方法</li>
+<li>将 Runnable 对象转变为工作任务的传统方式是把它提交给一个 Thread 构造器。</li>
+</ol>
+<h2 id="注解">注解</h2>
+<h3 id="注解的本质">注解的本质</h3>
+<p><strong>注解的本质就是一个继承了 Annotation 接口的接口。</strong></p>
+<p>「java.lang.annotation.Annotation」接口中有这么一句话，用来描述『注解』。</p>
+<blockquote>
+<p>The common interface extended by all annotation types</p>
+<p>所有的注解类型都继承自这个普通的接口（Annotation）</p>
+</blockquote>
+<p>@Override  的源码为：</p>
+<pre><code class="language-java">@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.SOURCE)
+public @interface Override {
+}
+</code></pre>
+<p>本质上就相当于：</p>
+<pre><code class="language-java">public interface Override extends Annotation{
+    
+}
+</code></pre>
+<p><strong>一个注解准确意义上来说，只不过是一种特殊的注释而已，如果没有解析它的代码，它可能连注释都不如。</strong></p>
+<p>而解析一个类或者方法的注解往往有两种形式，一种是编译期直接的扫描，一种是运行期反射。反射的事情我们待会说，而编译器的扫描指的是编译器在对 java 代码编译字节码的过程中会检测到某个类或者方法被一些注解修饰，这时它就会对于这些注解进行某些处理。</p>
+<p>典型的就是注解 @Override，一旦编译器检测到某个方法被修饰了 @Override 注解，编译器就会检查当前方法的方法签名是否真正重写了父类的某个方法，也就是比较父类中是否具有一个同样的方法签名。</p>
+<p>这一种情况只适用于那些编译器已经熟知的注解类，比如 JDK 内置的几个注解，而你自定义的注解，编译器是不知道你这个注解的作用的，当然也不知道该如何处理，往往只是会根据该注解的作用范围来选择是否编译进字节码文件，仅此而已。</p>
+<h3 id="元注解">元注解</h3>
+<p>『元注解』是用于修饰注解的注解，通常用在注解的定义上，JAVA 中有以下几个『元注解』：</p>
+<ul>
+<li>@Target：注解的作用目标，@Target 用于指明被修饰的注解最终可以作用的目标是谁，也就是指明，你的注解到底是用来修饰方法的？修饰类的？还是用来修饰字段属性的。具体取值为：
+<ul>
+<li>ElementType.TYPE：允许被修饰的注解作用在类、接口和枚举上</li>
+<li>ElementType.FIELD：允许作用在属性字段上</li>
+<li>ElementType.METHOD：允许作用在方法上</li>
+<li>ElementType.PARAMETER：允许作用在方法参数上</li>
+<li>ElementType.CONSTRUCTOR：允许作用在构造器上</li>
+<li>ElementType.LOCAL_VARIABLE：允许作用在本地局部变量上</li>
+<li>ElementType.ANNOTATION_TYPE：允许作用在注解上</li>
+<li>ElementType.PACKAGE：允许作用在包上</li>
+</ul>
+</li>
+<li>@Retention：注解的生命周期。具体取值为：
+<ul>
+<li>RetentionPolicy.SOURCE：当前注解编译期可见，不会写入 class 文件</li>
+<li>RetentionPolicy.CLASS：类加载阶段丢弃，会写入 class 文件</li>
+<li>RetentionPolicy.RUNTIME：永久保存，可以反射获取</li>
+</ul>
+</li>
+<li>@Documented：注解是否应当被包含在 JavaDoc 文档中</li>
+<li>@Inherited：是否允许子类继承该注解</li>
+</ul>
+<h3 id="注解工作流程">注解工作流程</h3>
+<p>自定义注解：</p>
+<pre><code class="language-java">@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface Fruit {
+    String genName() default &quot;&quot;;
+    String genColor() default &quot;&quot;;
+}
+</code></pre>
+<p>作用于类：</p>
+<pre><code class="language-java">@Data
+@Fruit(genName = &quot;富士康苹果&quot;, genColor = &quot;红色&quot;)
+public class Apple {
+    private String name;
+    private String color;
+}
+</code></pre>
+<p>测试使用：</p>
+<pre><code class="language-java">public class AnnotationTest {
+    public static void main(String[] args) {
+        Apple apple = new Apple();
+        // 通过动态代理生成实现注解的代理类, 将注解的值加入到map中
+        Fruit fruit = apple.getClass().getAnnotation(Fruit.class);
+        // 实际上是根据方法名从map中将值取出
+        System.out.println(fruit.genName());
+        System.out.println(fruit.genColor());
+    }
+}
+</code></pre>
+<p>对于一个类或者接口来说，Class 类中提供了以下一些方法用于反射注解。</p>
+<ul>
+<li>getAnnotation：返回指定的注解</li>
+<li>isAnnotationPresent：判定当前元素是否被指定注解修饰</li>
+<li>getAnnotations：返回所有的注解</li>
+<li>getDeclaredAnnotation：返回本元素的指定注解</li>
+<li>getDeclaredAnnotations：返回本元素的所有注解，不包含父类继承而来的</li>
+</ul>
+<ol>
+<li>当使用反射获取到注解时即调用 getAnnotation() 方法后， JDK 通过动态代理机制生成一个实现我们注解（接口）的代理类。其构造方法执行的是，AnnotationInvocationHandler 这个类中</li>
+</ol>
+<pre><code class="language-java"> private static final long serialVersionUID = 6182022883658399397L;
+    private final Class&lt;? extends Annotation&gt; type;
+	// key为注解的方法名，value为属性的值。
+    private final Map&lt;String, Object&gt; memberValues;
+    private transient volatile Method[] memberMethods = null;
+
+    AnnotationInvocationHandler(Class&lt;? extends Annotation&gt; var1, Map&lt;String, Object&gt; var2) {
+        Class[] var3 = var1.getInterfaces();
+        if (var1.isAnnotation() &amp;&amp; var3.length == 1 &amp;&amp; var3[0] == Annotation.class) {
+            this.type = var1;
+            this.memberValues = var2;
+        } else {
+            throw new AnnotationFormatError(&quot;Attempt to create proxy for a non-annotation type.&quot;);
+        }
+    }
+</code></pre>
+<p>执行完构造方法后，memberValues map 中就有注解的所有方法名与值。</p>
+<ol start="2">
+<li>
+<p>执行注解的任何方法都会调用 invoke 方法</p>
+<pre><code class="language-java">public Object invoke(Object var1, Method var2, Object[] var3) {
+        String var4 = var2.getName();
+        Class[] var5 = var2.getParameterTypes();
+        if (var4.equals(&quot;equals&quot;) &amp;&amp; var5.length == 1 &amp;&amp; var5[0] == Object.class) {
+            return this.equalsImpl(var3[0]);
+        } else if (var5.length != 0) {
+            throw new AssertionError(&quot;Too many parameters for an annotation method&quot;);
+        } else {
+            byte var7 = -1;
+            switch(var4.hashCode()) {
+            case -1776922004:
+                if (var4.equals(&quot;toString&quot;)) {
+                    var7 = 0;
+                }
+                break;
+            case 147696667:
+                if (var4.equals(&quot;hashCode&quot;)) {
+                    var7 = 1;
+                }
+                break;
+            case 1444986633:
+                if (var4.equals(&quot;annotationType&quot;)) {
+                    var7 = 2;
+                }
+            }
+
+            switch(var7) {
+            case 0:
+                return this.toStringImpl();
+            case 1:
+                return this.hashCodeImpl();
+            case 2:
+                return this.type;
+            default:
+                // 主要就是这个地方，根据方法名将值从map中取出来
+                Object var6 = this.memberValues.get(var4);
+                if (var6 == null) {
+                    throw new IncompleteAnnotationException(this.type, var4);
+                } else if (var6 instanceof ExceptionProxy) {
+                    throw ((ExceptionProxy)var6).generateException();
+                } else {
+                    if (var6.getClass().isArray() &amp;&amp; Array.getLength(var6) != 0) {
+                        var6 = this.cloneArray(var6);
+                    }
+
+                    return var6;
+                }
+            }
+        }
+    }
+</code></pre>
+</li>
+</ol>
+
+    </div>
+    <div class="article-footer">
+<blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接: </strong>
+      <a href="https://wzgl998877.github.io/2022/01/java-%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3%E5%AD%A6%E4%B9%A0/" title="Java 编程思想学习" target="_blank" rel="external">https://wzgl998877.github.io/2022/01/java-%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3%E5%AD%A6%E4%B9%A0/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong>License: </strong>
+        <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN</a>
+    </li>
+  </ul>
+</blockquote>
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/wzgl998877/" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="https://wzgl998877.github.io/avatar.png" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/wzgl998877/" target="_blank"><span class="text-dark">microzheng</span><small class="ml-1x">努力会说谎，但努力不会白费</small></a></h3>
+        <div>不想搬砖的码农</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+    </div>
+  </article>
+</div><nav class="bar bar-footer clearfix" data-stick-bottom>
+    <div class="bar-inner">
+        <ul class="pager pull-left">
+            <li class="prev">
+                <a href="https://wzgl998877.github.io/2022/01/leetcode/" title="LeetCode"><i
+                        class="icon icon-angle-left"
+                        aria-hidden="true"></i><span>&nbsp;&nbsp;下一篇</span></a>
+            </li>
+            <li class="next">
+                <a href="https://wzgl998877.github.io/2022/01/java-%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/"
+                    title="Java 并发编程"><span>上一篇&nbsp;&nbsp;</span><i
+                        class="icon icon-angle-right" aria-hidden="true"></i></a>
+            </li>
+            
+            <li class="toggle-toc">
+                <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false"
+                    title="文章目录" role="button">
+                    <span>[&nbsp;</span><span>文章目录</span>
+                    <i class="text-collapsed icon icon-anchor"></i>
+                    <i class="text-in icon icon-close"></i>
+                    <span>]</span>
+                </a>
+            </li>
+        </ul>
+        <div class="bar-right">
+            <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter"
+                data-mobile-sites="weibo,qq,qzone"></div>
+        </div>
+    </div>
+</nav>
+
+
+</main><footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+<ul class="social-links">
+    <li><a href="https://github.com/wzgl998877/" target="_blank" title="github" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-github"></i></a></li>
+    <li><a href="https://wzgl998877.github.io/index.xml" target="_blank" title="rss" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-rss"></i></a></li>
+</ul>
+  <div class="copyright">
+    &copy;2022  -
+    2022
+    <div class="publishby">
+        Theme by <a href="https://github.com/wzgl998877/" target="_blank"> microzheng </a>base on<a href="https://github.com/xiaoheiAh/hugo-theme-pure" target="_blank"> pure</a>.
+    </div>
+    
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_SVG"></script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+            showMathMenu: false, //disables context menu
+            tex2jax: {
+            inlineMath: [ ['$','$'], ['\\(','\\)'] ]
+           }
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+<script>
+    window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/highlight.min.js"></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/python.min.js" defer></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/javascript.min.js" defer></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/java.min.js" defer></script><script>
+    hljs.configure({
+        tabReplace: '    ', 
+        classPrefix: ''     
+        
+    })
+    hljs.initHighlightingOnLoad();
+</script>
+<script src="https://wzgl998877.github.io/js/application.min.a94ab19cb63a95c8d7fbd7b85cab3ddeea8c369bdf75b9cab6708787ead123af.js"></script>
+<script src="https://wzgl998877.github.io/js/plugin.min.19c5bcb2fb0789ab4f2b7834e5ceb5e92635645605bab902c1024b25f1502364.js"></script>
+
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(未命名)',
+            },
+            ROOT_URL: 'https:\/\/wzgl998877.github.io\/',
+            CONTENT_URL: 'https:\/\/wzgl998877.github.io\/\/searchindex.json ',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script type="text/javascript" src="https://wzgl998877.github.io/js/insight.min.4a2d52de4bfff73e0c688404fe3d17c9a3ae12d9888e1e1ac9c690e4890de2ded50fe55f2b819c2ba55435a76f396f3ea6805765f0b0af5635cdf74ea459eab0.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+<script>
+    tocbot.init({
+        
+        tocSelector: '.js-toc',
+        
+        contentSelector: '.js-toc-content',
+        
+        headingSelector: 'h1, h2, h3',
+        
+        hasInnerContainers: true,
+    });
+</script>
+
+
+  </body>
+</html>
