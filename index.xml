@@ -6,10 +6,19 @@
     <description>Recent content on Pure theme for Hugo</description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>CC BY 4.0 CN</copyright>
-    <lastBuildDate>Sun, 09 Jan 2022 11:24:40 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 12 Jan 2022 11:24:40 +0800</lastBuildDate>
     
         <atom:link href="https://wzgl998877.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Mysql是怎样运行的</title>
+      <link>https://wzgl998877.github.io/2022/01/mysql%E6%98%AF%E6%80%8E%E6%A0%B7%E8%BF%90%E8%A1%8C%E7%9A%84/</link>
+      <pubDate>Wed, 12 Jan 2022 11:24:40 +0800</pubDate>
+      
+      <guid>https://wzgl998877.github.io/2022/01/mysql%E6%98%AF%E6%80%8E%E6%A0%B7%E8%BF%90%E8%A1%8C%E7%9A%84/</guid>
+      <description>[TOC] 本篇文章是(Mysql是怎样运行的)阅读笔记，这本书网上很多人的评价都很高，看了下书也不是很厚，所以读读。 MySQL的架构 mysql 工作的整体流程</description>
+    </item>
     
     <item>
       <title>Java 并发编程</title>
@@ -36,15 +45,6 @@
       
       <guid>https://wzgl998877.github.io/2022/01/leetcode/</guid>
       <description>LeetCode 链表 链表（Linked list）是一种常见的基础数据结构，是一种线性表，但是并不会按线性的顺序存储数据，而是在每一个节点里存到下一个节点的</description>
-    </item>
-    
-    <item>
-      <title>Linux工作日常命令</title>
-      <link>https://wzgl998877.github.io/2022/01/linux%E5%B7%A5%E4%BD%9C%E6%97%A5%E5%B8%B8%E5%91%BD%E4%BB%A4/</link>
-      <pubDate>Sun, 09 Jan 2022 11:24:40 +0800</pubDate>
-      
-      <guid>https://wzgl998877.github.io/2022/01/linux%E5%B7%A5%E4%BD%9C%E6%97%A5%E5%B8%B8%E5%91%BD%E4%BB%A4/</guid>
-      <description>Linux工作日常命令 jps 命令 jps 查看全部的jvm进程，可以带上grep命令一起使用 jps |grep -e ××× find命令 基本格式：find path expression 1. 按照文件名查</description>
     </item>
     
     <item>
@@ -153,6 +153,15 @@
       
       <guid>https://wzgl998877.github.io/2022/01/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</guid>
       <description>设计模式 七大软件设计原则 1 . 开闭原则 ​ 软件实体应当对扩展开放，对修改关闭。当应用的需求改变时，在不修改软件实体的源代码或者二进制代码的前提下</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://wzgl998877.github.io/1/01/linux%E5%B7%A5%E4%BD%9C%E6%97%A5%E5%B8%B8%E5%91%BD%E4%BB%A4/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://wzgl998877.github.io/1/01/linux%E5%B7%A5%E4%BD%9C%E6%97%A5%E5%B8%B8%E5%91%BD%E4%BB%A4/</guid>
+      <description>[TOC] Linux工作日常命令 jps 命令 jps 查看全部的jvm进程，可以带上grep命令一起使用 jps |grep -e ××× find命令 基本格式：find path expression 1. 按照文件名</description>
     </item>
     
   </channel>
