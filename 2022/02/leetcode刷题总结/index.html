@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <title>
+        LeetCode刷题总结 - 码农的学习笔记
+      </title>
+        <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    
+    <meta name="theme-color" content="#000000" />
+    
+    <meta http-equiv="window-target" content="_top" />
+    
+    
+    <meta name="description" content="​ [TOC] 算法这东西，可以说玄之又玄，大学就被程序设计这门课统治，工作了，虽然说这东西在实践中用到的少，但是谁让大家都卷呢，你不会就是不行，所以本" />
+    <meta name="generator" content="Hugo 0.91.2 with theme pure" />
+    <title>LeetCode刷题总结 - 码农的学习笔记</title>
+    
+    
+    <link rel="stylesheet" href="https://wzgl998877.github.io/css/style.min.e64d754037c0ee0ec4e20ab1d6f07740ace61729bc03850559b8caa21ae4a597.css">
+    
+    <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/9.15.10/styles/github.min.css" async>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css" async>
+    <meta property="og:title" content="LeetCode刷题总结" />
+<meta property="og:description" content="​ [TOC] 算法这东西，可以说玄之又玄，大学就被程序设计这门课统治，工作了，虽然说这东西在实践中用到的少，但是谁让大家都卷呢，你不会就是不行，所以本" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wzgl998877.github.io/2022/02/leetcode%E5%88%B7%E9%A2%98%E6%80%BB%E7%BB%93/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-02-12T14:44:56+08:00" />
+<meta property="article:modified_time" content="2022-02-12T14:44:56+08:00" />
+
+<meta itemprop="name" content="LeetCode刷题总结">
+<meta itemprop="description" content="​ [TOC] 算法这东西，可以说玄之又玄，大学就被程序设计这门课统治，工作了，虽然说这东西在实践中用到的少，但是谁让大家都卷呢，你不会就是不行，所以本"><meta itemprop="datePublished" content="2022-02-12T14:44:56+08:00" />
+<meta itemprop="dateModified" content="2022-02-12T14:44:56+08:00" />
+<meta itemprop="wordCount" content="5970">
+<meta itemprop="keywords" content="LeetCode," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="LeetCode刷题总结"/>
+<meta name="twitter:description" content="​ [TOC] 算法这东西，可以说玄之又玄，大学就被程序设计这门课统治，工作了，虽然说这东西在实践中用到的少，但是谁让大家都卷呢，你不会就是不行，所以本"/>
+
+    <!--[if lte IE 9]>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+      <![endif]-->
+
+    <!--[if lt IE 9]>
+        <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+      <![endif]-->
+  </head>
+
+  
+  
+
+  <body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage"><header class="header" itemscope itemtype="http://schema.org/WPHeader">
+    <div class="slimContent">
+      <div class="navbar-header">
+        <div class="profile-block text-center">
+          <a id="avatar" href="https://github.com/wzgl998877/" target="_blank">
+            <img class="img-circle img-rotate" src="https://wzgl998877.github.io/avatar.png" width="200" height="200">
+          </a>
+          <h2 id="name" class="hidden-xs hidden-sm">microzheng</h2>
+          <h3 id="title" class="hidden-xs hidden-sm hidden-md">努力会说谎，但努力不会白费</h3>
+          <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i>Shenzhen China</small>
+        </div><div class="search" id="search-form-wrap">
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i
+                        class="icon icon-search"></i></button>
+            </span>
+        </div>
+        <div class="ins-search">
+            <div class="ins-search-mask"></div>
+            <div class="ins-search-container">
+                <div class="ins-input-wrapper">
+                    <input type="text" class="ins-search-input" placeholder="想要查找什么..."
+                        x-webkit-speech />
+                    <button type="button" class="close ins-close ins-selectable" data-dismiss="modal"
+                        aria-label="Close"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="ins-section-wrapper">
+                    <div class="ins-section-container"></div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+        <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+        <ul class="nav navbar-nav main-nav">
+            <li class="menu-item menu-item-home">
+                <a href="/">
+                    <i class="icon icon-home-fill"></i>
+                  <span class="menu-title">主页</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-archives">
+                <a href="/posts/">
+                    <i class="icon icon-archives-fill"></i>
+                  <span class="menu-title">归档</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-categories">
+                <a href="/categories/">
+                    <i class="icon icon-folder"></i>
+                  <span class="menu-title">分类</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-tags">
+                <a href="/tags/">
+                    <i class="icon icon-tags"></i>
+                  <span class="menu-title">标签</span>
+                </a>
+            </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+<aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content"><p>enjoy~</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+      <div class="widget">
+    <h3 class="widget-title"> 分类</h3>
+    <div class="widget-body">
+        <ul class="category-list">
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/java/" class="category-list-link">java</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/" class="category-list-link">中间件</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E5%B8%B8%E7%94%A8%E6%A1%86%E6%9E%B6/" class="category-list-link">常用框架</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="category-list-link">数据库</a><span class="category-list-count">2</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E6%97%A5%E5%B8%B8%E6%80%BB%E7%BB%93/" class="category-list-link">日常总结</a><span class="category-list-count">2</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E7%AE%97%E6%B3%95/" class="category-list-link">算法</a><span class="category-list-count">2</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/" class="category-list-link">系统设计</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/" class="category-list-link">网络编程</a><span class="category-list-count">3</span></li>
+        </ul>
+    </div>
+</div>
+      <div class="widget">
+    <h3 class="widget-title"> 标签</h3>
+    <div class="widget-body">
+        <ul class="tag-list">
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/http/" class="tag-list-link">http</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/java%E5%9F%BA%E7%A1%80/" class="tag-list-link">java基础</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/java%E5%B9%B6%E5%8F%91/" class="tag-list-link">java并发</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/jvm/" class="tag-list-link">jvm</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/leetcode/" class="tag-list-link">leetcode</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/mybatis/" class="tag-list-link">mybatis</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/mysql/" class="tag-list-link">mysql</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/netty/" class="tag-list-link">netty</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/rpc/" class="tag-list-link">rpc</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/spring/" class="tag-list-link">spring</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/websocket/" class="tag-list-link">websocket</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" class="tag-list-link">消息队列</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="tag-list-link">设计模式</a><span
+                    class="tag-list-count">1</span></li>
+            
+        </ul>
+
+    </div>
+</div>
+      
+<div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+        <ul class="recent-post-list list-unstyled no-thumbnail">
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://wzgl998877.github.io/2022/02/leetcode%E5%88%B7%E9%A2%98%E6%80%BB%E7%BB%93/" class="title">LeetCode刷题总结</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2022-02-12 14:44:56 &#43;0800 CST" itemprop="datePublished">2022-02-12</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://wzgl998877.github.io/2022/01/mysql%E6%98%AF%E6%80%8E%E6%A0%B7%E8%BF%90%E8%A1%8C%E7%9A%84/" class="title">Mysql是怎样运行的</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2022-01-12 11:24:40 &#43;0800 CST" itemprop="datePublished">2022-01-12</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://wzgl998877.github.io/2022/01/java-%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" class="title">Java 并发编程</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2022-01-09 11:24:40 &#43;0800 CST" itemprop="datePublished">2022-01-09</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://wzgl998877.github.io/2022/01/java-%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3%E5%AD%A6%E4%B9%A0/" class="title">Java 编程思想学习</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2022-01-09 11:24:40 &#43;0800 CST" itemprop="datePublished">2022-01-09</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://wzgl998877.github.io/2022/01/leetcode/" class="title">LeetCode</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2022-01-09 11:24:40 &#43;0800 CST" itemprop="datePublished">2022-01-09</time>
+                    </p>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+  </div>
+</aside>
+
+    
+    
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <h4 class="toc-title">文章目录</h4>
+    <nav id="toc" class="js-toc toc">
+
+    </nav>
+  </div>
+</aside>
+<main class="main" role="main"><div class="content">
+  <article id="-" class="article article-type-" itemscope
+    itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      <h1 itemprop="name">
+  <a
+    class="article-title"
+    href="/2022/02/leetcode%E5%88%B7%E9%A2%98%E6%80%BB%E7%BB%93/"
+    >LeetCode刷题总结</a
+  >
+</h1>
+
+      <div class="article-meta">
+        
+<span class="article-date">
+  <i class="icon icon-calendar-check"></i>&nbsp;
+<a href="https://wzgl998877.github.io/2022/02/leetcode%E5%88%B7%E9%A2%98%E6%80%BB%E7%BB%93/" class="article-date">
+  <time datetime="2022-02-12 14:44:56 &#43;0800 CST" itemprop="datePublished">2022-02-12</time>
+</a>
+</span>
+<span class="article-category">
+  <i class="icon icon-folder"></i>&nbsp;
+  <a class="article-category-link" href="/categories/%E7%AE%97%E6%B3%95/"> 算法 </a>
+</span>  
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>&nbsp;
+    <a class="article-tag-link" href="/tags/leetcode/"> LeetCode </a>
+  </span>
+
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 5970字</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 12分 </span>
+      </div>
+    </div>
+    <div class="article-entry marked-body js-toc-content" itemprop="articleBody">
+      <p>​</p>
+<p>[TOC]</p>
+<p>算法这东西，可以说玄之又玄，大学就被程序设计这门课统治，工作了，虽然说这东西在实践中用到的少，但是谁让大家都卷呢，你不会就是不行，所以本着打不赢就加入的原则，自己也刷了不少题，今天作下总结。</p>
+<h2 id="算法复杂度">算法复杂度</h2>
+<p>算法的复杂度，其实就是分为时间复杂度和空间复杂度，比如O(1)、O(logn)、O(n)、O(nlogn)、O(n^2) 等等</p>
+<h3 id="时间复杂度">时间复杂度</h3>
+<p><strong>算法</strong>的<strong>时间复杂度（Time complexity）是一个函数，它定性描述该算法的运行时间</strong>。这是一个代表算法输入值的字符串的长度的函数。时间复杂度常用<strong>大O符号</strong>表述，不包<strong>括这个函数的低阶项和首项系数</strong>，例如。</p>
+<pre><code>O(2*n^2 + 10*n + 1000) = O(2*n^2 + 10*n) = O(n^2 + n) = O(n^2)
+</code></pre>
+<p>各个时间复杂度的例子</p>
+<blockquote>
+<p>常见时间复杂度
+O(1)常数阶 &lt; O(log n)对数阶 &lt; O(n)线性阶 &lt; O(n^2)平方阶 &lt; O(n^3)立方阶 &lt; O(2^n)指数阶</p>
+</blockquote>
+<pre><code class="language-java">package com.zt.javastudy.leetcode;
+
+/**
+ * @author zhengtao
+ * 算法复杂度分析
+ */
+public class Time {
+    /**
+     * 0(n) 时间复杂度,一个循环
+     */
+    public void test1(int[] nums) {
+        for (int i = 0; i &lt; nums.length; i++) {
+            System.out.println(nums[i]);
+        }
+    }
+
+    /**
+     * O(log n)，对数时间,常见的具有对数时间的算法有二叉树的相关操作和二分搜索。
+     * 可以理解为每次都缩小了一半
+     */
+    public int binary_search(int[] nums, int target) {
+        int left = 0, right = nums.length - 1;
+        while (left &lt;= right) {
+            int mid = left + (right - left) / 2;
+            if (nums[mid] &lt; target) {
+                left = mid + 1;
+            } else if (nums[mid] &gt; target) {
+                right = mid - 1;
+            } else if (nums[mid] == target) {
+                // 直接返回
+                return mid;
+            }
+        }
+        // 直接返回
+        return -1;
+    }
+
+    /**
+     * o(nlogn),内循环是O(log n)
+     */
+    public void function3(long n) {
+        System.out.println(&quot;o(nlogn)算法&quot;);
+        long k = 0;
+        for (long i = 0; i &lt; n; i++) {
+            // O(log n)
+            for (long j = 1; j &lt; n; j = j * 2) {
+                k++;
+            }
+        }
+    }
+
+    /**
+     * o(n^2),两层循环
+     *
+     * @param n
+     */
+    public static void function2(long n) {
+        System.out.println(&quot;o(n^2)算法&quot;);
+        long k = 0;
+        for (long i = 0; i &lt; n; i++) {
+            for (long j = 0; j &lt; n; j++) {
+                k++;
+            }
+        }   
+    }
+}
+
+</code></pre>
+<h2 id="数组">数组</h2>
+<p>数组的题目其实算是比较简单的，一是数组是最熟悉的数据结构，二是数组的题目不需要用到一些算法（贪心、回溯、递归等等），数组常见类型的题目有：</p>
+<ul>
+<li>二分查找</li>
+<li>滑动窗口</li>
+<li>双指针</li>
+</ul>
+<p>下面将从自己刷过题中按这几个题型来总结</p>
+<h3 id="二分查找">二分查找</h3>
+<p>二分查找的题目其实很简单，二分法都很熟了，二分查找的核心就是找到具有单调性的正确查找对象，但是涉及到二分查找的问题，主要是注意**「搜索区间」和 while 的终止条件**，目前自己全部是采用两端都闭合的搜索区间，有关二分查找的题目又可以分为以下三种类型</p>
+<ul>
+<li>
+<p>直接二分搜索（最简单）</p>
+<pre><code class="language-java">public int binary_search(int[] nums, int target) {
+    // 左边界为0， 右边界为数组最后一个数
+    int left = 0, right = nums.length - 1;
+    // 结束条件为 &lt;=
+    while (left &lt;= right) {
+        int mid = left + (right - left) / 2;
+        if (nums[mid] &lt; target) {
+            left = mid + 1;
+        } else if (nums[mid] &gt; target) {
+            right = mid - 1;
+        } else if (nums[mid] == target) {
+            // 直接返回
+            return mid;
+        }
+    }
+    // 直接返回
+    return -1;
+}
+</code></pre>
+</li>
+<li>
+<p>查找最左边界</p>
+<pre><code class="language-java">/**
+     * 查找最左边界，
+     * 因为我们需找到 target 的最左侧索引
+     * 所以当 nums[mid] == target 时不要立即返回
+     * 而要收紧右侧边界以锁定左侧边界
+     *
+     * @param nums
+     * @param target
+     * @return
+     */
+public int left_bound(int[] nums, int target) {
+    int left = 0, right = nums.length - 1;
+    while (left &lt;= right) {
+        int mid = left + (right - left) / 2;
+        if (nums[mid] &gt;= target) {
+            right = mid - 1;
+        } else {
+            left = mid + 1;
+        }
+    }
+    // 最后要检查 left 越界的情况
+    if (left &gt;= nums.length || nums[left] != target)
+        return -1;
+    return left;
+}
+</code></pre>
+</li>
+<li>
+<p>寻找右边界</p>
+<pre><code class="language-java">/**
+     * 寻找最右边界
+     * 因为我们需找到 target 的最右侧索引
+     * 所以当 nums[mid] == target 时不要立即返回
+     * 而要收紧左侧边界以锁定右侧边界
+     *
+     * @param nums
+     * @param target
+     * @return
+     */
+public int right_bound(int[] nums, int target) {
+    int left = 0, right = nums.length - 1;
+    while (left &lt;= right) {
+        int mid = left + (right - left) / 2;
+        if (nums[mid] &lt;= target) {
+            left = mid + 1;
+        } else {
+            right = mid - 1;
+        }
+    }
+    // 最后要检查 right 越界的情况
+    if (right &lt; 0 || nums[right] != target)
+        return -1;
+    return right;
+}
+</code></pre>
+</li>
+</ul>
+<p>总结完这三种类型的题目后，就是套题目了，其实做题最难的也是这一步，遇到什么题该用什么方法，对我这种不是完全理解各种算法的人来说是很难的，所以只能靠量取胜哈哈</p>
+<h4 id="875-爱吃香蕉的珂珂httpsleetcode-cncomproblemskoko-eating-bananas"><a href="https://leetcode-cn.com/problems/koko-eating-bananas/">875. 爱吃香蕉的珂珂</a></h4>
+<p>珂珂喜欢吃香蕉。这里有 <code>N</code> 堆香蕉，第 <code>i</code> 堆中有 <code>piles[i]</code> 根香蕉。警卫已经离开了，将在 <code>H</code> 小时后回来。</p>
+<p>珂珂可以决定她吃香蕉的速度 <code>K</code> （单位：根/小时）。每个小时，她将会选择一堆香蕉，从中吃掉 <code>K</code> 根。如果这堆香蕉少于 <code>K</code> 根，她将吃掉这堆的所有香蕉，然后这一小时内不会再吃更多的香蕉。</p>
+<p>珂珂喜欢慢慢吃，但仍然想在警卫回来前吃掉所有的香蕉。</p>
+<p>返回她可以在 <code>H</code> 小时内吃掉所有香蕉的最小速度 <code>K</code>（<code>K</code> 为整数）。</p>
+<p><strong>示例 1：</strong></p>
+<pre><code>输入: piles = [3,6,7,11], H = 8
+输出: 4
+</code></pre>
+<p><strong>示例 2：</strong></p>
+<pre><code>输入: piles = [30,11,23,4,20], H = 5
+输出: 30
+</code></pre>
+<p><strong>示例 3：</strong></p>
+<pre><code>输入: piles = [30,11,23,4,20], H = 6
+输出: 23
+</code></pre>
+<p><strong>提示：</strong></p>
+<ul>
+<li><code>1 &lt;= piles.length &lt;= 10^4</code></li>
+<li><code>piles.length &lt;= H &lt;= 10^9</code></li>
+<li><code>1 &lt;= piles[i] &lt;= 10^9</code></li>
+</ul>
+<p>这道题可以理解为，每小时最少吃1，最大吃getMax(piles),求的就是从1开始，能吃完的最小速度是多少？再联想这其实就是求最左边界，于是可以用二分法来做</p>
+<pre><code class="language-java">/**
+暴力做法，直接遍历
+*/
+public int minEatingSpeed(int[] piles, int h) {
+    int max = getMax(piles);
+    // 可以用二分法代替
+    for (int speed = 1; speed &lt;= max; speed++) {
+        if (canEat(piles, speed, h)) {
+            return speed;
+        }
+    }
+    return max;
+}
+/**
+二分法求最左边界，标准代码
+*/
+public int minEatingSpeed1(int[] piles, int h) {
+    int left = 1, right = getMax(piles);
+    while (left &lt;= right) {
+        int middle = (left + right) / 2;
+        if (canEat(piles, middle, h)) {
+            right = middle - 1;
+        } else {
+            left = middle + 1;
+        }
+    }
+    return left;
+}
+
+private boolean canEat(int[] piles, int speed, int h) {
+    int time = 0;
+    for (int i : piles) {
+        if (i % speed == 0) {
+            time += i / speed;
+        } else {
+            time += i / speed + 1;
+        }
+    }
+    return time &lt;= h;
+}
+
+private int getMax(int[] piles) {
+    int max = 0;
+    for (int i : piles) {
+        max = Math.max(max, i);
+    }
+    return max;
+}
+</code></pre>
+<h4 id="1011-在-d-天内送达包裹的能力httpsleetcode-cncomproblemscapacity-to-ship-packages-within-d-days"><a href="https://leetcode-cn.com/problems/capacity-to-ship-packages-within-d-days/">1011. 在 D 天内送达包裹的能力</a></h4>
+<p>传送带上的包裹必须在 <code>days</code> 天内从一个港口运送到另一个港口。</p>
+<p>传送带上的第 <code>i</code> 个包裹的重量为 <code>weights[i]</code>。每一天，我们都会按给出重量（<code>weights</code>）的顺序往传送带上装载包裹。我们装载的重量不会超过船的最大运载重量。</p>
+<p>返回能在 <code>days</code> 天内将传送带上的所有包裹送达的船的最低运载能力。</p>
+<p><strong>示例 1：</strong></p>
+<pre><code>输入：weights = [1,2,3,4,5,6,7,8,9,10], days = 5
+输出：15
+解释：
+船舶最低载重 15 就能够在 5 天内送达所有包裹，如下所示：
+第 1 天：1, 2, 3, 4, 5
+第 2 天：6, 7
+第 3 天：8
+第 4 天：9
+第 5 天：10
+
+请注意，货物必须按照给定的顺序装运，因此使用载重能力为 14 的船舶并将包装分成 (2, 3, 4, 5), (1, 6, 7), (8), (9), (10) 是不允许的。 
+</code></pre>
+<p><strong>示例 2：</strong></p>
+<pre><code>输入：weights = [3,2,2,4,1,4], days = 3
+输出：6
+解释：
+船舶最低载重 6 就能够在 3 天内送达所有包裹，如下所示：
+第 1 天：3, 2
+第 2 天：2, 4
+第 3 天：1, 4
+</code></pre>
+<p><strong>示例 3：</strong></p>
+<pre><code>输入：weights = [1,2,3,1,1], D = 4
+输出：3
+解释：
+第 1 天：1
+第 2 天：2
+第 3 天：3
+第 4 天：1, 1
+</code></pre>
+<p><strong>提示：</strong></p>
+<ul>
+<li><code>1 &lt;= days &lt;= weights.length &lt;= 5 * 104</code></li>
+<li><code>1 &lt;= weights[i] &lt;= 500</code></li>
+</ul>
+<p>这题很显然，跟上面一题很相似,最低运载能力 x 从1开始到sum(weights)结束，求最小的x，这明显就是二分法求最左边界</p>
+<pre><code class="language-java">public int shipWithinDays(int[] weights, int days) {
+    int left = 1, right = sum(weights);
+    while (left &lt;= right) {
+        int middle = (left + right) / 2;
+        if (canWeight(weights, middle, days)) {
+            right = middle - 1;
+        } else {
+            left = middle + 1;
+        }
+    }
+    return left;
+}
+
+private boolean canWeight(int[] weights, int middle, int days) {
+    int sum = 0;
+    for (int i : weights) {
+        if (i &gt; middle) {
+            return false;
+        }
+        if (sum + i &gt; middle) {
+            days--;
+            sum = i;
+        } else {
+            sum += i;
+        }
+    }
+    return days &gt; 0;
+}
+
+private int sum(int[] weights) {
+    int sum = 0;
+    for (int i : weights) {
+        sum += i;
+    }
+    return sum;
+}
+</code></pre>
+<h4 id="410-分割数组的最大值httpsleetcode-cncomproblemssplit-array-largest-sum"><a href="https://leetcode-cn.com/problems/split-array-largest-sum/">410. 分割数组的最大值</a></h4>
+<p>给定一个非负整数数组 <code>nums</code> 和一个整数 <code>m</code> ，你需要将这个数组分成 <code>m</code> 个非空的连续子数组。</p>
+<p>设计一个算法使得这 <code>m</code> 个子数组各自和的最大值最小。</p>
+<p><strong>示例 1：</strong></p>
+<pre><code>输入：nums = [7,2,5,10,8], m = 2
+输出：18
+解释：
+一共有四种方法将 nums 分割为 2 个子数组。 
+其中最好的方式是将其分为 [7,2,5] 和 [10,8] 。
+因为此时这两个子数组各自的和的最大值为18，在所有情况中最小。
+</code></pre>
+<p><strong>示例 2：</strong></p>
+<pre><code>输入：nums = [1,2,3,4,5], m = 2
+输出：9
+</code></pre>
+<p><strong>示例 3：</strong></p>
+<pre><code>输入：nums = [1,4,4], m = 3
+输出：4
+</code></pre>
+<p><strong>提示：</strong></p>
+<ul>
+<li><code>1 &lt;= nums.length &lt;= 1000</code></li>
+<li><code>0 &lt;= nums[i] &lt;= 106</code></li>
+<li><code>1 &lt;= m &lt;= min(50, nums.length)</code></li>
+</ul>
+<p>这题目一开始看跟二分法完全不沾边，但是仔细想想跟上面两个有类似之处，「使……最大值尽可能小」，这就和二分法差不多了。</p>
+<p>思路为：现在题目是固定了m的值，让我们确定一个最大子数组和；我们可以反过来，<strong>限制一个最大子数组和max，来反推最大子数组和为max时，至少可以将nums分割成几个子数组</strong>。因此思路就转为，<strong>如果我们找到一个最小max值，满足split(nums, max)和m相等</strong>，这个就又是寻找最左边界了，就跟上面两题一样了，前面说过二分法最重要的就是搜索区间，那这个的搜索区间是什么呢？显然，<strong>子数组至少包含一个元素，至多包含整个数组</strong>，所以「最大」子数组和的取值范围就是闭区间[max(nums), sum(nums)]，也就是最大元素值到整个数组和之间。</p>
+<pre><code class="language-java">public int splitArray(int[] nums, int m) {
+    int left = Arrays.stream(nums).max().getAsInt(), right = Arrays.stream(nums).sum();
+    while (left &lt;= right) {
+        int middle = (left + right) / 2;
+        if (spiltNums(nums, middle) &lt;= m) {
+            right = middle - 1;
+        } else {
+            left = middle + 1;
+        }
+    }
+    return left;
+}
+
+/**
+     * 在每个子数组和不超过 max 的条件下，
+     * 计算 nums 至少可以分割成几个子数组
+     *
+     * @param nums
+     * @param max
+     * @return
+     */
+public int spiltNums(int[] nums, int max) {
+    int n = 0;
+    int sum = 0;
+    for (int i : nums) {
+        if (sum + i &gt; max) {
+            sum = i;
+            n++;
+        } else {
+            sum += i;
+        }
+    }
+    return n + 1;
+}
+</code></pre>
+<h4 id="12-小张刷题计划httpsleetcode-cncomproblemsxiao-zhang-shua-ti-ji-hua"><a href="https://leetcode-cn.com/problems/xiao-zhang-shua-ti-ji-hua/">12. 小张刷题计划</a></h4>
+<p>为了提高自己的代码能力，小张制定了 <code>LeetCode</code> 刷题计划，他选中了 <code>LeetCode</code> 题库中的 <code>n</code> 道题，编号从 <code>0</code> 到 <code>n-1</code>，并计划在 <code>m</code> 天内<strong>按照题目编号顺序</strong>刷完所有的题目（注意，小张不能用多天完成同一题）。</p>
+<p>在小张刷题计划中，小张需要用 <code>time[i]</code> 的时间完成编号 <code>i</code> 的题目。此外，小张还可以使用场外求助功能，通过询问他的好朋友小杨题目的解法，可以省去该题的做题时间。为了防止“小张刷题计划”变成“小杨刷题计划”，小张每天最多使用一次求助。</p>
+<p>我们定义 <code>m</code> 天中做题时间最多的一天耗时为 <code>T</code>（小杨完成的题目不计入做题总时间）。请你帮小张求出最小的 <code>T</code>是多少。</p>
+<p><strong>示例 1：</strong></p>
+<blockquote>
+<p>输入：<code>time = [1,2,3,3], m = 2</code></p>
+<p>输出：<code>3</code></p>
+<p>解释：第一天小张完成前三题，其中第三题找小杨帮忙；第二天完成第四题，并且找小杨帮忙。这样做题时间最多的一天花费了 3 的时间，并且这个值是最小的。</p>
+</blockquote>
+<p><strong>示例 2：</strong></p>
+<blockquote>
+<p>输入：<code>time = [999,999,999], m = 4</code></p>
+<p>输出：<code>0</code></p>
+<p>解释：在前三天中，小张每天求助小杨一次，这样他可以在三天内完成所有的题目并不花任何时间。</p>
+</blockquote>
+<p><strong>限制：</strong></p>
+<ul>
+<li><code>1 &lt;= time.length &lt;= 10^5</code></li>
+<li><code>1 &lt;= time[i] &lt;= 10000</code></li>
+<li><code>1 &lt;= m &lt;= 1000</code></li>
+</ul>
+<p>这题看起来和上面一题就是一模一样的，从0到sum(time),求最左边界</p>
+<pre><code class="language-java">public int minTime(int[] time, int m) {
+    int left = 0;
+    int right = Arrays.stream(time).sum();
+    while (left &lt;= right) {
+        int middle = (left + right) / 2;
+        if (spiltTime(time, middle) &lt;= m) {
+            right = middle - 1;
+        } else {
+            left = middle + 1;
+        }
+    }
+    return left;
+}
+
+/**
+     * 在每个子数组和不超过 max 的条件下，
+     * 计算 nums 至少可以分割成几个子数组
+     *
+     * @param nums
+     * @param max
+     * @return
+     */
+public int spiltTime(int[] nums, int max) {
+    int n = 0;
+    int sum = 0;
+    int time = 0;
+    for (int i : nums) {
+        if (time &lt; i) {
+            time = i;
+        }
+        if (sum + i &gt; max + time) {
+            sum = i;
+            n++;
+            time = i;
+        } else {
+            sum += i;
+        }
+    }
+    return n + 1;
+}
+</code></pre>
+<h4 id="1482-制作-m-束花所需的最少天数httpsleetcode-cncomproblemsminimum-number-of-days-to-make-m-bouquets"><a href="https://leetcode-cn.com/problems/minimum-number-of-days-to-make-m-bouquets/">1482. 制作 m 束花所需的最少天数</a></h4>
+<p>给你一个整数数组 <code>bloomDay</code>，以及两个整数 <code>m</code> 和 <code>k</code> 。</p>
+<p>现需要制作 <code>m</code> 束花。制作花束时，需要使用花园中 <strong>相邻的 <code>k</code> 朵花</strong> 。</p>
+<p>花园中有 <code>n</code> 朵花，第 <code>i</code> 朵花会在 <code>bloomDay[i]</code> 时盛开，<strong>恰好</strong> 可以用于 <strong>一束</strong> 花中。</p>
+<p>请你返回从花园中摘 <code>m</code> 束花需要等待的最少的天数。如果不能摘到 <code>m</code> 束花则返回 <strong>-1</strong> 。</p>
+<p><strong>示例 1：</strong></p>
+<pre><code>输入：bloomDay = [1,10,3,10,2], m = 3, k = 1
+输出：3
+解释：让我们一起观察这三天的花开过程，x 表示花开，而 _ 表示花还未开。
+现在需要制作 3 束花，每束只需要 1 朵。
+1 天后：[x, _, _, _, _]   // 只能制作 1 束花
+2 天后：[x, _, _, _, x]   // 只能制作 2 束花
+3 天后：[x, _, x, _, x]   // 可以制作 3 束花，答案为 3
+</code></pre>
+<p><strong>示例 2：</strong></p>
+<pre><code>输入：bloomDay = [1,10,3,10,2], m = 3, k = 2
+输出：-1
+解释：要制作 3 束花，每束需要 2 朵花，也就是一共需要 6 朵花。而花园中只有 5 朵花，无法满足制作要求，返回 -1 。
+</code></pre>
+<p><strong>示例 3：</strong></p>
+<pre><code>输入：bloomDay = [7,7,7,7,12,7,7], m = 2, k = 3
+输出：12
+解释：要制作 2 束花，每束需要 3 朵。
+花园在 7 天后和 12 天后的情况如下：
+7 天后：[x, x, x, x, _, x, x]
+可以用前 3 朵盛开的花制作第一束花。但不能使用后 3 朵盛开的花，因为它们不相邻。
+12 天后：[x, x, x, x, x, x, x]
+显然，我们可以用不同的方式制作两束花。
+</code></pre>
+<p><strong>示例 4：</strong></p>
+<pre><code>输入：bloomDay = [1000000000,1000000000], m = 1, k = 1
+输出：1000000000
+解释：需要等 1000000000 天才能采到花来制作花束
+</code></pre>
+<p><strong>示例 5：</strong></p>
+<pre><code>输入：bloomDay = [1,10,2,9,3,8,4,7,5,6], m = 4, k = 2
+输出：9
+</code></pre>
+<p><strong>提示：</strong></p>
+<ul>
+<li><code>bloomDay.length == n</code></li>
+<li><code>1 &lt;= n &lt;= 10^5</code></li>
+<li><code>1 &lt;= bloomDay[i] &lt;= 10^9</code></li>
+<li><code>1 &lt;= m &lt;= 10^6</code></li>
+<li><code>1 &lt;= k &lt;= n</code></li>
+</ul>
+<p>这题也是一样的，二分法最左边界就完事了</p>
+<pre><code class="language-java">public int minDays(int[] bloomDay, int m, int k) {
+    int left = Arrays.stream(bloomDay).min().getAsInt(), right = Arrays.stream(bloomDay).max().getAsInt(), max = right;
+    if (bloomDay.length &lt; m * k) {
+        return -1;
+    }
+    while (left &lt;= right) {
+        int middle = (left + right) / 2;
+        if (bloom(bloomDay, m, k, middle)) {
+            right = middle - 1;
+        } else {
+            left = middle + 1;
+        }
+    }
+    if (left &gt; max) {
+        return -1;
+    }
+    return left;
+}
+
+public boolean bloom(int[] bloomDay, int m, int k, int day) {
+    int sum = 0;
+    for (int i : bloomDay) {
+        if (i &gt; day) {
+            sum = 0;
+        } else {
+            sum++;
+            if (sum &gt;= k) {
+                sum = 0;
+                m--;
+            }
+        }
+    }
+    return m &lt;= 0;
+}
+</code></pre>
+<h4 id="1552-两球之间的磁力httpsleetcode-cncomproblemsmagnetic-force-between-two-balls"><a href="https://leetcode-cn.com/problems/magnetic-force-between-two-balls/">1552. 两球之间的磁力</a></h4>
+<p>在代号为 C-137 的地球上，Rick 发现如果他将两个球放在他新发明的篮子里，它们之间会形成特殊形式的磁力。Rick 有 <code>n</code> 个空的篮子，第 <code>i</code> 个篮子的位置在 <code>position[i]</code> ，Morty 想把 <code>m</code> 个球放到这些篮子里，使得任意两球间 <strong>最小磁力</strong> 最大。</p>
+<p>已知两个球如果分别位于 <code>x</code> 和 <code>y</code> ，那么它们之间的磁力为 <code>|x - y|</code> 。</p>
+<p>给你一个整数数组 <code>position</code> 和一个整数 <code>m</code> ，请你返回最大化的最小磁力。</p>
+<p><strong>示例 1：</strong></p>
+<p><img src="q3v1.jpg" alt="img"></p>
+<pre><code>输入：position = [1,2,3,4,7], m = 3
+输出：3
+解释：将 3 个球分别放入位于 1，4 和 7 的三个篮子，两球间的磁力分别为 [3, 3, 6]。最小磁力为 3 。我们没办法让最小磁力大于 3 。
+</code></pre>
+<p><strong>示例 2：</strong></p>
+<pre><code>输入：position = [5,4,3,2,1,1000000000], m = 2
+输出：999999999
+解释：我们使用位于 1 和 1000000000 的篮子时最小磁力最大。
+</code></pre>
+<p><strong>提示：</strong></p>
+<ul>
+<li><code>n == position.length</code></li>
+<li><code>2 &lt;= n &lt;= 10^5</code></li>
+<li><code>1 &lt;= position[i] &lt;= 10^9</code></li>
+<li>所有 <code>position</code> 中的整数 <strong>互不相同</strong> 。</li>
+<li><code>2 &lt;= m &lt;= position.length</code></li>
+</ul>
+<p>这题和上面的也都是一样的，最小磁力为x，取值范围为[1，max(position) -min(position)]，但这题是二分搜索<strong>最右边界</strong></p>
+<pre><code class="language-java">public int maxDistance(int[] position, int m) {
+    // 先排序，好求最小距离
+    Arrays.sort(position);
+    int length = position.length;
+    int left = 0, right = position[length - 1] - position[0];
+    while (left &lt;= right) {
+        int middle = (left + right) / 2;
+        // 求最右边界
+        if (distance(position, middle) &gt;= m) {
+            left = middle + 1;
+        } else {
+            right = middle - 1;
+        }
+    }
+    return right;
+}
+
+/**
+     * 最小磁力 为 n时，最多可以分为几段
+     *
+     * @param position
+     * @param n
+     * @return
+     */
+public int distance(int[] position, int n) {
+    int min = position[0];
+    int difference = 0;
+    int nums = 0;
+    for (int i : position) {
+        difference = i - min;
+        if (difference &gt;= n) {
+            min = i;
+            nums++;
+        }
+    }
+    return nums + 1;
+}
+</code></pre>
+<h4 id="29-两数相除httpsleetcode-cncomproblemsdivide-two-integers"><a href="https://leetcode-cn.com/problems/divide-two-integers/">29. 两数相除</a></h4>
+<p>难度中等836收藏分享切换为英文接收动态反馈</p>
+<p>给定两个整数，被除数 <code>dividend</code> 和除数 <code>divisor</code>。将两数相除，要求不使用乘法、除法和 mod 运算符。</p>
+<p>返回被除数 <code>dividend</code> 除以除数 <code>divisor</code> 得到的商。</p>
+<p>整数除法的结果应当截去（<code>truncate</code>）其小数部分，例如：<code>truncate(8.345) = 8</code> 以及 <code>truncate(-2.7335) = -2</code></p>
+<p><strong>示例 1:</strong></p>
+<pre><code>输入: dividend = 10, divisor = 3
+输出: 3
+解释: 10/3 = truncate(3.33333..) = truncate(3) = 3
+</code></pre>
+<p><strong>示例 2:</strong></p>
+<pre><code>输入: dividend = 7, divisor = -3
+输出: -2
+解释: 7/-3 = truncate(-2.33333..) = -2
+</code></pre>
+<p><strong>提示：</strong></p>
+<ul>
+<li>被除数和除数均为 32 位有符号整数。</li>
+<li>除数不为 0。</li>
+<li>假设我们的环境只能存储 32 位有符号整数，其数值范围是 [−231, 231 − 1]。本题中，如果除法结果溢出，则返回 231 − 1。</li>
+</ul>
+<p>这题其实很明显，不过需要特殊处理，dividend 和 divisor 均有「正数」和「负数」两种可能，当且仅当其中一者为负数时，结果为负，为了方便，我们可以先记录最终结果的正负号，然后将 dividend 和 divisor 都当成正数来处理；dividend 和 divisor 均为 int，可以确定答案的绝对值落在 [0, dividend] 范围内）；</p>
+<pre><code class="language-java">public int divide(int dividend, int divisor) {
+    // 考虑被除数为最小值的情况
+    if (dividend == Integer.MIN_VALUE) {
+        if (divisor == 1) {
+            return Integer.MIN_VALUE;
+        }
+        if (divisor == -1) {
+            return Integer.MAX_VALUE;
+        }
+    }
+    // 考虑除数为最小值的情况
+    if (divisor == Integer.MIN_VALUE) {
+        return dividend == Integer.MIN_VALUE ? 1 : 0;
+    }
+    // 考虑被除数为 0 的情况
+    if (dividend == 0) {
+        return 0;
+    }
+
+    // 一般情况，使用二分查找
+    // 将所有的正数取相反数，这样就只需要考虑一种情况
+    boolean rev = false;
+    if (dividend &gt; 0) {
+        dividend = -dividend;
+        rev = !rev;
+    }
+    if (divisor &gt; 0) {
+        divisor = -divisor;
+        rev = !rev;
+    }
+
+    int left = 1, right = Integer.MAX_VALUE, ans = 0;
+    while (left &lt;= right) {
+        // 注意溢出，并且不能使用除法
+        int mid = left + ((right - left) &gt;&gt; 1);
+        boolean check = quickAdd(divisor, mid, dividend);
+        if (check) {
+            ans = mid;
+            // 注意溢出
+            if (mid == Integer.MAX_VALUE) {
+                break;
+            }
+            left = mid + 1;
+        } else {
+            right = mid - 1;
+        }
+    }
+
+    return rev ? -ans : ans;
+}
+
+// 快速乘 这个没搞懂是什么意思
+public boolean quickAdd(int y, int z, int x) {
+    // x 和 y 是负数，z 是正数
+    // 需要判断 z * y &gt;= x 是否成立
+    int result = 0, add = y;
+    while (z != 0) {
+        if ((z &amp; 1) != 0) {
+            // 需要保证 result + add &gt;= x
+            if (result &lt; x - add) {
+                return false;
+            }
+            result += add;
+        }
+        if (z != 1) {
+            // 需要保证 add + add &gt;= x
+            if (add &lt; x - add) {
+                return false;
+            }
+            add += add;
+        }
+        // 不能使用除法
+        z &gt;&gt;= 1;
+    }
+    return true;
+}
+</code></pre>
+
+    </div>
+    <div class="article-footer">
+<blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接: </strong>
+      <a href="https://wzgl998877.github.io/2022/02/leetcode%E5%88%B7%E9%A2%98%E6%80%BB%E7%BB%93/" title="LeetCode刷题总结" target="_blank" rel="external">https://wzgl998877.github.io/2022/02/leetcode%E5%88%B7%E9%A2%98%E6%80%BB%E7%BB%93/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong>License: </strong>
+        <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN</a>
+    </li>
+  </ul>
+</blockquote>
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/wzgl998877/" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="https://wzgl998877.github.io/avatar.png" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/wzgl998877/" target="_blank"><span class="text-dark">microzheng</span><small class="ml-1x">努力会说谎，但努力不会白费</small></a></h3>
+        <div>不想搬砖的码农</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+    </div>
+  </article>
+</div><nav class="bar bar-footer clearfix" data-stick-bottom>
+    <div class="bar-inner">
+        <ul class="pager pull-left">
+            <li class="prev">
+                <a href="https://wzgl998877.github.io/2022/01/mysql%E6%98%AF%E6%80%8E%E6%A0%B7%E8%BF%90%E8%A1%8C%E7%9A%84/" title="Mysql是怎样运行的"><i
+                        class="icon icon-angle-left"
+                        aria-hidden="true"></i><span>&nbsp;&nbsp;下一篇</span></a>
+            </li>
+            
+            <li class="toggle-toc">
+                <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false"
+                    title="文章目录" role="button">
+                    <span>[&nbsp;</span><span>文章目录</span>
+                    <i class="text-collapsed icon icon-anchor"></i>
+                    <i class="text-in icon icon-close"></i>
+                    <span>]</span>
+                </a>
+            </li>
+        </ul>
+        <div class="bar-right">
+            <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter"
+                data-mobile-sites="weibo,qq,qzone"></div>
+        </div>
+    </div>
+</nav>
+
+
+</main><footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+<ul class="social-links">
+    <li><a href="https://github.com/wzgl998877/" target="_blank" title="github" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-github"></i></a></li>
+    <li><a href="https://wzgl998877.github.io/index.xml" target="_blank" title="rss" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-rss"></i></a></li>
+</ul>
+  <div class="copyright">
+    &copy;2022  -
+    2022
+    <div class="publishby">
+        Theme by <a href="https://github.com/wzgl998877/" target="_blank"> microzheng </a>base on<a href="https://github.com/xiaoheiAh/hugo-theme-pure" target="_blank"> pure</a>.
+    </div>
+    
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_SVG"></script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+            showMathMenu: false, //disables context menu
+            tex2jax: {
+            inlineMath: [ ['$','$'], ['\\(','\\)'] ]
+           }
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+<script>
+    window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/highlight.min.js"></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/python.min.js" defer></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/javascript.min.js" defer></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/java.min.js" defer></script><script>
+    hljs.configure({
+        tabReplace: '    ', 
+        classPrefix: ''     
+        
+    })
+    hljs.initHighlightingOnLoad();
+</script>
+<script src="https://wzgl998877.github.io/js/application.min.a94ab19cb63a95c8d7fbd7b85cab3ddeea8c369bdf75b9cab6708787ead123af.js"></script>
+<script src="https://wzgl998877.github.io/js/plugin.min.19c5bcb2fb0789ab4f2b7834e5ceb5e92635645605bab902c1024b25f1502364.js"></script>
+
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(未命名)',
+            },
+            ROOT_URL: 'https:\/\/wzgl998877.github.io\/',
+            CONTENT_URL: 'https:\/\/wzgl998877.github.io\/\/searchindex.json ',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script type="text/javascript" src="https://wzgl998877.github.io/js/insight.min.4a2d52de4bfff73e0c688404fe3d17c9a3ae12d9888e1e1ac9c690e4890de2ded50fe55f2b819c2ba55435a76f396f3ea6805765f0b0af5635cdf74ea459eab0.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+<script>
+    tocbot.init({
+        
+        tocSelector: '.js-toc',
+        
+        contentSelector: '.js-toc-content',
+        
+        headingSelector: 'h1, h2, h3',
+        
+        hasInnerContainers: true,
+    });
+</script>
+
+
+  </body>
+</html>
