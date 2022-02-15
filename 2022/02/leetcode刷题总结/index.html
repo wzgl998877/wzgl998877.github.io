@@ -39,7 +39,7 @@
 <meta itemprop="name" content="LeetCode刷题总结">
 <meta itemprop="description" content="​ [TOC] 算法这东西，可以说玄之又玄，大学就被程序设计这门课统治，工作了，虽然说这东西在实践中用到的少，但是谁让大家都卷呢，你不会就是不行，所以本"><meta itemprop="datePublished" content="2022-02-12T14:44:56+08:00" />
 <meta itemprop="dateModified" content="2022-02-12T14:44:56+08:00" />
-<meta itemprop="wordCount" content="7837">
+<meta itemprop="wordCount" content="8095">
 <meta itemprop="keywords" content="LeetCode," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="LeetCode刷题总结"/>
 <meta name="twitter:description" content="​ [TOC] 算法这东西，可以说玄之又玄，大学就被程序设计这门课统治，工作了，虽然说这东西在实践中用到的少，但是谁让大家都卷呢，你不会就是不行，所以本"/>
@@ -320,8 +320,8 @@
     <a class="article-tag-link" href="/tags/leetcode/"> LeetCode </a>
   </span>
 
-		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 7837字</span>
-		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 16分 </span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 8095字</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 17分 </span>
       </div>
     </div>
     <div class="article-entry marked-body js-toc-content" itemprop="articleBody">
@@ -1175,6 +1175,33 @@ if (l &gt;= n || arr[l] != target) {
 }
 return l;
 </code></pre>
+<h4 id="34-在排序数组中查找元素的第一个和最后一个位置httpsleetcode-cncomproblemsfind-first-and-last-position-of-element-in-sorted-array"><a href="https://leetcode-cn.com/problems/find-first-and-last-position-of-element-in-sorted-array/">34. 在排序数组中查找元素的第一个和最后一个位置</a></h4>
+<p>给定一个按照升序排列的整数数组 <code>nums</code>，和一个目标值 <code>target</code>。找出给定目标值在数组中的开始位置和结束位置。</p>
+<p>如果数组中不存在目标值 <code>target</code>，返回 <code>[-1, -1]</code>。</p>
+<p><strong>进阶：</strong></p>
+<ul>
+<li>你可以设计并实现时间复杂度为 <code>O(log n)</code> 的算法解决此问题吗？</li>
+</ul>
+<p><strong>示例 1：</strong></p>
+<pre><code>输入：nums = [5,7,7,8,8,10], target = 8
+输出：[3,4]
+</code></pre>
+<p><strong>示例 2：</strong></p>
+<pre><code>输入：nums = [5,7,7,8,8,10], target = 6
+输出：[-1,-1]
+</code></pre>
+<p><strong>示例 3：</strong></p>
+<pre><code>输入：nums = [], target = 0
+输出：[-1,-1]
+</code></pre>
+<p><strong>提示：</strong></p>
+<ul>
+<li><code>0 &lt;= nums.length &lt;= 105</code></li>
+<li><code>-109 &lt;= nums[i] &lt;= 109</code></li>
+<li><code>nums</code> 是一个非递减数组</li>
+<li><code>-109 &lt;= target &lt;= 109</code></li>
+</ul>
+<p>这题目看起来就很简单，就是搜索最左边界和最右边界</p>
 
     </div>
     <div class="article-footer">
