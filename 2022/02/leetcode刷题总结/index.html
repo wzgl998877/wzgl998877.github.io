@@ -39,7 +39,7 @@
 <meta itemprop="name" content="LeetCode刷题总结">
 <meta itemprop="description" content="​ [TOC] 算法这东西，可以说玄之又玄，大学就被程序设计这门课统治，工作了，虽然说这东西在实践中用到的少，但是谁让大家都卷呢，你不会就是不行，所以本"><meta itemprop="datePublished" content="2022-02-12T14:44:56+08:00" />
 <meta itemprop="dateModified" content="2022-02-12T14:44:56+08:00" />
-<meta itemprop="wordCount" content="8095">
+<meta itemprop="wordCount" content="9248">
 <meta itemprop="keywords" content="LeetCode," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="LeetCode刷题总结"/>
 <meta name="twitter:description" content="​ [TOC] 算法这东西，可以说玄之又玄，大学就被程序设计这门课统治，工作了，虽然说这东西在实践中用到的少，但是谁让大家都卷呢，你不会就是不行，所以本"/>
@@ -320,8 +320,8 @@
     <a class="article-tag-link" href="/tags/leetcode/"> LeetCode </a>
   </span>
 
-		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 8095字</span>
-		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 17分 </span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 9248字</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 19分 </span>
       </div>
     </div>
     <div class="article-entry marked-body js-toc-content" itemprop="articleBody">
@@ -1202,6 +1202,126 @@ return l;
 <li><code>-109 &lt;= target &lt;= 109</code></li>
 </ul>
 <p>这题目看起来就很简单，就是搜索最左边界和最右边界</p>
+<pre><code class="language-java">public int[] searchRange(int[] nums, int target) {
+    int[] result = {-1, -1};
+    // 先找最左边界
+    result[0] = left_bound(nums, target);
+    // 最右边界
+    result[1] = right_bound(nums, target);
+    // 万万没想到这题还真的就是两遍二分
+    return result;
+}
+</code></pre>
+<p>做了这么多二分法的题，总结出来的一点点小心得就是如果是<strong>求线性方程中的解(y=ax+b)</strong>，列如nums[1,n] 按顺序排列好，求target是否存在，判断题目是采用二分法后，需要注意的是两点</p>
+<ul>
+<li>搜索区间 最小值是什么？最大值是什么？</li>
+<li>求最左边界？最右边界？最左边界和最右边界的判断条件需要记得！！！</li>
+</ul>
+<h3 id="滑动窗口">滑动窗口</h3>
+<hr>
+<p>滑动窗口属于双指针的一种特例，这个算法技巧的思路非常简单，用<code>i</code>,<code>j</code>表示滑动窗口的左边界和右边界，通过改变<code>i</code>,<code>j</code>来<strong>扩展</strong>和<strong>收缩</strong>滑动窗口，可以想象成一个窗口在字符串上游走</p>
+<pre><code class="language-java">/**
+     * 滑动窗口套路 有一个字符串s，需要找到t
+     * 思路为：
+     * 1、定义一个双指针left,right,作为窗口 window的左右边界
+     * 2、右移right（right++），使得window包含t，即找到可行解
+     * 3、停止增加right，转而不断增加left指针缩小窗口[left, right)，直到窗口中的字符串不再符合要求（不包含T中的所有字符了）。同时，每次增加left，我们都要更新一轮结果。
+     * 4、重复第 2 和第 3 步，直到right到达字符串S的尽头。
+     *
+     * @param s
+     * @param t
+     */
+void slidingWindow(String s, String t) {
+    Map&lt;Character, Integer&gt; window = new HashMap&lt;&gt;();
+    Map&lt;Character, Integer&gt; need = new HashMap&lt;&gt;();
+    for (int i = 0; i &lt; t.length(); i++) {
+        need.put(t.charAt(i), need.getOrDefault(t.charAt(i), 0) + 1);
+    }
+
+    int left = 0, right = 0;
+    int valid = 0;
+    while (right &lt; s.length()) {
+        // c 是将移入窗口的字符
+        char c = s.charAt(right);
+        // 右移窗口
+        right++;
+        // 进行窗口内数据的一系列更新...，找出可行解
+
+        /*** debug 输出的位置 ***/
+        System.out.println(left);
+        System.out.println(right);
+        /********************/
+
+        // 判断左侧窗口是否要收缩，找出局部最优解
+        while (valid == need.size()) {
+            // d 是将移出窗口的字符
+            char d = s.charAt(left);
+            // 左移窗口
+            left++;
+            // 进行窗口内数据的一系列更新...
+        }
+    }
+}
+</code></pre>
+<h4 id="76-最小覆盖子串httpsleetcode-cncomproblemsminimum-window-substring"><a href="https://leetcode-cn.com/problems/minimum-window-substring/">76. 最小覆盖子串</a></h4>
+<p>给你一个字符串 <code>s</code> 、一个字符串 <code>t</code> 。返回 <code>s</code> 中涵盖 <code>t</code> 所有字符的最小子串。如果 <code>s</code> 中不存在涵盖 <code>t</code> 所有字符的子串，则返回空字符串 <code>&quot;&quot;</code> 。</p>
+<p><strong>注意：</strong></p>
+<ul>
+<li>对于 <code>t</code> 中重复字符，我们寻找的子字符串中该字符数量必须不少于 <code>t</code> 中该字符数量。</li>
+<li>如果 <code>s</code> 中存在这样的子串，我们保证它是唯一的答案。</li>
+</ul>
+<p><strong>示例 1：</strong></p>
+<pre><code>输入：s = &quot;ADOBECODEBANC&quot;, t = &quot;ABC&quot;
+输出：&quot;BANC&quot;
+</code></pre>
+<p><strong>示例 2：</strong></p>
+<pre><code>输入：s = &quot;a&quot;, t = &quot;a&quot;
+输出：&quot;a&quot;
+</code></pre>
+<p><strong>示例 3:</strong></p>
+<pre><code>输入: s = &quot;a&quot;, t = &quot;aa&quot;
+输出: &quot;&quot;
+解释: t 中两个字符 'a' 均应包含在 s 的子串中，
+因此没有符合条件的子字符串，返回空字符串。
+</code></pre>
+<p>这题是一个很典型的滑动窗口,滑动窗口最难的在于怎么找到局部最优解，很显然这题的局部最优解就是，字符串长度最小</p>
+<pre><code class="language-java">public String minWindow(String s, String t) {
+    Map&lt;Character, Integer&gt; window = new HashMap&lt;&gt;();
+    Map&lt;Character, Integer&gt; need = new HashMap&lt;&gt;();
+    for (int i = 0; i &lt; t.length(); i++) {
+        need.put(t.charAt(i), need.getOrDefault(t.charAt(i), 0) + 1);
+    }
+    int left = 0, right = 0, nums = 0;
+    int start = 0, length = Integer.MAX_VALUE;
+    while (right &lt; s.length()) {
+        char c = s.charAt(right);
+        right++;
+        // 扩大右边界把window装满t，找到可行解
+        if (need.containsKey(c)) {
+            window.put(c, window.getOrDefault(c, 0) + 1);
+            if (window.get(c).equals(need.get(c))) {
+                nums++;
+            }
+        }
+        // 收缩左边界，找到局部最优解
+        while (nums == need.size()) {
+            char d = s.charAt(left);
+            if (right - left &lt; length) {
+                start = left;
+                length = right - left;
+            }
+            left++;
+            if (need.containsKey(d)) {
+                if (need.get(d).equals(window.get(d))) {
+                    nums--;
+                }
+                window.put(d, window.get(d) - 1);
+            }
+        }
+    }
+    return length == Integer.MAX_VALUE ? &quot;&quot; : s.substring(start, start + length);
+}
+</code></pre>
 
     </div>
     <div class="article-footer">
