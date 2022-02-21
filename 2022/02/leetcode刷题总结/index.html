@@ -39,7 +39,7 @@
 <meta itemprop="name" content="LeetCode刷题总结">
 <meta itemprop="description" content="​ [TOC] 算法这东西，可以说玄之又玄，大学就被程序设计这门课统治，工作了，虽然说这东西在实践中用到的少，但是谁让大家都卷呢，你不会就是不行，所以本"><meta itemprop="datePublished" content="2022-02-12T14:44:56+08:00" />
 <meta itemprop="dateModified" content="2022-02-12T14:44:56+08:00" />
-<meta itemprop="wordCount" content="13359">
+<meta itemprop="wordCount" content="13970">
 <meta itemprop="keywords" content="LeetCode," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="LeetCode刷题总结"/>
 <meta name="twitter:description" content="​ [TOC] 算法这东西，可以说玄之又玄，大学就被程序设计这门课统治，工作了，虽然说这东西在实践中用到的少，但是谁让大家都卷呢，你不会就是不行，所以本"/>
@@ -320,8 +320,8 @@
     <a class="article-tag-link" href="/tags/leetcode/"> LeetCode </a>
   </span>
 
-		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 13359字</span>
-		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 27分 </span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 13970字</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 28分 </span>
       </div>
     </div>
     <div class="article-entry marked-body js-toc-content" itemprop="articleBody">
@@ -1665,6 +1665,83 @@ private int maxArraysDistance(int[] nums, int k) {
         }
         // 为什么会是right - left呢？，看第一幅图就知道了
         result += right - left;
+    }
+    return result;
+}
+</code></pre>
+<h4 id="239-滑动窗口最大值httpsleetcode-cncomproblemssliding-window-maximum"><a href="https://leetcode-cn.com/problems/sliding-window-maximum/">239. 滑动窗口最大值</a></h4>
+<p>给你一个整数数组 <code>nums</code>，有一个大小为 <code>k</code> 的滑动窗口从数组的最左侧移动到数组的最右侧。你只可以看到在滑动窗口内的 <code>k</code> 个数字。滑动窗口每次只向右移动一位。</p>
+<p>返回 <em>滑动窗口中的最大值</em> 。</p>
+<p><strong>示例 1：</strong></p>
+<pre><code>输入：nums = [1,3,-1,-3,5,3,6,7], k = 3
+输出：[3,3,5,5,6,7]
+解释：
+滑动窗口的位置                最大值
+---------------               -----
+[1  3  -1] -3  5  3  6  7       3
+ 1 [3  -1  -3] 5  3  6  7       3
+ 1  3 [-1  -3  5] 3  6  7       5
+ 1  3  -1 [-3  5  3] 6  7       5
+ 1  3  -1  -3 [5  3  6] 7       6
+ 1  3  -1  -3  5 [3  6  7]      7
+</code></pre>
+<p><strong>示例 2：</strong></p>
+<pre><code>输入：nums = [1], k = 1
+输出：[1]
+</code></pre>
+<p><strong>提示：</strong></p>
+<ul>
+<li><code>1 &lt;= nums.length &lt;= 105</code></li>
+<li><code>-104 &lt;= nums[i] &lt;= 104</code></li>
+<li><code>1 &lt;= k &lt;= nums.length</code></li>
+</ul>
+<p>这一道题其实想起来很简单，第一版暴力，</p>
+<pre><code class="language-java">class Solution {
+    public int[] maxSlidingWindow(int[] nums, int k) {
+        int left = 0, right = 0;
+        int[] result = new int[nums.length - k + 1];
+        int i = 0;
+        while(right &lt; nums.length) {
+            right++;
+            if(right - left == k) {
+                result[i++] = max(nums, left, right);
+                left++;
+            }
+        }
+        return result;
+    }
+    private int max(int[] nums, int left, int right) {
+        int result = nums[left];
+        for(int i = left; i &lt; right; i++) {
+            result = Math.max(result, nums[i]);
+        }
+        return result;
+    }
+}
+</code></pre>
+<p>很显然，时间花费在了找最大值上，怎么用0（1）的时间复杂度，找出最大值呢？可以用双端队列，维护一个递减的双端队列，为什么维护一个递减的双端队列可以呢？因为每个区间移除的元素一定不是这个区间的最大值，而下个区间的最大值，一定是在上一个区间移除队首元素后的最大值，因此可以成立</p>
+<pre><code class="language-java">public int[] maxSlidingWindow(int[] nums, int k) {
+    // 维护一个递减的双端队列
+    Deque&lt;Integer&gt; queue = new LinkedList&lt;&gt;();
+    int left = 0, right = 0;
+    int[] result = new int[nums.length - k + 1];
+    while(right &lt; nums.length) {
+        // 当前元素大于队尾元素，移除队尾元素
+        while (!queue.isEmpty() &amp;&amp; nums[right] &gt;= nums[queue.peekLast()]) {
+            queue.removeLast();
+        }
+        // 添加元素到队尾
+        queue.addLast(right);
+        right++;
+        // 如果队首元素不在区间内，移除队首元素
+        while(queue.peekFirst() &lt; left) {
+            queue.removeFirst();
+        }
+
+        if(right - left == k) {
+            // 在区间内时，队首元素为区间最大元素
+            result[left++] = nums[queue.peekFirst()];
+        }
     }
     return result;
 }
