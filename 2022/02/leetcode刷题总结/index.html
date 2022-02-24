@@ -39,7 +39,7 @@
 <meta itemprop="name" content="LeetCode刷题总结">
 <meta itemprop="description" content="​ [TOC] 算法这东西，可以说玄之又玄，大学就被程序设计这门课统治，工作了，虽然说这东西在实践中用到的少，但是谁让大家都卷呢，你不会就是不行，所以本"><meta itemprop="datePublished" content="2022-02-12T14:44:56+08:00" />
 <meta itemprop="dateModified" content="2022-02-12T14:44:56+08:00" />
-<meta itemprop="wordCount" content="13970">
+<meta itemprop="wordCount" content="15774">
 <meta itemprop="keywords" content="LeetCode," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="LeetCode刷题总结"/>
 <meta name="twitter:description" content="​ [TOC] 算法这东西，可以说玄之又玄，大学就被程序设计这门课统治，工作了，虽然说这东西在实践中用到的少，但是谁让大家都卷呢，你不会就是不行，所以本"/>
@@ -320,8 +320,8 @@
     <a class="article-tag-link" href="/tags/leetcode/"> LeetCode </a>
   </span>
 
-		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 13970字</span>
-		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 28分 </span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 15774字</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 32分 </span>
       </div>
     </div>
     <div class="article-entry marked-body js-toc-content" itemprop="articleBody">
@@ -1615,7 +1615,7 @@ void slidingWindow(String s, String t) {
 </code></pre>
 <h4 id="992-k-个不同整数的子数组httpsleetcode-cncomproblemssubarrays-with-k-different-integers"><a href="https://leetcode-cn.com/problems/subarrays-with-k-different-integers/">992. K 个不同整数的子数组</a></h4>
 <p>给定一个正整数数组 <code>nums</code>和一个整数 k ，返回 num 中 「<strong>好子数组」</strong> 的数目。</p>
-<p>如果 <code>nums</code> 的某个子数组中不同整数的个数恰好为 <code>k</code>，则称 <code>nums</code> 的这个连续、不一定不同的子数组为 <strong>「****好子数组 」</strong>。</p>
+<p>如果 <code>nums</code> 的某个子数组中不同整数的个数恰好为 <code>k</code>，则称 <code>nums</code> 的这个连续、不一定不同的子数组为 「好子数组 」。</p>
 <ul>
 <li>例如，<code>[1,2,3,1,2]</code> 中有 <code>3</code> 个不同的整数：<code>1</code>，<code>2</code>，以及 <code>3</code>。</li>
 </ul>
@@ -1742,6 +1742,164 @@ private int maxArraysDistance(int[] nums, int k) {
             // 在区间内时，队首元素为区间最大元素
             result[left++] = nums[queue.peekFirst()];
         }
+    }
+    return result;
+}
+</code></pre>
+<h4 id="424-替换后的最长重复字符httpsleetcode-cncomproblemslongest-repeating-character-replacement"><a href="https://leetcode-cn.com/problems/longest-repeating-character-replacement/">424. 替换后的最长重复字符</a></h4>
+<p>给你一个字符串 <code>s</code> 和一个整数 <code>k</code> 。你可以选择字符串中的任一字符，并将其更改为任何其他大写英文字符。该操作最多可执行 <code>k</code> 次。</p>
+<p>在执行上述操作后，返回包含相同字母的最长子字符串的长度。</p>
+<p><strong>示例 1：</strong></p>
+<pre><code>输入：s = &quot;ABAB&quot;, k = 2
+输出：4
+解释：用两个'A'替换为两个'B',反之亦然。
+</code></pre>
+<p><strong>示例 2：</strong></p>
+<pre><code>输入：s = &quot;AABABBA&quot;, k = 1
+输出：4
+解释：
+将中间的一个'A'替换为'B',字符串变为 &quot;AABBBBA&quot;。
+子串 &quot;BBBB&quot; 有最长重复字母, 答案为 4。
+</code></pre>
+<p>这题的思路很清晰，首先维护一个窗口，窗口中<strong>左边界左移的时机</strong>就是区间内用了k次机会后还不够，这时候需要左移左边界，那么怎么算区间内用的机会呢，很显然，用区间长度（right - left）减去 出现次数最多的字符的次数(max)，就是需要变化的次数，那么问题来了，怎么维护这个<strong>出现次数最多的字符的次数</strong>呢？自己想了很久，比如用treeMap实现，但肯定题目不会这么做，看了答案恍然大悟，很简单，最后要求的就是 <strong>max + k</strong>，k不变，那么结果只跟max有关，因此不需要维护max，<strong>只需要记录max的最大值即可</strong>！！！。</p>
+<pre><code class="language-java">public int characterReplacement(String s, int k) {
+    Map&lt;Character, Integer&gt; window = new HashMap&lt;&gt;();
+    int left = 0, right = 0;
+    // max 代表区间内出现次数最多的字符
+    int max = 0, result = 0;
+    while (right &lt; s.length()) {
+        char c = s.charAt(right);
+        right++;
+        window.put(c, window.getOrDefault(c, 0) + 1);
+        // result = max + k， 因此只需要找到最大的max即可
+        max = Math.max(max, window.get(c));
+        if (right - left &gt; max + k) {
+            char d = s.charAt(left);
+            left++;
+            window.put(d, window.get(d) - 1);
+        }
+        // 这里为什么要在后面判断呢？，因为循环进入if的条件是，right - left &gt; max + k，而我们答案需要的是max+k，所有需要在left++后执行
+        result = Math.max(right - left, result);
+    }
+    return result;
+}
+</code></pre>
+<p>这个题目，需要注意的点有：</p>
+<ul>
+<li>求max时，只需要求出<strong>最大的max</strong>而不需要求出<strong>每个区间内最大的max</strong></li>
+<li>在返回结果时，应该在if条件后执行，而不是if内，因为进入循环的条件就是right - left &gt; max + k，意味着这个区间已经不符合要求了，所以需要left++</li>
+</ul>
+<h4 id="1004-最大连续1的个数-iiihttpsleetcode-cncomproblemsmax-consecutive-ones-iii"><a href="https://leetcode-cn.com/problems/max-consecutive-ones-iii/">1004. 最大连续1的个数 III</a></h4>
+<p>给定一个二进制数组 <code>nums</code> 和一个整数 <code>k</code> ，如果可以翻转最多<code>k</code> 个 <code>0</code> ，则返回 <em>数组中连续 <code>1</code> 的最大个数</em> 。</p>
+<p><strong>示例 1：</strong></p>
+<pre><code>输入：nums = [1,1,1,0,0,0,1,1,1,1,0], K = 2
+输出：6
+解释：[1,1,1,0,0,1,1,1,1,1,1]
+粗体数字从 0 翻转到 1，最长的子数组长度为 6。
+</code></pre>
+<p><strong>示例 2：</strong></p>
+<pre><code>输入：nums = [0,0,1,1,0,0,1,1,1,0,1,1,0,0,0,1,1,1,1], K = 3
+输出：10
+解释：[0,0,1,1,1,1,1,1,1,1,1,1,0,0,0,1,1,1,1]
+粗体数字从 0 翻转到 1，最长的子数组长度为 10。
+</code></pre>
+<p>这题和上面一模一样</p>
+<pre><code class="language-java">public int longestOnes(int[] nums, int k) {
+    int left = 0, right = 0, result = 0, temp = 0;
+    while(right &lt; nums.length) {
+        if(nums[right] == 0) {
+            temp++;
+        }
+        right++;
+        while(temp &gt; k) {
+            if(nums[left] == 0) {
+                temp--;
+            }
+            left++;
+        }
+        result = Math.max(result, right - left);
+    }
+    return result;
+}
+</code></pre>
+<h4 id="1208-尽可能使字符串相等httpsleetcode-cncomproblemsget-equal-substrings-within-budget"><a href="https://leetcode-cn.com/problems/get-equal-substrings-within-budget/">1208. 尽可能使字符串相等</a></h4>
+<p>给你两个长度相同的字符串，<code>s</code> 和 <code>t</code>。</p>
+<p>将 <code>s</code> 中的第 <code>i</code> 个字符变到 <code>t</code> 中的第 <code>i</code> 个字符需要 <code>|s[i] - t[i]|</code> 的开销（开销可能为 0），也就是两个字符的 ASCII 码值的差的绝对值。</p>
+<p>用于变更字符串的最大预算是 <code>maxCost</code>。在转化字符串时，总开销应当小于等于该预算，这也意味着字符串的转化可能是不完全的。</p>
+<p>如果你可以将 <code>s</code> 的子字符串转化为它在 <code>t</code> 中对应的子字符串，则返回可以转化的最大长度。</p>
+<p>如果 <code>s</code> 中没有子字符串可以转化成 <code>t</code> 中对应的子字符串，则返回 <code>0</code>。</p>
+<p><strong>示例 1：</strong></p>
+<pre><code>输入：s = &quot;abcd&quot;, t = &quot;bcdf&quot;, maxCost = 3
+输出：3
+解释：s 中的 &quot;abc&quot; 可以变为 &quot;bcd&quot;。开销为 3，所以最大长度为 3。
+</code></pre>
+<p><strong>示例 2：</strong></p>
+<pre><code>输入：s = &quot;abcd&quot;, t = &quot;cdef&quot;, maxCost = 3
+输出：1
+解释：s 中的任一字符要想变成 t 中对应的字符，其开销都是 2。因此，最大长度为 1。
+</code></pre>
+<p><strong>示例 3：</strong></p>
+<pre><code>输入：s = &quot;abcd&quot;, t = &quot;acde&quot;, maxCost = 0
+输出：1
+解释：a -&gt; a, cost = 0，字符串未发生变化，所以最大长度为 1。
+</code></pre>
+<p>这题又是一模一样的</p>
+<pre><code class="language-java">public int equalSubstring(String s, String t, int maxCost) {
+    int left = 0, right = 0, result = 0, temp = 0;
+    while (right &lt; s.length()) {
+        temp += Math.abs(s.charAt(right) - t.charAt(right));
+        right++;
+        while (temp &gt; maxCost) {
+            temp -= Math.abs(s.charAt(left) - t.charAt(left));
+            left++;
+        }
+        result = Math.max(right - left, result);
+    }
+    return result;
+}
+</code></pre>
+<h4 id="1493-删掉一个元素以后全为-1-的最长子数组httpsleetcode-cncomproblemslongest-subarray-of-1s-after-deleting-one-element"><a href="https://leetcode-cn.com/problems/longest-subarray-of-1s-after-deleting-one-element/">1493. 删掉一个元素以后全为 1 的最长子数组</a></h4>
+<p>给你一个二进制数组 <code>nums</code> ，你需要从中删掉一个元素。</p>
+<p>请你在删掉元素的结果数组中，返回最长的且只包含 1 的非空子数组的长度。</p>
+<p>如果不存在这样的子数组，请返回 0 。</p>
+<p><strong>提示 1：</strong></p>
+<pre><code>输入：nums = [1,1,0,1]
+输出：3
+解释：删掉位置 2 的数后，[1,1,1] 包含 3 个 1 。
+</code></pre>
+<p><strong>示例 2：</strong></p>
+<pre><code>输入：nums = [0,1,1,1,0,1,1,0,1]
+输出：5
+解释：删掉位置 4 的数字后，[0,1,1,1,1,1,0,1] 的最长全 1 子数组为 [1,1,1,1,1] 。
+</code></pre>
+<p><strong>示例 3：</strong></p>
+<pre><code>输入：nums = [1,1,1]
+输出：2
+解释：你必须要删除一个元素。
+</code></pre>
+<p><strong>示例 4：</strong></p>
+<pre><code>输入：nums = [1,1,0,0,1,1,1,0,1]
+输出：4
+</code></pre>
+<p><strong>示例 5：</strong></p>
+<pre><code>输入：nums = [0,0,0]
+输出：0
+</code></pre>
+<p>这题也一点意思都没有，一模一样</p>
+<pre><code class="language-java">public int longestSubarray(int[] nums) {
+    int left = 0, right = 0, result = 0, temp = 0;
+    while (right &lt; nums.length) {
+        if (nums[right] == 0) {
+            temp++;
+        }
+        right++;
+        while (temp &gt; 1) {
+            if (nums[left] == 0) {
+                temp--;
+            }
+            left++;
+        }
+        result = Math.max(result, right - left - 1);
     }
     return result;
 }
