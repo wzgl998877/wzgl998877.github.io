@@ -6,10 +6,19 @@
     <description>Recent content in mysql on 码农的学习笔记</description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>CC BY 4.0 CN</copyright>
-    <lastBuildDate>Wed, 12 Jan 2022 11:24:40 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 28 Feb 2022 23:43:20 +0800</lastBuildDate>
     
         <atom:link href="https://wzgl998877.github.io/tags/mysql/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Mysql总结</title>
+      <link>https://wzgl998877.github.io/2022/02/mysql%E6%80%BB%E7%BB%93/</link>
+      <pubDate>Mon, 28 Feb 2022 23:43:20 +0800</pubDate>
+      
+      <guid>https://wzgl998877.github.io/2022/02/mysql%E6%80%BB%E7%BB%93/</guid>
+      <description>这篇文章主要对Mysql是怎样运行的进行提炼总结以及补充 常用的存储引擎有：ARCHIVE、BLACKHOLE、InnoDB、MyISAM等，</description>
+    </item>
     
     <item>
       <title>LeetCode刷题总结</title>

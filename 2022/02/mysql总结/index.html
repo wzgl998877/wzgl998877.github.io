@@ -2,7 +2,7 @@
 <html lang="zh">
   <head>
     <title>
-         - 码农的学习笔记
+        Mysql总结 - 码农的学习笔记
       </title>
         <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -20,29 +20,29 @@
     <meta http-equiv="window-target" content="_top" />
     
     
-    <meta name="description" content="[TOC] Linux工作日常命令 jps 命令 jps 查看全部的jvm进程，可以带上grep命令一起使用 jps |grep -e ××× find命令 基本格式：find path expression 1. 按照文件名" />
+    <meta name="description" content="这篇文章主要对Mysql是怎样运行的进行提炼总结以及补充 常用的存储引擎有：ARCHIVE、BLACKHOLE、InnoDB、MyISAM等，" />
     <meta name="generator" content="Hugo 0.91.2 with theme pure" />
-    <title> - 码农的学习笔记</title>
+    <title>Mysql总结 - 码农的学习笔记</title>
     
     
     <link rel="stylesheet" href="https://wzgl998877.github.io/css/style.min.e64d754037c0ee0ec4e20ab1d6f07740ace61729bc03850559b8caa21ae4a597.css">
     
     <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/9.15.10/styles/github.min.css" async>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css" async>
-    <meta property="og:title" content="" />
-<meta property="og:description" content="[TOC] Linux工作日常命令 jps 命令 jps 查看全部的jvm进程，可以带上grep命令一起使用 jps |grep -e ××× find命令 基本格式：find path expression 1. 按照文件名" />
+    <meta property="og:title" content="Mysql总结" />
+<meta property="og:description" content="这篇文章主要对Mysql是怎样运行的进行提炼总结以及补充 常用的存储引擎有：ARCHIVE、BLACKHOLE、InnoDB、MyISAM等，" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://wzgl998877.github.io/1/01/linux%E5%B7%A5%E4%BD%9C%E6%97%A5%E5%B8%B8%E5%91%BD%E4%BB%A4/" /><meta property="article:section" content="posts" />
+<meta property="og:url" content="https://wzgl998877.github.io/2022/02/mysql%E6%80%BB%E7%BB%93/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-02-28T23:43:20+08:00" />
+<meta property="article:modified_time" content="2022-02-28T23:43:20+08:00" />
 
-
-
-<meta itemprop="name" content="">
-<meta itemprop="description" content="[TOC] Linux工作日常命令 jps 命令 jps 查看全部的jvm进程，可以带上grep命令一起使用 jps |grep -e ××× find命令 基本格式：find path expression 1. 按照文件名">
-
-<meta itemprop="wordCount" content="935">
-<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content=""/>
-<meta name="twitter:description" content="[TOC] Linux工作日常命令 jps 命令 jps 查看全部的jvm进程，可以带上grep命令一起使用 jps |grep -e ××× find命令 基本格式：find path expression 1. 按照文件名"/>
+<meta itemprop="name" content="Mysql总结">
+<meta itemprop="description" content="这篇文章主要对Mysql是怎样运行的进行提炼总结以及补充 常用的存储引擎有：ARCHIVE、BLACKHOLE、InnoDB、MyISAM等，"><meta itemprop="datePublished" content="2022-02-28T23:43:20+08:00" />
+<meta itemprop="dateModified" content="2022-02-28T23:43:20+08:00" />
+<meta itemprop="wordCount" content="350">
+<meta itemprop="keywords" content="mysql," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Mysql总结"/>
+<meta name="twitter:description" content="这篇文章主要对Mysql是怎样运行的进行提炼总结以及补充 常用的存储引擎有：ARCHIVE、BLACKHOLE、InnoDB、MyISAM等，"/>
 
     <!--[if lte IE 9]>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -298,96 +298,40 @@
       <h1 itemprop="name">
   <a
     class="article-title"
-    href="/1/01/linux%E5%B7%A5%E4%BD%9C%E6%97%A5%E5%B8%B8%E5%91%BD%E4%BB%A4/"
-    ></a
+    href="/2022/02/mysql%E6%80%BB%E7%BB%93/"
+    >Mysql总结</a
   >
 </h1>
 
       <div class="article-meta">
         
+<span class="article-date">
+  <i class="icon icon-calendar-check"></i>&nbsp;
+<a href="https://wzgl998877.github.io/2022/02/mysql%E6%80%BB%E7%BB%93/" class="article-date">
+  <time datetime="2022-02-28 23:43:20 &#43;0800 CST" itemprop="datePublished">2022-02-28</time>
+</a>
+</span>
+<span class="article-category">
+  <i class="icon icon-folder"></i>&nbsp;
+  <a class="article-category-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"> 数据库 </a>
+</span>  
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>&nbsp;
+    <a class="article-tag-link" href="/tags/mysql/"> mysql </a>
+  </span>
 
-		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 935字</span>
-		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 2分 </span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 350字</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 1分 </span>
       </div>
     </div>
     <div class="article-entry marked-body js-toc-content" itemprop="articleBody">
-      <p>[TOC]</p>
-<h1 id="linux工作日常命令">Linux工作日常命令</h1>
-<h2 id="jps-命令">jps 命令</h2>
-<p>jps 查看全部的jvm进程，可以带上grep命令一起使用 jps |grep -e ×××</p>
-<h2 id="find命令">find命令</h2>
-<p><strong>基本格式：find path expression</strong></p>
-<h4 id="1-按照文件名查找">1. 按照文件名查找</h4>
-<p>　　　　(1)find / -name httpd.conf　　#在根目录下查找文件httpd.conf，表示在整个硬盘查找
-　　　　(2)find /etc -name httpd.conf　　#在/etc目录下文件httpd.conf
-　　　　(3)find /etc -name &lsquo;<em>srm</em>&rsquo;　　#使用通配符*(0或者任意多个)。表示在/etc目录下查找文件名中含有字符串‘srm’的文件
-　　　　(4)find . -name &lsquo;srm*&rsquo; 　　#表示当前目录下查找文件名开头是字符串‘srm’的文件</p>
-<h4 id="2按照文件特征查找">2.按照文件特征查找 　　　　</h4>
-<p>　　　　(1)find / -amin -10 　　# 查找在系统中最后10分钟访问的文件(access time)
-　　　　(2)find / -atime -2　　 # 查找在系统中最后48小时访问的文件
-　　　　(3)find / -empty 　　# 查找在系统中为空的文件或者文件夹
-　　　　(4)find / -group cat 　　# 查找在系统中属于 group为cat的文件
-　　　　(5)find / -mmin -5 　　# 查找在系统中最后5分钟里修改过的文件(modify time)
-　　　　(6)find / -mtime -1 　　#查找在系统中最后24小时里修改过的文件
-　　　　(7)find / -user fred 　　#查找在系统中属于fred这个用户的文件
-　　　　(8)find / -size +10000c　　#查找出大于10000000字节的文件(c:字节，w:双字，k:KB，M:MB，G:GB)
-　　　　(9)find / -size -1000k 　　#查找出小于1000KB的文件</p>
-<h4 id="3使用混合查找方式查找文件">3.使用混合查找方式查找文件</h4>
-<p>　　　　参数有： ！，-and(-a)，-or(-o)。</p>
-<p>　　　　(1)find /tmp -size +10000c -and -mtime +2 　　#在/tmp目录下查找大于10000字节并在最后2分钟内修改的文件
-　　 (2)find / -user fred -or -user george 　　#在/目录下查找用户是fred或者george的文件文件
-　　 (3)find /tmp ! -user panda　　#在/tmp目录中查找所有不属于panda用户的文件</p>
-<h3 id="文件大小排序">文件大小排序</h3>
-<p>du -sh * 可以将文件夹下按顺序排序</p>
-<p>mv account_confirm.log.2* /log/logs/tms 移动文件可以直接使用正则表达式</p>
-<p>tar czvf 25480446_2020.tar.gz 2020* 压缩多个文件到压缩包</p>
-<p>df -h 查看磁盘使用情况</p>
-<p>free -h 查看内存使用情况</p>
-<h2 id="ip命令">ip命令</h2>
-<p>比较高深，没参透，常用的有 ip a</p>
-<h2 id="grep">grep</h2>
-<ol>
-<li>
-<p>在文件中搜索一个单词，命令会返回一个包含 <strong>“match_pattern”</strong> 的文本行</p>
-<pre><code class="language-shell">grep &quot;match_pattern&quot; file_name
-如：grep &quot;taifungChangeAssignTaskRpc&quot; manage_service_workflow.log
-匹配多个 grep &quot;match_pattern&quot; file_name1 file_name2
-</code></pre>
-<p>匹配同时满足多个条件的</p>
-<pre><code class="language-shell"># | grep &quot;bb&quot; 同时满足多少就写多少
-grep &quot;aaa&quot; log.log | grep &quot;bb&quot;
-</code></pre>
-<p>相反的</p>
-<pre><code class="language-shell">grep -v &quot;match_pattern&quot; file_name
-输出不匹配的所有行
-</code></pre>
-</li>
-<li>
-<p>正则匹配</p>
-<pre><code class="language-shell">grep -E &quot;[1-9]+&quot; file_name
-eg: grep -E *.06151000064240 manage_service_workflow.log 
-</code></pre>
-<p>忽略大小写</p>
-<pre><code class="language-shell">grep -i &quot;match_pattern&quot; file_name
-eg:grep -i &quot;tAIfungChangeAssignTaskRpc&quot; manage_service_workflow.log 
-</code></pre>
-</li>
-<li>
-<p>打印规则</p>
-<pre><code class="language-shell"># 显示匹配某个结果之后的3行，使用 -A 选项：
-grep &quot;5&quot; file_name -A 3
-# 显示匹配某个结果之前的3行，使用 -B 选项：
-grep &quot;5&quot; file_name -B 3
-# 显示匹配某个结果的前三行和后三行，使用 -C 选项：
-grep &quot;5&quot; file_name -C 3
-</code></pre>
-</li>
-<li>
-<p>统计包含指定字符的行数</p>
-<pre><code class="language-she">cat test.log | grep -c test
-</code></pre>
-</li>
-</ol>
+      <p>这篇文章主要对Mysql是怎样运行的进行提炼总结以及补充</p>
+<p>常用的存储引擎有：ARCHIVE、BLACKHOLE、InnoDB、MyISAM等，最常用的就是InnoDB 和MyISAM，<strong>其中InnoDB 是MySQL 默认的存储引擎</strong></p>
+<p>InnoDB 存储引擎行格式，分别是Compact 、Redundant 、Dynamic 和Compressed，<strong>其中mysql5.6 默认使用 Compact，mysql 5.7 默认使用Dynamic</strong></p>
+<p><img src="" alt="image-20220111160208062"></p>
+<p>​	Dynamic 和Compressed 行格式 ，这俩行格式和Compact 行格式挺像，只不过在处理行溢出数据时有点儿分歧，它们不会在记录的真实数据处存储字段真实数据的前768 个字节，而是把所有的字节都存储到其他页面中，只在记录的真实数据处存储其他页面的地址，就像这样：</p>
+<p><img src="" alt="image-20220112105546186"></p>
+<p>记录在页中按照主键值由小到大顺序串联成一个单链表</p>
 
     </div>
     <div class="article-footer">
@@ -395,7 +339,7 @@ grep &quot;5&quot; file_name -C 3
   <ul class="post-copyright list-unstyled">
     <li class="post-copyright-link hidden-xs">
       <strong>本文链接: </strong>
-      <a href="https://wzgl998877.github.io/1/01/linux%E5%B7%A5%E4%BD%9C%E6%97%A5%E5%B8%B8%E5%91%BD%E4%BB%A4/" title="" target="_blank" rel="external">https://wzgl998877.github.io/1/01/linux%E5%B7%A5%E4%BD%9C%E6%97%A5%E5%B8%B8%E5%91%BD%E4%BB%A4/</a>
+      <a href="https://wzgl998877.github.io/2022/02/mysql%E6%80%BB%E7%BB%93/" title="Mysql总结" target="_blank" rel="external">https://wzgl998877.github.io/2022/02/mysql%E6%80%BB%E7%BB%93/</a>
     </li>
     <li class="post-copyright-license">
       <strong>License: </strong>
@@ -425,10 +369,10 @@ grep &quot;5&quot; file_name -C 3
 </div><nav class="bar bar-footer clearfix" data-stick-bottom>
     <div class="bar-inner">
         <ul class="pager pull-left">
-            <li class="next">
-                <a href="https://wzgl998877.github.io/2022/01/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"
-                    title="设计模式"><span>上一篇&nbsp;&nbsp;</span><i
-                        class="icon icon-angle-right" aria-hidden="true"></i></a>
+            <li class="prev">
+                <a href="https://wzgl998877.github.io/2022/02/leetcode%E5%88%B7%E9%A2%98%E6%80%BB%E7%BB%93/" title="LeetCode刷题总结"><i
+                        class="icon icon-angle-left"
+                        aria-hidden="true"></i><span>&nbsp;&nbsp;下一篇</span></a>
             </li>
             
             <li class="toggle-toc">
