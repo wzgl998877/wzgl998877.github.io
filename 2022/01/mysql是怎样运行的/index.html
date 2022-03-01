@@ -39,7 +39,7 @@
 <meta itemprop="name" content="Mysql是怎样运行的">
 <meta itemprop="description" content="[TOC] 本篇文章是(Mysql是怎样运行的)阅读笔记，这本书网上很多人的评价都很高，看了下书也不是很厚，所以读读。 MySQL的架构 mysql 工作的整体流程"><meta itemprop="datePublished" content="2022-01-12T11:24:40+08:00" />
 <meta itemprop="dateModified" content="2022-01-12T11:24:40+08:00" />
-<meta itemprop="wordCount" content="83268">
+<meta itemprop="wordCount" content="83267">
 <meta itemprop="keywords" content="mysql," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Mysql是怎样运行的"/>
 <meta name="twitter:description" content="[TOC] 本篇文章是(Mysql是怎样运行的)阅读笔记，这本书网上很多人的评价都很高，看了下书也不是很厚，所以读读。 MySQL的架构 mysql 工作的整体流程"/>
@@ -320,7 +320,7 @@
     <a class="article-tag-link" href="/tags/mysql/"> mysql </a>
   </span>
 
-		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 83268字</span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 83267字</span>
 		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 167分 </span>
       </div>
     </div>
@@ -529,7 +529,7 @@ NOT NULL 修饰，不允许存储NULL 值。</li>
 <p>​	MySQL 中磁盘和内存交互的基本单位是页，也就是说MySQL 是以页为基本单位来管理存储空间的，我们的记录都会被分配到某个页中存储。<strong>而一个页的大小一般是16KB ，也就是16384 字节，而一个VARCHAR(M) 类</strong>
 <strong>型的列就最多可以存储65532 个字节，这样就可能造成一个页存放不了一条记录</strong>的尴尬情况</p>
 <p>​	对于Compact 和Reduntant 行格式来说，<strong>如果某一列中的数据非常多的话，在本记录的真实数据处只会存储该列的前768 个字节的数据和一个指向其他页的地址，然后把剩下的数据存放到其他页中，这个过程也叫做行溢出，存储超出768 字节的那些页面也被称为溢出页</strong></p>
-<p><strong><img src="./image-20220112104651557.png" alt="image-20220112104651557"></strong></p>
+<p><img src="./image-20220112104651557.png" alt="image-20220112104651557"></p>
 <blockquote>
 <p>不只是 VARCHAR(M) 类型的列，其他的 TEXT、BLOB 类型的列在存储数据非常多的时候也会发生行溢出。</p>
 </blockquote>
@@ -655,7 +655,7 @@ NOT NULL 修饰，不允许存储NULL 值。</li>
 <p>从图中可以看出来，删除第2条记录前后主要发生了这些变化：</p>
 <ol>
 <li>
-<p>第2条记录并没有从存储空间中移除，而是把该条记录的delete_mask 值设置为1 。</p>
+<p>第2条记录并没有从存储空间中移除，而是把该条记录的delete_mask 值设置为1</p>
 </li>
 <li>
 <p>第2条记录的next_record 值变为了0，意味着该记录没有下一条记录了。</p>
@@ -664,8 +664,7 @@ NOT NULL 修饰，不允许存储NULL 值。</li>
 <p>第1条记录的next_record 指向了第3条记录。</p>
 </li>
 <li>
-<p>还有一点你可能忽略了，就是最大记录的n_owned 值从5 变成了4 ，关于这一点的变化我们稍后会详
-细说明的。所以，<strong>不论我们怎么对页中的记录做增删改操作，InnoDB始终会维护一条记录的单链表，链表中的各个节点是按照主键值由小到大的顺序连接起来的</strong>。</p>
+<p>还有一点你可能忽略了，就是最大记录的n_owned 值从5 变成了4 ，关于这一点的变化我们稍后会详细说明的。所以，<strong>不论我们怎么对页中的记录做增删改操作，InnoDB始终会维护一条记录的单链表，链表中的各个节点是按照主键值由小到大的顺序连接起来的</strong>。</p>
 </li>
 </ol>
 <h4 id="page-directory页目录">Page Directory（页目录）</h4>
@@ -682,8 +681,7 @@ SELECT * FROM page_demo WHERE c1 = 3;</p>
 <strong>谓的Page Directory ，也就是页目录</strong>（此时应该返回头看看页面各个部分的图）。<strong>页面目录中的这些地址</strong>
 <strong>偏移量被称为槽（英文名： Slot ），所以这个页面目录就是由槽组成的</strong>。</li>
 </ol>
-<p>比方说现在的page_demo 表中正常的记录共有6条， InnoDB 会把它们分成两组，第一组中只有一个最小记录，
-第二组中是剩余的5条记录，看下边的示意图：</p>
+<p>比方说现在的page_demo 表中正常的记录共有6条， InnoDB 会把它们分成两组，第一组中只有一个最小记录，第二组中是剩余的5条记录，看下边的示意图：</p>
 <p><img src="./image-20220112142955993.png" alt="image-20220112142955993"></p>
 <p>从这个图中我们需要注意这么几点：</p>
 <ul>
