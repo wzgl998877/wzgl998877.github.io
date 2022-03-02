@@ -513,7 +513,7 @@ public class AopStudyTest {
 <h3 id="公司的一套框架">公司的一套框架</h3>
 <h4 id="web容器同步请求">web容器同步请求</h4>
 <p>Web容器（比如tomcat）默认情况下会为每个请求分配一个请求处理线程（在tomcat7/8中，能够同时处理到达的请求的线程数量默认为200），默认情况下，在响应完成前，该线程资源都不会被释放。如图所示：</p>
-<p><img src="https://segmentfault.com/img/remote/1460000018791727?w=709&amp;h=404" alt=""></p>
+<p><img src="1460000018791727.png" alt=""></p>
 <p><strong>处理HTTP请求和执行具体业务代码的线程是同一个线程！</strong></p>
 <p>如果业务代码处理时间比较长，那么请求处理线程将一直被占用，直到任务结束，这种情况下，随着并发请求数量的增加，将可能导致处理请求线程全部被占用，此时tomcat会将后来的请求堆积到内部阻塞队列容器中，如果存放请求的阻塞队列也满了，那么后续的进来请求将会遭遇拒绝服务，直到有线程资源可以处理请求为止。</p>
 <p>实践是检验真理的唯一标准 将工作线程设为1，方便测试</p>
@@ -540,7 +540,7 @@ public class AopStudyTest {
 <p>很明显的看到当有两个请求过来时，第二个会阻塞，直到第一个请求完成后才会开始处理，而且执行请求的线程和处理业务的线程是同一个线程。</p>
 <h4 id="web容器异步请求">web容器异步请求</h4>
 <p>有同步请求当然就有异步请求，Servlet 3.0开始支持异步处理请求。在接收到请求之后，<strong>Servlet线程可以将耗时的操作委派给另一个线程来完成</strong>，<strong>自己在不生成响应的情况下返回至容器</strong>，以便能处理另一个请求。此时当前请求的响应将被延后，在异步处理完成后时再对客户端进行响应（异步线程拥有 ServletRequest 和 ServletResponse 对象的引用）。开启异步请求处理之后，Servlet 线程不再是一直处于阻塞状态以等待业务逻辑的处理，而是启动异步线程之后可以立即返回。异步处理的特性可以帮助应用节省容器中的线程。如图所示：</p>
-<p><img src="https://segmentfault.com/img/remote/1460000018791728" alt=""></p>
+<p><img src="1460000018791728.png" alt=""></p>
 <p>  <strong>我们还能发现，<code>实际上这里的异步请求处理对于客户端浏览器来说仍然是同步输出，它并没有提升响应速度，用户是没有感知的</code>，但是异步请求处理解放了服务器端的请求处理线程的使用，处理请求线程并没有卡在业务代码那里等待，当前的业务逻辑被转移给其他线程去处理了，能够让tomcat同时接受更多的请求，从而提升了并发处理请求的能力！</strong></p>
 <p>代码说话</p>
 <pre><code class="language-java">package com.zt.javastudy.async;
@@ -687,10 +687,10 @@ public class HttpAsyncListener implements AsyncListener {
 
 </code></pre>
 <p>测试，同样是发两个请求：</p>
-<p><img src="C:%5CUsers%5Czhengtao%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210924110422530.png" alt="image-20210924110422530"></p>
+<p><img src="image-20210924110422530.png" alt="image-20210924110422530"></p>
 <p>可以很明显的看到，请求线程是同一个，但是第一个请求还没结束第二个请求就已经开始处理了。业务代码则是自定义的线程池处理的。</p>
 <p>搞懂这个之后看公司的代码就很简单了</p>
-<p><img src="C:%5CUsers%5Czhengtao%5CDesktop%5C%E5%AD%A6%E4%B9%A0%5C%E6%B5%81%E7%A8%8B%E5%9B%BE%5C%E5%85%AC%E5%8F%B8easy%E6%A1%86%E6%9E%B6.png" alt=""></p>
+<p><img src="%E5%85%AC%E5%8F%B8easy%E6%A1%86%E6%9E%B6.png" alt=""></p>
 <h3 id="静态方法中使用bean">静态方法中使用bean</h3>
 <p>写一些工具类时，可能会用到其他的bean。第一眼是这样写的</p>
 <pre><code class="language-java">@Component
