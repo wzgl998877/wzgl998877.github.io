@@ -20,29 +20,29 @@
     <meta http-equiv="window-target" content="_top" />
     
     
-    <meta name="description" content="日常问题总结 工作中总是会遇到各种各样的问题，只有总结下来才是一笔财富。 fastjson的一些技巧 在工作中总是遇到给前端的字段需要是下划线的，" />
+    <meta name="description" content="[TOC] 日常问题总结 工作中总是会遇到各种各样的问题，只有总结下来才是一笔财富。 fastjson的一些技巧 在工作中总是遇到给前端的字段需要是下划线的" />
     <meta name="generator" content="Hugo 0.91.2 with theme pure" />
     <title>日常问题总结 - 码农的学习笔记</title>
     
     
-    <link rel="stylesheet" href="https://wzgl998877.github.io/css/style.min.e64d754037c0ee0ec4e20ab1d6f07740ace61729bc03850559b8caa21ae4a597.css">
+    <link rel="stylesheet" href="https://wzgl998877.github.io/css/style.min.a85959a41e7abcc0db1f81f44bd264649303417f91b536e87dcde644340fea6d.css">
     
     <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/9.15.10/styles/github.min.css" async>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css" async>
     <meta property="og:title" content="日常问题总结" />
-<meta property="og:description" content="日常问题总结 工作中总是会遇到各种各样的问题，只有总结下来才是一笔财富。 fastjson的一些技巧 在工作中总是遇到给前端的字段需要是下划线的，" />
+<meta property="og:description" content="[TOC] 日常问题总结 工作中总是会遇到各种各样的问题，只有总结下来才是一笔财富。 fastjson的一些技巧 在工作中总是遇到给前端的字段需要是下划线的" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://wzgl998877.github.io/2022/01/%E6%97%A5%E5%B8%B8%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-01-09T11:24:40+08:00" />
 <meta property="article:modified_time" content="2022-01-09T11:24:40+08:00" />
 
 <meta itemprop="name" content="日常问题总结">
-<meta itemprop="description" content="日常问题总结 工作中总是会遇到各种各样的问题，只有总结下来才是一笔财富。 fastjson的一些技巧 在工作中总是遇到给前端的字段需要是下划线的，"><meta itemprop="datePublished" content="2022-01-09T11:24:40+08:00" />
+<meta itemprop="description" content="[TOC] 日常问题总结 工作中总是会遇到各种各样的问题，只有总结下来才是一笔财富。 fastjson的一些技巧 在工作中总是遇到给前端的字段需要是下划线的"><meta itemprop="datePublished" content="2022-01-09T11:24:40+08:00" />
 <meta itemprop="dateModified" content="2022-01-09T11:24:40+08:00" />
-<meta itemprop="wordCount" content="6169">
+<meta itemprop="wordCount" content="8413">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="日常问题总结"/>
-<meta name="twitter:description" content="日常问题总结 工作中总是会遇到各种各样的问题，只有总结下来才是一笔财富。 fastjson的一些技巧 在工作中总是遇到给前端的字段需要是下划线的，"/>
+<meta name="twitter:description" content="[TOC] 日常问题总结 工作中总是会遇到各种各样的问题，只有总结下来才是一笔财富。 fastjson的一些技巧 在工作中总是遇到给前端的字段需要是下划线的"/>
 
     <!--[if lte IE 9]>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -316,30 +316,31 @@
   <a class="article-category-link" href="/categories/%E6%97%A5%E5%B8%B8%E6%80%BB%E7%BB%93/"> 日常总结 </a>
 </span>
 
-		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 6169字</span>
-		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 13分 </span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 8413字</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 17分 </span>
       </div>
     </div>
     <div class="article-entry marked-body js-toc-content" itemprop="articleBody">
-      <h1 id="日常问题总结">日常问题总结</h1>
+      <p>[TOC]</p>
+<h1 id="日常问题总结">日常问题总结</h1>
 <p>工作中总是会遇到各种各样的问题，只有总结下来才是一笔财富。</p>
 <h3 id="fastjson的一些技巧">fastjson的一些技巧</h3>
 <p>在工作中总是遇到给前端的字段需要是下划线的，这时候可以通过全局配置来实现。</p>
 <p><strong>添加这个配置bean后，所有的http请求都会进行转换，即会将返回参数改为下划线</strong></p>
-<pre><code class="language-java">    @Bean
-    public HttpMessageConverters fastJsonHttpMessageConverters(){
-        FastJsonHttpMessageConverter converter = new FastJsonHttpMessageConverter();
-        FastJsonConfig fastJsonConfig = new FastJsonConfig();
-        // 格式化输出，也就是换行等处理
-        fastJsonConfig.setSerializerFeatures(SerializerFeature.PrettyFormat);
-        SerializeConfig config = new SerializeConfig();
-        // 转为下划线
-        config.propertyNamingStrategy = PropertyNamingStrategy.SnakeCase;
-        fastJsonConfig.setSerializeConfig(config);
-        converter.setFastJsonConfig(fastJsonConfig);
-        return new HttpMessageConverters(converter);
-    }
-    CamelCase策略，Java对象属性：personId，序列化后属性：persionId
+<pre><code class="language-java">@Bean
+public HttpMessageConverters fastJsonHttpMessageConverters(){
+    FastJsonHttpMessageConverter converter = new FastJsonHttpMessageConverter();
+    FastJsonConfig fastJsonConfig = new FastJsonConfig();
+    // 格式化输出，也就是换行等处理
+    fastJsonConfig.setSerializerFeatures(SerializerFeature.PrettyFormat);
+    SerializeConfig config = new SerializeConfig();
+    // 转为下划线
+    config.propertyNamingStrategy = PropertyNamingStrategy.SnakeCase;
+    fastJsonConfig.setSerializeConfig(config);
+    converter.setFastJsonConfig(fastJsonConfig);
+    return new HttpMessageConverters(converter);
+}
+CamelCase策略，Java对象属性：personId，序列化后属性：persionId
 
     PascalCase策略，Java对象属性：personId，序列化后属性：PersonId
 
@@ -779,7 +780,32 @@ public class ConditionalTest {
 }
 
 </code></pre>
-<p>其中 name 就是配置项的名称，havingValue  就是匹配的值，在这个代码中只有test.enable=true,才会创建bean。</p>
+<p>注解含义详解</p>
+<pre><code class="language-java">@Retention(RetentionPolicy.RUNTIME)
+@Target({ ElementType.TYPE, ElementType.METHOD })
+@Documented
+@Conditional(OnPropertyCondition.class)
+public @interface ConditionalOnProperty {
+
+	// 数组，获取对应property名称的值，与name不可同时使用
+	String[] value() default {};
+
+	// 配置属性名称的前缀，比如spring.http.encoding
+	String prefix() default &quot;&quot;;
+
+	// 数组，配置属性完整名称或部分名称
+	// 可与prefix组合使用，组成完整的配置属性名称，与value不可同时使用
+	String[] name() default {};
+
+	// 可与name组合使用，比较获取到的属性值与havingValue给定的值是否相同，相同才加载配置
+	String havingValue() default &quot;&quot;;
+
+	// 缺少该配置属性时是否可以加载。如果为true，没有该配置属性时也会正常加载；反之则不会生效
+	boolean matchIfMissing() default false;
+
+}
+</code></pre>
+<p>因此在这个代码中只有test.enable=true,才会创建bean。</p>
 <h3 id="分布式id解决方案">分布式id解决方案</h3>
 <h4 id="uuid">uuid</h4>
 <p>​	UUID(Universally Unique Identifier)的标准型式包含32个16进制数字，以连字号分为五段，形式为8-4-4-4-12的36个字符，示例：<code>550e8400-e29b-41d4-a716-446655440000</code></p>
@@ -1142,6 +1168,257 @@ public class DataSourceAspect {
 <li>重写 <code>determineCurrentLookupKey </code>方法来更改数据源（到此，其实已经完成了动态数据源的功能，调用set方法即可动态的更改数据源）</li>
 <li>自定义注解，并创建一个切面来调用set方法动态的更改数据源</li>
 </ul>
+<h3 id="公司的jwt公共包">公司的jwt公共包</h3>
+<p>Cookie、Session、Token、JWT（JSON Web Token） 这些都是登录认证中经常用到的东西，</p>
+<p>具体链接可见https://juejin.cn/post/6844904034181070861</p>
+<h4 id="jwt消息构成">JWT消息构成</h4>
+<p>一个token分3部分，按顺序:</p>
+<pre><code>头部（header): 一般为固定的，加密方式等
+载荷（payload): 是一个 JSON 对象，用来存放实际需要传递的数据
+签证（signature): 对前两部分进行签名，防止数据篡改
+</code></pre>
+<pre><code>其中载荷（payload)中JWT 规定了7个官方字段
+iss (issuer)：签发人
+ exp (expiration time)：过期时间，这个很重要
+ sub (subject)：主题
+ aud (audience)：受众
+ nbf (Not Before)：生效时间
+ iat (Issued At)：签发时间
+ jti (JWT ID)：编号
+</code></pre>
+<ul>
+<li>
+<p>对象为一个很长的字符串，字符之间通过&quot;.&ldquo;分隔符分为三个子串。注意JWT对象为一个长字串，各字串之间也没有换行符，一般格式为：xxxxx.yyyyy.zzzzz 。 例如 ：</p>
+</li>
+<li>
+<pre><code>yJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+</code></pre>
+</li>
+</ul>
+<p><img src="xrvp4pjty8.png" alt=""></p>
+<h4 id="jwt的认证流程图">JWT的认证流程图</h4>
+<p><img src="8qwls7hxns.png" alt=""></p>
+<pre><code>流程说明：
+ 1，浏览器发起请求登陆，携带用户名和密码；
+ 2，服务端验证身份，根据算法，将用户标识符打包生成 token,
+ 3，服务器返回JWT信息给浏览器，JWT不包含敏感信息；
+ 4，浏览器发起请求获取用户资料，把刚刚拿到的 token一起发送给服务器；
+ 5，服务器发现数据中有 token，验明正身；
+ 6，服务器返回该用户的用户资料；
+</code></pre>
+<h4 id="公司代码应用">公司代码应用</h4>
+<p>熟悉之前两部分后，只要抱着是怎样加密json、实现过期时间、单点登录去看即可代码即可，整体流程如下</p>
+<p><img src="%E5%85%AC%E5%8F%B8jwt%E6%B5%81%E7%A8%8B%E5%9B%BE.png" alt=""></p>
+<h5 id="登录">登录</h5>
+<pre><code class="language-java">@Service(LoginReq.COMMAND_SERVICE_NAME)
+public class LoginCmd extends BaseCmdService&lt;LoginReq&gt; {
+    private static final String JWT_HEADER = &quot;{ \&quot;alg\&quot;: \&quot;SM2SM3\&quot;, \&quot;typ\&quot;: \&quot;JWT\&quot;, \&quot;ver\&quot;: \&quot;1\&quot;}&quot;;
+    private static final String PLAT_CODE = &quot;MERCH&quot;;
+
+    @Autowired
+    private StaffService merchUserService;
+    @Autowired
+    private JwtSessionUtils jwtSessionUtils;
+    @Autowired
+    private IMonitorService monitorService;
+
+    @Value(&quot;${jlpay.framework.jwt.expire.plat:86400}&quot;)
+    private int jwtWxExpireSeconds;
+
+    /**
+     * 执行命令将请求参数传给实现类
+     *
+     * @param req 请求参数
+     * @return
+     * @throws Exception
+     */
+    @Override
+    protected BaseCmdResp invoke(LoginReq req) throws Exception {
+        // 登录逻辑
+
+        //生成JWT ACCESS TOKEN
+        JwtHeaderInfo jwtHeaderInfo = JSON.parseObject(JWT_HEADER, JwtHeaderInfo.class);
+        jwtHeaderInfo.setPlat(plat);
+        JwtPayloadInfo payloadInfo = buildJwtPayloadInfo(req, resp);
+        String jwtToken = jwtSessionUtils.getAccessToken(jwtHeaderInfo, payloadInfo, jwtWxExpireSeconds, TimeUnit.SECONDS, monitorService);
+        resp.setAccessToken(jwtToken);
+
+        // 逻辑处理
+
+        //返回
+        return resp;
+    }
+    
+	/**
+     * 构造需要传递的数据
+     * @param req
+     * @param resp
+     * @return
+     */
+    private JwtPayloadInfo buildJwtPayloadInfo(LoginReq req, LoginResp resp) {
+        JwtPayloadInfo payloadInfo = new JwtPayloadInfo();
+        payloadInfo.setUid(resp.getUserId());
+        payloadInfo.setUname(resp.getUserName());
+        payloadInfo.setUtype(resp.getUserType());
+        payloadInfo.setCid(resp.getMerchId());
+        payloadInfo.setMno(resp.getShopId());
+        payloadInfo.setMname(resp.getShopName());
+        payloadInfo.setAud(resp.getMerchType());
+        payloadInfo.setNbf(DateEasyUtil.format(new Date(), DateEasyUtil.NEW_FORMAT));
+        return payloadInfo;
+    }
+}
+
+</code></pre>
+<p>其中主要代码就在getAccessToken 这个方法内</p>
+<pre><code class="language-java">/**
+     * 按默认封装的header,payload生成JWT Token
+     *
+     * @param headerInfo
+     * @param payloadInfo
+     * @param expireTime
+     * @param timeUnit
+     * @return
+     */
+    public String getAccessToken(JwtHeaderInfo headerInfo, JwtPayloadInfo payloadInfo, int expireTime, TimeUnit timeUnit, IMonitorService monitorService) {
+        getTokenPreProcess(headerInfo, payloadInfo);
+
+        JSONObject headerJson = JSON.parseObject(JSON.toJSONString(headerInfo));
+        JSONObject payloadJson = JSON.parseObject(JSON.toJSONString(payloadInfo));
+		// 生成token，并添加exp失效时间参数
+        String accessToken = jwtHelper.generateToken(headerJson, payloadJson, expireTime, timeUnit);
+        // 放redis
+        setJwtCacheInfo(headerInfo, payloadInfo, monitorService);
+
+        return accessToken;
+    }
+
+</code></pre>
+<p>生成token，就是使用国密算法加密得到token，放入redis中</p>
+<pre><code class="language-java"> /**
+     * 获取token前做的前置操作：设置签发时间，设置jti编号
+     *
+     * @param headerInfo
+     * @param payloadInfo
+     */
+    private void getTokenPreProcess(JwtHeaderInfo headerInfo, JwtPayloadInfo payloadInfo) {
+        String deviceId = payloadInfo.getDeviceId();
+        // 统一签发时间为当前执行时间
+        String currentDate = DateUtil.getLongDateString(new Date());
+        payloadInfo.setIat(currentDate);
+        // 有设备号jti存设备号，否则取随机数
+        if (StringUtils.isNotEmpty(deviceId)) {
+            payloadInfo.setJti(deviceId);
+        } else {
+            payloadInfo.setJti(generateJti(JTI_BIT));
+        }
+        // 检查入参
+        checkRequest(headerInfo, payloadInfo);
+    }
+     /**
+     * 设置JwtCacheInfo
+     *
+     * @param headerInfo
+     * @param payloadInfo
+     * @param monitorService
+     */
+    private void setJwtCacheInfo(JwtHeaderInfo headerInfo, JwtPayloadInfo payloadInfo, IMonitorService monitorService) {
+        String loginJwtKey = getLoginJwtKey(headerInfo.getPlat(), payloadInfo.getUid());
+        JwtCacheInfo jwtCacheInfo = new JwtCacheInfo();
+        jwtCacheInfo.setIat(payloadInfo.getIat());
+        jwtCacheInfo.setJti(payloadInfo.getJti());
+        // 存这个redis并没有加入失效时间是否可取？
+        boolean setJwtCacheResult = persistService.setString(loginJwtKey, JSON.toJSONString(jwtCacheInfo));
+        if (monitorService != null &amp;&amp; !setJwtCacheResult) {
+            monitorService.monitor(&quot;写入JWT失败, 请排查Xpipe-redis-write节点是否故障&quot;);
+        }
+    }
+</code></pre>
+<p>保证了，key为前缀+用户id，value为 签发时间(iat)，唯一编号(jti)组成</p>
+<h5 id="校验jwt">校验jwt</h5>
+<p>主要为verifyJwtAccessToken这个方法</p>
+<pre><code class="language-java">public JwtInfo verifyJwtAccessToken(String accessToken, IMonitorService monitorService, IJwtCacheCheckService cacheCheckService) throws JwtException {
+        JwtInfo jwtInfo = new JwtInfo();
+        try {
+            // 校验jwt
+            DecodedJWT jwtDecoded = jwtHelper.verify(accessToken);
+            JwtHeaderInfo jwtHeaderInfo = JSON.parseObject(jwtHelper.getHeader(jwtDecoded), JwtHeaderInfo.class);
+            JwtPayloadInfo payloadInfo = JSON.parseObject(jwtHelper.getPayloadClaims(jwtDecoded), JwtPayloadInfo.class);
+            jwtInfo.setHeaderInfo(jwtHeaderInfo);
+            jwtInfo.setPayloadInfo(payloadInfo);
+
+            String loginJwtKey = getLoginJwtKey(jwtHeaderInfo.getPlat(), payloadInfo.getUid());
+            String jwtCacheStr = persistService.getString(loginJwtKey);
+            JwtCacheInfo jwtCacheInfo = JSON.parseObject(jwtCacheStr, JwtCacheInfo.class);
+            // 获取到jwtCacheInfo，则校验，获取不到则不校验并告警(降级处理)
+            if (jwtCacheInfo == null) {
+                monitorService.monitor(&quot;读取JWT失败, 请排查Xpipe-redis-read节点是否故障&quot;);
+                return jwtInfo;
+            }
+
+            //jwtCacheInfo及JWT是否过期
+            cacheCheckService.check(jwtCacheInfo, payloadInfo, iatDiff);
+        } catch (JwtException e) {
+            log.warn(&quot;JWT缓存时间校验不通过&quot;, e.getMessage());
+            throw new JwtException(JwtExceptionCode.SESSION_KICK_OUT);
+        } catch (JWTVerificationException e) {
+            log.warn(&quot;JWT校验错误&quot;, e);
+            throw new JwtException(JwtExceptionCode.SESSION_TIME_OUT);
+        } catch (Exception e) {
+            log.error(&quot;未知错误&quot;, e);
+            throw new JwtException(JwtExceptionCode.SESSION_TIME_OUT);
+        }
+        return jwtInfo;
+    }
+</code></pre>
+<p>这里主要实现，如果token过期，则踢出登录</p>
+<pre><code class="language-java">/**
+校验jwt是否合法
+*/
+ public DecodedJWT verify(DecodedJWT jwt) throws JWTVerificationException {
+     	// 验签校验
+        verifyAlgorithm(jwt, algorithm);
+        algorithm.verify(jwt);
+     	// 校验参数，主要校验过期时间，实现踢出登录
+        verifyClaims(jwt, claims);
+        return jwt;
+    }
+</code></pre>
+<p>这里主要实现单点登录</p>
+<pre><code class="language-java">/**
+     * 默认校验规则
+     *
+     * @param jwtCacheInfo
+     * @param payloadInfo
+     * @param diff         签发时间iat允许的误差，单位秒
+     * @throws JwtException
+     */
+@Override
+public void check(JwtCacheInfo jwtCacheInfo, JwtPayloadInfo payloadInfo, int diff) throws JwtException {
+
+    Date cacheIat = DateUtil.parseDateLongFormat(jwtCacheInfo.getIat());
+    if (cacheIat == null) {
+        throw new JwtException(&quot;iat not in xpipe-redis&quot;);
+    }
+	// 目前的时间
+    Date payloadIat = DateUtil.parseDateLongFormat(payloadInfo.getIat());
+    if (payloadIat == null) {
+        throw new JwtException(&quot;iat not in jwt payload&quot;);
+    }
+
+    // 通过uid和plat取用户最后一次登录生成JWT TOKEN的生效时间(多机房通过XPIPE同步)，
+    // 如果当前TOKEN生效时间早于取到的时间则判断为失效，如果没取到最后一次生效时间，则认为是TOKEN是有效的
+    if (payloadIat.before(cacheIat)) {
+        throw new JwtException(&quot;iat(payload) is before iat(xpipe-redis)&quot;);
+    }
+
+    // 如果当前TOKEN的签发时间早于或者晚于XPIPE中取到的签发时间3秒(可配置)以内，则jti编号必须一致才认为TOKEN是有效的
+    if (cacheIat.before(DateUtil.addSeconds(payloadIat, diff)) &amp;&amp; cacheIat.after(DateUtil.addSeconds(payloadIat, -diff)) &amp;&amp; !payloadInfo.getJti().equals(jwtCacheInfo.getJti())) {
+        throw new JwtException(&quot;jti(payload) and jti(xpipe-redis) must be same&quot;);
+    }
+
+}
+</code></pre>
 
     </div>
     <div class="article-footer">
