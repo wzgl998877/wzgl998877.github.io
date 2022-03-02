@@ -25,7 +25,7 @@
     <title>Mysql总结 - 码农的学习笔记</title>
     
     
-    <link rel="stylesheet" href="https://wzgl998877.github.io/css/style.min.a85959a41e7abcc0db1f81f44bd264649303417f91b536e87dcde644340fea6d.css">
+    <link rel="stylesheet" href="https://wzgl998877.github.io/css/style.min.e64d754037c0ee0ec4e20ab1d6f07740ace61729bc03850559b8caa21ae4a597.css">
     
     <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/9.15.10/styles/github.min.css" async>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css" async>
@@ -39,7 +39,7 @@
 <meta itemprop="name" content="Mysql总结">
 <meta itemprop="description" content="[TOC] 这篇文章主要对Mysql是怎样运行的进行提炼总结以及补充 MySQL 的存储引擎 常用的存储引擎有：ARCHIVE、BLACKHOLE、InnoDB、M"><meta itemprop="datePublished" content="2022-02-28T23:43:20+08:00" />
 <meta itemprop="dateModified" content="2022-02-28T23:43:20+08:00" />
-<meta itemprop="wordCount" content="6607">
+<meta itemprop="wordCount" content="22078">
 <meta itemprop="keywords" content="mysql," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Mysql总结"/>
 <meta name="twitter:description" content="[TOC] 这篇文章主要对Mysql是怎样运行的进行提炼总结以及补充 MySQL 的存储引擎 常用的存储引擎有：ARCHIVE、BLACKHOLE、InnoDB、M"/>
@@ -147,6 +147,7 @@
     <h3 class="widget-title"> 分类</h3>
     <div class="widget-body">
         <ul class="category-list">
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/git/" class="category-list-link">git</a><span class="category-list-count">1</span></li>
             <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/java/" class="category-list-link">java</a><span class="category-list-count">3</span></li>
             <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/" class="category-list-link">中间件</a><span class="category-list-count">1</span></li>
             <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E5%B8%B8%E7%94%A8%E6%A1%86%E6%9E%B6/" class="category-list-link">常用框架</a><span class="category-list-count">3</span></li>
@@ -227,6 +228,16 @@
             <li>
                 <div class="item-inner">
                     <p class="item-title">
+                        <a href="https://wzgl998877.github.io/2022/03/git%E7%9B%B8%E5%85%B3/" class="title">git相关</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2022-03-02 20:03:24 &#43;0800 CST" itemprop="datePublished">2022-03-02</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
                         <a href="https://wzgl998877.github.io/2022/02/mysql%E6%80%BB%E7%BB%93/" class="title">Mysql总结</a>
                     </p>
                     <p class="item-date">
@@ -258,16 +269,6 @@
                 <div class="item-inner">
                     <p class="item-title">
                         <a href="https://wzgl998877.github.io/2022/01/java-%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" class="title">Java 并发编程</a>
-                    </p>
-                    <p class="item-date">
-                        <time datetime="2022-01-09 11:24:40 &#43;0800 CST" itemprop="datePublished">2022-01-09</time>
-                    </p>
-                </div>
-            </li>
-            <li>
-                <div class="item-inner">
-                    <p class="item-title">
-                        <a href="https://wzgl998877.github.io/2022/01/java-%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3%E5%AD%A6%E4%B9%A0/" class="title">Java 编程思想学习</a>
                     </p>
                     <p class="item-date">
                         <time datetime="2022-01-09 11:24:40 &#43;0800 CST" itemprop="datePublished">2022-01-09</time>
@@ -320,8 +321,8 @@
     <a class="article-tag-link" href="/tags/mysql/"> mysql </a>
   </span>
 
-		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 6607字</span>
-		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 14分 </span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 22078字</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 45分 </span>
       </div>
     </div>
     <div class="article-entry marked-body js-toc-content" itemprop="articleBody">
@@ -705,6 +706,488 @@ User Records ：真实存储我们插入的记录的部分，大小不固定。<
 <li><strong>为保证从内存中同步到磁盘的页的完整性，在页的首部和尾部都会存储页中数据的校验和和页面最后修改时</strong>
 <strong>对应的LSN 值，如果首部和尾部的校验和和LSN 值校验不成功的话，就说明同步过程出现了问题</strong>。</li>
 </ol>
+<h3 id="b树索引">B+树索引</h3>
+<p>各个数据页可以组成一个<strong>双向链表</strong>，而每个数据页中的记录<strong>会按照主键值从小到大的顺序组成一个单向链表</strong>，每个数据页都会为存储在它里边儿的记录生成一个页目录，<strong>在通过主键查找某条记录的时候可以在页目录中使用二分法快速定位到对应的槽，然后再遍历该槽对应分组中的记录即可快速找到指定的记录</strong>。页和记录的关系示意图如下：</p>
+<p><img src="image-20220112163512527.png" alt="image-20220112163512527"></p>
+<p>新建一个index_demo 表，该表有2个INT 类型的列，1个CHAR(1) 类型的列，而且我们规定了c1 列为主键，这个表使用Compact 行格式来实际存储记录的。为了我们理解上的方便，我们简化了一下index_demo 表的行格式示
+意图：</p>
+<p><img src="image-20220112165103356.png" alt="image-20220112165103356"></p>
+<p>把一些记录放到页里边的示意图就是：</p>
+<p><img src="image-20220112165138344.png" alt="image-20220112165138344"></p>
+<h4 id="一个简单的索引方案">一个简单的索引方案</h4>
+<p>​	<strong>我们在根据某个搜索条件查找一些记录时为什么要遍历所有的数据页呢</strong>？<code>因为各个页中的记录并没有规律，我们并不知道我们的搜索条件匹配哪些页中的记录，所以不得不依次遍历所有的数据页</code></p>
+<p>​	所以如果我们想快速的定位到需要查找的记录在哪些数据页中该咋办？还记得我们<strong>为根据主键值快速定位一条记录在页中的位置而设立的页目录</strong>么？我们也可以想办法为快速定位记录所在的数据页而建立一个别的目录，建这个目录必须完成下边这些事儿：</p>
+<ul>
+<li>
+<p>下一个数据页中用户记录的主键值必须大于上一个页中用户记录的主键值。</p>
+<p>我们这里需要做一个假设：假设我们的每个数据页最多能存放3条记录（实际上一个数据页非常大，可以存放下好多记录）。有了这个假设之后我们向index_demo 表插入3条记录：</p>
+<pre><code class="language-sql">mysql&gt; INSERT INTO index_demo VALUES(1, 4, 'u'), (3, 9, 'd'), (5, 3, 'y');
+</code></pre>
+<p>那么这些记录已经按照主键值的大小串联成一个单向链表了，如图所示：</p>
+</li>
+</ul>
+<p><img src="image-20220112165538703.png" alt="image-20220112165538703"></p>
+<p>此时我们再来插入一条记录:</p>
+<pre><code class="language-sql">INSERT INTO index_demo VALUES(4, 4, 'a');
+</code></pre>
+<p>因为页10 最多只能放3条记录，所以我们不得不再分配<strong>一个新页</strong>：</p>
+<p><img src="image-20220112165642310.png" alt="image-20220112165642310"><strong>新分配的数据页编号可能并不是连续的，也就是说我们使用的这些页在存储空间里可能并不挨着</strong>。它们只是通过维护着上一个页和下一个页的编号而建立了链表关系</p>
+<p>页10 中用户记录最大的主键值是5 ，而页28 中有一条记录的主键值是4 ，因为5&gt;4 ，所以这就不符合下一个数据页中用户记录的主键值必须大于上一个页中用户记录的主键值的要求，所以<strong>在插入主键值为4 的记录的时候需要伴随着一次记录移动，也就是把主键值为5 的记录移动到页28 中，然后再把主键值为4 的记录插入到页10 中</strong>，这个过程的示意图如下:</p>
+<p><img src="image-20220112170056420.png" alt="image-20220112170056420"></p>
+<p>这个过程表明了在对页中的记录进行增删改操作的过程中，我们必须通过一些诸如记录移动的操作来始终保证这个状态一直成立：<strong>下一个数据页中用户记录的主键值必须大于上一个页中用户记录的主键值</strong>。这个过程我们也可以称为<code>页分裂</code>。</p>
+<ul>
+<li>
+<p>给所有的页建立一个目录项</p>
+<p>由于<strong>数据页的编号可能并不是连续的</strong>，所以在向index_demo 表中插入许多条记录后，可能是这样的效果：</p>
+</li>
+</ul>
+<p><img src="image-20220112170338739.png" alt="image-20220112170338739"></p>
+<p>​	因为这些16KB 的页在物理存储上可能并不挨着，所以如果想从这么多页中根据主键值快速定位某些记录所在的页，<strong>我们需要给它们做个目录，每个页对应一个目录项</strong>，每个目录项包括下边两个部分：</p>
+<ul>
+<li>页的用户记录中最小的主键值，我们用key 来表示。</li>
+<li>页号，我们用page_no 表示。</li>
+</ul>
+<p>所以我们为上边几个页做好的目录就像这样子：</p>
+<p><img src="image-20220112170501286.png" alt="image-20220112170501286"></p>
+<p>以页28 为例，它对应目录项2 ，这个目录项中包含着该页的页号28 以及该页中用户记录的最小主键值5 。我们只需要把几个目录项在物理存储器上连续存储，比如把他们放到一个数组里，就可以实现根据主键值快速查找某条记录的功能了。比方说我们想找主键值为20 的记录，具体查找过程分两步：</p>
+<ul>
+<li>先从目录项中根据二分法快速确定出主键值为20 的记录在目录项3 中（因为 12 &lt; 20 &lt; 209 ），它对应的页是页9 。</li>
+<li>再根据前边说的<a href="#%E5%9C%A8%E4%B8%80%E4%B8%AA%E9%A1%B5%E4%B8%AD%E7%9A%84%E6%9F%A5%E6%89%BE">在页中查找记录</a>的方式去页9 中定位具体的记录。</li>
+</ul>
+<p>至此，针对数据页做的简易目录就搞定了。不过忘了说了，这个<strong>目录</strong>有一个别名，称为<strong>索引</strong></p>
+<h4 id="innodb中的索引方案">InnoDB中的索引方案</h4>
+<p>上边之所以称为一个简易的<strong>索引方案</strong>，是因为我们为了在根据主键值进行查找时使用二分法快速定位具体的目录项而假设所有目录项都可以在物理存储器上连续存储，但是这样做有几个问题：</p>
+<ul>
+<li>InnoDB 是使用<strong>页来作为管理存储空间的基本单位</strong>，也就是最多能保证16KB 的连续存储空间，而随着表中记录数量的增多，<strong>需要非常大的连续的存储空间才能把所有的目录项都放下，这对记录数量非常多的表是不现实的</strong>。</li>
+<li>我们时常会对记录进行增删，<strong>假设我们把页28 中的记录都删除了</strong>， 页28 也就没有存在的必要了，<strong>那意味着目录项2 也就没有存在的必要了，这就需要把目录项2 后的目录项都向前移动一下</strong>，这种牵一发而动全身的设计不是什么好主意～</li>
+</ul>
+<p>所以，设计InnoDB 的大叔们需要一种可以灵活管理所有目录项的方式。他们灵光乍现，忽然发现这些<strong>目录项其实长得跟我们的用户记录差不多</strong>，只不过目录项中的两个列是主键和页号而已，所以他们复用了之前存储用户记录的数据页来存储目录项，为了和用户记录做一下区分，我们把这些用来表示目录项的记录称为目录项记录。那InnoDB 怎么区分一条记录是普通的用户记录还是目录项记录呢？别忘了记录头信息里的
+record_type 属性，它的各个取值代表的意思如下：</p>
+<ul>
+<li>0 ：普通的用户记录</li>
+<li>1 ：<strong>目录项记录</strong></li>
+<li>2 ：最小记录</li>
+<li>3 ：最大记录
+哈哈，原来这个值为1 的record_type 是这个意思呀，我们把前边使用到的目录项放到数据页中的样子就是这样：</li>
+</ul>
+<p><img src="image-20220112171623872.png" alt="image-20220112171623872"></p>
+<p>从图中可以看出来，我们<strong>新分配了一个编号为30 的页来专门存储目录项记录</strong>。这里再次强调一遍目录项记录和普通的用户记录的不同点：</p>
+<ul>
+<li>目录项记录的record_type 值是1，而普通用户记录的record_type 值是0。</li>
+<li>目录项记录只有主键值和页的编号两个列，而普通的用户记录的列是用户自己定义的，可能包含很多列，另外还有InnoDB 自己添加的隐藏列。</li>
+<li>还记得我们之前在唠叨记录头信息的时候说过一个叫<a href="#%E8%AE%B0%E5%BD%95%E5%A4%B4%E4%BF%A1%E6%81%AF%E7%9A%84%E7%A7%98%E5%AF%86">min_rec_mask</a> 的属性么，只有在存储目录项记录的页中的主键值最小的目录项记录的min_rec_mask 值为1 ，其他别的记录的min_rec_mask 值都是0 。</li>
+</ul>
+<p>除了上述几点外，这两者就没啥差别了，它们用的是一样的数据页，页的组成结构也是一样一样的（就是我们前边介绍过的7个部分），都会为主键值生成Page Directory （页目录），从而在按照主键值进行查找时可以使用二分法来加快查询速度。现在以查找主键为20 的记录为例，根据某个主键值去查找记录的步骤就可以大致拆分成下边两步:</p>
+<ul>
+<li>先到存储<strong>目录项记录</strong>的页，也就是页30 中通过二分法快速定位到对应目录项，因为12 &lt; 20 &lt; 209 ，所以定位到对应的记录所在的页就是页9 。</li>
+<li>再到存储<strong>用户记录</strong>的页9 中根据二分法快速定位到主键值为20 的用户记录</li>
+</ul>
+<p>虽然说目录项记录中只存储主键值和对应的页号，比用户记录需要的存储空间小多了，但是不论怎么说一个页只有16KB 大小，能存放的目录项记录也是有限的，那如果表中的数据太多，以至于一个数据页不足以存放所有的目录项记录，该咋办呢？</p>
+<p>当然是再多整一个存储目录项记录的页喽～ 为了大家更好的理解新分配一个目录项记录页的过程，我们假设一个存储目录项记录的页最多只能存放4条目录项记录，所以如果此时我们再向上图中插入一条主键值为320 的用户记录的话，那就需要分配一个新的存储目录项记录的页喽：</p>
+<p><img src="image-20220112172433014.png" alt="image-20220112172433014"></p>
+<p>从图中可以看出，我们插入了一条主键值为320 的用户记录之后需要两个新的数据页：</p>
+<ul>
+<li>为存储该用户记录而新生成了页31 。</li>
+<li>因为原先存储目录项记录的页30 的容量已满（我们前边假设只能存储4条目录项记录），所以不得不需要一个新的页32 来存放页31 对应的目录项。</li>
+</ul>
+<p>现在因为存储目录项记录的页不止一个，所以如果我们想根据主键值查找一条用户记录大致需要3个步骤，以查找主键值为20 的记录为例：</p>
+<ol>
+<li>确定目录项记录页
+我们现在的存储目录项记录的页有两个，即页30 和页32 ，又因为页30 表示的目录项的主键值的范围是[1, 320) ， 页32 表示的目录项的主键值不小于320 ，所以主键值为20 的记录对应的目录项记录在页30中。</li>
+<li>通过目录项记录页确定用户记录真实所在的页。</li>
+<li>在真实存储用户记录的页中定位到具体的记录。</li>
+</ol>
+<p>那么问题来了，在这个查询步骤的第1步中我们需要<strong>定位存储目录项记录的页</strong>，但是这些页在存储空间中也可能不挨着，如果我们表中的数据非常多则会产生很多<strong>存储目录项记录的页</strong>，那我们怎么根据主键值快速定位一个存储目录项记录的页呢？其实也简单，<strong>为这些存储目录项记录的页再生成一个更高级的目录，就像是一个多级目录一样，大目录里嵌套小目录，小目录里才是实际的数据</strong>，所以现在各个页的示意图就是这样子</p>
+<p><img src="image-20220112172841839.png" alt="image-20220112172841839"></p>
+<p>如图，我们生成了一个存储更高级目录项的页33 ，这个页中的两条记录分别代表页30 和页32 ，如果用户记录的主键值在[1, 320) 之间，则到页30 中查找更详细的目录项记录，如果主键值不小于320 的话，就到页32中查找更详细的目录项记录。随着表中记录的增加，这个目录的层级会继续增加，如果简化一下，那么我们可以用下边这个图来描述它:</p>
+<p><img src="image-20220112173054335.png" alt="image-20220112173054335"></p>
+<p><strong>这他妈的就是B+树了！！！</strong></p>
+<h4 id="聚簇索引">聚簇索引</h4>
+<p>我们上边介绍的B+ 树本身就是一个目录，或者说本身就是一个<strong>索引</strong>。它有两个特点：</p>
+<ol>
+<li>使用记录主键值的大小进行记录和页的排序，这包括三个方面的含义：</li>
+</ol>
+<ul>
+<li>页内的记录是按照主键的大小顺序排成一个单向链表。</li>
+<li>各个存放用户记录的页也是根据页中用户记录的主键大小顺序排成一个双向链表。</li>
+<li>存放目录项记录的页分为不同的层次，在同一层次中的页也是根据页中目录项记录的主键大小顺序排成一个双向链表。</li>
+</ul>
+<ol start="2">
+<li>B+ 树的叶子节点存储的是完整的用户记录。
+所谓完整的用户记录，就是指这个记录中存储了所有列的值（包括隐藏列）。</li>
+</ol>
+<p><strong>我们把具有这两种特性的B+ 树称为聚簇索引</strong>，所有完整的用户记录都存放在这个<strong>聚簇索引的叶子节点</strong>处。这种聚簇索引并不需要我们在MySQL 语句中显式的使用INDEX 语句去创建（后边会介绍索引相关的语句），InnoDB 存储引擎会<strong>自动的为我们创建聚簇索引</strong>。另外有趣的一点是，在InnoDB 存储引擎中， <strong>聚簇索引就是数据的存储方式（所有的用户记录都存储在了叶子节点），也就是所谓的索引即数据，数据即索引</strong>。</p>
+<h4 id="二级索引">二级索引</h4>
+<p>​	大家有木有发现，上边介绍的<strong>聚簇索引</strong>只能在<strong>搜索条件是主键值时</strong>才能发挥作用，因为B+ 树中的数据都是按照主键进行排序的。那如果我们想以别的列作为搜索条件该咋办呢？难道只能从头到尾沿着链表依次遍历记录么？不，我们可以<strong>多建几棵B+ 树</strong>，不同的B+ 树中的数据采用不同的排序规则。比方说我们用c2 列的大小作为数据页、页中记录的排序规则，再建一棵B+ 树，效果如下图所示：</p>
+<p><img src="image-20220112195520555.png" alt="image-20220112195520555"></p>
+<p>这个B+ 树与上边介绍的聚簇索引有几处不同：</p>
+<ul>
+<li>使用记录c2 列的大小进行记录和页的排序，这包括三个方面的含义：
+<ul>
+<li>页内的记录是按照<strong>c2 列的大小</strong>顺序排成一个单向链表。</li>
+<li>各个存放用户记录的页也是根据页中记录的<strong>c2 列大小</strong>顺序排成一个双向链表。</li>
+<li>存放目录项记录的页分为不同的层次，在同一层次中的页也是根据页中目录项记录的<strong>c2 列大小顺序</strong>排成一个双向链表。</li>
+</ul>
+</li>
+<li>B+ 树的叶子节点存储的并不是完整的用户记录，而只是c2列+主键这两个列的值。</li>
+<li>目录项记录中不再是主键+页号的搭配，而变成了c2列+页号的搭配。</li>
+</ul>
+<p>所以如果我们现在想通过c2 列的值查找某些记录的话就可以使用我们刚刚建好的这个B+ 树了。以查找c2 列的值为4 的记录为例，查找过程如下：</p>
+<ol>
+<li>确定目录项记录页根据根页面，也就是页44 ，可以快速定位到目录项记录所在的页为页42 （因为2 &lt; 4 &lt; 9 ）。</li>
+<li>通过目录项记录页确定用户记录真实所在的页。
+在页42 中可以快速定位到实际存储用户记录的页，但是由于c2 列并没有唯一性约束，所以c2 列值为4 的记录可能分布在多个数据页中，又因为2 &lt; 4 ≤ 4 ，所以确定实际存储用户记录的页在页34 和页35 中。</li>
+<li>在真实存储用户记录的页中定位到具体的记录。
+到页34 和页35 中定位到具体的记录。</li>
+<li>但是这个B+ 树的叶子节点中的记录只存储了c2 和c1 （也就是主键）两个列，所以<strong>我们必须再根据主键值去聚簇索引中再查找一遍完整的用户记录</strong>。</li>
+</ol>
+<p>我们根据这个以c2 列大小排序的B+ 树<strong>只能确定我们要查找记录的主键值</strong>，所以如果我们想根据c2 列的值查找到完整的用户记录的话，仍然需要到<strong>聚簇索引</strong>中再查一遍，这个过程也被称为<strong>回表</strong>。也就是根据c2 列的值查询一条完整的用户记录需要使用到2 棵B+ 树！！！</p>
+<p>因为这种按照<strong>非主键列</strong>建立的<strong>B+ 树</strong>需要<strong>一次回表</strong>操作才可以定位到<strong>完整的用户记录</strong>，所以这种B+ 树也被称为<strong>二级索引</strong>（英文名secondary index ），或者辅助索引。由于我们使用的是c2 列的大小作为B+ 树的排序规则，所以我们也称这个B+ 树为为<strong>c2列建立的索引</strong>。</p>
+<h4 id="联合索引">联合索引</h4>
+<p>我们也可以同时以多个列的大小作为排序规则，也就是同时为<strong>多个列建立索引</strong>，比方说我们想让B+ 树按照c2和c3 列的大小进行排序，这个包含两层含义：</p>
+<ul>
+<li>先把各个记录和页按照c2 列进行排序。</li>
+<li>在记录的c2 列相同的情况下，采用c3 列进行排序</li>
+</ul>
+<p><img src="image-20220112200830399.png" alt="image-20220112200830399"></p>
+<p>如图所示，我们需要注意一下几点：</p>
+<ul>
+<li>每条目录项记录都由<strong>c2 、c3 、页号</strong>这三个部分组成，各条记录先按照c2 列的值进行排序，如果记录的c2 列相同，则按照c3 列的值进行排序。</li>
+<li>B+ 树叶子节点处的用户记录由<strong>c2 、c3 和主键c1 列</strong>组成。</li>
+</ul>
+<p>千万要注意一点，<strong>以c2和c3列的大小为排序规则建立的B+树称为联合索引，本质上也是一个二级索引</strong>。</p>
+<h4 id="b树索引的注意事项">B+树索引的注意事项</h4>
+<h5 id="根页面万年不动窝">根页面万年不动窝</h5>
+<p><strong>一个B+树索引的根节点自诞生之日起，便不会再移动</strong>。这样只要我们对某个表建立一个索引，那么它的根节点的页号便会被记录到某个地方，然后凡是InnoDB 存储引擎需要用到这个索引的时候，都会从那个固定的地方取出根节点的页号，从而来访问这个索引。</p>
+<h5 id="内节点中目录项记录的唯一性">内节点中目录项记录的唯一性</h5>
+<p>我们知道B+ 树索引的内节点中目录项记录的内容是索引列 + 页号的搭配，但是对于二级索引来说，为了让新插入记录能找到自己在哪个页里，<strong>我们需要保证在B+树的同一层内节点的目录项记录除页号这个字段以外是唯一的</strong>。所以对于二级索引的内节点的目录项记录的内容实际上是由三个部分构成的：</p>
+<ul>
+<li>索引列的值</li>
+<li>主键值</li>
+<li>页号</li>
+</ul>
+<p>也就是我们把<code>主键值</code>也添加到二级索引内节点中的<code>目录项记录</code>了，这样就能保证B+ 树每一层节点中各条目录项记录除<code>页号</code>这个字段外是唯一的，所以我们为c2 列建立二级索引后的示意图实际上应该是这样子的</p>
+<p><img src="image-20220112202541069.png" alt="image-20220112202541069"></p>
+<h5 id="一个页面最少存储2条记录">一个页面最少存储2条记录</h5>
+<p>​	我们前边说过一个B+树只需要很少的层级就可以轻松存储数亿条记录，查询速度杠杠的！<strong>这是因为B+树本质上就是一个大的多层级目录，每经过一个目录时都会过滤掉许多无效的子目录，直到最后访问到存储真实数据的目录</strong>。<strong>那如果一个大的目录中只存放一个子目录是个啥效果呢？那就是目录层级非常非常非常多，而且最后的那个存放真实数据的目录中只能存放一条记录</strong>。所以InnoDB 的一个数据页至少可以存放两条记录，这也是我们之前唠叨记录行格式的时候说过一个结论（我们当时依据这个结论推导了表中只有一个列时该列在不发生行溢出的情况下最多能存储多少字节，忘了的话回去看看吧）。</p>
+<h4 id="myisam中的索引方案简单介绍">MyISAM中的索引方案简单介绍</h4>
+<p>​	至此，我们介绍的都是InnoDB 存储引擎中的索引方案，我们有必要再简单介绍一下MyISAM 存储引擎中的索引方案。我们知道InnoDB 中<strong>索引即数据</strong>，也就是聚<strong>簇索引的那棵B+ 树的叶子节点中已经把所有完整的用户记录都包含了</strong>，而MyISAM 的索引方案虽然也使用<strong>B+树</strong>，但是却将索引和数据分开存储：</p>
+<ul>
+<li><strong>将表中的记录按照记录的插入顺序单独存储在一个文件中，称之为数据文件。这个文件并不划分为若干个数据页，有多少记录就往这个文件中塞多少记录就成了</strong>。<strong>我们可以通过行号而快速访问到一条记录</strong>。
+MyISAM 记录也需要记录头信息来存储一些额外数据，我们以上边唠叨过的index_demo 表为例，看一下这个表中的记录使用MyISAM 作为存储引擎在存储空间中的表示：</li>
+</ul>
+<p><img src="image-20220112203638552.png" alt="image-20220112203638552"></p>
+<p>​	由于在插入数据的时候并没有刻意按照主键大小排序，所以我们并不能在这些数据上使用二分法进行查找。</p>
+<ul>
+<li>
+<p>使用MyISAM 存储引擎的表会把<strong>索引信息另外存储到一个称为索引文件的另一个文件中</strong>。<strong>MyISAM 会单独为表的主键创建一个索引，只不过在索引的叶子节点中存储的不是完整的用户记录，而是主键值 + 行号的组合。<strong>也就是先通过索引找到对应的行号，再通过行号去找对应的记录！这一点和InnoDB 是完全不相同的，<strong>在InnoDB 存储引擎中，我们只需要根据主键值对聚簇索引进行一次查找就能找到对应的记录</strong>，而在</strong>MyISAM 中却需要进行一次回表操作，意味着MyISAM 中建立的索引相当于全部都是二级索引</strong></p>
+</li>
+<li>
+<p>如果有需要的话，我们也可以对其它的列分别建立索引或者建立联合索引，原理和InnoDB 中的索引差不多，不过在叶子节点处存储的是相应的列 + 行号。这些索引也全部都是二级索引</p>
+</li>
+</ul>
+<h4 id="myisam-和-innodb-区别">Myisam 和 InnoDB 区别</h4>
+<ol>
+<li>
+<p>InnoDB 支持事务，MyISAM 不支持事务。这是 MySQL 将默认存储引擎从MyISAM 变成 InnoDB 的重要原因之一；</p>
+</li>
+<li>
+<p>InnoDB 支持外键，而 MyISAM 不支持。对一个包含外键的 InnoDB 表转MYISAM 会失败；</p>
+</li>
+<li>
+<p><strong>InnoDB 是聚簇索引，MyISAM 是非聚簇索引</strong>。聚簇索引的文件存放在主键索引的叶子节点上，因此 InnoDB 必须要有主键，通过主键索引效率很高。但是辅助索引需要两次查询，先查询到主键，然后再通过主键查询到数据。因此，主键不应该过大，因为主键太大，其他索引也都会很大。而 MyISAM 是非聚集索引，数据文件是分离的，索引保存的是数据文件的指针。主键索引和辅助索引是独立的。</p>
+</li>
+<li>
+<p>InnoDB 不保存表的具体行数，执行 select count(*) from table 时需要全表扫描。而MyISAM 用一个变量保存了整个表的行数，执行上述语句时只需要读出该变量即可，速度很快；</p>
+</li>
+<li>
+<p>InnoDB 最小的锁粒度是行锁，MyISAM 最小的锁粒度是表锁。一个更新语句会锁住整张表，导致其他查询和更新都会被阻塞，因此并发访问受限。这也是 MySQL 将默认存储引擎从 MyISAM 变成 InnoDB 的重要原因之一；</p>
+</li>
+<li>
+<p>MyISAM：允许没有任何索引和主键的表存在，索引都是保存行的地址。InnoDB：如果没有设定主键或者非空唯一索引，就会自动生成一个6字节的主键(用户不可见)</p>
+</li>
+</ol>
+<h3 id="b树索引的使用">B+树索引的使用</h3>
+<hr>
+<p>B+ 树索引总结:</p>
+<ul>
+<li>每个索引都对应一棵B+ 树， B+ 树分为好多层，最下边一层是叶子节点，其余的是内节点。所有用户记录都存储在B+ 树的叶子节点，所有目录项记录都存储在内节点。</li>
+<li>InnoDB 存储引擎会自动为<strong>主键</strong>（如果没有它会自动帮我们添加）建立<strong>聚簇索引</strong>，<strong>聚簇索引的叶子节点包含完整的用户记录</strong>。</li>
+<li>我们可以为自己感兴趣的列建立二级索引， 二级索引的叶子节点包含的用户记录由<strong>索引列 + 主键</strong>组成，所以如果想通过二级索引来查找完整的用户记录的话，需要通过<strong>回表</strong>操作，<strong>也就是在通过二级索引找到主键值之后再到聚簇索引中查找完整的用户记录</strong>。</li>
+<li>B+ 树中每层节点都是按照索引列值<code>从小到大</code>的顺序排序而组成了<strong>双向链表</strong>，而且每个页内的记录（不论是用户记录还是目录项记录）都是按照<strong>索引列的值从小到大的顺序而形成了一个单链表</strong>。如果是联合索引的话，则页面和记录先按照<strong>联合索引前边的列排序，如果该列值相同，再按照联合索引后边的列排序</strong>。</li>
+<li>通过索引查找记录是从B+ 树的根节点开始，一层一层向下搜索。由于每个页面都按照索引列的值建立了Page Directory （页目录），所以在这些页面中的查找非常快。</li>
+</ul>
+<h4 id="索引的代价">索引的代价</h4>
+<hr>
+<ol>
+<li>空间上的代价
+这个是显而易见的，每<strong>建立一个索引都要为它建立一棵B+ 树</strong>，每一棵B+ 树的每一个节点都是一个数据页，一个页默认会占用16KB 的存储空间，一棵很大的B+ 树由许多数据页组成，那可是很大的一片存储空间呢。</li>
+<li>时间上的代价
+每次对表中的数据进行增、删、改操作时，都需要去修改各个B+ 树索引。而且我们讲过， B+ 树每层节点都是按照索引列的值从小到大的顺序排序而组成了双向链表。不论是叶子节点中的记录，还是内节点中的记录（也就是不论是用户记录还是目录项记录）都是按照索引列的值从小到大的顺序而形成了一个单向链表。而
+增、删、改操作可能会对节点和记录的排序造成破坏，所以存储引擎需要额外的时间进行一些记录移位，页面分裂、页面回收啥的操作来维护好节点和记录的排序。如果我们建了许多索引，每个索引对应的B+ 树都要进行相关的维护操作，这还能不给性能拖后腿么？</li>
+</ol>
+<p>所以说，一个表上索引建的越多，就会占用越多的存储空间，在增删改记录的时候性能就越差。</p>
+<h4 id="b树索引适用的条件">B+树索引适用的条件</h4>
+<hr>
+<p>下边我们将唠叨许多种让B+ 树索引发挥最大效能的技巧和注意事项，先创建一个person_info表，这个表是用来存储人的一些基本信息的：</p>
+<pre><code class="language-sql">CREATE TABLE person_info(
+id INT NOT NULL auto_increment,
+name VARCHAR(100) NOT NULL,
+birthday DATE NOT NULL,
+phone_number CHAR(11) NOT NULL,
+country varchar(100) NOT NULL,
+PRIMARY KEY (id),
+KEY idx_name_birthday_phone_number (name, birthday, phone_number)
+);
+</code></pre>
+<p>对于这个person_info 表我们需要注意两点：</p>
+<ul>
+<li>表中的主键是id 列，它存储一个自动递增的整数。所以InnoDB 存储引擎会自动为id 列建立<strong>聚簇索引</strong>。</li>
+<li>我们额外定义了一个二级索引idx_name_birthday_phone_number ，它是由3个列组成的<strong>联合索引</strong>。所以在这个索引对应的B+ 树的叶子节点处存储的用户记录只保留name 、birthday 、phone_number 这三个列的值以及主键id 的值，并不会保存country 列的值。</li>
+</ul>
+<p>person_info 表会为聚簇索引和idx_name_birthday_phone_number 索引建立<strong>2棵B+ 树</strong>。下边我们画一下索引idx_name_birthday_phone_number 的示意图，不过既然我们已经掌握了InnoDB 的B+ 树索引原理，那我们在画图的时候为了让图更加清晰，所以在省略一些不必要的部分，比如记录的额外信息，各页面的页号等等，其中内节点中目录项记录的页号信息我们用箭头来代替，在记录结构中只保留name 、birthday 、phone_number 、id 这四个列的真实数据值</p>
+<p><img src="../Mysql%E6%98%AF%E6%80%8E%E6%A0%B7%E8%BF%90%E8%A1%8C%E7%9A%84/image-20220113145903575.png" alt="image-20220113145903575"></p>
+<p>从图中可以看出这个idx_name_birthday_phone_number 索引对应的B+ 树中页面和记录的排序方式就是这的：</p>
+<ul>
+<li>先按照name 列的值进行排序。</li>
+<li>如果name 列的值相同，则按照birthday 列的值进行排序。</li>
+<li>如果birthday 列的值也相同，则按照phone_number 的值进行排序</li>
+</ul>
+<h5 id="全值匹配">全值匹配</h5>
+<hr>
+<p>如果我们的搜索条件中的列和索引列一致的话，这种情况就称为全值匹配,例如：</p>
+<pre><code class="language-sql">SELECT * FROM person_info WHERE name = 'Ashburn' AND birthday = '1990-09-27' AND phone_number = '15123983239';
+</code></pre>
+<p>这个毫无疑问会走索引，但WHERE 子句中的几个搜索条件的顺序对查询结果有啥影响么？也就是说如果我们调换name 、birthday 、phone_number 这几个搜索列的顺序对查询的执行过程有影响么？例如：</p>
+<pre><code class="language-sql">SELECT * FROM person_info WHERE birthday = '1990-09-27' AND phone_number = '15123983239' AND name = 'Ashburn';
+</code></pre>
+<p>答案是：没影响哈。MySQL 有<strong>查询优化器</strong>，会分析这些<strong>搜索条件</strong>并且<strong>按照可以使用的索引中列的顺序来决定先使用哪个搜索条件，后使用哪个搜索条件</strong>。</p>
+<h5 id="匹配左边的列">匹配左边的列</h5>
+<hr>
+<p>其实在我们的搜索语句中也可以不用包含全部联合索引中的列，只包含左边的就行，比方说下边的查询语句：</p>
+<pre><code class="language-sql">SELECT * FROM person_info WHERE name = 'Ashburn';
+或者包含多个左边的列也行：
+SELECT * FROM person_info WHERE name = 'Ashburn' AND birthday = '1990-09-27';
+</code></pre>
+<p>那这条查询语句能用到索引吗？</p>
+<pre><code class="language-sql">SELECT * FROM person_info WHERE birthday = '1990-09-27';
+</code></pre>
+<p>答案是用不到，<strong>因为B+ 树的数据页和记录先是按照name 列的值排序的，在name 列的值相同的情况下才使用birthday 列进行排序，也就是说name 列的值不同的记录中birthday 的值可能是无序的</strong>需要特别注意的一点是，<strong>如果我们想使用联合索引中尽可能多的列，搜索条件中的各个列必须是联合索引中从最左边开始连续的列</strong>。比方说联合索引idx_name_birthday_phone_number 中列的定义顺序是name 、birthday 、phone_number ，如果我们的搜索条件中只有name 和phone_number ，而没有中间的birthday ，比方说这样：</p>
+<pre><code class="language-sql">SELECT * FROM person_info WHERE name = 'Ashburn' AND phone_number = '15123983239';
+</code></pre>
+<p>这样只能用到name 列的索引， birthday 和phone_number 的索引就用不上了，因为name 值相同的记录先按照birthday 的值进行排序， birthday 值相同的记录才按照phone_number 值进行排序</p>
+<h5 id="匹配列前缀">匹配列前缀</h5>
+<hr>
+<p>为某个列建立索引的意思其实就是在<strong>对应的B+ 树的记录中使用该列的值进行排序</strong>，比方说person_info 表上建立的联合索引idx_name_birthday_phone_number 会先用name 列的值进行排序，字符串排序使用的当然就是字典序，<strong>也就是说这些字符串的前n个字符，也就是前缀都是排好序的，所以对于字符串类型的索引列来说，我们只匹配它的前缀也是可以快速定位记录的</strong>，例如：</p>
+<pre><code class="language-sql">走索引 SELECT * FROM person_info WHERE name LIKE 'As%';
+不走索引 SELECT * FROM person_info WHERE name LIKE '%As%';
+</code></pre>
+<h5 id="匹配范围值">匹配范围值</h5>
+<hr>
+<p>idx_name_birthday_phone_number 索引的B+ 树示意图，所有记录都是按照索引列的值从小到大的顺序排好序的，所以这极大的方便我们查找索引列的值在某个范围内的记录。比方说下边这个查询语句</p>
+<pre><code class="language-sql">SELECT * FROM person_info WHERE name &gt; 'Asa' AND name &lt; 'Barlow';
+</code></pre>
+<p>由于B+ 树中的数据页和记录是先按name 列排序的，所以我们上边的查询过程其实是这样的：</p>
+<ul>
+<li>找到name 值为Asa 的记录(查找到范围的下限)。</li>
+<li>遍历链表找到name 值为Barlow 的记录（查找到范围的上限）由于所有记录都是由链表连起来的（记录之间用单链表，数据页之间用双链表）</li>
+<li>找到这些记录的主键值，再到<strong>聚簇索引</strong>中<strong>回表</strong>查找完整的记录。</li>
+</ul>
+<p>注意</p>
+<p><strong>如果对多个列同时进行范围查找的话，只有对索引最左边的那个列进行范围查找的时候才能用到B+ 树索引</strong>，</p>
+<pre><code class="language-sql">SELECT * FROM person_info WHERE name &gt; 'Asa' AND name &lt; 'Barlow' AND birthday &gt; '1980-01-01';
+</code></pre>
+<p>上边这个查询可以分成两个部分：</p>
+<ol>
+<li>通过条件name &gt; &lsquo;Asa&rsquo; AND name &lt; &lsquo;Barlow&rsquo; 来对name 进行范围，查找的结果可能有<strong>多条name 值不同的</strong>
+<strong>记录</strong></li>
+<li>对这些name 值不同的记录继续通过birthday &gt; &lsquo;1980-01-01&rsquo; 条件继续过滤。
+这样子对于联合索引idx_name_birthday_phone_number 来说，只能用到name 列的部分，而用不到birthday 列的部分，因为只有name 值相同的情况下才能用birthday 列的值进行排序，<strong>而这个查询中通过name 进行范围查找的记录中可能并不是按照birthday 列进行排序的</strong>，所以在搜索条件中继续以birthday 列进行查找时是用不到这个B+ 树索引的。</li>
+</ol>
+<p>而与上面相反的是，<strong>精确匹配某一列并范围匹配另外一列</strong>,如</p>
+<pre><code class="language-sql">SELECT * FROM person_info WHERE name = 'Ashburn' AND birthday &gt; '1980-01-01' AND birthday &lt; '2000-12-31' AND phone_number &gt; '15100000000';
+</code></pre>
+<p>这个查询的条件可以分为3个部分：</p>
+<ol>
+<li>name = &lsquo;Ashburn&rsquo; ，对name 列进行精确查找，当然可以使用B+ 树索引了。</li>
+<li>birthday &gt; &lsquo;1980-01-01&rsquo; AND birthday &lt; &lsquo;2000-12-31&rsquo; ，由于<strong>name 列是精确查找</strong>，所以通过name =&lsquo;Ashburn&rsquo; 条件查找后得到的结果的name 值都是相同的，它们会再按照birthday 的值进行排序。所以此时对<strong>birthday 列进行范围查找是可以用到B+ 树索引的</strong>。</li>
+<li>phone_number &gt; &lsquo;15100000000&rsquo; ，通过birthday 的范围查找的记录的birthday 的值可能不同，<strong>所以这个条件无法再利用B+ 树索引了，只能遍历上一步查询得到的记录</strong>。</li>
+</ol>
+<h5 id="用于排序">用于排序</h5>
+<hr>
+<p>我们在写查询语句的时候经常需要对查询出来的记录通过ORDER BY 子句按照某种规则进行排序。一般情况下，我们只能把记录都加载到内存中，再用一些排序算法，比如快速排序、归并排序等等在<strong>内存</strong>中对这些记录进行排序，有的时候可能查询的结果集太大以至于不能在内存中进行排序的话，还可能暂时借助<strong>磁盘</strong>的空间来存放中间结果，排序操作完成后再把排好序的结果集返回到客户端。在MySQL 中，<strong>把这种在内存中或者磁盘上进行排序的方式统称为文件排序（英文名： filesort ）</strong>，文件排序是很慢的。但是如果ORDER BY 子句里使用到了我们的索引列，就有可能省去在内存或文件中排序的步骤，比如下边这个简单的查询语句</p>
+<pre><code class="language-sql">SELECT * FROM person_info ORDER BY name, birthday, phone_number LIMIT 10;
+</code></pre>
+<p>因为有idx_name_birthday_phone_number 索引，所以直接从<strong>索引中提取数据</strong>，然后进行<strong>回表</strong>操作取出所有数据</p>
+<p>对于联合索引有个问题需要注意， ORDER BY 的子句后边的列的顺序也必须按照索引列的顺序给出，否则也不能使用索引，同理， ORDER BY name 、ORDER BY name, birthday 这种匹配索引左边的列的形式可以使用部分的B+ 树索引。当联合索引左边列的值为常量，也可以使用后边的列进行排序，比如这样</p>
+<pre><code class="language-sql">SELECT * FROM person_info WHERE name = 'A' ORDER BY birthday, phone_number LIMIT 10;
+</code></pre>
+<h5 id="不可以使用索引进行排序的几种情况">不可以使用索引进行排序的几种情况</h5>
+<hr>
+<h6 id="ascdesc混用">ASC、DESC混用</h6>
+<p>对于使用联合索引进行排序的场景，我们要求各个排序列的排序顺序是一致的，也就是要么各个列都是ASC 规则
+排序，要么都是DESC 规则排序。</p>
+<p>如果查询中的各个排序列的排序顺序是一致的，比方说下边这两种情况：</p>
+<ul>
+<li>ORDER BY name, birthday LIMIT 10
+这种情况直接从索引的最左边开始往右读10行记录就可以了。</li>
+<li>ORDER BY name DESC, birthday DESC LIMIT 10 ，
+这种情况直接从索引的最右边开始往左读10行记录就可以了。</li>
+</ul>
+<p>但是是先按照name 列进行升序排列，再按照birthday 列进行降序排列的话，比如说这样的查询语句：</p>
+<pre><code class="language-sql">SELECT * FROM person_info ORDER BY name, birthday DESC LIMIT 10;
+</code></pre>
+<p>就不能走索引</p>
+<h6 id="where子句中出现非排序使用到的索引列">WHERE子句中出现非排序使用到的索引列</h6>
+<pre><code class="language-sql">SELECT * FROM person_info WHERE country = 'China' ORDER BY name LIMIT 10;
+</code></pre>
+<p>这个查询只能先把符合搜索条件country = &lsquo;China&rsquo; 的记录提取出来后再进行排序，使用不到索引。</p>
+<pre><code class="language-sql">SELECT * FROM person_info WHERE name = 'A' ORDER BY birthday, phone_number LIMIT 10;
+</code></pre>
+<p>虽然这个查询也有搜索条件，但是name = &lsquo;A&rsquo; 可以使用到索引idx_name_birthday_phone_number ，而且过滤剩
+下的记录还是按照birthday 、phone_number 列排序的，所以还是可以使用索引进行排序的</p>
+<h6 id="排序列包含非同一个索引的列">排序列包含非同一个索引的列</h6>
+<p>有时候用来排序的多个列不是一个索引里的，这种情况也不能使用索引进行排序，比方说：</p>
+<pre><code class="language-sql">SELECT * FROM person_info ORDER BY name, country LIMIT 10;
+</code></pre>
+<p>name 和country (即使country为索引列也不行)并不属于一个联合索引中的列，所以无法使用索引进行排序</p>
+<h6 id="排序列使用了复杂的表达式">排序列使用了复杂的表达式</h6>
+<pre><code class="language-sql">SELECT * FROM person_info ORDER BY UPPER(name) LIMIT 10;
+</code></pre>
+<p>使用了UPPER 函数修饰过的列就不是单独的列了，这样就无法使用<strong>索引</strong>进行排序。</p>
+<h5 id="用于分组">用于分组</h5>
+<pre><code class="language-sql">SELECT name, birthday, phone_number, COUNT(*) FROM person_info GROUP BY name, birthday, phone_number
+</code></pre>
+<p>和使用B+ 树索引进行排序使用规则相同，分组列的顺序也需要和索引列的顺序一致，也可以只使用索引列中左边的列进行分组等</p>
+<h4 id="回表的代价">回表的代价</h4>
+<hr>
+<pre><code class="language-sql">SELECT * FROM person_info WHERE name &gt; 'Asa' AND name &lt; 'Barlow';
+</code></pre>
+<p>在使用idx_name_birthday_phone_number 索引进行查询时大致可以分为这两个步骤：</p>
+<ol>
+<li>从索引idx_name_birthday_phone_number 对应的B+ 树中取出name 值在Asa ～ Barlow 之间的用户记录。</li>
+<li>由于索引idx_name_birthday_phone_number 对应的B+ 树用户记录中只包含name 、birthday 、
+phone_number 、id 这4个字段，而查询列表是* ，意味着要查询表中所有字段，也就是还要包括country
+字段。这时需要把从上一步中获取到的每一条记录的id 字段都到<strong>聚簇索引</strong>对应的B+ 树中找到<strong>完整的用户记录</strong>，也就是我们通常所说的<strong>回表</strong>，然后把完整的用户记录返回给查询用户。</li>
+</ol>
+<p>由于索引idx_name_birthday_phone_number 对应的B+ 树中的记录首先会按照name 列的值进行排序，所以值在Asa ～ Barlow 之间的记录在<strong>磁盘中的存储是相连的，集中分布在一个或几个数据页中</strong>，我们可以很快的把这些连着的记录从磁盘中读出来，这种读取方式我们也可以称为<code>顺序I/O</code>。根据第1步中获取到的记录的id 字段的值可能并不相连，而在<strong>聚簇索引中记录是根据id （也就是主键）的顺序排列的</strong>，所以根据这些并不连续的id值到聚簇索引中访问完整的用户记录可能<strong>分布在不同的数据页中</strong>，这样读取完整的用户记录可能要访问更多的数据页，这种读取方式我们也可以称为<strong>随机I/O</strong> 。一般情况下，<strong>顺序I/O</strong>比<strong>随机I/O</strong>的性能高很多。所以这个使用索引idx_name_birthday_phone_number 的查询有这么两个特点：</p>
+<ul>
+<li>会使用到两个B+ 树索引，一个二级索引，一个聚簇索引。</li>
+<li>访问二级索引使用顺序I/O ，访问聚簇索引使用随机I/O 。</li>
+</ul>
+<p><strong>需要回表的记录越多，使用二级索引的性能就越低</strong>，甚至让某些查询宁愿使用<strong>全表扫描</strong>也不使用<strong>二级索引</strong>。比方说name 值在Asa ～ Barlow 之间的用户记录数量占全部记录数量90%以上，那么如果使用idx_name_birthday_phone_number 索引的话，有90%多的id 值需要回表，还不如直接去扫描聚簇索引（也就是全表扫描）。</p>
+<p>那什么时候采用全表扫描的方式，什么时候使用采用二级索引 + 回表的方式去执行查询呢？</p>
+<p><strong>查询优化器会事先对表中的记录计算一些统计数据，然后再利用这些统计数据根据查询的条件来计算一下需要回表的记录数，需要回表的记录数越多，就越倾向于使用全表扫描，反之倾向于使用二级索引 + 回表的方式</strong>。</p>
+<p>一般情况下，限制查询获取较少的记录数会让优化器更倾向于选择使用二级索引 + 回表的方式进行查询，因为回表的记录越少，性能提升就越高，比方说上边的查询可以改写成这样：</p>
+<pre><code class="language-sql">SELECT * FROM person_info WHERE name &gt; 'Asa' AND name &lt; 'Barlow' LIMIT 10;
+同样排序也可以：SELECT * FROM person_info ORDER BY name, birthday, phone_number LIMIT 10;
+</code></pre>
+<h5 id="覆盖索引">覆盖索引</h5>
+<p>为了彻底告别回表操作带来的性能损耗，最好在查询列表里只包含索引列，比如：</p>
+<pre><code class="language-sql">SELECT name, birthday, phone_number FROM person_info WHERE name &gt; 'Asa' AND name &lt; 'Barlo
+w'
+</code></pre>
+<p>因为只查询name , birthday , phone_number 这三个索引列的值，所以通idx_name_birthday_phone_number 索引得到结果后就不必到聚簇索引中再查找记录的剩余列，这样就省去了<strong>回表</strong>操作带来的性能损耗。我们把这种只需要用到索引的查询方式称为<code>索引覆盖</code>,所以坚决不能用* 号作为查询列表，最好把我们需要查询的列依次标明。</p>
+<h4 id="如何挑选索引">如何挑选索引</h4>
+<hr>
+<h5 id="只为用于搜索排序或分组的列创建索引">只为用于搜索、排序或分组的列创建索引</h5>
+<p>只为出现在WHERE 子句中的列、连接子句中的连接列，或者出现在ORDER BY 或GROUP BY 子句中的
+列创建索引。而出现在查询列表中的列就没必要建立索引了</p>
+<h5 id="考虑列的基数">考虑列的基数</h5>
+<p><strong>列的基数</strong>指的是某一列中不重复数据的个数，比方说某个列包含值2, 5, 8, 2, 5, 8, 2, 5, 8 ，虽然有9 条记录，但该列的基数却是3 。也就是说，在记录行数一定的情况下，<strong>列的基数越大，该列中的值越分散，列的基数越小，该列中的值越集中</strong>。假设某个列的基数为1 ，也就是所有记录在该列中的值都一样，那为该列建立索引是没有用的，因为所有值都一样就无法排序，无法进行快速查找了，而且如果某个建立了<strong>二级索引的列的重复值特别多</strong>，那么使用这个二级索引查出的记录还可能要做<strong>回表</strong>操作，这样性能损耗就更大了。</p>
+<p>所以结论就是：<strong>最好为那些列的基数大的列建立索引，为基数太小列的建立索引效果可能不好</strong>（索引尽量建在数据重复不多的列上，比如XX_id,但XX_time上则不合适）</p>
+<h5 id="索引列的类型尽量小">索引列的类型尽量小</h5>
+<p>我们在定义表结构的时候要显式的指定列的类型，以整数类型为例，有TINYINT 、MEDIUMINT 、INT 、BIGINT
+这么几种，它们占用的存储空间依次递增，我们这里所说的<strong>类型大小</strong>指的就是<strong>该类型表示的数据范围的大小</strong>。
+能表示的整数范围当然也是依次递增，如果我们想要对某个整数列建立索引的话，<strong>在表示的整数范围允许的情况</strong>
+<strong>下，尽量让索引列使用较小的类型</strong>，比如我们能使用INT 就不要使用BIGINT ，能使用MEDIUMINT 就不要使用
+INT ～ 这是因为：</p>
+<ul>
+<li>数据类型越小，在查询时进行的比较操作越快（这是CPU层次的东东）</li>
+<li>数据类型越小，索引占用的存储空间就越少，在一个数据页内就可以放下更多的记录，从而减少<strong>磁盘I/O</strong> 带
+来的性能损耗，也就意味着可以把更多的数据页缓存在内存中，从而加快读写效率。</li>
+</ul>
+<p>这个建议对于表的主键来说更加适用，因为不仅是<strong>聚簇索引中会存储主键值</strong>，其他所有的二级索引的节点处都会
+<strong>存储一份记录的主键值</strong>，如果主键适用更小的数据类型，也就意味着节省更多的存储空间和更高效的I/O</p>
+<h5 id="索引字符串值的前缀">索引字符串值的前缀</h5>
+<p><strong>只对字符串的前几个字符进行索引</strong>也就是说在二级索引的记录中只保留字符串前几个字符。这样在查找记录时虽然不能精确的定位到记录的位置，但是能定位到相应前缀所在的位置，<strong>然后根据前缀相同的记录的主键值回表查询完整的字符串值</strong>，再对比就好了。这样只在B+ 树中存储字符串的前几个字符的编码，既节约空间，又减少了字符串的比较时间，比方说我们在建表语句中只对name 列的前10个字符进行索引可以这么写：</p>
+<pre><code class="language-sql">CREATE TABLE person_info(
+name VARCHAR(100) NOT NULL,
+birthday DATE NOT NULL,
+phone_number CHAR(11) NOT NULL,
+country varchar(100) NOT NULL,
+KEY idx_name_birthday_phone_number (name(10), birthday, phone_number)
+);
+</code></pre>
+<p>name(10) 就表示在建立的B+ 树索引中只保留记录的前10 个字符的编码，这种只索引字符串值的前缀的策略是
+我们非常鼓励的，尤其是在字符串类型能存储的字符比较多的时候。</p>
+<pre><code class="language-sql">SELECT * FROM person_info ORDER BY name LIMIT 10;
+</code></pre>
+<p>因为二级索引中不包含完整的name 列信息，所以无法对前十个字符相同，后边的字符不同的记录进行排序，也
+就是使用索引列前缀的方式无法支持使用<strong>索引排序</strong>，只好乖乖的用文件排序喽。</p>
+<h5 id="让索引列在比较表达式中单独出现">让索引列在比较表达式中单独出现</h5>
+<p>假设表中有一个整数列my_col ，我们为这个列建立了索引。下边的两个WHERE 子句虽然语义是一致的，但是在
+效率上却有差别：</p>
+<ol>
+<li>WHERE my_col * 2 &lt; 4</li>
+<li>WHERE my_col &lt; 4/2</li>
+</ol>
+<p>第1个WHERE 子句中my_col 列并不是以单独列的形式出现的，而是以my_col * 2 这样的表达式的形式出现的，
+<strong>存储引擎会依次遍历所有的记录，计算这个表达式的值是不是小于4</strong> ，所以这种情况下是使用不到为my_col 列
+建立的B+ 树索引的。而第2个WHERE 子句中my_col 列并是以单独列的形式出现的，这样的情况可以直接使用
+B+ 树索引。
+所以结论就是：<strong>如果索引列在比较表达式中不是以单独列的形式出现，而是以某个表达式，或者函数调用形式出</strong>
+<strong>现的话，是用不到索引的</strong>。</p>
+<h5 id="主键插入顺序">主键插入顺序</h5>
+<p>我们知道，对于一个使用InnoDB 存储引擎的表来说，在我们没有显式的创建索引时，表中的数据实际上都是存储在<strong>聚簇索引</strong>的叶子节点的。而记录又是存储在数据页中的，数据页和记录又是按照记录主键值从小到大的顺序进行排序，所以如果我们插入的记录的主键值是依次增大的话，那我们每插满一个数据页就换到下一个数据页继续插，而如果我们插入的主键值忽大忽小的话，这就比较麻烦了，假设某个数据页存储的记录已经满了，它存储的主键值在1~100 之间：</p>
+<p><img src="../Mysql%E6%98%AF%E6%80%8E%E6%A0%B7%E8%BF%90%E8%A1%8C%E7%9A%84/image-20220113172305129.png" alt="image-20220113172305129"></p>
+<p>如果此时再插入一条主键值为9 的记录，那它插入的位置就如下图：</p>
+<p><img src="../Mysql%E6%98%AF%E6%80%8E%E6%A0%B7%E8%BF%90%E8%A1%8C%E7%9A%84/image-20220113172317389.png" alt="image-20220113172317389"></p>
+<p>可这个数据页已经满了啊，再插进来咋办呢？我们需要把当前页面分裂成两个页面，把本页中的一些记录移动到新创建的这个页中。页面分裂和记录移位意味着什么？意味着：性能损耗！所以如果我们想尽量避免这样无谓的性能损耗最好<strong>让插入的记录的主键值依次递增</strong></p>
+<h5 id="冗余和重复索引">冗余和重复索引</h5>
+<p>有时候有的同学有意或者无意的就对同一个列创建了多个索引，比方说这样写建表语句：</p>
+<pre><code class="language-sql">CREATE TABLE person_info(
+id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+name VARCHAR(100) NOT NULL,
+birthday DATE NOT NULL,
+phone_number CHAR(11) NOT NULL,
+country varchar(100) NOT NULL,
+PRIMARY KEY (id),
+KEY idx_name_birthday_phone_number (name(10), birthday, phone_number),
+KEY idx_name (name(10))
+);
+</code></pre>
+<p>通过idx_name_birthday_phone_number 索引就可以对name 列进行快速搜索，再创建一个专门针对name 列的索引就算是一个冗余索引，维护这个索引只会增加维护的成本，并不会对搜索有什么好处。<strong>这个自己也犯过</strong></p>
+<h4 id="总结-1">总结</h4>
+<ol>
+<li>
+<p>B+ 树索引在空间和时间上都有代价，所以没事儿别瞎建索引。</p>
+</li>
+<li>
+<p>B+ 树索引适用于下边这些情况：</p>
+<ul>
+<li>全值匹配</li>
+<li>匹配左边的列</li>
+<li>匹配范围值</li>
+<li>精确匹配某一列并范围匹配另外一列</li>
+<li>用于排序</li>
+<li>用于分组</li>
+</ul>
+</li>
+<li>
+<p>在使用索引时需要注意下边这些事项：</p>
+<ul>
+<li>只为用于搜索、排序或分组的列创建索引</li>
+<li>为列的基数大的列创建索引</li>
+<li>索引列的类型尽量小</li>
+<li>可以只对字符串值的前缀建立索引</li>
+<li>只有索引列在比较表达式中单独出现才可以适用索引</li>
+<li>为了尽可能少的让聚簇索引发生页面分裂和记录移位的情况，主键一定要依次递增。</li>
+<li>定位并删除表中的重复和冗余索引</li>
+<li>尽量使用覆盖索引进行查询，避免回表带来的性能损耗。</li>
+</ul>
+</li>
+</ol>
 
     </div>
     <div class="article-footer">
@@ -746,6 +1229,11 @@ User Records ：真实存储我们插入的记录的部分，大小不固定。<
                 <a href="https://wzgl998877.github.io/2022/02/leetcode%E5%88%B7%E9%A2%98%E6%80%BB%E7%BB%93/" title="LeetCode刷题总结"><i
                         class="icon icon-angle-left"
                         aria-hidden="true"></i><span>&nbsp;&nbsp;下一篇</span></a>
+            </li>
+            <li class="next">
+                <a href="https://wzgl998877.github.io/2022/03/git%E7%9B%B8%E5%85%B3/"
+                    title="git相关"><span>上一篇&nbsp;&nbsp;</span><i
+                        class="icon icon-angle-right" aria-hidden="true"></i></a>
             </li>
             
             <li class="toggle-toc">

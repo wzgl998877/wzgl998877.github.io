@@ -6,10 +6,19 @@
     <description>Recent content in Categories on 码农的学习笔记</description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>CC BY 4.0 CN</copyright>
-    <lastBuildDate>Mon, 28 Feb 2022 23:43:20 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 02 Mar 2022 20:03:24 +0800</lastBuildDate>
     
         <atom:link href="https://wzgl998877.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>git相关</title>
+      <link>https://wzgl998877.github.io/2022/03/git%E7%9B%B8%E5%85%B3/</link>
+      <pubDate>Wed, 02 Mar 2022 20:03:24 +0800</pubDate>
+      
+      <guid>https://wzgl998877.github.io/2022/03/git%E7%9B%B8%E5%85%B3/</guid>
+      <description>[TOC] git是工作中天天用到的东西，但好像也只会几个命令，现在稍微研究下 git简介 本地 Git 的三个分区分别是：working directory，st</description>
+    </item>
     
     <item>
       <title>Mysql总结</title>
