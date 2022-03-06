@@ -39,7 +39,7 @@
 <meta itemprop="name" content="LeetCode刷题总结">
 <meta itemprop="description" content="​ [TOC] 算法这东西，可以说玄之又玄，大学就被程序设计这门课统治，工作了，虽然说这东西在实践中用到的少，但是谁让大家都卷呢，你不会就是不行，所以本"><meta itemprop="datePublished" content="2022-02-12T14:44:56+08:00" />
 <meta itemprop="dateModified" content="2022-02-12T14:44:56+08:00" />
-<meta itemprop="wordCount" content="16209">
+<meta itemprop="wordCount" content="20972">
 <meta itemprop="keywords" content="LeetCode," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="LeetCode刷题总结"/>
 <meta name="twitter:description" content="​ [TOC] 算法这东西，可以说玄之又玄，大学就被程序设计这门课统治，工作了，虽然说这东西在实践中用到的少，但是谁让大家都卷呢，你不会就是不行，所以本"/>
@@ -321,8 +321,8 @@
     <a class="article-tag-link" href="/tags/leetcode/"> LeetCode </a>
   </span>
 
-		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 16209字</span>
-		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 33分 </span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 20972字</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 42分 </span>
       </div>
     </div>
     <div class="article-entry marked-body js-toc-content" itemprop="articleBody">
@@ -1501,6 +1501,52 @@ void slidingWindow(String s, String t) {
     return arg / k;
 }
 </code></pre>
+<h4 id="1658-将-x-减到-0-的最小操作数httpsleetcode-cncomproblemsminimum-operations-to-reduce-x-to-zero"><a href="https://leetcode-cn.com/problems/minimum-operations-to-reduce-x-to-zero/">1658. 将 x 减到 0 的最小操作数</a></h4>
+<p>给你一个整数数组 <code>nums</code> 和一个整数 <code>x</code> 。每一次操作时，你应当移除数组 <code>nums</code> 最左边或最右边的元素，然后从 <code>x</code> 中减去该元素的值。请注意，需要 <strong>修改</strong> 数组以供接下来的操作使用。</p>
+<p>如果可以将 <code>x</code> <strong>恰好</strong> 减到 <code>0</code> ，返回 <strong>最小操作数</strong> ；否则，返回 <code>-1</code> 。</p>
+<p><strong>示例 1：</strong></p>
+<pre><code>输入：nums = [1,1,4,2,3], x = 5
+输出：2
+解释：最佳解决方案是移除后两个元素，将 x 减到 0 。
+</code></pre>
+<p><strong>示例 2：</strong></p>
+<pre><code>输入：nums = [5,6,7,8,9], x = 4
+输出：-1
+</code></pre>
+<p><strong>示例 3：</strong></p>
+<pre><code>输入：nums = [3,2,20,1,1,3], x = 10
+输出：5
+解释：最佳解决方案是移除后三个元素和前两个元素（总共 5 次操作），将 x 减到 0 。
+</code></pre>
+<p><strong>提示：</strong></p>
+<ul>
+<li><code>1 &lt;= nums.length &lt;= 105</code></li>
+<li><code>1 &lt;= nums[i] &lt;= 104</code></li>
+<li><code>1 &lt;= x &lt;= 109</code></li>
+</ul>
+<p>这题还是有点意思的，这题目的意思，可以反过来理解，<strong>因为删除元素都是在最左边或最右边的元素，因此题目可以转为找sum-x的最长子数组</strong>，这样就简单了</p>
+<pre><code class="language-java">public int minOperations(int[] nums, int x) {
+    int left = 0, right = 0, result = -1;
+    // 因为从两边进行剔除，也就可以转为求最大的连续子数组使其和的target
+    int target = Arrays.stream(nums).sum() - x;
+    if (target &lt; 0) {
+        return -1;
+    }
+    int temp = 0;
+    while (right &lt; nums.length) {
+        temp += nums[right];
+        right++;
+        while (temp &gt; target) {
+            temp -= nums[left];
+            left++;
+        }
+        if (temp == target) {
+            result = Math.max(result, right - left);
+        }
+    }
+    return result == -1 ? -1 : nums.length - result;
+}
+</code></pre>
 <h4 id="3-无重复字符的最长子串httpsleetcode-cncomproblemslongest-substring-without-repeating-characters"><a href="https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/">3. 无重复字符的最长子串</a></h4>
 <p>给定一个字符串 <code>s</code> ，请你找出其中不含有重复字符的 <strong>最长子串</strong> 的长度。</p>
 <p><strong>示例 1:</strong></p>
@@ -1542,6 +1588,26 @@ void slidingWindow(String s, String t) {
     return result;
 }
 </code></pre>
+<h4 id="1695-删除子数组的最大得分">1695 删除子数组的最大得分</h4>
+<p>给你一个正整数数组 <code>nums</code> ，请你从中删除一个含有 <strong>若干不同元素</strong> 的子数组**。**删除子数组的 <strong>得分</strong> 就是子数组各元素之 <strong>和</strong> 。</p>
+<p>返回 <strong>只删除一个</strong> 子数组可获得的 <strong>最大得分</strong> <em>。</em></p>
+<p>如果数组 <code>b</code> 是数组 <code>a</code> 的一个连续子序列，即如果它等于 <code>a[l],a[l+1],...,a[r]</code> ，那么它就是 <code>a</code> 的一个子数组。</p>
+<p><strong>示例 1：</strong></p>
+<pre><code>输入：nums = [4,2,4,5,6]
+输出：17
+解释：最优子数组是 [2,4,5,6]
+</code></pre>
+<p><strong>示例 2：</strong></p>
+<pre><code>输入：nums = [5,2,1,2,5,2,1,2,5]
+输出：8
+解释：最优子数组是 [5,2,1] 或 [1,2,5]
+</code></pre>
+<p><strong>提示：</strong></p>
+<ul>
+<li><code>1 &lt;= nums.length &lt;= 105</code></li>
+<li><code>1 &lt;= nums[i] &lt;= 104</code></li>
+</ul>
+<p>和上面一题不能说一模一样，只能说完全一致</p>
 <h4 id="395-至少有-k-个重复字符的最长子串httpsleetcode-cncomproblemslongest-substring-with-at-least-k-repeating-characters"><a href="https://leetcode-cn.com/problems/longest-substring-with-at-least-k-repeating-characters/">395. 至少有 K 个重复字符的最长子串</a></h4>
 <p>给你一个字符串 <code>s</code> 和一个整数 <code>k</code> ，请你找出 <code>s</code> 中的最长子串， 要求该子串中的每一字符出现次数都不少于 <code>k</code> 。返回这一子串的长度。</p>
 <p><strong>示例 1：</strong></p>
@@ -1747,6 +1813,79 @@ private int maxArraysDistance(int[] nums, int k) {
     return result;
 }
 </code></pre>
+<h4 id="1438-绝对差不超过限制的最长连续子数组httpsleetcode-cncomproblemslongest-continuous-subarray-with-absolute-diff-less-than-or-equal-to-limit"><a href="https://leetcode-cn.com/problems/longest-continuous-subarray-with-absolute-diff-less-than-or-equal-to-limit/">1438. 绝对差不超过限制的最长连续子数组</a></h4>
+<p>给你一个整数数组 <code>nums</code> ，和一个表示限制的整数 <code>limit</code>，请你返回最长连续子数组的长度，该子数组中的任意两个元素之间的绝对差必须小于或者等于 <code>limit</code> <em>。</em></p>
+<p>如果不存在满足条件的子数组，则返回 <code>0</code> 。</p>
+<p><strong>示例 1：</strong></p>
+<pre><code>输入：nums = [8,2,4,7], limit = 4
+输出：2 
+解释：所有子数组如下：
+[8] 最大绝对差 |8-8| = 0 &lt;= 4.
+[8,2] 最大绝对差 |8-2| = 6 &gt; 4. 
+[8,2,4] 最大绝对差 |8-2| = 6 &gt; 4.
+[8,2,4,7] 最大绝对差 |8-2| = 6 &gt; 4.
+[2] 最大绝对差 |2-2| = 0 &lt;= 4.
+[2,4] 最大绝对差 |2-4| = 2 &lt;= 4.
+[2,4,7] 最大绝对差 |2-7| = 5 &gt; 4.
+[4] 最大绝对差 |4-4| = 0 &lt;= 4.
+[4,7] 最大绝对差 |4-7| = 3 &lt;= 4.
+[7] 最大绝对差 |7-7| = 0 &lt;= 4. 
+因此，满足题意的最长子数组的长度为 2 。
+</code></pre>
+<p><strong>示例 2：</strong></p>
+<pre><code>输入：nums = [10,1,2,4,7,2], limit = 5
+输出：4 
+解释：满足题意的最长子数组是 [2,4,7,2]，其最大绝对差 |2-7| = 5 &lt;= 5 。
+</code></pre>
+<p><strong>示例 3：</strong></p>
+<pre><code>输入：nums = [4,2,2,2,4,4,2,2], limit = 0
+输出：3
+</code></pre>
+<p><strong>提示：</strong></p>
+<ul>
+<li><code>1 &lt;= nums.length &lt;= 10^5</code></li>
+<li><code>1 &lt;= nums[i] &lt;= 10^9</code></li>
+<li><code>0 &lt;= limit &lt;= 10^9</code></li>
+</ul>
+<p>这道题和上面一道题，基本一致，不过这道题需要求最大值和最小值，因此维护两个队列,一个递减队列，一个递增队列</p>
+<pre><code class="language-java">public int longestSubarray(int[] nums, int limit) {
+    int left = 0, right = 0, result = 0;
+    // 单调递增队列
+    Deque&lt;Integer&gt; minDeque = new LinkedList&lt;&gt;();
+    // 单调递减队列
+    Deque&lt;Integer&gt; maxDeque = new LinkedList&lt;&gt;();
+    while (right &lt; nums.length) {
+        // 当前元素小于队尾元素，移除队尾元素
+        while (!minDeque.isEmpty() &amp;&amp; nums[minDeque.peekLast()] &gt;= nums[right]) {
+            minDeque.pollLast();
+        }
+        // 当前元素大于队尾元素，移除队尾元素
+        while (!maxDeque.isEmpty() &amp;&amp; nums[maxDeque.peekLast()] &lt;= nums[right]) {
+            maxDeque.pollLast();
+        }
+        minDeque.offerLast(right);
+        maxDeque.offerLast(right);
+        while (minDeque.peekFirst() &lt; left) {
+            minDeque.pollFirst();
+        }
+        while (maxDeque.peekFirst() &lt; left) {
+            maxDeque.pollFirst();
+        }
+        right++;
+        while (nums[maxDeque.peekFirst()] - nums[minDeque.peekFirst()] &gt; limit) {
+            if (left == maxDeque.peekFirst()) {
+                maxDeque.pollFirst();
+            }
+            if (left == minDeque.peekFirst()) {
+                minDeque.pollFirst();
+            }
+            left++;
+        }
+        result = Math.max(right - left, result);
+    }
+    return result;
+}
+</code></pre>
 <h4 id="424-替换后的最长重复字符httpsleetcode-cncomproblemslongest-repeating-character-replacement"><a href="https://leetcode-cn.com/problems/longest-repeating-character-replacement/">424. 替换后的最长重复字符</a></h4>
 <p>给你一个字符串 <code>s</code> 和一个整数 <code>k</code> 。你可以选择字符串中的任一字符，并将其更改为任何其他大写英文字符。该操作最多可执行 <code>k</code> 次。</p>
 <p>在执行上述操作后，返回包含相同字母的最长子字符串的长度。</p>
@@ -1905,6 +2044,57 @@ private int maxArraysDistance(int[] nums, int k) {
     return result;
 }
 </code></pre>
+<h4 id="904-水果成篮httpsleetcode-cncomproblemsfruit-into-baskets"><a href="https://leetcode-cn.com/problems/fruit-into-baskets/">904. 水果成篮</a></h4>
+<p>你正在探访一家农场，农场从左到右种植了一排果树。这些树用一个整数数组 <code>fruits</code> 表示，其中 <code>fruits[i]</code> 是第 <code>i</code> 棵树上的水果 <strong>种类</strong> 。</p>
+<p>你想要尽可能多地收集水果。然而，农场的主人设定了一些严格的规矩，你必须按照要求采摘水果：</p>
+<ul>
+<li>你只有 <strong>两个</strong> 篮子，并且每个篮子只能装 <strong>单一类型</strong> 的水果。每个篮子能够装的水果总量没有限制。</li>
+<li>你可以选择任意一棵树开始采摘，你必须从 <strong>每棵</strong> 树（包括开始采摘的树）上 <strong>恰好摘一个水果</strong> 。采摘的水果应当符合篮子中的水果类型。每采摘一次，你将会向右移动到下一棵树，并继续采摘。</li>
+<li>一旦你走到某棵树前，但水果不符合篮子的水果类型，那么就必须停止采摘。</li>
+</ul>
+<p>给你一个整数数组 <code>fruits</code> ，返回你可以收集的水果的 <strong>最大</strong> 数目。</p>
+<p><strong>示例 1：</strong></p>
+<pre><code>输入：fruits = [1,2,1]
+输出：3
+解释：可以采摘全部 3 棵树。
+</code></pre>
+<p><strong>示例 2：</strong></p>
+<pre><code>输入：fruits = [0,1,2,2]
+输出：3
+解释：可以采摘 [1,2,2] 这三棵树。
+如果从第一棵树开始采摘，则只能采摘 [0,1] 这两棵树。
+</code></pre>
+<p><strong>示例 3：</strong></p>
+<pre><code>输入：fruits = [1,2,3,2,2]
+输出：4
+解释：可以采摘 [2,3,2,2] 这四棵树。
+如果从第一棵树开始采摘，则只能采摘 [1,2] 这两棵树。
+</code></pre>
+<p><strong>示例 4：</strong></p>
+<pre><code>输入：fruits = [3,3,3,1,2,1,1,2,3,3,4]
+输出：5
+解释：可以采摘 [1,2,1,1,2] 这五棵树。
+</code></pre>
+<p>一模一样，标准滑动窗口</p>
+<pre><code class="language-java">public int totalFruit(int[] fruits) {
+    int left = 0, right = 0;
+    int result = 0;
+    Map&lt;Integer, Integer&gt; need = new HashMap&lt;&gt;();
+    while (right &lt; fruits.length) {
+        need.put(fruits[right], need.getOrDefault(fruits[right], 0) + 1);
+        right++;
+        while (need.size() &gt; 2) {
+            need.put(fruits[left], need.get(fruits[left]) - 1);
+            if (need.get(fruits[left]) == 0) {
+                need.remove(fruits[left]);
+            }
+            left++;
+        }
+        result = Math.max(right - left, result);
+    }
+    return result;
+}
+</code></pre>
 <h4 id="1838-最高频元素的频数httpsleetcode-cncomproblemsfrequency-of-the-most-frequent-element"><a href="https://leetcode-cn.com/problems/frequency-of-the-most-frequent-element/">1838. 最高频元素的频数</a></h4>
 <p>元素的 <strong>频数</strong> 是该元素在一个数组中出现的次数。</p>
 <p>给你一个整数数组 <code>nums</code> 和一个整数 <code>k</code> 。在一步操作中，你可以选择 <code>nums</code> 的一个下标，并将该下标对应元素的值增加 <code>1</code> 。</p>
@@ -1942,6 +2132,111 @@ private int maxArraysDistance(int[] nums, int k) {
         result = Math.max(result, right - left);
     }
     return result;
+}
+</code></pre>
+<h4 id="209-长度最小的子数组httpsleetcode-cncomproblemsminimum-size-subarray-sum"><a href="https://leetcode-cn.com/problems/minimum-size-subarray-sum/">209. 长度最小的子数组</a></h4>
+<p>给定一个含有 <code>n</code> 个正整数的数组和一个正整数 <code>target</code> <strong>。</strong></p>
+<p>找出该数组中满足其和 <code>≥ target</code> 的长度最小的 <strong>连续子数组</strong> <code>[numsl, numsl+1, ..., numsr-1, numsr]</code> ，并返回其长度**。**如果不存在符合条件的子数组，返回 <code>0</code> 。</p>
+<p><strong>示例 1：</strong></p>
+<pre><code>输入：target = 7, nums = [2,3,1,2,4,3]
+输出：2
+解释：子数组 [4,3] 是该条件下的长度最小的子数组。
+</code></pre>
+<p><strong>示例 2：</strong></p>
+<pre><code>输入：target = 4, nums = [1,4,4]
+输出：1
+</code></pre>
+<p><strong>示例 3：</strong></p>
+<pre><code>输入：target = 11, nums = [1,1,1,1,1,1,1,1]
+输出：0
+</code></pre>
+<p><strong>提示：</strong></p>
+<ul>
+<li><code>1 &lt;= target &lt;= 109</code></li>
+<li><code>1 &lt;= nums.length &lt;= 105</code></li>
+<li><code>1 &lt;= nums[i] &lt;= 105</code></li>
+</ul>
+<p>这题很简单标准的滑动窗口</p>
+<pre><code class="language-java">public int minSubArrayLen(int target, int[] nums) {
+    int left = 0, right = 0, result = Integer.MAX_VALUE, temp = 0;
+    while (right &lt; nums.length) {
+        temp += nums[right];
+        right++;
+        while (temp &gt;= target) {
+            result = Math.min(right - left, result);
+            temp -= nums[left];
+            left++;
+        }
+    }
+    return result == Integer.MAX_VALUE ? 0 : result;
+}
+</code></pre>
+<h4 id="862-和至少为-k-的最短子数组httpsleetcode-cncomproblemsshortest-subarray-with-sum-at-least-k"><a href="https://leetcode-cn.com/problems/shortest-subarray-with-sum-at-least-k/">862. 和至少为 K 的最短子数组</a></h4>
+<p>给你一个整数数组 <code>nums</code> 和一个整数 <code>k</code> ，找出 <code>nums</code> 中和至少为 <code>k</code> 的 <strong>最短非空子数组</strong> ，并返回该子数组的长度。如果不存在这样的 <strong>子数组</strong> ，返回 <code>-1</code> 。</p>
+<p><strong>子数组</strong> 是数组中 <strong>连续</strong> 的一部分。</p>
+<p><strong>示例 1：</strong></p>
+<pre><code>输入：nums = [1], k = 1
+输出：1
+</code></pre>
+<p><strong>示例 2：</strong></p>
+<pre><code>输入：nums = [1,2], k = 4
+输出：-1
+</code></pre>
+<p><strong>示例 3：</strong></p>
+<pre><code>输入：nums = [2,-1,2], k = 3
+输出：3
+</code></pre>
+<p><strong>提示：</strong></p>
+<ul>
+<li><code>1 &lt;= nums.length &lt;= 105</code></li>
+<li><code>-105 &lt;= nums[i] &lt;= 105</code></li>
+<li><code>1 &lt;= k &lt;= 109</code></li>
+</ul>
+<p>这题和上一题唯一的不同就是，<strong>nums中可能有负数，所以就不能简单的使用滑动窗口了，而是转而使用前缀和做，即求sum(y) - sum(x) &gt;= k,并保证，y - x最小</strong>，思路上有点像<a href="https://leetcode-cn.com/problems/minimum-operations-to-reduce-x-to-zero/">1658. 将 x 减到 0 的最小操作数</a></p>
+<pre><code class="language-java">public int shortestSubarray(int[] nums, int k) {
+    int n = nums.length, result = n + 1;
+    int[] sum = new int[n + 1];
+    for (int i = 0; i &lt; n; i++) {
+        sum[i + 1] = sum[i] + nums[i];
+    }
+    for (int i = 1; i &lt;= n; i++) {
+        for (int j = 0; j &lt;= i; j++) {
+            // 求使sum[i] - sum[j] &gt;= k 成立的最小的i - j
+            if (sum[i] - sum[j] &gt;= k) {
+                result = Math.min(i - j, result);
+            }
+        }
+    }
+    return result == n + 1 ? -1 : result;
+}}
+</code></pre>
+<p>这样子时间复杂度为O(n^2)需要优化，怎么优化呢？首先，对于固定的sum[i],有两种情况需要考虑</p>
+<ul>
+<li>内循环中，j1 &lt; j2,且sum[j1] &gt;= sum[j2] &amp;&amp; sum[i] - sum[j1] &gt;= k,则代表，j1 到 j2中有0或者负数，此时明显i - j2小于i - j1，因此可以看成，我们需要维护<strong>一个单调递增的队列</strong></li>
+<li>外循环中，<strong>当已经找到sum[i] - sum[j] &gt;= k，则此时再递增j也没有用了，因为要维持，i - j最小，意思就为当队尾元素 - 队首元素 &gt;= k 时，移除队首元素</strong></li>
+</ul>
+<pre><code class="language-java">public int shortestSubarray1(int[] nums, int k) {
+    int n = nums.length, result = n + 1;
+    long[] sum = new long[n + 1];
+    for (int i = 0; i &lt; n; i++) {
+        sum[i + 1] = sum[i] + nums[i];
+    }
+    Deque&lt;Integer&gt; deque = new LinkedList&lt;&gt;();
+    int right = 0;
+    while (right &lt; n + 1) {
+        // 维持单调递增队列
+        while (!deque.isEmpty() &amp;&amp; sum[right] &lt;= sum[deque.peekLast()]) {
+            deque.pollLast();
+        }
+        // 当队首元素已满足条件，移除队首元素
+        while (!deque.isEmpty() &amp;&amp; sum[right] - sum[deque.peekFirst()] &gt;= k) {
+            result = Math.min(right - deque.peekFirst(), result);
+            deque.pollFirst();
+        }
+        deque.offerLast(right);
+        right++;
+    }
+    return result == n + 1 ? -1 : result;
 }
 </code></pre>
 <h4 id="30-串联所有单词的子串httpsleetcode-cncomproblemssubstring-with-concatenation-of-all-words"><a href="https://leetcode-cn.com/problems/substring-with-concatenation-of-all-words/">30. 串联所有单词的子串</a></h4>
@@ -2078,6 +2373,259 @@ private int maxArraysDistance(int[] nums, int k) {
         }
     }
     return list;
+}
+</code></pre>
+<h3 id="双指针">双指针</h3>
+<p>这个概念其实比较宽泛，可以说二分法和滑动窗口都是双指针的应用</p>
+<h4 id="870-优势洗牌httpsleetcode-cncomproblemsadvantage-shuffle"><a href="https://leetcode-cn.com/problems/advantage-shuffle/">870. 优势洗牌</a></h4>
+<p>给定两个大小相等的数组 <code>A</code> 和 <code>B</code>，A 相对于 B 的<em>优势</em>可以用满足 <code>A[i] &gt; B[i]</code> 的索引 <code>i</code> 的数目来描述。</p>
+<p>返回 <code>A</code> 的<strong>任意</strong>排列，使其相对于 <code>B</code> 的优势最大化。</p>
+<p><strong>示例 1：</strong></p>
+<pre><code>输入：A = [2,7,11,15], B = [1,10,4,11]
+输出：[2,11,7,15]
+</code></pre>
+<p><strong>示例 2：</strong></p>
+<pre><code>输入：A = [12,24,8,32], B = [13,25,32,11]
+输出：[24,32,8,12]
+</code></pre>
+<p><strong>提示：</strong></p>
+<ol>
+<li><code>1 &lt;= A.length = B.length &lt;= 10000</code></li>
+<li><code>0 &lt;= A[i] &lt;= 10^9</code></li>
+<li><code>0 &lt;= B[i] &lt;= 10^9</code></li>
+</ol>
+<p>这个题目其实比较简单，田忌赛马类型，如果我方打不过，就选最弱的应战，如果打的过就选大的里面最小的</p>
+<pre><code class="language-java">public int[] advantageCount(int[] nums1, int[] nums2) {
+    Arrays.sort(nums1);
+    boolean[] isUsed = new boolean[nums1.length];
+    int[] result = new int[nums1.length];
+    int flag = 0;
+    int index = 0, j;
+    for (int i : nums2) {
+        for (j = index; j &lt; nums2.length; j++) {
+            // 如果发现有比i大的则直接选取
+            if (nums1[j] &gt; i &amp;&amp; !isUsed[j]) {
+                result[flag++] = nums1[j];
+                isUsed[j] = true;
+                break;
+            }
+        }
+        if (j == nums2.length) {
+            // 如果没有比i大的，则选取最小的
+            for (int k = index; k &lt; nums2.length; k++) {
+                if (!isUsed[k]) {
+                    result[flag++] = nums1[k];
+                    isUsed[k] = true;
+                    index = k + 1;
+                    break;
+                }
+            }
+        }
+
+    }
+    return result;
+}
+</code></pre>
+<p>但是这么写时间复杂太高了，复杂度，主要是因为，nums2的位置没有排序，那么想一下，如果nums2排序之后，该怎么比较呢，就很简单了，从后往前遍历，如果nums1[i] &gt; nums2[i] 那么就选当前元素，如果小于，那么就选nums1中最小的，所以我们需要做的就是把<strong>nums2也排序，但是需要记录下标</strong></p>
+<pre><code class="language-java">public int[] advantageCount1(int[] nums1, int[] nums2) {
+    Arrays.sort(nums1);
+    int length = nums1.length;
+    int[][] nums = new int[length][2];
+    // 二维数组，记录下nums的下标和值
+    for (int i = 0; i &lt; length; i++) {
+        nums[i][0] = i;
+        nums[i][1] = nums2[i];
+    }
+    // 按nums的值进行排序
+    Arrays.sort(nums, Comparator.comparingInt(a -&gt; a[1]));
+    int[] result = new int[length];
+    int left = 0, right = length - 1;
+    for (int i = length - 1; i &gt;= 0; i--) {
+        // 关键在于，对于nums2中的每一个元素，只有两种情况，一打的过，那么就选当前元素，打不过就选最小的
+        int index = nums[i][0], value = nums[i][1];
+        if (value &lt; nums1[right]) {
+            // 这里就是关键，打的过，那么index上，nums1就出当前元素
+            result[index] = nums1[right];
+            right--;
+        } else {
+            // 打不过，index位置上就选最小的
+            result[index] = nums1[left];
+            left++;
+        }
+    }
+    return result;
+}
+</code></pre>
+<h4 id="1-两数之和httpsleetcode-cncomproblemstwo-sum"><a href="https://leetcode-cn.com/problems/two-sum/">1. 两数之和</a></h4>
+<p>给定一个整数数组 <code>nums</code> 和一个整数目标值 <code>target</code>，请你在该数组中找出 <strong>和为目标值</strong> <em><code>target</code></em> 的那 <strong>两个</strong> 整数，并返回它们的数组下标。</p>
+<p>你可以假设每种输入只会对应一个答案。但是，数组中同一个元素在答案里不能重复出现。</p>
+<p>你可以按任意顺序返回答案。</p>
+<p><strong>示例 1：</strong></p>
+<pre><code>输入：nums = [2,7,11,15], target = 9
+输出：[0,1]
+解释：因为 nums[0] + nums[1] == 9 ，返回 [0, 1] 。
+</code></pre>
+<p><strong>示例 2：</strong></p>
+<pre><code>输入：nums = [3,2,4], target = 6
+输出：[1,2]
+</code></pre>
+<p><strong>示例 3：</strong></p>
+<pre><code>输入：nums = [3,3], target = 6
+输出：[0,1]
+</code></pre>
+<p><strong>提示：</strong></p>
+<ul>
+<li><code>2 &lt;= nums.length &lt;= 104</code></li>
+<li><code>-109 &lt;= nums[i] &lt;= 109</code></li>
+<li><code>-109 &lt;= target &lt;= 109</code></li>
+<li><strong>只会存在一个有效答案</strong></li>
+</ul>
+<p>这题经典第一题，使用hash表即可</p>
+<pre><code class="language-java">public int[] twoSum(int[] nums, int target) {
+    Map&lt;Integer, Integer&gt; hashtable = new HashMap&lt;Integer, Integer&gt;();
+    for (int i = 0; i &lt; nums.length; i++) {
+        if (hashtable.containsKey(target - nums[i])) {
+            return new int[]{hashtable.get(target - nums[i]), i};
+        }
+        hashtable.put(nums[i], i);
+    }
+    return new int[0];
+}
+</code></pre>
+<h4 id="15-三数之和httpsleetcode-cncomproblems3sum"><a href="https://leetcode-cn.com/problems/3sum/">15. 三数之和</a></h4>
+<p>给你一个包含 <code>n</code> 个整数的数组 <code>nums</code>，判断 <code>nums</code> 中是否存在三个元素 *a，b，c ，*使得 <em>a + b + c =</em> 0 ？请你找出所有和为 <code>0</code> 且不重复的三元组。</p>
+<p>**注意：**答案中不可以包含重复的三元组。</p>
+<p><strong>示例 1：</strong></p>
+<pre><code>输入：nums = [-1,0,1,2,-1,-4]
+输出：[[-1,-1,2],[-1,0,1]]
+</code></pre>
+<p><strong>示例 2：</strong></p>
+<pre><code>输入：nums = []
+输出：[]
+</code></pre>
+<p><strong>示例 3：</strong></p>
+<pre><code>输入：nums = [0]
+输出：[]
+</code></pre>
+<p><strong>提示：</strong></p>
+<ul>
+<li><code>0 &lt;= nums.length &lt;= 3000</code></li>
+<li><code>-105 &lt;= nums[i] &lt;= 105</code></li>
+</ul>
+<p>这题很简单，其实就是相当于是二数之和的升级版，需要注意的是，不能包含有重复的元素，因此需要去重，</p>
+<p>去重思路为，先排序，然后针对于，出现的重复元素，跳过就好，</p>
+<ul>
+<li>
+<p>思路：</p>
+<p>1、排序，保证不会有重复元素,</p>
+<p>「不重复」的本质是什么？我们保持三重循环的大框架不变，只需要保证：</p>
+<ul>
+<li>第二重循环枚举到的元素不小于当前第一重循环枚举到的元素</li>
+<li>第三重循环枚举到的元素不小于当前第二重循环枚举到的元素。</li>
+</ul>
+<p>也就是说，我们枚举的三元组 (a,b,c) 满足 a≤b≤c，保证了只有 (a,b,c) 这个顺序会被枚举到，而 (b,a,c)、(c,b,a) 等等这些不会，这样就减少了重复。要实现这一点，我们可以将数组中的元素从小到大进行排序，随后使用普通的三重循环就可以满足上面的要求。</p>
+<p>2、确定好一个元素后，第二个元素，顺着遍历，第三个元素逆着遍历，使用双指针，即n^3变成了n^2</p>
+</li>
+</ul>
+<pre><code class="language-java">public List&lt;List&lt;Integer&gt;&gt; threeSum(int[] nums) {
+    Arrays.sort(nums);
+    List&lt;List&lt;Integer&gt;&gt; result = new ArrayList&lt;&gt;();
+    int n = nums.length;
+    for(int i = 0; i &lt; n; i++) {
+        if(i &gt; 0 &amp;&amp; nums[i] == nums[i - 1]) {
+            continue;
+        }
+        int left = i + 1, right = n - 1;
+        while(left &lt; right) {
+            if(left &gt; i + 1 &amp;&amp; nums[left] == nums[left - 1]) {
+                left++;
+                continue;
+            }
+
+            int temp = nums[i] + nums[left] + nums[right];
+            if(temp &gt; 0) {
+                right--;
+            } else if(temp &lt; 0) {
+                left++;
+            } else {
+                List&lt;Integer&gt; list = new ArrayList&lt;&gt;();
+                list.add(nums[i]);
+                list.add(nums[left]);
+                list.add(nums[right]);
+                result.add(list);
+                right--;
+                left++;
+            }
+        }
+    }
+    return result;
+}
+</code></pre>
+<h4 id="18-四数之和httpsleetcode-cncomproblems4sum"><a href="https://leetcode-cn.com/problems/4sum/">18. 四数之和</a></h4>
+<p>给你一个由 <code>n</code> 个整数组成的数组 <code>nums</code> ，和一个目标值 <code>target</code> 。请你找出并返回满足下述全部条件且<strong>不重复</strong>的四元组 <code>[nums[a], nums[b], nums[c], nums[d]]</code> （若两个四元组元素一一对应，则认为两个四元组重复）：</p>
+<ul>
+<li><code>0 &lt;= a, b, c, d &lt; n</code></li>
+<li><code>a</code>、<code>b</code>、<code>c</code> 和 <code>d</code> <strong>互不相同</strong></li>
+<li><code>nums[a] + nums[b] + nums[c] + nums[d] == target</code></li>
+</ul>
+<p>你可以按 <strong>任意顺序</strong> 返回答案 。</p>
+<p><strong>示例 1：</strong></p>
+<pre><code>输入：nums = [1,0,-1,0,-2,2], target = 0
+输出：[[-2,-1,1,2],[-2,0,0,2],[-1,0,0,1]]
+</code></pre>
+<p><strong>示例 2：</strong></p>
+<pre><code>输入：nums = [2,2,2,2,2], target = 8
+输出：[[2,2,2,2]]
+</code></pre>
+<p><strong>提示：</strong></p>
+<ul>
+<li><code>1 &lt;= nums.length &lt;= 200</code></li>
+<li><code>-109 &lt;= nums[i] &lt;= 109</code></li>
+<li><code>-109 &lt;= target &lt;= 109</code></li>
+</ul>
+<p>这题则是一模一样只是多了层循环而已</p>
+<pre><code class="language-java">public List&lt;List&lt;Integer&gt;&gt; fourSum(int[] nums, int target) {
+    Arrays.sort(nums);
+    int length = nums.length;
+    List&lt;List&lt;Integer&gt;&gt; result = new ArrayList&lt;&gt;();
+    for (int i = 0; i &lt; length; i++) {
+        // 去重，选一个就好
+        if (i &gt; 0 &amp;&amp; nums[i] == nums[i - 1]) {
+            continue;
+        }
+        for (int j = i + 1; j &lt; length; j++) {
+            if (j &gt; i + 1 &amp;&amp; nums[j] == nums[j - 1]) {
+                continue;
+            }
+            int left = j + 1, right = length - 1;
+            while (left &lt; right) {
+                // 去重
+                if (left &gt; j + 1 &amp;&amp; nums[left] == nums[left - 1]) {
+                    left++;
+                    continue;
+                }
+                int sum = nums[i] + nums[j] + nums[left] + nums[right];
+                while (sum &gt; target &amp;&amp; left &lt; right) {
+                    sum -= nums[right];
+                    right--;
+                    sum += nums[right];
+                }
+                if (left == right) {
+                    break;
+                }
+                if (sum == target) {
+                    List&lt;Integer&gt; list = new ArrayList&lt;&gt;();
+                    list.add(nums[i]);
+                    list.add(nums[j]);
+                    list.add(nums[left]);
+                    list.add(nums[right]);
+                    result.add(list);
+                }
+                left++;
+            }
+        }
+    }
+    return result;
 }
 </code></pre>
 
