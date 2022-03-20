@@ -830,7 +830,7 @@ public @interface ConditionalOnProperty {
 </ul>
 <h4 id="snowflake雪花算法">snowflake(雪花算法)</h4>
 <p>​	雪花算法（Snowflake）是twitter公司内部分布式项目采用的ID生成算法，具体规则如下：</p>
-<p><img src="https://img-blog.csdnimg.cn/20200921220349644.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxOTc3ODM4,size_16,color_FFFFFF,t_70#pic_center" alt=""></p>
+<p><img src="watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxOTc3ODM4,size_16,color_FFFFFF,t_70#pic_center.png" alt=""></p>
 <ul>
 <li>1位，不用。二进制中最高位为1的都是负数，但是我们生成的id一般都使用整数，所以这个最高位固定是0</li>
 <li>41位，用来记录时间戳（毫秒）。 	- 41位可以表示 2^{41}-1 个数字，
