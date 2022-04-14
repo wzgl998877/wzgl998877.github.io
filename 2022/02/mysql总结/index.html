@@ -39,7 +39,7 @@
 <meta itemprop="name" content="Mysql总结">
 <meta itemprop="description" content="[TOC] 这篇文章主要对Mysql是怎样运行的进行提炼总结以及补充 MySQL 的存储引擎 常用的存储引擎有：ARCHIVE、BLACKHOLE、InnoDB、M"><meta itemprop="datePublished" content="2022-02-28T23:43:20+08:00" />
 <meta itemprop="dateModified" content="2022-02-28T23:43:20+08:00" />
-<meta itemprop="wordCount" content="22078">
+<meta itemprop="wordCount" content="27029">
 <meta itemprop="keywords" content="mysql," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Mysql总结"/>
 <meta name="twitter:description" content="[TOC] 这篇文章主要对Mysql是怎样运行的进行提炼总结以及补充 MySQL 的存储引擎 常用的存储引擎有：ARCHIVE、BLACKHOLE、InnoDB、M"/>
@@ -321,8 +321,8 @@
     <a class="article-tag-link" href="/tags/mysql/"> mysql </a>
   </span>
 
-		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 22078字</span>
-		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 45分 </span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 27029字</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 54分 </span>
       </div>
     </div>
     <div class="article-entry marked-body js-toc-content" itemprop="articleBody">
@@ -1191,6 +1191,128 @@ KEY idx_name (name(10))
 </ul>
 </li>
 </ol>
+<h2 id="极客时间">极客时间</h2>
+<h3 id="日志系统">日志系统</h3>
+<p>wal，物理日志redolog，逻辑日志binlog</p>
+<h4 id="wal">WAL</h4>
+<p>Wirte-Ahead Logging 先写日志，再写磁盘。</p>
+<p>具体来说，当有一条记录需要更新时，InnoDB先把记录写到redolog里面，并更新内存，这个时候更新就算完成了，同时，InnoDB会在合适的时候，将这个操作记录更新到磁盘</p>
+<h4 id="redolog">redolog</h4>
+<p><strong>重做日志</strong>，是InnoDB独有，大小是固定的，从头开始写，写到末尾就又回到开头循环写</p>
+<p><img src="16a7950217b3f0f4ed02db5db59562a7.png" alt="img"></p>
+<p>write pos 是当前记录的位置，一边写一边后移，写到第 3 号文件末尾后就回到 0 号文件开头。checkpoint 是当前要擦除的位置，也是往后推移并且循环的，擦除记录前要把记录更新到数据文件。</p>
+<p>write pos 和 checkpoint 之间的是“粉板”上还空着的部分，可以用来记录新的操作。如果 write pos 追上 checkpoint，表示“粉板”满了，这时候不能再执行新的更新，得停下来先擦掉一些记录，把 checkpoint 推进一下。</p>
+<p>有了 redo log，InnoDB 就可以保证即使数据库发生异常重启，之前提交的记录都不会丢失，这个能力称为 <strong>crash-safe</strong></p>
+<h4 id="回滚日志-undo-log">回滚日志 undo log</h4>
+<p>undo log顾名思义，主要就是提供了回滚的作用，但其还有另一个主要作用，就是多个行版本控制(MVCC)，保证事务的原子性。在数据修改的流程中，会记录一条与当前操作相反的逻辑日志到undo log中（可以认为当delete一条记录时，undo log中会记录一条对应的insert记录，反之亦然，当update一条记录时，它记录一条对应相反的update记录），如果因为某些原因导致事务异常失败了，可以借助该undo log进行回滚，保证事务的完整性，所以undo log也必不可少。</p>
+<h4 id="归档日志-binlog">归档日志 binlog</h4>
+<p>binlog在MySQL的server层产生，不属于任何引擎，主要记录用户对数据库操作的SQL语句（除了查询语句）。之所以将binlog称为归档日志，是因为binlog不会像redo log一样擦掉之前的记录循环写，而是一直记录（超过有效期才会被清理），如果超过单日志的最大值（默认1G，可以通过变量 max_binlog_size 设置），则会新起一个文件继续记录。但由于日志可能是基于事务来记录的(如InnoDB表类型)，而事务是绝对不可能也不应该跨文件记录的，如果正好binlog日志文件达到了最大值但事务还没有提交则不会切换新的文件记录，而是继续增大日志，所以 max_binlog_size 指定的值和实际的binlog日志大小不一定相等。</p>
+<h4 id="更新语句在mysql中执行流程">更新语句在mysql中执行流程</h4>
+<ol>
+<li>从内存中找出这条数据记录，对其进行更新；</li>
+<li>将对数据页的更改记录到redo log中；</li>
+<li>将逻辑操作记录到binlog中；</li>
+<li>对于内存中的数据和日志，都是由后台线程，当触发到落盘规则后再异步进行刷盘</li>
+</ol>
+<p>以update T set c=c+1 where id=2 为例，执行流程如下</p>
+<p><img src="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2020/5/21/172352cc00cc4425~tplv-t2oaga2asx-zoom-in-crop-mark:1304:0:0:0.awebp" alt="img"></p>
+<p>从图中可看出，事务的提交过程有两个阶段，<strong>就是将redo log的写入拆成了两个步骤：prepare和commit，中间再穿插写入binlog</strong>，这就叫两阶段提交</p>
+<p>两阶段提交虽然能够保证单事务两个日志的内容一致，但在多事务的情况下，却不能保证两者的提交顺序一致，比如下面这个例子，假设现在有3个事务同时提交：</p>
+<pre><code>T1 (--prepare--binlog---------------------commit)
+T2 (-----prepare-----binlog----commit)
+T3 (--------prepare-------binlog------commit)复制代码
+</code></pre>
+<p>由于binlog写入的顺序和redo log提交结束的顺序不一致，导致binlog和redo log所记录的事务提交结束的顺序不一样，最终导致的结果就是主从数据不一致。</p>
+<p>因此，在两阶段提交的流程基础上，还需要加一个锁来保证提交的原子性，从而保证多事务的情况下，两个日志的提交顺序一致。所以在早期的MySQL版本中，通过使用prepare_commit_mutex锁来保证事务提交的顺序，在一个事务获取到锁时才能进入prepare，一直到commit结束才能释放锁，下个事务才可以继续进行prepare操作。通过加锁虽然完美地解决了顺序一致性的问题，但在并发量较大的时候，就会导致对锁的争用，性能不佳。除了锁的争用会影响到性能之外，还有一个对性能影响更大的点，就是每个事务提交都会进行两次fsync（写磁盘），一次是redo log落盘，另一次是binlog落盘。大家都知道，写磁盘是昂贵的操作，对于普通磁盘，每秒的QPS大概也就是几百。</p>
+<h4 id="组提交">组提交</h4>
+<p><strong>问题：针对通过在两阶段提交中加锁控制事务提交顺序这种实现方式遇到的性能瓶颈问题，有没有更好的解决方案呢？</strong></p>
+<p>答案自然是有的，在MySQL 5.6 就引入了binlog组提交，即BLGC（Binary Log Group Commit）。binlog组提交的基本思想是，引入队列机制保证InnoDB commit顺序与binlog落盘顺序一致，并将事务分组，组内的binlog刷盘动作交给一个事务进行，实现组提交目的。具体如图：</p>
+<p><img src="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2020/5/21/172352cc00ec2f0c~tplv-t2oaga2asx-zoom-in-crop-mark:1304:0:0:0.awebp" alt="img"></p>
+<p><strong>第一阶段（prepare阶段）：</strong></p>
+<p>持有prepare_commit_mutex，并且write/fsync redo log到磁盘，设置为prepared状态，完成后就释放prepare_commit_mutex，binlog不作任何操作。</p>
+<p>第二个阶段（commit阶段）：这里拆分成了三步，每一步的任务分配给一个专门的线程处理：</p>
+<ol>
+<li>
+<p><strong>Flush Stage（写入binlog缓存）</strong></p>
+<p>① 持有Lock_log mutex [leader持有，follower等待]</p>
+<p>② 获取队列中的一组binlog(队列中的所有事务)</p>
+<p>③ 写入binlog缓存</p>
+</li>
+<li>
+<p><strong>Sync Stage（将binlog落盘）</strong></p>
+<p>①释放Lock_log mutex，持有Lock_sync mutex[leader持有，follower等待]</p>
+<p>②将一组binlog落盘（fsync动作，最耗时，假设sync_binlog为1）。</p>
+</li>
+<li>
+<p><strong>Commit Stage（InnoDB commit，清楚undo信息）</strong></p>
+<p>①释放Lock_sync mutex，持有Lock_commit mutex[leader持有，follower等待]</p>
+<p>② 遍历队列中的事务，逐一进行InnoDB commit</p>
+<p>③ 释放Lock_commit mutex</p>
+</li>
+</ol>
+<p>每个Stage都有自己的队列，队列中的第一个事务称为leader，其他事务称为follower，leader控制着follower的行为。每个队列各自有mutex保护，队列之间是顺序的。只有flush完成后，才能进入到sync阶段的队列中；sync完成后，才能进入到commit阶段的队列中。但是这三个阶段的作业是可以同时并发执行的，即当一组事务在进行commit阶段时，其他新事务可以进行flush阶段，实现了真正意义上的组提交，大幅度降低磁盘的IOPS消耗。</p>
+<p>针对组提交为什么比两阶段提交加锁性能更好，简单做个总结：组提交虽然在每个队列中仍然保留了prepare_commit_mutex锁，但是锁的粒度变小了，变成了原来两阶段提交的1/4，所以锁的争用性也会大大降低；另外，组提交是批量刷盘，相比之前的单条记录都要刷盘，能大幅度降低磁盘的IO消耗。</p>
+<h2 id="六数据恢复流程">六、数据恢复流程</h2>
+<p><strong>问题：假设事务提交过程中，MySQL进程突然奔溃，重启后是怎么保证数据不丢失的？</strong></p>
+<p>下图就是MySQL重启后，提供服务前会先做的事 &ndash; 恢复数据的流程：</p>
+<p><img src="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2020/5/21/172352cc015ee94a~tplv-t2oaga2asx-zoom-in-crop-mark:1304:0:0:0.awebp" alt="img"></p>
+<p>对上图进行简单描述就是：奔溃重启后会检查redo log中是完整并且处于prepare状态的事务，然后根据XID（事务ID），从binlog中找到对应的事务，如果找不到，则回滚；找到并且事务完整则重新commit redo log，完成事务的提交。</p>
+<p>下面我们根据事务提交流程，在不同的阶段时刻，看看MySQL突然奔溃后，按照上述流程是如何恢复数据的。</p>
+<ol>
+<li>
+<p><strong>时刻A</strong>（刚在内存中更改完数据页，还没有开始写redo log的时候奔溃）：</p>
+<p>因为内存中的脏页还没刷盘，也没有写redo log和binlog，即这个事务还没有开始提交，所以奔溃恢复跟该事务没有关系；</p>
+</li>
+<li>
+<p><strong>时刻B</strong>（正在写redo log或者已经写完redo log并且落盘后，处于prepare状态，还没有开始写binlog的时候奔溃）：</p>
+<p>恢复后会判断redo log的事务是不是完整的，如果不是则根据undo log回滚；如果是完整的并且是prepare状态，则进一步判断对应的事务binlog是不是完整的，如果不完整则一样根据undo log进行回滚；</p>
+</li>
+<li>
+<p><strong>时刻C</strong>（正在写binlog或者已经写完binlog并且落盘了，还没有开始commit redo log的时候奔溃）：</p>
+<p>恢复后会跟时刻B一样，先检查redo log中是完整并且处于prepare状态的事务，然后判断对应的事务binlog是不是完整的，如果不完整则一样根据undo log回滚，完整则重新commit redo log；</p>
+</li>
+<li>
+<p><strong>时刻D</strong>（正在commit redo log或者事务已经提交完的时候，还没有反馈成功给客户端的时候奔溃）：</p>
+<p>恢复后跟时刻C基本一样，都会对照redo log和binlog的事务完整性，来确认是回滚还是重新提交。</p>
+</li>
+</ol>
+<h3 id="选择普通索引还是唯一索引">选择普通索引还是唯一索引？</h3>
+<ul>
+<li>对于查询过程来说：
+a、普通索引，查到满足条件的第一个记录后，继续查找下一个记录，直到第一个不满足条件的记录
+b、唯一索引，由于索引唯一性，查到第一个满足条件的记录后，停止检索
+但是，两者的性能差距微乎其微。因为InnoDB根据数据页来读写的。</li>
+<li>对于更新过程来说：
+概念：change buffer
+当需要更新一个数据页，如果数据页在内存中就直接更新，如果不在内存中，在不影响数据一致性的前提下，InnoDB会将这些更新操作缓存在change buffer中。下次查询需要访问这个数据页的时候，将数据页读入内存，然后执行change buffer中的与这个页有关的操作。</li>
+</ul>
+<blockquote>
+<p>change buffer: 是可以持久化的数据。在内存中有拷贝，也会被写入到磁盘上</p>
+<p>merge: 将change buffer中的操作应用到原数据页上，得到最新结果的过程，称为merge
+<strong>访问这个数据页会触发merge，系统有后台线程定期merge，在数据库正常关闭的过程中，也会执行merge</strong></p>
+<p>唯一索引的更新不能使用change buffer</p>
+<p>change buffer用的是buffer pool里的内存，change buffer的大小，可以通过参数innodb_change_buffer_max_size来动态设置。这个参数设置为50的时候，表示change buffer的大小最多只能占用buffer pool的50%。</p>
+<p>将数据从磁盘读入内存涉及随机IO的访问，是数据库里面成本最高的操作之一。
+change buffer 因为减少了随机磁盘访问，所以对更新性能的提升很明显。</p>
+</blockquote>
+<ul>
+<li>change buffer使用场景
+在一个数据页做merge之前，change buffer记录的变更越多，收益就越大。
+对于<strong>写多读少</strong>的业务来说，页面在写完以后马上被访问到的概率比较小，此时change buffer的使用效果最好。这种业务模型常见的就是账单类、日志类的系统。反过来，假设一个业务的更新模式是写<strong>入之后马上会做查询</strong>，那么即使满足了条件，将更新先记录在change buffer,但之后由于马上要访问这个数据页，会立即触发merge过程。这样随机访问IO的次数不会减少，反而增加了change buffer的维护代价。所以，对于这种业务模式来说，change buffer反而起到了副作用。</li>
+</ul>
+<p>索引的选择和实践：
+尽可能使用普通索引。
+redo log主要节省的是随机写磁盘的IO消耗(转成顺序写)，而change buffer主要节省的则是随机读磁盘的IO消耗。</p>
+<h4 id="change-buffe数据是否会丢失">change buffe数据是否会丢失</h4>
+<p>1.change buffer有一部分在内存有一部分在ibdata.
+做purge操作,应该就会把change buffer里相应的数据持久化到ibdata
+2.redo log里记录了数据页的修改以及change buffer新写入的信息
+如果掉电,持久化的change buffer数据已经purge,不用恢复。主要分析没有持久化的数据
+情况又分为以下几种:
+(1)change buffer写入,redo log虽然做了fsync但未commit,binlog未fsync到磁盘,这部分数据丢失
+(2)change buffer写入,redo log写入但没有commit,binlog以及fsync到磁盘,先从binlog恢复redo log,再从redo log恢复change buffer
+(3)change buffer写入,redo log和binlog都已经fsync.那么直接从redo log里恢复。</p>
+<p>change buffer不会丢失，因为change buffer是可以持久化的数据，在磁盘上占据了系统表空间ibdata，对应的内部系统表名为SYS_IBUF_TABLE。因此在异常关机的时候，不会丢失。</p>
 
     </div>
     <div class="article-footer">
