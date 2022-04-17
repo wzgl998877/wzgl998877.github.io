@@ -39,7 +39,7 @@
 <meta itemprop="name" content="Mysql总结">
 <meta itemprop="description" content="[TOC] 这篇文章主要对Mysql是怎样运行的进行提炼总结以及补充 MySQL 的存储引擎 常用的存储引擎有：ARCHIVE、BLACKHOLE、InnoDB、M"><meta itemprop="datePublished" content="2022-02-28T23:43:20+08:00" />
 <meta itemprop="dateModified" content="2022-02-28T23:43:20+08:00" />
-<meta itemprop="wordCount" content="27029">
+<meta itemprop="wordCount" content="33295">
 <meta itemprop="keywords" content="mysql," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Mysql总结"/>
 <meta name="twitter:description" content="[TOC] 这篇文章主要对Mysql是怎样运行的进行提炼总结以及补充 MySQL 的存储引擎 常用的存储引擎有：ARCHIVE、BLACKHOLE、InnoDB、M"/>
@@ -321,8 +321,8 @@
     <a class="article-tag-link" href="/tags/mysql/"> mysql </a>
   </span>
 
-		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 27029字</span>
-		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 54分 </span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 33295字</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 67分 </span>
       </div>
     </div>
     <div class="article-entry marked-body js-toc-content" itemprop="articleBody">
@@ -1177,13 +1177,26 @@ KEY idx_name (name(10))
 <li>
 <p>在使用索引时需要注意下边这些事项：</p>
 <ul>
-<li>只为用于搜索、排序或分组的列创建索引</li>
-<li>为列的基数大的列创建索引</li>
-<li>索引列的类型尽量小</li>
-<li>可以只对字符串值的前缀建立索引</li>
-<li>只有索引列在比较表达式中单独出现才可以适用索引</li>
-<li>为了尽可能少的让聚簇索引发生页面分裂和记录移位的情况，主键一定要依次递增。</li>
-<li>定位并删除表中的重复和冗余索引
+<li>
+<p>只为用于搜索、排序或分组的列创建索引</p>
+</li>
+<li>
+<p>为列的基数大的列创建索引</p>
+</li>
+<li>
+<p>索引列的类型尽量小</p>
+</li>
+<li>
+<p>可以只对字符串值的前缀建立索引</p>
+</li>
+<li>
+<p>只有索引列在比较表达式中单独出现才可以适用索引</p>
+</li>
+<li>
+<p>为了尽可能少的让聚簇索引发生页面分裂和记录移位的情况，主键一定要依次递增。</p>
+</li>
+<li>
+<p>定位并删除表中的重复和冗余索引</p>
 <ul>
 <li>尽量使用覆盖索引进行查询，避免回表带来的性能损耗。</li>
 </ul>
@@ -1191,6 +1204,130 @@ KEY idx_name (name(10))
 </ul>
 </li>
 </ol>
+<h2 id="mysql中的锁">mysql中的锁</h2>
+<p><strong>按锁的使用方式可以分为共享锁和独占锁</strong>，<strong>按锁的粒度可以分为表锁、行锁、页锁</strong></p>
+<h3 id="共享锁和独占锁">共享锁和独占锁</h3>
+<ul>
+<li>共享锁，英文名： Shared Locks ，简称S锁。<strong>在事务要读取一条记录时，需要先获取该记录的S锁</strong>。</li>
+<li>独占锁，也常称排他锁，英文名： Exclusive Locks ，简称X锁。<strong>在事务要改动一条记录时，需要先获取该记录的X锁。</strong></li>
+</ul>
+<p>假如事务T1 首先获取了一条记录的S锁之后，事务T2 接着也要访问这条记录：</p>
+<ul>
+<li>如果事务T2 想要再获取一个记录的S锁，那么事务T2 也会获得该锁，也就意味着事务T1 和T2 在该记录上同时持有S锁。</li>
+<li>如果事务T2 想要再获取一个记录的X锁，那么此操作会被阻塞，直到事务T1 提交之后将S锁释放掉。</li>
+<li>如果事务T1 首先获取了一条记录的X锁之后，那么不管事务T2 接着想获取该记录的S锁还是X锁都会被阻塞，直到事务T1 提交。</li>
+</ul>
+<p>所以我们说<strong>S锁和S锁是兼容的， S锁和X锁是不兼容的， X锁和X锁也是不兼容的</strong></p>
+<p>给表加的锁也可以分为共享锁（ S锁）和独占锁（ X锁）</p>
+<p>如果一个事务给表加了S锁，那么：</p>
+<ul>
+<li>别的事务可以继续获得该表的S锁</li>
+<li>别的事务可以继续获得该表中的某些记录的S锁(行锁)</li>
+<li>别的事务不可以继续获得该表的X锁</li>
+<li>别的事务不可以继续获得该表中的某些记录的X锁(行锁)</li>
+</ul>
+<p>给表加X锁：如果一个事务给表加了X锁（意味着该事务要独占这个表），那么：</p>
+<ul>
+<li>别的事务不可以继续获得该表的S锁</li>
+<li>别的事务不可以继续获得该表中的某些记录的S锁(行锁)</li>
+<li>别的事务不可以继续获得该表的X锁</li>
+<li>别的事务不可以继续获得该表中的某些记录的X锁(行锁)</li>
+</ul>
+<p>在对表上表锁时有两个问题：</p>
+<ul>
+<li>对表整体上S锁，需要判断是否存在行 X锁</li>
+<li>对表整体上X锁，需要判断是否存在行 X锁，行S锁</li>
+</ul>
+<p>在对表上表锁时，怎么知道表里是否存在行锁呢？于是乎设计InnoDB 的大叔们提出了一种称之为意向锁（英文名： Intention Locks ）：</p>
+<ul>
+<li>意向共享锁，英文名： Intention Shared Lock ，简称IS锁。当事务准备在某条记录上加S锁时，需要先在<strong>表级别</strong>加一个IS锁。</li>
+<li>意向独占锁，英文名： Intention Exclusive Lock ，简称IX锁。当事务准备在某条记录上加X锁时，需要先在<strong>表级别</strong>加一个IX锁。</li>
+</ul>
+<p>总结一下：<strong>IS、IX锁是表级锁，它们的提出仅仅为了在之后加表级别的S锁和X锁时可以快速判断表中的记录是否被上锁，以避免用遍历的方式来查看表中有没有上锁的记录，也就是说其实IS锁和IX锁是兼容的，IX锁和IX锁是兼容的</strong></p>
+<h3 id="表锁">表锁</h3>
+<p>对于MyISAM 、MEMORY 、MERGE 这些存储引擎来说，它们只支持<strong>表级锁</strong>，而且这些<strong>引擎并不支持事务</strong>，所以使用这些存储引擎的锁一般都是针对当前会话来说的。比方说在Session 1 中对一个表执行SELECT 操作，就相当于为这个表加了一个表级别的S锁，如果在SELECT 操作未完成时， Session 2 中对这个表执行UPDATE 操作，相当于要获取表的X锁，此操作会被阻塞，直到Session 1 中的SELECT 操作完成，释放掉表级别的S锁后，Session 2 中对这个表执行UPDATE 操作才能继续获取X锁，然后执行具体的更新语句。</p>
+<h4 id="innodb存储引擎中的锁">InnoDB存储引擎中的锁</h4>
+<p>InnoDB 存储引擎既支持表锁，也支持行锁。表锁实现简单，占用资源较少，不过粒度很粗，有时候你仅仅需要锁住几条记录，但使用表锁的话相当于为表中的所有记录都加锁，所以性能比较差。行锁粒度更细，可以实现更精准的并发控制。</p>
+<ul>
+<li>
+<p>表级别的S锁、X锁</p>
+<p>在对某个表执行一些诸如ALTER TABLE 、DROP TABLE 这类的DDL 语句时，其他事务对这个表并发执行诸如SELECT 、INSERT 、DELETE 、UPDATE 的语句会发生阻塞，同理，某个事务中对某个表执行SELECT 、INSERT 、DELETE 、UPDATE 语句时，在其他会话中对这个表执行DDL 语句也会发生阻塞。这个过程其实是通过在server层使用一种称之为元数据锁（英文名： Metadata Locks ，简称MDL ）东东来实现的，一般情况下也不会使用InnoDB 存储引擎自己提供的表级别的S锁和X锁。其实这个InnoDB 存储引擎提供的表级S锁或者X锁是相当鸡肋，只会在一些特殊情况下，比方说崩溃恢复过程中用到。不过我们还是可以手动获取一下的，比方说在系统变量autocommit=0，innodb_table_locks =1 时，手动获取InnoDB 存储引擎提供的表t 的S锁或者X锁可以这么写：</p>
+<pre><code class="language-sql">LOCK TABLES t READ ： InnoDB 存储引擎会对表t 加表级别的S锁。
+LOCK TABLES t WRITE ： InnoDB 存储引擎会对表t 加表级别的X锁。
+</code></pre>
+</li>
+<li>
+<p>表级别的IS锁、IX锁</p>
+<p>当我们在对使用InnoDB 存储引擎的表的某些记录加S锁(行锁)之前，那就需要先在表级别加一个IS锁，当我们在对使用InnoDB 存储引擎的表的某些记录加X锁(行锁)之前，那就需要先在表级别加一个IX锁。IS锁和IX锁的使命只是为了后续在加表级别的S锁和X锁时判断表中是否有已经被加锁的记录，以避免用遍历的方式来查看表中有没有上锁的记录</p>
+</li>
+<li>
+<p>表级别的AUTO-INC锁</p>
+<p>在使用MySQL 过程中，我们可以为表的某个列添加AUTO_INCREMENT 属性，之后在插入记录时，可以不指定该列的值，系统会自动为它赋上递增的值，系统实现这种自动给AUTO_INCREMENT 修饰的列递增赋值的原理主要是两个：</p>
+<ul>
+<li>
+<p>采用AUTO-INC 锁，也就是在执行插入语句时就在表级别加一个AUTO-INC 锁，然后为每条待插入记录的AUTO_INCREMENT 修饰的列分配递增的值，在该语句执行结束后，再把AUTO-INC 锁释放掉。这样一个事务在持有AUTO-INC 锁的过程中，其他事务的插入语句都要被阻塞，可以保证一个语句中分配的递增值是连续的。如果我们的插入语句在执行前不可以确定具体要插入多少条记录（<strong>无法预计即将插入记录的数量</strong>），比方说使用INSERT &hellip; SELECT 、REPLACE &hellip; SELECT 或者LOAD DATA 这种插入语句，一般是使用AUTO-INC 锁为AUTO_INCREMENT 修饰的列生成对应的值。</p>
+</li>
+<li>
+<p>采用一个轻量级的锁，<strong>在为插入语句生成AUTO_INCREMENT 修饰的列的值时获取一下这个轻量级锁</strong>，然后生成本次插入语句需要用到的AUTO_INCREMENT 列的值之后，就<strong>把该轻量级锁释放掉</strong>，并不需要等到整个插入语句执行完才释放锁。如果我们的插入语句在执行前就可以确定具体要插入多少条记录，比方说我们上边举的关于表t 的例子
+中，在语句执行前就可以确定要插入2条记录，那么一般采用轻量级锁的方式对AUTO_INCREMENT 修饰的列进行赋值。这种方式可以避免锁定表，可以提升插入性能。</p>
+<blockquote>
+<p>设计InnoDB的大叔提供了一个称之为innodb_autoinc_lock_mode的系统变量来控制到底使用上述两种方式中的哪种来为AUTO_INCREMENT修饰的列进行赋值，</p>
+<p>当innodb_autoinc_lock_mode值为0时，一律采用AUTO-INC锁；</p>
+<p>当innodb_autoinc_lock_mode值为2时，一律采用轻量级锁；</p>
+<p>当innodb_autoinc_lock_mode值为1时，两种方式混着来（也就是在插入记录数量确定时采用轻量级锁，不确定时使用AUTO-INC锁）。不过当innodb_autoinc_lock_mode值为2时，可能会造成不同事务中的插入语句为AUTO_INCREMENT修饰的列生成的值是交叉的，在有主从复制的场景中是不安全的。</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="行锁">行锁</h3>
+<p>行锁，也称为记录锁，顾名思义就是<strong>在记录上加的锁</strong>。不过设计InnoDB 的大叔很有才，一个行锁玩出了各种花样，也就是把行锁分成了各种类型。换句话说即使对同一条记录加行锁，如果类型不同，起到的功效也是不同的</p>
+<ul>
+<li>
+<p>Record Locks ：</p>
+<p><strong>单个行记录上的锁</strong> Record Lock总是会去锁住索引记录，如果InnoDB存储引擎表建立的时候没有设置任何一个索引，这时InnoDB存储引擎会使用隐式的主键来进行锁定</p>
+</li>
+<li>
+<p>Gap Locks 间隙锁</p>
+<p>我们说MySQL 在REPEATABLE READ 隔离级别下是可以解决幻读问题的，解决方案有两种，可以使用MVCC 方案解决，也可以采用加锁方案解决。但是在使用加锁方案解决时有个大问题，就是事务在第一次执行读取操作时，那些幻影记录尚不存在，我们无法给这些幻影记录加上Record Lock。不过这难不倒设计InnoDB 的
+大叔，他们提出了一种称之为Gap Locks 的锁，官方的类型名称为： LOCK_GAP ，我们也可以简称为gap锁。比方说我们把number 值为8 的那条记录加一个gap锁的示意图如下：</p>
+</li>
+</ul>
+<p><img src="image-20220210152223731.png" alt="image-20220210152223731"></p>
+<p>如图中为number 值为8 的记录加了gap锁，意味着不允许别的事务在number 值为8 的记录前边的间隙插入新记录，其实就是number 列的值(3, 8) 这个区间的新记录是不允许立即插入的。比方说有另外一个事务再想插入一条number 值为4 的新记录，它定位到该条新记录的下一条记录的number 值为8，而这条记录上又有一个gap锁，所以就会阻塞插入操作，直到拥有这个gap锁的事务提交了之后， number 列的值在区间(3, 8) 中的新记录才可以被插入。
+这个gap锁的提出<strong>仅仅是为了防止插入幻影记录而提出的</strong>，虽然有共享gap锁和独占gap锁这样的说法，但是它们起到的作用都是相同的。而且如果你对一条记录加了gap锁（不论是共享gap锁还是独占gap锁），并不会限制其他事务对这条记录加正经记录锁或者继续加gap锁</p>
+<ul>
+<li>
+<p>Next-Key Locks</p>
+<p>有时候我们既想<strong>锁住某条记录，又想阻止其他事务在该记录前边的间隙插入新记录</strong>，所以设计InnoDB 的大叔们就提出了一种称之为Next-Key Locks 的锁，官方的类型名称为： LOCK_ORDINARY ，我们也可以简称为next-key锁。比方说我们把number 值为8 的那条记录加一个next-key锁的示意图如下：</p>
+</li>
+</ul>
+<p><img src="image-20220210152631875.png" alt="image-20220210152631875"></p>
+<ul>
+<li>
+<p>Insert Intention Locks</p>
+<p>我们说一个事务在插入一条记录时需要判断一下插入位置是不是被别的事务加了所谓的gap锁（ next-key锁也包含gap锁，后边就不强调了），如果有的话，插入操作需要等待，直到拥有gap锁的那个事务提交。设计InnoDB 的大叔规定事务在等待的时候也需要在内存中生成一个锁结构，表明有事务想在某个间隙中插入新记录，但是现在在等待。把这种类型的锁命名为Insert Intention Locks ，官方的类型名称为： LOCK_INSERT_INTENTION ，我们也可以称为<strong>插入意向锁</strong></p>
+<p>比方说现在T1 为number 值为8 的记录加了一个gap锁，然后T2 和T3 分别想向hero 表中插入number 值分别为4 、5 的两条记录，所以现在为number 值为8 的记录加的锁的示意图就如下所示：</p>
+<p><img src="image-20220210152955329.png" alt="image-20220210152955329"></p>
+</li>
+</ul>
+<p>从图中可以看到，由于T1 持有gap锁，所以T2 和T3 需要生成一个插入意向锁的锁结构并且处于等待状态。当T1 提交后会把它获取到的锁都释放掉，这样T2 和T3 就能获取到对应的插入意向锁了（本质上就是把插入意向锁对应锁结构的is_waiting 属性改为false ）， T2 和T3 之间也并不会相互阻塞，它们可以同时获取到number 值为8的插入意向锁，然后执行插入操作。事实上<strong>插入意向锁并不会阻止别的事务继续获取该记录上任何类型的锁</strong>（ 插入意向锁就是这么鸡肋）。</p>
+<ul>
+<li>
+<p>隐式锁</p>
+<p>我们前边说一个事务在执行INSERT 操作时，如果即将插入的间隙已经被其他事务加了gap锁，那么本次INSERT 操作会阻塞，并且当前事务会在该间隙上加一个插入意向锁，否则一般情况下INSERT 操作是不加锁的。那如果一个事务首先插入了一条记录（此时并没有与该记录关联的锁结构），然后另一个事务</p>
+<ul>
+<li>立即使用SELECT &hellip; LOCK IN SHARE MODE 语句读取这条事务，也就是在要获取这条记录的S锁，或者使用SELECT &hellip; FOR UPDATE 语句读取这条事务或者直接修改这条记录，也就是要获取这条记录的X锁，该咋办？如果允许这种情况的发生，那么可能产生<strong>脏读</strong>问题。</li>
+<li>立即修改这条记录，也就是要获取这条记录的X锁，该咋办？
+如果允许这种情况的发生，那么可能产生<strong>脏写</strong>问题。
+这时候我们前边唠叨了很多遍的事务id 又要起作用了。我们把聚簇索引和二级索引中的记录分开看一下：</li>
+<li>情景一：对于聚簇索引记录来说，<strong>有一个trx_id 隐藏列，该隐藏列记录着最后改动该记录的事务id</strong> 。
+那么如果在当前事务中新插入一条聚簇索引记录后，该记录的trx_id 隐藏列代表的的就是当前事务的事务id ，<strong>如果其他事务此时想对该记录添加S锁或者X锁时，首先会看一下该记录的trx_id 隐藏列代表的事务是否是当前的活跃事务，如果是的话，那么就帮助当前事务创建一个X锁（也就是为当前事务创建一个锁结构， is_waiting 属性是false ），然后自己进入等待状态（也就是为自己也创建一个锁结构，is_waiting 属性是true ）</strong>。</li>
+<li>情景二：对于二级索引记录来说，本身并没有trx_id 隐藏列，但是在<strong>二级索引页面的Page Header 部分有一个PAGE_MAX_TRX_ID 属性，该属性代表对该页面做改动的最大的事务id</strong> ，如果<strong>PAGE_MAX_TRX_ID 属性值小于当前最小的活跃事务id ，那么说明对该页面做修改的事务都已经提交了，否则就需要在页面中定位到对应的二级索引记录，然后回表找到它对应的聚簇索引记录</strong>，然后再重复情景一的做法。</li>
+</ul>
+</li>
+</ul>
+<p><strong>一个事务对新插入的记录可以不显式的加锁</strong>（生成一个锁结构），但是由于事务id 这个牛逼的东东的存在，相当于加了一个<strong>隐式锁</strong>。<strong>别的事务在对这条记录加S锁或者X锁时，由于隐式锁的存在，会先帮助当前事务生成一个锁结构，然后自己再生成一个锁结构后进入等待状态</strong>。</p>
 <h2 id="极客时间">极客时间</h2>
 <h3 id="日志系统">日志系统</h3>
 <p>wal，物理日志redolog，逻辑日志binlog</p>
@@ -1198,7 +1335,8 @@ KEY idx_name (name(10))
 <p>Wirte-Ahead Logging 先写日志，再写磁盘。</p>
 <p>具体来说，当有一条记录需要更新时，InnoDB先把记录写到redolog里面，并更新内存，这个时候更新就算完成了，同时，InnoDB会在合适的时候，将这个操作记录更新到磁盘</p>
 <h4 id="redolog">redolog</h4>
-<p><strong>重做日志</strong>，是InnoDB独有，大小是固定的，从头开始写，写到末尾就又回到开头循环写</p>
+<p><strong>重做日志</strong>,<strong>物理格式的日志，记录的是物理数据页面的修改的信息</strong></p>
+<p>作用：确保事务的持久性。防止在发生故障的时间点，尚有脏页未写入磁盘，在重启 mysql 服务的时候，根据 redo log 进行重做，从而达到事务的持久性这一特性。是InnoDB独有，<strong>大小是固定的，从头开始写，写到末尾就又回到开头循环写</strong></p>
 <p><img src="16a7950217b3f0f4ed02db5db59562a7.png" alt="img"></p>
 <p>write pos 是当前记录的位置，一边写一边后移，写到第 3 号文件末尾后就回到 0 号文件开头。checkpoint 是当前要擦除的位置，也是往后推移并且循环的，擦除记录前要把记录更新到数据文件。</p>
 <p>write pos 和 checkpoint 之间的是“粉板”上还空着的部分，可以用来记录新的操作。如果 write pos 追上 checkpoint，表示“粉板”满了，这时候不能再执行新的更新，得停下来先擦掉一些记录，把 checkpoint 推进一下。</p>
@@ -1206,6 +1344,11 @@ KEY idx_name (name(10))
 <h4 id="回滚日志-undo-log">回滚日志 undo log</h4>
 <p>undo log顾名思义，主要就是提供了回滚的作用，但其还有另一个主要作用，就是多个行版本控制(MVCC)，保证事务的原子性。在数据修改的流程中，会记录一条与当前操作相反的逻辑日志到undo log中（可以认为当delete一条记录时，undo log中会记录一条对应的insert记录，反之亦然，当update一条记录时，它记录一条对应相反的update记录），如果因为某些原因导致事务异常失败了，可以借助该undo log进行回滚，保证事务的完整性，所以undo log也必不可少。</p>
 <h4 id="归档日志-binlog">归档日志 binlog</h4>
+<ul>
+<li>作用：用于复制，在主从复制中，从库利用主库上的 binlog 进行重播，实现主从同步。 用于数据库的基于时间点的还原。</li>
+<li>内容：逻辑格式的日志，可以简单认为就是执行过的事务中的 sql 语句。但又不完全是 sql 语句这么简单，而是包括了执行的 sql 语句（增删改）反向的信息，也就意味着 delete 对应着 delete 本身和其反向的 insert；update 对应着 update 执行前后的版本的信息；insert 对应着 delete 和 insert 本身的信息。</li>
+<li>binlog 有三种模式：Statement（基于 SQL 语句的复制）、Row（基于行的复制） 以及 Mixed（混合模式）</li>
+</ul>
 <p>binlog在MySQL的server层产生，不属于任何引擎，主要记录用户对数据库操作的SQL语句（除了查询语句）。之所以将binlog称为归档日志，是因为binlog不会像redo log一样擦掉之前的记录循环写，而是一直记录（超过有效期才会被清理），如果超过单日志的最大值（默认1G，可以通过变量 max_binlog_size 设置），则会新起一个文件继续记录。但由于日志可能是基于事务来记录的(如InnoDB表类型)，而事务是绝对不可能也不应该跨文件记录的，如果正好binlog日志文件达到了最大值但事务还没有提交则不会切换新的文件记录，而是继续增大日志，所以 max_binlog_size 指定的值和实际的binlog日志大小不一定相等。</p>
 <h4 id="更新语句在mysql中执行流程">更新语句在mysql中执行流程</h4>
 <ol>
@@ -1252,7 +1395,7 @@ T3 (--------prepare-------binlog------commit)复制代码
 </ol>
 <p>每个Stage都有自己的队列，队列中的第一个事务称为leader，其他事务称为follower，leader控制着follower的行为。每个队列各自有mutex保护，队列之间是顺序的。只有flush完成后，才能进入到sync阶段的队列中；sync完成后，才能进入到commit阶段的队列中。但是这三个阶段的作业是可以同时并发执行的，即当一组事务在进行commit阶段时，其他新事务可以进行flush阶段，实现了真正意义上的组提交，大幅度降低磁盘的IOPS消耗。</p>
 <p>针对组提交为什么比两阶段提交加锁性能更好，简单做个总结：组提交虽然在每个队列中仍然保留了prepare_commit_mutex锁，但是锁的粒度变小了，变成了原来两阶段提交的1/4，所以锁的争用性也会大大降低；另外，组提交是批量刷盘，相比之前的单条记录都要刷盘，能大幅度降低磁盘的IO消耗。</p>
-<h2 id="六数据恢复流程">六、数据恢复流程</h2>
+<h4 id="数据恢复流程">数据恢复流程</h4>
 <p><strong>问题：假设事务提交过程中，MySQL进程突然奔溃，重启后是怎么保证数据不丢失的？</strong></p>
 <p>下图就是MySQL重启后，提供服务前会先做的事 &ndash; 恢复数据的流程：</p>
 <p><img src="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2020/5/21/172352cc015ee94a~tplv-t2oaga2asx-zoom-in-crop-mark:1304:0:0:0.awebp" alt="img"></p>
@@ -1313,6 +1456,31 @@ redo log主要节省的是随机写磁盘的IO消耗(转成顺序写)，而chang
 (2)change buffer写入,redo log写入但没有commit,binlog以及fsync到磁盘,先从binlog恢复redo log,再从redo log恢复change buffer
 (3)change buffer写入,redo log和binlog都已经fsync.那么直接从redo log里恢复。</p>
 <p>change buffer不会丢失，因为change buffer是可以持久化的数据，在磁盘上占据了系统表空间ibdata，对应的内部系统表名为SYS_IBUF_TABLE。因此在异常关机的时候，不会丢失。</p>
+<h3 id="mysql-countcount字段count1的区别">Mysql count(*)，count(字段)，count(1)的区别</h3>
+<p>基于 InnoDB。</p>
+<ul>
+<li>
+<p>含义区别</p>
+<p>count()是一个聚合函数，对于返回的结果集，会逐行判断，若返回的不是 NULL，就会加 1，否则不加。</p>
+<p>因此，count(*)、count(主键 id)和count(1)都表示返回满足条件的结果集的<strong>总行数</strong>；而count(字段），则表示返回满足条件的数据行里面，参数“字段”不为 NULL 的总个数。</p>
+</li>
+<li>
+<p>性能区别</p>
+<p>分析性能，考虑以下几个原则：</p>
+<p>1、server 层要什么就会返回什么；</p>
+<p>2、InnoDB 只返回必要的值；</p>
+<p>3、优化器只优化了count(*)</p>
+<ul>
+<li>对于count(主键id)，InnoDB 会遍历全表，取每行的主键 id，返回给 server 层，server 层拿到数据后，进行判断累加。</li>
+<li>对于count(1)，InnoDB 仍遍历全表，但是不取值，server 层对返回的每一行数据新增一个 1，然后进行判断累加；因此，count(1)要更快些，因为无需取值。从引擎返回 id 会涉及到解析数据行，以及拷贝字段值的操作。</li>
+<li>对于count(字段)：如果这个“字段”是定义为 not null 的话，一行行地从记录里面读出这个字段，判断不能为 null，按行累加；2、如果这个“字段”定义允许为 null，那么执行的时候，判断到有可能是 null，还要把值取出来再判断一下，不是 null 才累加。</li>
+<li>count(* ) 是例外，并不会把全部字段取出来，而是专门做了优化，不取值。count(*)肯定不是 null，按行累加。</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><strong>结论</strong>：按照效率排序的话，count(字段)&lt;count(主键 id)&lt;count(1)≈count(* )，所以我建议你，尽量使用count(*)。</p>
+</blockquote>
 
     </div>
     <div class="article-footer">
