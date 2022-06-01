@@ -39,7 +39,7 @@
 <meta itemprop="name" content="LeetCode刷题总结">
 <meta itemprop="description" content="​ [TOC] 算法这东西，可以说玄之又玄，大学就被程序设计这门课统治，工作了，虽然说这东西在实践中用到的少，但是谁让大家都卷呢，你不会就是不行，所以本"><meta itemprop="datePublished" content="2022-02-12T14:44:56+08:00" />
 <meta itemprop="dateModified" content="2022-02-12T14:44:56+08:00" />
-<meta itemprop="wordCount" content="21841">
+<meta itemprop="wordCount" content="21381">
 <meta itemprop="keywords" content="LeetCode," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="LeetCode刷题总结"/>
 <meta name="twitter:description" content="​ [TOC] 算法这东西，可以说玄之又玄，大学就被程序设计这门课统治，工作了，虽然说这东西在实践中用到的少，但是谁让大家都卷呢，你不会就是不行，所以本"/>
@@ -149,7 +149,7 @@
         <ul class="category-list">
             <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/git/" class="category-list-link">git</a><span class="category-list-count">1</span></li>
             <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/java/" class="category-list-link">java</a><span class="category-list-count">3</span></li>
-            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/" class="category-list-link">中间件</a><span class="category-list-count">2</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/" class="category-list-link">中间件</a><span class="category-list-count">3</span></li>
             <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E5%B8%B8%E7%94%A8%E6%A1%86%E6%9E%B6/" class="category-list-link">常用框架</a><span class="category-list-count">3</span></li>
             <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="category-list-link">数据库</a><span class="category-list-count">3</span></li>
             <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E6%97%A5%E5%B8%B8%E6%80%BB%E7%BB%93/" class="category-list-link">日常总结</a><span class="category-list-count">3</span></li>
@@ -214,7 +214,7 @@
             
             
             <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" class="tag-list-link">消息队列</a><span
-                    class="tag-list-count">1</span></li>
+                    class="tag-list-count">2</span></li>
             
             
             <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="tag-list-link">设计模式</a><span
@@ -325,8 +325,8 @@
     <a class="article-tag-link" href="/tags/leetcode/"> LeetCode </a>
   </span>
 
-		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 21841字</span>
-		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 44分 </span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 21381字</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 43分 </span>
       </div>
     </div>
     <div class="article-entry marked-body js-toc-content" itemprop="articleBody">
@@ -2680,48 +2680,6 @@ private int maxArraysDistance(int[] nums, int k) {
     }
     return result;
 }
-</code></pre>
-<pre><code class="language-sql"> select 
-to_char(t.SETTLE_DATE,'yyyy-MM-dd') as 清算日期 ,t.ORDER_ID as 訂單號,
-to_char(t.TRANS_TIME,'yyyy-MM-dd HH24:mi:ss') as 交易时间,
-t.LMERCH_NO as 商户号,f.MERCHANTNAME as 商戶名稱,t.LTERM_NO as 终端号,t.AMOUNT as 交易金额,t.FEE_AMOUNT as 商戶總回佣,
-t.CHN_FEE as 渠道手續費,(t.amount-t.CHN_FEE) as 清算金額
-, (case CHANNEL_CODE
-            when '25250446' then '銀聯'
-            when 'ffb' then '豐付寶'
-            when 'ali_mo' then '支付寶MO'
-            when 'ali_gn' then '支付寶GN'
-            when 'wechat_hk' then '微信HK'
-            when 'wechat_cn' then '微信CN'
-            when 'icbcpay' then '澳門工銀'
-            when 'mpay' then '澳門通'
-            when 'uepay' then '極易付'
-            when 'libpay' then '澳門國際'
-            when 'cgbpay' then '澳門廣發'
-            when 'bocpay' then '澳門中銀'
-            else '其他' end) as 渠道,
-t.SERVICE_FEE as 服務費
-,t.SELF_COMMISSION as 本行回佣
-,t.AGENT_COMMISSION as 代理商回佣
-,t.THIRD_COMMISSION as 第三方回佣,
- (t.amount-t.CHN_FEE) as 過賬金額
- from T_Check_Trans_List t left join CRM_NEW.t_f42 f on t.LMERCH_NO = f.f42 where t.ERROR_FLAG='0' and t.LRET_CODE='00' and t.STATUS !='2'  AND  t.settle_Date &gt;= to_date('20210101','yyyymmdd')  AND  t.settle_Date &lt;= to_date('20211231','yyyymmdd')
- order by t.SETTLE_DATE DESC, t.TRANS_TIME DESC;
- 
- select(case CHANNEL_CODE
-            when '25250446' then '銀聯'
-            when 'ffb' then '豐付寶'
-            when 'ali_mo' then '支付寶MO'
-            when 'ali_gn' then '支付寶GN'
-            when 'wechat_hk' then '微信HK'
-            when 'wechat_cn' then '微信CN'
-            when 'icbcpay' then '澳門工銀'
-            when 'mpay' then '澳門通'
-            when 'uepay' then '極易付'
-            when 'libpay' then '澳門國際'
-            when 'cgbpay' then '澳門廣發'
-            when 'bocpay' then '澳門中銀'
-            else '其他' end) as 渠道 , count(t.ORDER_ID) as 交易笔数 ,sum(t.AMOUNT) as 交易金额 from T_Check_Trans_List t  where t.ERROR_FLAG='0' and t.LRET_CODE='00' and t.STATUS !='2'  AND  t.settle_Date &gt;= to_date('20210101','yyyymmdd')  AND  t.settle_Date &lt;= to_date('20211231','yyyymmdd') group by t.CHANNEL_CODE
 </code></pre>
 
     </div>

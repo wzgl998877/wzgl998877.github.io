@@ -32,14 +32,14 @@
     <meta property="og:title" content="消息队列介绍" />
 <meta property="og:description" content="消息队列介绍 消息队列主要应用场景为异步、削峰、解耦。 异步解耦 场景一：用户注册，注册时需要发送短信及邮件，并且需要写库 串行模式。流程如下： ​ 缺" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://wzgl998877.github.io/2022/01/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" /><meta property="article:section" content="posts" />
+<meta property="og:url" content="https://wzgl998877.github.io/2022/01/mq%E6%80%BB%E7%BB%93/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-01-09T11:24:40+08:00" />
 <meta property="article:modified_time" content="2022-01-09T11:24:40+08:00" />
 
 <meta itemprop="name" content="消息队列介绍">
 <meta itemprop="description" content="消息队列介绍 消息队列主要应用场景为异步、削峰、解耦。 异步解耦 场景一：用户注册，注册时需要发送短信及邮件，并且需要写库 串行模式。流程如下： ​ 缺"><meta itemprop="datePublished" content="2022-01-09T11:24:40+08:00" />
 <meta itemprop="dateModified" content="2022-01-09T11:24:40+08:00" />
-<meta itemprop="wordCount" content="6921">
+<meta itemprop="wordCount" content="11430">
 <meta itemprop="keywords" content="消息队列," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="消息队列介绍"/>
 <meta name="twitter:description" content="消息队列介绍 消息队列主要应用场景为异步、削峰、解耦。 异步解耦 场景一：用户注册，注册时需要发送短信及邮件，并且需要写库 串行模式。流程如下： ​ 缺"/>
@@ -303,7 +303,7 @@
       <h1 itemprop="name">
   <a
     class="article-title"
-    href="/2022/01/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/"
+    href="/2022/01/mq%E6%80%BB%E7%BB%93/"
     >消息队列介绍</a
   >
 </h1>
@@ -312,7 +312,7 @@
         
 <span class="article-date">
   <i class="icon icon-calendar-check"></i>&nbsp;
-<a href="https://wzgl998877.github.io/2022/01/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" class="article-date">
+<a href="https://wzgl998877.github.io/2022/01/mq%E6%80%BB%E7%BB%93/" class="article-date">
   <time datetime="2022-01-09 11:24:40 &#43;0800 CST" itemprop="datePublished">2022-01-09</time>
 </a>
 </span>
@@ -325,8 +325,8 @@
     <a class="article-tag-link" href="/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/"> 消息队列 </a>
   </span>
 
-		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 6921字</span>
-		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 14分 </span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 11430字</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 23分 </span>
       </div>
     </div>
     <div class="article-entry marked-body js-toc-content" itemprop="articleBody">
@@ -357,6 +357,64 @@
 <h2 id="常见消息队列">常见消息队列</h2>
 <p><img src="https://blog-10039692.file.myqcloud.com/1506330751030_7532_1506330753496.png" alt=""></p>
 <h2 id="rocketmq">RocketMQ</h2>
+<h2 id="主题和队列有什么区别">主题和队列有什么区别？</h2>
+<p>最初的消息队列，就是一个严格意义上的队列。在计算机领域，“队列（Queue）”是一种数据结构，有完整而严格的定义。在维基百科中，队列的定义是这样的：</p>
+<p>队列是先进先出（FIFO, First-In-First-Out）的线性表（Linear List）。在具体应用中通常用链表或者数组来实现。队列只允许在后端（称为 rear）进行插入操作，在前端（称为 front）进行删除操作。</p>
+<p>这个定义里面包含几个关键点，第一个是先进先出，这里面隐含着的一个要求是，在消息入队出队过程中，需要保证这些消息<strong>严格有序</strong>，按照什么顺序写进队列，必须按照同样的顺序从队列中读出来。不过，队列是没有“读”这个操作的，“读”就是出队，也就是从队列中“删除”这条消息。</p>
+<p>**早期的消息队列，就是按照“队列”的数据结构来设计的。**我们一起看下这个图，生产者（Producer）发消息就是入队操作，消费者（Consumer）收消息就是出队也就是删除操作，服务端存放消息的容器自然就称为“队列”。</p>
+<p>这就是最初的一种消息模型：队列模型。</p>
+<p><img src="b18f43f67ae1b0d24d88f0ba39708a84.jpg" alt="img"></p>
+<p>如果有多个生产者往同一个队列里面发送消息，这个队列中可以消费到的消息，就是这些生产者生产的所有消息的合集。消息的顺序就是这些生产者发送消息的自然顺序。如果有多个消费者接收同一个队列的消息，这些消费者之间实际上是竞争的关系，每个消费者只能收到队列中的一部分消息，也就是说任何一条消息只能被其中的一个消费者收到。</p>
+<p>如果需要将一份消息数据分发给多个消费者，要求每个消费者都能收到全量的消息，例如，对于一份订单数据，风控系统、分析系统、支付系统等都需要接收消息。这个时候，单个队列就满足不了需求，一个可行的解决方式是，为每个消费者创建一个单独的队列，让生产者发送多份。</p>
+<p>显然这是个比较蠢的做法，同样的一份消息数据被复制到多个队列中会浪费资源，更重要的是，生产者必须知道有多少个消费者。为每个消费者单独发送一份消息，这实际上违背了消息队列“解耦”这个设计初衷。</p>
+<p>为了解决这个问题，演化出了另外一种消息模型：<strong>发布 - 订阅模型（Publish-Subscribe Pattern）</strong></p>
+<p><img src="d5c0742113b2a6f5a419e1ffc3327354.jpg" alt="img"></p>
+<p>在发布 - 订阅模型中，消息的发送方称为发布者（Publisher），消息的接收方称为订阅者（Subscriber），服务端存放消息的容器称为主题（Topic）。发布者将消息发送到主题中，订阅者在接收消息之前需要先“订阅主题”。“订阅”在这里既是一个动作，同时还可以认为是主题在消费时的一个逻辑副本，每份订阅中，订阅者都可以接收到主题的所有消息。</p>
+<p>在消息领域的历史上很长的一段时间，队列模式和发布 - 订阅模式是并存的，有些消息队列同时支持这两种消息模型，比如 ActiveMQ。我们仔细对比一下这两种模型，生产者就是发布者，消费者就是订阅者，队列就是主题，并没有本质的区别。<strong>它们最大的区别其实就是，一份消息数据能不能被消费多次的问题。</strong></p>
+<p>实际上，在这种发布 - 订阅模型中，如果只有一个订阅者，那它和队列模型就基本是一样的了。也就是说，发布 - 订阅模型在功能层面上是可以兼容队列模型的。</p>
+<p>现代的消息队列产品使用的消息模型大多是这种发布 - 订阅模型，当然也有例外。</p>
+<h2 id="rabbitmq-的消息模型">RabbitMQ 的消息模型</h2>
+<p>这个例外就是 RabbitMQ，它是少数依然坚持使用队列模型的产品之一。那它是怎么解决多个消费者的问题呢？你还记得我在上节课中讲到 RabbitMQ 的一个特色 Exchange 模块吗？在 RabbitMQ 中，Exchange 位于生产者和队列之间，生产者并不关心将消息发送给哪个队列，而是将消息发送给 Exchange，由 Exchange 上配置的策略来决定将消息投递到哪些队列中。</p>
+<p><img src="2df04ce80ff54702240df8598f277ca5.jpg" alt="img"></p>
+<p>同一份消息如果需要被多个消费者来消费，需要配置 Exchange 将消息发送到多个队列，每个队列中都存放一份完整的消息数据，可以为一个消费者提供消费服务。这也可以变相地实现新发布 - 订阅模型中，“一份消息数据可以被多个订阅者来多次消费”这样的功能。具体的配置你可以参考 RabbitMQ 官方教程，其中一个章节专门是讲如何实现发布订阅的。</p>
+<h2 id="rocketmq-的消息模型">RocketMQ 的消息模型</h2>
+<p>讲完了 RabbitMQ 的消息模型，我们再来看看 RocketMQ。RocketMQ 使用的消息模型是标准的发布 - 订阅模型，在 RocketMQ 的术语表中，生产者、消费者和主题与我在上面讲的发布 - 订阅模型中的概念是完全一样的。</p>
+<p>但是，在 RocketMQ 也有队列（Queue）这个概念，并且队列在 RocketMQ 中是一个非常重要的概念，那队列在 RocketMQ 中的作用是什么呢？这就要从消息队列的消费机制说起。</p>
+<p>几乎所有的消息队列产品都使用一种非常朴素的“请求 - 确认”机制，确保消息不会在传递过程中由于网络或服务器故障丢失。具体的做法也非常简单。在生产端，生产者先将消息发送给服务端，也就是 Broker，服务端在收到消息并将消息写入主题或者队列中后，会给生产者发送确认的响应。</p>
+<p>如果生产者没有收到服务端的确认或者收到失败的响应，则会重新发送消息；在消费端，消费者在收到消息并完成自己的消费业务逻辑（比如，将数据保存到数据库中）后，也会给服务端发送消费成功的确认，服务端只有收到消费确认后，才认为一条消息被成功消费，否则它会给消费者重新发送这条消息，直到收到对应的消费成功确认。</p>
+<p>这个确认机制很好地保证了消息传递过程中的可靠性，但是，引入这个机制在消费端带来了一个不小的问题。什么问题呢？为了确保消息的有序性，在某一条消息被成功消费之前，下一条消息是不能被消费的，否则就会出现消息空洞，违背了有序性这个原则。</p>
+<p>也就是说，每个主题在任意时刻，至多只能有一个消费者实例在进行消费，那就没法通过水平扩展消费者的数量来提升消费端总体的消费性能。为了解决这个问题，RocketMQ 在主题下面增加了队列的概念。</p>
+<p>**每个主题包含多个队列，通过多个队列来实现多实例并行生产和消费。**需要注意的是，<strong>RocketMQ 只在队列上保证消息的有序性，主题层面是无法保证消息的严格顺序的</strong>。</p>
+<p>RocketMQ 中，订阅者的概念是通过消费组（Consumer Group）来体现的。每个消费组都消费主题中一份完整的消息，不同消费组之间消费进度彼此不受影响，也就是说，一条消息被 Consumer Group1 消费过，也会再给 Consumer Group2 消费。</p>
+<p>消费组中包含多个消费者，同一个组内的消费者是竞争消费的关系，每个消费者负责消费组内的一部分消息。如果一条消息被消费者 Consumer1 消费了，那同组的其他消费者就不会再收到这条消息。</p>
+<p>在 Topic 的消费过程中，由于消息需要被不同的组进行多次消费，所以消费完的消息并不会立即被删除，这就需要 <strong>RocketMQ 为每个消费组在每个队列上维护一个消费位置</strong>（Consumer Offset），这个位置之前的消息都被消费过，之后的消息都没有被消费过，每成功消费一条消息，消费位置就加一。这个消费位置是非常重要的概念，我们在使用消息队列的时候，丢消息的原因大多是由于消费位置处理不当导致的。</p>
+<p>RocketMQ 的消息模型中，比较关键的概念就是这些了。为了便于你理解，我画了下面这张图：</p>
+<p><img src="465142ab5b5096f283118c307e8cc117.jpg" alt="img"></p>
+<h4 id="例子">例子</h4>
+<p>假设有一个主题 MyTopic，我们为主题创建 5 个队列，分布到 2 个 Broker 中。</p>
+<p><img src="dd3f4c5e40f58b62c2d89554b579a72f.jpg" alt="img"></p>
+<p>先说消息生产这一端，假设我们有 3 个生产者实例：Produer0，Produer1 和 Producer2。</p>
+<p>这 3 个生产者是如何对应到 2 个 Broker 的，又是如何对应到 5 个队列的呢？这个很简单，<strong>不用对应，随便发</strong>。每个生产者可以在 5 个队列中轮询发送，也可以随机选一个队列发送，或者只往某个队列发送，这些都可以。比如 Producer0 要发 5 条消息，可以都发到队列 Q0 里面，也可以 5 个队列每个队列发一条。</p>
+<p>然后说消费端，很多同学没有搞清楚消费组、消费者和队列这几个概念的对应关系。</p>
+<p>每个消费组就是一份订阅，它要消费主题 MyTopic 下，所有队列的全部消息。注意，队列里的消息并不是消费掉就没有了，这里的“消费”，只是去队列里面读了消息，并没有删除，消费完这条消息还是在队列里面。</p>
+<p>多个消费组在消费同一个主题时，消费组之间是互不影响的。比如我们有 2 个消费组：G0 和 G1。G0 消费了哪些消息，G1 是不知道的，也不用知道。G0 消费过的消息，G1 还可以消费。即使 G0 积压了很多消息，对 G1 来说也没有任何影响。</p>
+<p>然后我们再说消费组的内部，一个消费组中可以包含多个消费者的实例。比如说消费组 G1，包含了 2 个消费者 C0 和 C1，那这 2 个消费者又是怎么和主题 MyTopic 的 5 个队列对应的呢？</p>
+<p>由于消费确认机制的限制，这里面有一个原则是，在同一个消费组里面，每个队列只能被一个消费者实例占用。至于如何分配，这里面有很多策略，我就不展开说了。总之保证每个队列分配一个消费者就行了。比如，我们可以让消费者 C0 消费 Q0，Q1 和 Q2，C1 消费 Q3 和 Q4，如果 C0 宕机了，会触发重新分配，这时候 C1 同时消费全部 5 个队列。</p>
+<p>再强调一下，队列占用只是针对消费组内部来说的，对于其他的消费组来说是没有影响的。比如队列 Q2 被消费组 G1 的消费者 C1 占用了，对于消费组 G2 来说，是完全没有影响的，G2 也可以分配它的消费者来占用和消费队列 Q2。</p>
+<p>最后说一下消费位置，每个消费组内部维护自己的一组消费位置，每个队列对应一个消费位置。消费位置在服务端保存，并且，<strong>消费位置和消费者是没有关系的</strong>。每个消费位置一般就是一个整数，记录这个消费组中，这个队列消费到哪个位置了，这个位置之前的消息都成功消费了，之后的消息都没有消费或者正在消费。</p>
+<p>我把咱们这个例子的消费位置整理成下面的表格，便于你理解。</p>
+<p><img src="2c78c72078002444e758f9dde1386585.jpg" alt="img"></p>
+<p>你可以看到，这个表格中并没有消费者这一列，也就是说消费者和消费位置是没有关系的。</p>
+<h2 id="kafka-的消息模型">Kafka 的消息模型</h2>
+<p>我们再来看看另一种常见的消息队列 Kafka，Kafka 的消息模型和 RocketMQ 是完全一样的，我刚刚讲的所有 RocketMQ 中对应的概念，和生产消费过程中的确认机制，都完全适用于 Kafka。唯一的区别是，在 Kafka 中，队列这个概念的名称不一样，Kafka 中对应的名称是“分区（Partition）”，含义和功能是没有任何区别的。</p>
+<h2 id="小结">小结</h2>
+<p>我们来总结一下本节课学习的内容。首先我们讲了队列和主题的区别，这两个概念的背后实际上对应着两种不同的消息模型：队列模型和发布 - 订阅模型。然后你需要理解，这两种消息模型其实并没有本质上的区别，都可以通过一些扩展或者变化来互相替代。</p>
+<p>常用的消息队列中，RabbitMQ 采用的是队列模型，但是它一样可以实现发布 - 订阅的功能。RocketMQ 和 Kafka 采用的是发布 - 订阅模型，并且二者的消息模型是基本一致的。</p>
+<p>最后提醒你一点，我这节课讲的消息模型和相关的概念是业务层面的模型，深刻理解业务模型有助于你用最佳的姿势去使用消息队列。</p>
+<p>但业务模型不等于就是实现层面的模型。比如说 MySQL 和 Hbase 同样是支持 SQL 的数据库，它们的业务模型中，存放数据的单元都是“表”，但是在实现层面，没有哪个数据库是以二维表的方式去存储数据的，MySQL 使用 B+ 树来存储数据，而 HBase 使用的是 KV 的结构来存储。同样，像 Kafka 和 RocketMQ 的业务模型基本是一样的，并不是说他们的实现就是一样的，实际上这两个消息队列的实现是完全不同的。</p>
+<h2 id="思考题">思考题</h2>
+<p>最后给大家留一个思考题。刚刚我在介绍 RocketMQ 的消息模型时讲过，在消费的时候，为了保证消息的不丢失和严格顺序，每个队列只能串行消费，无法做到并发，否则会出现消费空洞的问题。那如果放宽一下限制，不要求严格顺序，能否做到单个队列的并行消费呢？如果可以，该如何实现？欢迎在留言区与我分享讨论。</p>
+<p>感谢阅读，如果你觉得这篇文章对你有一些启发，也欢迎把它分享给你的朋友。</p>
 <h3 id="架构">架构</h3>
 <p><img src="https://github.com/apache/rocketmq/raw/master/docs/cn/image/rocketmq_architecture_1.png" alt=""></p>
 <p>RocketMQ架构上主要分为四部分，如上图所示:</p>
@@ -527,7 +585,7 @@
   <ul class="post-copyright list-unstyled">
     <li class="post-copyright-link hidden-xs">
       <strong>本文链接: </strong>
-      <a href="https://wzgl998877.github.io/2022/01/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" title="消息队列介绍" target="_blank" rel="external">https://wzgl998877.github.io/2022/01/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/</a>
+      <a href="https://wzgl998877.github.io/2022/01/mq%E6%80%BB%E7%BB%93/" title="消息队列介绍" target="_blank" rel="external">https://wzgl998877.github.io/2022/01/mq%E6%80%BB%E7%BB%93/</a>
     </li>
     <li class="post-copyright-license">
       <strong>License: </strong>
@@ -558,13 +616,13 @@
     <div class="bar-inner">
         <ul class="pager pull-left">
             <li class="prev">
-                <a href="https://wzgl998877.github.io/2022/01/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3java%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AD%A6%E4%B9%A0/" title="深入理解Java虚拟机"><i
+                <a href="https://wzgl998877.github.io/2022/01/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" title="消息队列介绍"><i
                         class="icon icon-angle-left"
                         aria-hidden="true"></i><span>&nbsp;&nbsp;下一篇</span></a>
             </li>
             <li class="next">
-                <a href="https://wzgl998877.github.io/2022/01/mq%E6%80%BB%E7%BB%93/"
-                    title="消息队列介绍"><span>上一篇&nbsp;&nbsp;</span><i
+                <a href="https://wzgl998877.github.io/2022/01/%E6%97%A5%E5%B8%B8%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/"
+                    title="日常问题总结"><span>上一篇&nbsp;&nbsp;</span><i
                         class="icon icon-angle-right" aria-hidden="true"></i></a>
             </li>
             
