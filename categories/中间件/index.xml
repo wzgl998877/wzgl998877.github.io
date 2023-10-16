@@ -1,15 +1,78 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>中间件 on Pure theme for Hugo</title>
+    <title>中间件 on 码农的学习笔记</title>
     <link>https://wzgl998877.github.io/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/</link>
-    <description>Recent content in 中间件 on Pure theme for Hugo</description>
+    <description>Recent content in 中间件 on 码农的学习笔记</description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>CC BY 4.0 CN</copyright>
-    <lastBuildDate>Sun, 09 Jan 2022 11:24:40 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 06 May 2022 15:21:49 +0800</lastBuildDate>
     
         <atom:link href="https://wzgl998877.github.io/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>SpringCloud</title>
+      <link>https://wzgl998877.github.io/2022/11/springcloud/</link>
+      <pubDate>Mon, 07 Nov 2022 19:15:43 +0800</pubDate>
+      
+      <guid>https://wzgl998877.github.io/2022/11/springcloud/</guid>
+      <description>[TOC] Spring Cloud 学习 springcloud 自己觉得就是利用了spring可插拔的特性，引入了很多框架，解决了服务治理（负载均衡、熔断降级、配置管理等）的一套模板（框架），</description>
+    </item>
+    
+    <item>
+      <title>Docker和k8s</title>
+      <link>https://wzgl998877.github.io/2022/09/docker%E5%92%8Ck8s/</link>
+      <pubDate>Fri, 09 Sep 2022 10:26:21 +0800</pubDate>
+      
+      <guid>https://wzgl998877.github.io/2022/09/docker%E5%92%8Ck8s/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Redis学习</title>
+      <link>https://wzgl998877.github.io/2022/05/redis%E6%80%BB%E7%BB%93/</link>
+      <pubDate>Fri, 06 May 2022 15:21:49 +0800</pubDate>
+      
+      <guid>https://wzgl998877.github.io/2022/05/redis%E6%80%BB%E7%BB%93/</guid>
+      <description>[TOC] 这篇文章主要记录自己学习 Redis 的历程 Redis 的数据结构 redis中数据结构有 String（字符串）、List（列表）、Hash（哈希）、Set（集合</description>
+    </item>
+    
+    <item>
+      <title>git相关</title>
+      <link>https://wzgl998877.github.io/2022/03/git%E7%9B%B8%E5%85%B3/</link>
+      <pubDate>Wed, 02 Mar 2022 20:03:24 +0800</pubDate>
+      
+      <guid>https://wzgl998877.github.io/2022/03/git%E7%9B%B8%E5%85%B3/</guid>
+      <description>[TOC] git是工作中天天用到的东西，但好像也只会几个命令，现在稍微研究下 git简介 本地 Git 的三个分区分别是：working directory，st</description>
+    </item>
+    
+    <item>
+      <title>Mysql总结</title>
+      <link>https://wzgl998877.github.io/2022/02/mysql%E6%80%BB%E7%BB%93/</link>
+      <pubDate>Mon, 28 Feb 2022 23:43:20 +0800</pubDate>
+      
+      <guid>https://wzgl998877.github.io/2022/02/mysql%E6%80%BB%E7%BB%93/</guid>
+      <description>[TOC] 这篇文章主要对Mysql是怎样运行的进行提炼总结以及补充 MySQL 的存储引擎 常用的存储引擎有：ARCHIVE、BLACKHOLE、InnoDB、M</description>
+    </item>
+    
+    <item>
+      <title>面试题汇总</title>
+      <link>https://wzgl998877.github.io/2022/02/%E9%9D%A2%E8%AF%95%E9%A2%98%E6%B1%87%E6%80%BB/</link>
+      <pubDate>Thu, 17 Feb 2022 10:28:04 +0800</pubDate>
+      
+      <guid>https://wzgl998877.github.io/2022/02/%E9%9D%A2%E8%AF%95%E9%A2%98%E6%B1%87%E6%80%BB/</guid>
+      <description>这里记录遇到、听到、见到的面试题，可以说是总结复盘的好地方 [TOC] 阿里：三个线程交替打印abc。 手写单例模式双重校验锁 分布式事务 接口幂等性 Hash</description>
+    </item>
+    
+    <item>
+      <title>LeetCode刷题总结</title>
+      <link>https://wzgl998877.github.io/2022/02/leetcode%E5%88%B7%E9%A2%98%E6%80%BB%E7%BB%93/</link>
+      <pubDate>Sat, 12 Feb 2022 14:44:56 +0800</pubDate>
+      
+      <guid>https://wzgl998877.github.io/2022/02/leetcode%E5%88%B7%E9%A2%98%E6%80%BB%E7%BB%93/</guid>
+      <description>[TOC] 算法这东西，可以说玄之又玄，大学就被程序设计这门课统治，工作了，虽然说这东西在实践中用到的少，但是谁让大家都卷呢，你不会就是不行，所以本着</description>
+    </item>
     
     <item>
       <title>Mysql是怎样运行的</title>
@@ -26,7 +89,7 @@
       <pubDate>Sun, 09 Jan 2022 11:24:40 +0800</pubDate>
       
       <guid>https://wzgl998877.github.io/2022/01/java-%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/</guid>
-      <description>Java 并发编程 ​ 并发编程之美的笔记 什么是线程 ​ 进程是操作系统资源分配的最小单位，而线程是CPU任务调度和执行的最小单位 具体参考 https://blog.csdn.net/ThinkWon/article/details/102021274 五状态进程的主要</description>
+      <description>[TOC] Java 并发编程 ​ 并发编程之美的笔记 什么是线程 ​ 进程是操作系统资源分配的最小单位，而线程是CPU任务调度和执行的最小单位 具体参考 https://blog.csdn.net/ThinkWon/article/details/102021274 五状态进程的主</description>
     </item>
     
     <item>
@@ -58,11 +121,11 @@
     
     <item>
       <title>Netty 学习</title>
-      <link>https://wzgl998877.github.io/2022/01/netty-%E5%AD%A6%E4%B9%A0/</link>
+      <link>https://wzgl998877.github.io/2022/01/netty/</link>
       <pubDate>Sun, 09 Jan 2022 11:24:40 +0800</pubDate>
       
-      <guid>https://wzgl998877.github.io/2022/01/netty-%E5%AD%A6%E4%B9%A0/</guid>
-      <description>Netty 学习 虽然说netty，用的少但是感觉比较流行，值得研究！！！ Netty 是一个 NIO 客户端-服务器框架，可以快速轻松地开发网络应用程序，例如协议服务器和</description>
+      <guid>https://wzgl998877.github.io/2022/01/netty/</guid>
+      <description>[TOC] Netty 学习 虽然说netty，用的少但是感觉比较流行，值得研究！！！ Netty 是一个 NIO 客户端-服务器框架，可以快速轻松地开发网络应用程序，它极大地简化了</description>
     </item>
     
     <item>
@@ -98,7 +161,7 @@
       <pubDate>Sun, 09 Jan 2022 11:24:40 +0800</pubDate>
       
       <guid>https://wzgl998877.github.io/2022/01/%E5%9B%BE%E8%A7%A3http/</guid>
-      <description>图解http 网络模型 OSI 模型(具体每层的定义还需要看书确定这个只是网上看的，可以回去看计网) 应用层（application）：最接近终端用户的</description>
+      <description>[TOC] 图解http 网络模型 OSI 模型(具体每层的定义还需要看书确定这个只是网上看的，可以回去看计网) 应用层（application）：最接近终端用户</description>
     </item>
     
     <item>
@@ -116,52 +179,16 @@
       <pubDate>Sun, 09 Jan 2022 11:24:40 +0800</pubDate>
       
       <guid>https://wzgl998877.github.io/2022/01/%E6%97%A5%E5%B8%B8%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/</guid>
-      <description>日常问题总结 工作中总是会遇到各种各样的问题，只有总结下来才是一笔财富。 fastjson的一些技巧 在工作中总是遇到给前端的字段需要是下划线的，</description>
+      <description>[TOC] 日常问题总结 工作中总是会遇到各种各样的问题，只有总结下来才是一笔财富。 fastjson的一些技巧 在工作中总是遇到给前端的字段需要是下划线的</description>
     </item>
     
     <item>
       <title>消息队列介绍</title>
-      <link>https://wzgl998877.github.io/2022/01/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/</link>
+      <link>https://wzgl998877.github.io/2022/01/mq%E6%80%BB%E7%BB%93/</link>
       <pubDate>Sun, 09 Jan 2022 11:24:40 +0800</pubDate>
       
-      <guid>https://wzgl998877.github.io/2022/01/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/</guid>
-      <description>消息队列介绍 消息队列主要应用场景为异步、削峰、解耦。 异步解耦 场景一：用户注册，注册时需要发送短信及邮件，并且需要写库 串行模式。流程如下： ​ 缺</description>
-    </item>
-    
-    <item>
-      <title>深入理解Java虚拟机</title>
-      <link>https://wzgl998877.github.io/2022/01/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3java%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AD%A6%E4%B9%A0/</link>
-      <pubDate>Sun, 09 Jan 2022 11:24:40 +0800</pubDate>
-      
-      <guid>https://wzgl998877.github.io/2022/01/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3java%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AD%A6%E4%B9%A0/</guid>
-      <description>深入理解Java虚拟机 第2章 Java内存区域与内存溢出异常 程序计数器 ​ 程序计数器（Program Counter Register）是一块较小的内存空间，它</description>
-    </item>
-    
-    <item>
-      <title>知识点</title>
-      <link>https://wzgl998877.github.io/2022/01/%E7%9F%A5%E8%AF%86%E7%82%B9/</link>
-      <pubDate>Sun, 09 Jan 2022 11:24:40 +0800</pubDate>
-      
-      <guid>https://wzgl998877.github.io/2022/01/%E7%9F%A5%E8%AF%86%E7%82%B9/</guid>
-      <description>知识点！！！ 分布式session Nginx 正向代理 正向代理代理的对象是客户端，正向代理 是一个位于客户端和原始服务器(origin server)之间的</description>
-    </item>
-    
-    <item>
-      <title>设计模式</title>
-      <link>https://wzgl998877.github.io/2022/01/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</link>
-      <pubDate>Sun, 09 Jan 2022 11:24:40 +0800</pubDate>
-      
-      <guid>https://wzgl998877.github.io/2022/01/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</guid>
-      <description>设计模式 七大软件设计原则 1 . 开闭原则 ​ 软件实体应当对扩展开放，对修改关闭。当应用的需求改变时，在不修改软件实体的源代码或者二进制代码的前提下</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>https://wzgl998877.github.io/1/01/linux%E5%B7%A5%E4%BD%9C%E6%97%A5%E5%B8%B8%E5%91%BD%E4%BB%A4/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://wzgl998877.github.io/1/01/linux%E5%B7%A5%E4%BD%9C%E6%97%A5%E5%B8%B8%E5%91%BD%E4%BB%A4/</guid>
-      <description>[TOC] Linux工作日常命令 jps 命令 jps 查看全部的jvm进程，可以带上grep命令一起使用 jps |grep -e ××× find命令 基本格式：find path expression 1. 按照文件名</description>
+      <guid>https://wzgl998877.github.io/2022/01/mq%E6%80%BB%E7%BB%93/</guid>
+      <description>[TOC] 消息队列介绍 消息队列主要应用场景为异步、削峰、解耦。 异步解耦 场景一：用户注册，注册时需要发送短信及邮件，并且需要写库 串行模式。流程如下： ​</description>
     </item>
     
   </channel>

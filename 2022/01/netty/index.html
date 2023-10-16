@@ -1,0 +1,1369 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <title>
+        Netty 学习 - 码农的学习笔记
+      </title>
+        <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    
+    <meta name="theme-color" content="#000000" />
+    
+    <meta http-equiv="window-target" content="_top" />
+    
+    
+    <meta name="description" content="[TOC] Netty 学习 虽然说netty，用的少但是感觉比较流行，值得研究！！！ Netty 是一个 NIO 客户端-服务器框架，可以快速轻松地开发网络应用程序，它极大地简化了" />
+    <meta name="generator" content="Hugo 0.91.2 with theme pure" />
+    <title>Netty 学习 - 码农的学习笔记</title>
+    
+    
+    <link rel="stylesheet" href="https://wzgl998877.github.io/css/style.min.a85959a41e7abcc0db1f81f44bd264649303417f91b536e87dcde644340fea6d.css">
+    
+    <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/9.15.10/styles/github.min.css" async>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css" async>
+    <meta property="og:title" content="Netty 学习" />
+<meta property="og:description" content="[TOC] Netty 学习 虽然说netty，用的少但是感觉比较流行，值得研究！！！ Netty 是一个 NIO 客户端-服务器框架，可以快速轻松地开发网络应用程序，它极大地简化了" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wzgl998877.github.io/2022/01/netty/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-01-09T11:24:40+08:00" />
+<meta property="article:modified_time" content="2022-01-09T11:24:40+08:00" />
+
+<meta itemprop="name" content="Netty 学习">
+<meta itemprop="description" content="[TOC] Netty 学习 虽然说netty，用的少但是感觉比较流行，值得研究！！！ Netty 是一个 NIO 客户端-服务器框架，可以快速轻松地开发网络应用程序，它极大地简化了"><meta itemprop="datePublished" content="2022-01-09T11:24:40+08:00" />
+<meta itemprop="dateModified" content="2022-01-09T11:24:40+08:00" />
+<meta itemprop="wordCount" content="14811">
+<meta itemprop="keywords" content="Netty," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Netty 学习"/>
+<meta name="twitter:description" content="[TOC] Netty 学习 虽然说netty，用的少但是感觉比较流行，值得研究！！！ Netty 是一个 NIO 客户端-服务器框架，可以快速轻松地开发网络应用程序，它极大地简化了"/>
+
+    <!--[if lte IE 9]>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+      <![endif]-->
+
+    <!--[if lt IE 9]>
+        <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+      <![endif]-->
+  </head>
+
+  
+  
+
+  <body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage"><header class="header" itemscope itemtype="http://schema.org/WPHeader">
+    <div class="slimContent">
+      <div class="navbar-header">
+        <div class="profile-block text-center">
+          <a id="avatar" href="https://github.com/wzgl998877/" target="_blank">
+            <img class="img-circle img-rotate" src="https://wzgl998877.github.io/avatar.png" width="200" height="200">
+          </a>
+          <h2 id="name" class="hidden-xs hidden-sm">microzheng</h2>
+          <h3 id="title" class="hidden-xs hidden-sm hidden-md">努力会说谎，但努力不会白费</h3>
+          <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i>Shenzhen China</small>
+        </div><div class="search" id="search-form-wrap">
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i
+                        class="icon icon-search"></i></button>
+            </span>
+        </div>
+        <div class="ins-search">
+            <div class="ins-search-mask"></div>
+            <div class="ins-search-container">
+                <div class="ins-input-wrapper">
+                    <input type="text" class="ins-search-input" placeholder="想要查找什么..."
+                        x-webkit-speech />
+                    <button type="button" class="close ins-close ins-selectable" data-dismiss="modal"
+                        aria-label="Close"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="ins-section-wrapper">
+                    <div class="ins-section-container"></div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+        <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+        <ul class="nav navbar-nav main-nav">
+            <li class="menu-item menu-item-home">
+                <a href="/">
+                    <i class="icon icon-home-fill"></i>
+                  <span class="menu-title">主页</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-archives">
+                <a href="/posts/">
+                    <i class="icon icon-archives-fill"></i>
+                  <span class="menu-title">归档</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-categories">
+                <a href="/categories/">
+                    <i class="icon icon-folder"></i>
+                  <span class="menu-title">分类</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-tags">
+                <a href="/tags/">
+                    <i class="icon icon-tags"></i>
+                  <span class="menu-title">标签</span>
+                </a>
+            </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+<aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content"><p>enjoy~</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+      <div class="widget">
+    <h3 class="widget-title"> 分类</h3>
+    <div class="widget-body">
+        <ul class="category-list">
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/git/" class="category-list-link">git</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/java/" class="category-list-link">java</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/spring/" class="category-list-link">spring</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/" class="category-list-link">中间件</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E4%BA%91%E5%8E%9F%E7%94%9F/" class="category-list-link">云原生</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E5%B8%B8%E7%94%A8%E6%A1%86%E6%9E%B6/" class="category-list-link">常用框架</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="category-list-link">数据库</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E6%97%A5%E5%B8%B8%E6%80%BB%E7%BB%93/" class="category-list-link">日常总结</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E7%AE%97%E6%B3%95/" class="category-list-link">算法</a><span class="category-list-count">2</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/" class="category-list-link">系统设计</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/" class="category-list-link">网络编程</a><span class="category-list-count">3</span></li>
+        </ul>
+    </div>
+</div>
+      <div class="widget">
+    <h3 class="widget-title"> 标签</h3>
+    <div class="widget-body">
+        <ul class="tag-list">
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/http/" class="tag-list-link">http</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/java%E5%9F%BA%E7%A1%80/" class="tag-list-link">java基础</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/java%E5%B9%B6%E5%8F%91/" class="tag-list-link">java并发</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/jvm/" class="tag-list-link">jvm</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/leetcode/" class="tag-list-link">leetcode</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/mybatis/" class="tag-list-link">mybatis</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/mysql/" class="tag-list-link">mysql</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/netty/" class="tag-list-link">netty</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/redis/" class="tag-list-link">redis</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/rpc/" class="tag-list-link">rpc</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/spring/" class="tag-list-link">spring</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/websocket/" class="tag-list-link">websocket</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" class="tag-list-link">消息队列</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="tag-list-link">设计模式</a><span
+                    class="tag-list-count">1</span></li>
+            
+        </ul>
+
+    </div>
+</div>
+      
+<div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+        <ul class="recent-post-list list-unstyled no-thumbnail">
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://wzgl998877.github.io/2022/11/springcloud/" class="title">SpringCloud</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2022-11-07 19:15:43 &#43;0800 CST" itemprop="datePublished">2022-11-07</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://wzgl998877.github.io/2022/09/docker%E5%92%8Ck8s/" class="title">Docker和k8s</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2022-09-09 10:26:21 &#43;0800 CST" itemprop="datePublished">2022-09-09</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://wzgl998877.github.io/2022/05/redis%E6%80%BB%E7%BB%93/" class="title">Redis学习</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2022-05-06 15:21:49 &#43;0800 CST" itemprop="datePublished">2022-05-06</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://wzgl998877.github.io/2022/03/git%E7%9B%B8%E5%85%B3/" class="title">git相关</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2022-03-02 20:03:24 &#43;0800 CST" itemprop="datePublished">2022-03-02</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://wzgl998877.github.io/2022/02/mysql%E6%80%BB%E7%BB%93/" class="title">Mysql总结</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2022-02-28 23:43:20 &#43;0800 CST" itemprop="datePublished">2022-02-28</time>
+                    </p>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+  </div>
+</aside>
+
+    
+    
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <h4 class="toc-title">文章目录</h4>
+    <nav id="toc" class="js-toc toc">
+
+    </nav>
+  </div>
+</aside>
+<main class="main" role="main"><div class="content">
+  <article id="-" class="article article-type-" itemscope
+    itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      <h1 itemprop="name">
+  <a
+    class="article-title"
+    href="/2022/01/netty/"
+    >Netty 学习</a
+  >
+</h1>
+
+      <div class="article-meta">
+        
+<span class="article-date">
+  <i class="icon icon-calendar-check"></i>&nbsp;
+<a href="https://wzgl998877.github.io/2022/01/netty/" class="article-date">
+  <time datetime="2022-01-09 11:24:40 &#43;0800 CST" itemprop="datePublished">2022-01-09</time>
+</a>
+</span>
+<span class="article-category">
+  <i class="icon icon-folder"></i>&nbsp;
+  <a class="article-category-link" href="/categories/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/"> 网络编程 </a>
+</span>  
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>&nbsp;
+    <a class="article-tag-link" href="/tags/netty/"> Netty </a>
+  </span>
+
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 14811字</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 30分 </span>
+      </div>
+    </div>
+    <div class="article-entry marked-body js-toc-content" itemprop="articleBody">
+      <p>[TOC]</p>
+<h1 id="netty-学习">Netty 学习</h1>
+<p>虽然说netty，用的少但是感觉比较流行，值得研究！！！</p>
+<p><strong>Netty</strong> 是一个 <strong>NIO</strong> 客户端-服务器框架，可以快速轻松地开发网络应用程序，它极大地简化了<strong>网络编程</strong>，比如TCP和UDP 套接字服务器。</p>
+<p><img src="components.png" alt="img"></p>
+<p>那么什么是NIO？或者说什么是IO？</p>
+<h2 id="io">IO</h2>
+<p>I/O（Input/Output），即输入／输出，通常指数据在存储器（内部和外部）或其他周边设备之间的输入和输出。</p>
+<p>那么什么是存储器或者说是内存呢？</p>
+<p>复习一下计算机组成原理</p>
+<h3 id="冯诺依曼结构">冯诺依曼结构</h3>
+<p><img src="c2fdfc039245d688e5800831aac27d1ed31b24a0" alt="img"></p>
+<p>执行过程：</p>
+<ol>
+<li>
+<p>通过输入设备到存储器</p>
+</li>
+<li>
+<p>控制器读取程序计数器获得指令内存地址，通过操作地址总线从内存地址拿到数据。</p>
+</li>
+<li>
+<p>控制器分析指令寄存器中的指令，分析完后送到存储器</p>
+</li>
+<li>
+<p>存储器将数据送到运算器，运算器完成计算</p>
+</li>
+<li>
+<p>自增后开始顺序执行下一条指令，不断循环执行直到程序结束。</p>
+</li>
+<li>
+<p>输出到输出设备</p>
+</li>
+</ol>
+<h3 id="现代计算机机构">现代计算机机构</h3>
+<p><img src="bd315c6034a85edf898e40b647540923dd547520" alt="img"></p>
+<p>I/O 其实就是 input 和 output 的缩写，即输入/输出。比如我们用键盘来敲代码其实就是输入，那显示器显示图案就是输出，这其实就是 I/O。</p>
+<ul>
+<li>
+<p>磁盘 I/O 指的是硬盘和内存之间的输入输出。读取本地文件的时候，要将磁盘的数据拷贝到内存中，修改本地文件的时候，需要把修改后的数据拷贝到磁盘中。</p>
+</li>
+<li>
+<p>网络 I/O 指的是网卡与内存之间的输入输出。当网络上的数据到来时，网卡需要将数据拷贝到内存中。当要发送数据给网络上的其他人时，需要将数据从内存拷贝到网卡里。</p>
+</li>
+</ul>
+<p>那为什么都要跟内存交互呢?</p>
+<p>我们的指令最终是由 CPU 执行的，究其原因是 CPU 与内存交互的速度远高于 CPU 和这些外部设备直接交互的速度。</p>
+<p>因此都是和内存交互，当然假设没有内存，让 CPU 直接和外部设备交互，那也算 I/O。</p>
+<p>总结下：<strong>I/O 就是指内存与外部设备之间的交互</strong>（数据拷贝）。</p>
+<h3 id="用户态和内核态">用户态和内核态</h3>
+<p>对 32 位操作系统而言，它的寻址空间（虚拟地址空间，或叫线性地址空间）为 4G（2的32次方）。也就是说一个进程的最大地址空间为 4G。操作系统的核心是内核(kernel)，它独立于普通的应用程序，可以访问受保护的内存空间，也有访问底层硬件设备的所有权限。为了保证内核的安全，现在的操作系统一般都强制用户进程不能直接操作内核。具体的实现方式基本都是由操作系统将虚拟地址空间划分为两部分，一部分为内核空间，另一部分为用户空间。</p>
+<blockquote>
+<p>寻址空间一般指的是CPU对于<a href="https://baike.baidu.com/item/%E5%86%85%E5%AD%98%E5%AF%BB%E5%9D%80/1012006?fromModule=lemma_inlink">内存寻址</a>的能力。通俗地说，就是能最多用到多少内存的一个问题。数据在<a href="https://baike.baidu.com/item/%E5%AD%98%E5%82%A8%E5%99%A8/1583185?fromModule=lemma_inlink">存储器</a>(RAM)中存放是有规律的 ，CPU在运算的时候需要把数据提取出来就需要知道数据存放在哪里 ，这时候就需要挨家挨户的找，这就叫做寻址，但如果地址太多超出了CPU的能力范围，CPU就无法找到数据了。 CPU最大能查找多大范围的地址叫做寻址能力 ，CPU的寻址能力以<a href="https://baike.baidu.com/item/%E5%AD%97%E8%8A%82/1096318?fromModule=lemma_inlink">字节</a>为单位 ，如32位寻址的CPU可以寻址2的32次方大小的地址也就是4G，这也是为什么32位的CPU最大能搭配4G内存的原因 ，再多的话CPU就找不到了。</p>
+</blockquote>
+<p><img src="952033-20180203175433421-1012821617.png" alt="img"></p>
+<p>在说用户态与内核态之前，有必要说一下 C P U 指令集，指令集是 C P U 实现软件指挥硬件执行的媒介，具体来说每一条汇编语句都对应了一条 C P U 指令，同时 C P U 指令集 有权限分级，大家试想，C P U 指令集 可以直接操作硬件的，要是因为指令操作的不规范`，造成的错误会影响整个计算机系统的。好比你写程序，因为对硬件操作不熟悉，导致操作系统内核、及其他所有正在运行的程序，都可能会因为操作失误而受到不可挽回的错误，最后只能重启计算机才行。Intel的X86架构的CPU提供了0到3四个特权级，其中 ring 0 权限最高，可以使用所有 C P U 指令集，ring 3 权限最低，仅能使用常规 C P U 指令集，不能使用操作硬件资源的 C P U 指令集，比如 I O 读写、网卡访问、申请内存都不行，Linux系统仅采用ring 0 和 ring 3 这2个权限。</p>
+<p>分别对应的就是<strong>内核态(Kernel Mode)<strong>与</strong>用户态(User Mode)</strong>。</p>
+<ul>
+<li>内核态：进程运行在内核空间中，此时 CPU 可以执行任何指令。运行的代码也不受任何的限制，可以自由地访问任何有效地址，也可以直接进行端口的访问</li>
+<li>用户态：进程运行在用户空间中，被执行的代码要受到 CPU 的诸多检查，它们只能访问映射其地址空间的页表项中规定的在用户态下可访问页面的虚拟地址，且只能对任务状态段(TSS)中 I/O 许可位图(I/O Permission Bitmap)中规定的可访问端口进行直接访问。</li>
+</ul>
+<p>Kernel 运行在超级权限模式（Supervisor Mode）下，所以拥有很高的权限。按照权限管理的原则，多数应用程序应该运行在最小权限下。因此，很多操作系统，将内存分成了两个区域：</p>
+<ul>
+<li>
+<p>内核空间（Kernal Space），这个空间只有内核程序可以访问；</p>
+</li>
+<li>
+<p>用户空间（User Space），这部分内存专门给应用程序使用。</p>
+</li>
+</ul>
+<h3 id="内核态和用户态的切换">内核态和用户态的切换</h3>
+<p>从用户态到内核态切换可以通过三种方式：</p>
+<ol>
+<li>系统调用，<strong>用户态进程主动要求切换到内核态的一种方式</strong>，用户态进程通过系统调用申请使用操作系统提供的服务程序完成工作</li>
+<li>异常：如果当前进程运行在用户态，如果这个时候发生了异常事件，就会触发切换。例如：缺页异常。</li>
+<li>外设中断：当外设完成用户的请求时，会向CPU发送中断信号。</li>
+</ol>
+<p><img src="CgqCHl-Sm3mAG_x-AAC5MxhOcCc621.png" alt="Lark20201023-165439.png"></p>
+<p>如上图所示：内核程序执行在内核态（Kernal Mode），用户程序执行在用户态（User Mode）。当发生系统调用时，用户态的程序发起系统调用。因为系统调用中牵扯特权指令，用户态程序权限不足，因此会中断执行，也就是 Trap（Trap 是一种中断）。</p>
+<p>发生中断后，当前 CPU 执行的程序会中断，跳转到中断处理程序。内核程序开始执行，也就是开始处理系统调用。内核处理完成后，主动触发 Trap，这样会再次发生中断，切换回用户态工作。</p>
+<p>根据UNIX网络编程对I/O模型的分类，UNIX提供了5种I/O模型，阻塞I/O模型、非阻塞I/O模型、I/O复用模型、信号驱动I/O模型、异步I/O</p>
+<p>要深入的理解各种IO模型，那么必须先了解下产生各种IO的原因是什么，要知道这其中的本质问题那么我们就必须要知一条消息是如何从过一个人发送到另外一个人的；</p>
+<p>以两个应用程序通讯为例，我们来了解一下当“A”向&quot;B&quot; 发送一条消息，简单来说会经过如下流程：</p>
+<p>第一步：应用A把消息发送到 TCP发送缓冲区。</p>
+<p>第二步： TCP发送缓冲区再把消息发送出去，经过网络传递后，消息会发送到B服务器的TCP接收缓冲区。</p>
+<p>第三步：B再从TCP接收缓冲区去读取属于自己的数据。</p>
+<p><img src="v2-5311954c22d15ca91e47ab52168b7ada_r.jpg" alt="preview"></p>
+<h3 id="阻塞io模型">阻塞I/O模型</h3>
+<p>因为应用之间发送消息是间断性的，也就是说在上图中TCP缓冲区还没有接收到属于应用B该读取的消息时，那么此时应用B向TCP缓冲区发起读取申请，<strong>TCP接收缓冲区是应该马上告诉应用B 现在没有你的数据，还是说让应用B在这里等着，直到有数据再把数据交给应用B</strong>。</p>
+<p>把这个问题应用到第一个步骤也是一样，应用A在向TCP发送缓冲区发送数据时，如果TCP发送缓冲区已经满了，<strong>那么是告诉应用A现在没空间了，还是让应用A等待着，等TCP发送缓冲区有空间了再把应用A的数据访拷贝到发送缓冲区</strong>。</p>
+<p>所谓<strong>阻塞IO就是当应用B发起读取数据申请时，在内核数据没有准备好之前，应用B会一直处于等待数据状态，直到内核把数据准备好了交给应用B才结束</strong>。</p>
+<p>术语描述：<strong>在应用调用recvfrom读取数据时，其系统调用直到数据包到达且被复制到应用缓冲区中或者发送错误时才返回，在此期间一直会等待，进程从调用到返回这段时间内都是被阻塞的称为阻塞IO</strong>；</p>
+<p>流程：</p>
+<p>1、应用进程向内核发起recfrom读取数据。</p>
+<p>2、准备数据包（应用进程阻塞）。</p>
+<p>3、将数据从内核空间复制到应用空间。</p>
+<p>4、复制完成后，返回成功。</p>
+<p><img src="image-20220927193039794.png" alt="image-20220927193039794"></p>
+<h3 id="非阻塞io">非阻塞IO</h3>
+<p>非阻塞IO就是当应用B发起读取数据申请时，<strong>如果内核数据没有准备好会即刻告诉应用B，不会让B在这里等待</strong>。</p>
+<p>术语：<strong>非阻塞IO是在应用调用recvfrom读取数据时，如果该缓冲区没有数据的话，就会直接返回一个EWOULDBLOCK错误，不会让应用一直等待中</strong>。<strong>在没有数据的时候会即刻返回错误标识，那也意味着如果应用要读取数据就需要不断的调用recvfrom请求，直到读取到它数据要的数据为止</strong>。</p>
+<p>流程：</p>
+<p>1、应用进程向内核发起recvfrom读取数据。</p>
+<p>2、没有数据包准备好，即刻返回EWOULDBLOCK错误码。</p>
+<p>3、应用进程向内核发起recvfrom读取数据。</p>
+<p>4、已有数据包准备好就进行一下步骤，否则还是返回错误码。</p>
+<p>5、将数据从内核空间拷贝到用户空间。</p>
+<p>6、完成后，返回成功提示。</p>
+<p><img src="image-20220924164715808.png" alt="image-20220924164715808"></p>
+<h3 id="io复用模型">IO复用模型</h3>
+<p>我们还是把视角放到应用B从TCP缓冲区中读取数据这个环节来。如果在并发的环境下，可能会N个人向应用B发送消息，这种情况下我们的应用就<strong>必须创建多个线程去读取数据，每个线程都会自己调用recvfrom 去读取数据</strong>。那么此时情况可能如下图：</p>
+<p><img src="v2-529734ac694c4da96ac78eeebd7deb6b_720w.jpg" alt="img"></p>
+<p>如上图一样，并发情况下服务器很可能一瞬间会收到几十上百万的请求，这种情况下应用B就需要创建几十上百万的线程去读取数据，同时又因为应用线程是不知道什么时候会有数据读取，为了保证消息能及时读取到，那么这些线程自己必须不断的向内核发送recvfrom 请求来读取数据；</p>
+<p>那么问题来了，这么多的线程不断调用recvfrom 请求数据，先不说服务器能不能扛得住这么多线程，就算扛得住那么很明显这种方式是不是太浪费资源了，线程是我们操作系统的宝贵资源，大量的线程用来去读取数据了，那么就意味着能做其它事情的线程就会少。</p>
+<p>所以，有人就提出了一个思路，能不能提供一种方式，<strong>可以由一个线程监控多个网络请求</strong>（我们后面将称为fd文件描述符，linux系统把所有网络请求以一个fd来标识），<strong>这样就可以只需要一个或几个线程就可以完成数据状态询问的操作，当有数据准备就绪之后再分配对应的线程去读取数据</strong>，这么做就可以节省出大量的线程资源出来，这个就是IO复用模型的思路。</p>
+<p><img src="v2-2c65fd3534e58d3a54cdeae778a31446_720w.jpg" alt="img"></p>
+<p>正如上图，IO复用模型的思路就是系统提供了一种函数可以同时监控多个fd的操作，这个函数就是我们常说到的select、poll、epoll函数，有了这个函数后，<strong>应用线程通过调用select函数就可以同时监控多个fd，select函数监控的fd中只要有任何一个数据状态准备就绪了，select函数就会返回可读状态，这时询问线程再去通知处理数据的线程，对应线程此时再发起recvfrom请求去读取数据</strong>。</p>
+<blockquote>
+<h4 id="文件描述符fd">文件描述符fd</h4>
+<p>Linux的内核将所有外部设备都可以看做一个文件来操作。那么我们对与外部设备的操作都可以看做对文件进行操作。我们对一个文件的读写，都通过调用内核提供的系统调用；内核给我们返回一个filede scriptor（fd,文件描述符）。而对一个socket的读写也会有相应的描述符，称为socketfd(socket描述符）。描述符就是一个数字，指向内核中一个结构体（文件路径，数据区，等一些属性）。那么我们的应用程序对文件的读写就通过对描述符的读写完成。</p>
+</blockquote>
+<p>术语描述：<strong>进程通过将一个或多个fd传递给select，阻塞在select操作上，select帮我们侦测多个fd是否准备就绪，当有fd准备就绪时，select返回数据可读状态，应用程序再调用recvfrom读取数据</strong>。</p>
+<!-- raw HTML omitted -->
+<p>总结：<strong>复用IO的基本思路就是通过slect或poll、epoll 来监控多fd ，来达到不必为每个fd创建一个对应的监控线程，从而减少线程资源创建的目的</strong>。</p>
+<h4 id="select">select</h4>
+<p>select 的设计思路是<strong>唤醒</strong>模式，<strong>「通过一个 socket 列表(fd_set)维护所有的 socket」</strong>，socket 对应文件列表中的 fd，select 会默认限制最大文件句柄数为 1024，间接控制 fd[] 最大为 1024。</p>
+<ul>
+<li>需要将fd_set从用户空间拷贝到内核空间</li>
+<li>然后内核用poll机制（此poll机制非IO多路复用的那个poll方法，可参加附录）直到有一个fd活跃，或者超时了，方法返回。</li>
+<li>select方法返回后，需要轮询fd_set，以检查出发生IO事件的fd</li>
+</ul>
+<h4 id="poll">poll</h4>
+<p>poll 其实内部实现基本跟 select 一样，区别在于它们底层组织 fd[] 的数据结构不太一样，从而实现了 poll 的最大文件句柄数量限制去除了</p>
+<h4 id="epoll">epoll</h4>
+<p>epoll就是对select和poll的改进了。它的核心思想是基于<strong>事件驱动</strong>来实现的，实现起来也并不难，就是给<strong>每个fd注册一个回调函数，当fd对应的设备发生IO事件时，就会调用这个回调函数，将该fd放到一个链表中，然后由客户端从该链表中取出一个个fd，以此达到O（1）的时间复杂度</strong></p>
+<p>epoll操作实际上对应着有三个函数：epoll_create，epoll_ctr，epoll_wait</p>
+<h5 id="epoll_create">epoll_create</h5>
+<p>epoll_create相当于在内核中创建一个存放fd的数据结构。在select和poll方法中，内核都没有为fd准备存放其的数据结构，只是简单粗暴地把数组或者链表复制进来；而epoll则不一样，e<strong>poll_create会在内核建立一颗专门用来存放fd结点的红黑树</strong>，后续如果有新增的fd结点，都会注册到这个epoll红黑树上。</p>
+<h5 id="epoll_ctr">epoll_ctr</h5>
+<p>另一点不一样的是，select和poll会一次性将监听的所有fd都复制到内核中，而epoll不一样，当需要添加一个新的fd时，会调用epoll_ctr，给这个fd注册一个回调函数，然后将该fd结点注册到内核中的红黑树中。当该fd对应的设备活跃时，会调用该fd上的回调函数，将该结点存放在一个就绪链表中。这也解决了在内核空间和用户空间之间进行来回复制的问题。</p>
+<h5 id="epoll_wait">epoll_wait</h5>
+<p>epoll_wait的做法也很简单，其实直接就是从<strong>就绪链表</strong>中取结点，这也解决了轮询的问题，时间复杂度变成O(1)</p>
+<p>所以综合来说，epoll的优点有：</p>
+<ul>
+<li>
+<p>没有最大并发连接的限制，远远比1024或者2048要大。</p>
+</li>
+<li>
+<p>效率变高。epoll是基于事件驱动实现的，不会随着fd数量上升而效率下降</p>
+</li>
+<li>
+<p>减少内存拷贝的次数</p>
+</li>
+</ul>
+<p><strong>水平触发和边缘触发</strong></p>
+<p>简单理解下</p>
+<p>水平触发的意思就是说，只要条件满足，对应的事件就会一直被触发。所以如果条件满足了但未进行处理，那么就会一直被通知</p>
+<p>边缘触发的意思就是说，条件满足后，对应的事件只会被触发一次，无论是否被处理，都只会触发一次。</p>
+<p>而对于select和poll来说，其触发都是水平触发。而epoll则有两种模式：·EPOLLLT和EPOLLET</p>
+<ul>
+<li>EPOLLLT（默认状态）：也就是水平触发。在该模式下，只要这个fd还有数据可读，那么epoll_wait函数就会返回该fd</li>
+<li>EPOLLET（高速模式）：也就是边缘触发。在该模式下，当被监控的fd上有可读写事件发生时，epoll_wait会通知程序去读写，若本次读写没有读完所有数据，或者甚至没有进行处理，那么下一次调用epoll_wait时，也不会获取到该fd。这种效率比水平触发的要高，系统中不会充斥着大量程序不感兴趣的fd，不感兴趣直接忽视就行，下次不会再触发</li>
+</ul>
+<p>epoll就是对select和poll的改进了。它的核心思想是基于<strong>事件驱动</strong>来实现的</p>
+<ul>
+<li>
+<p>1.拆分:epoll 将添加等待队列和阻塞进程拆分成两个独立的操作，不用每次都去重新维护等待队列</p>
+</li>
+<li>
+<ul>
+<li>先用 epoll_ctl 维护等待队列 eventpoll，它通过红黑树存储 socket 对象，实现高效的查找，删除和添加。</li>
+<li>再调用 epoll_wait 阻塞进程，底层是一个双向链表。显而易见地，效率就能得到提升。</li>
+</ul>
+</li>
+</ul>
+<p>select 的添加等待队列和阻塞进程是合并在一起的，每次调用select()操作时都得执行一遍这两个操作，从而导致每次都要将fd[]传递到内核空间，并且遍历fd[]的每个fd的等待队列，将进程放入各个fd的等待队列中。</p>
+<ul>
+<li>2.直接返回有数据的 fd[]:select 进程被唤醒后，是需要遍历一遍 socket 列表，手动获取有数据的 socket，而 epoll 是在唤醒时直接把有数据的 socket 返回给进程，不需要自己去进行遍历查询。</li>
+</ul>
+<hr>
+<p><strong>「直接返回有数据的 socket 是怎么实现的？」</strong></p>
+<p>其实就是 epoll 会先注册一个文件描述符，一旦基于某个文件描述符就绪时，内核会采用类似 callback 的回调机制，迅速激活这个文件描述符，当进程调用 epoll_wait() 时便得到通知。</p>
+<p>epoll对文件描述符的操作有两种模式：<strong>「LT」</strong>（level trigger）和 <strong>「ET」</strong>（edge trigger）默认为 LT :</p>
+<ul>
+<li>
+<p>LT模式：当epoll_wait检测到描述符事件发生并将此事件通知应用程序，应用程序可以不立即处理该事件。下次调用epoll_wait时，会再次响应应用程序并通知此事件。</p>
+</li>
+<li>
+<p>ET模式：当epoll_wait检测到描述符事件发生并将此事件通知应用程序，应用程序必须立即处理该事件。如果不处理，下次调用epoll_wait时，不会再次响应应用程序并通知此事件。</p>
+</li>
+</ul>
+<h3 id="信号驱动io模型">信号驱动IO模型</h3>
+<p>复用IO模型解决了一个线程可以监控多个fd的问题，但是<strong>select是采用轮询的方式来监控多个fd的</strong>，通过不断的轮询fd的可读状态来知道是否就可读的数据，而无脑的轮询就显得有点暴力，因为大部分情况下的轮询都是无效的，所以有人就想，能不能不要我总是去问你是否数据准备就绪，能不能我发出请求后等你数据准备好了就通知我，所以就衍生了信号驱动IO模型。</p>
+<p>于是<strong>信号驱动IO不是用循环请求询问的方式去监控数据就绪状态，而是在调用sigaction时候建立一个SIGIO的信号联系，当内核数据准备好之后再通过SIGIO信号通知线程数据准备好后的可读状态，当线程收到可读状态的信号后，此时再向内核发起recvfrom读取数据的请求</strong>，因为信号驱动IO的模型下应用线程在发出信号监控后即可返回，不会阻塞，所以这样的方式下，一个应用线程也可以同时监控多个fd。</p>
+<p>类似于下图描述：</p>
+<p><img src="v2-2461c8df6a154930afb4e7c345442835_720w.jpg" alt="img"></p>
+<p>术语描述：首先开启套接口信号驱动IO功能，并通过系统调用sigaction执行一个信号处理函数，此时请求即刻返回，当数据准备就绪时，就生成对应进程的SIGIO信号，通过信号回调通知应用线程调用recvfrom来读取数据。</p>
+<p><img src="v2-bf11a9d3c0f52da85298baa13000e5c9_720w.jpg" alt="img"></p>
+<p>总结： IO复用模型里面的select虽然可以监控多个fd了，但select其实现的本质上还是通过不断的轮询fd来监控数据状态， 因为大部分轮询请求其实都是无效的，所以信号驱动IO意在通过这种建立信号关联的方式，实现了发出请求后只需要等待数据就绪的通知即可，这样就可以避免大量无效的数据状态轮询操作。</p>
+<h3 id="异步io">异步IO</h3>
+<p>其实经过了上面两个模型的优化，我们的效率有了很大的提升，但是我们当然不会就这样满足了，有没有更好的办法，通过观察我们发现，<strong>不管是IO复用还是信号驱动，我们要读取一个数据总是要发起两阶段的请求，第一次发送select请求，询问数据状态是否准备好，第二次发送recevform请求读取数据</strong>。</p>
+<p>思考一个问题：</p>
+<p>也许你一开始就有一个疑问，为什么我们明明是想读取数据，什么非得要先发起一个select询问数据状态的请求，然后再发起真正的读取数据请求,能不能有一种一劳永逸的方式，我只要发送一个请求我告诉内核我要读取数据，然后我就什么都不管了，然后内核去帮我去完成剩下的所有事情？</p>
+<p>当然既然你想得出来，那么就会有人做得到，有人设计了一种方案，<strong>应用只需要向内核发送一个read 请求,告诉内核它要读取数据后即刻返回</strong>；<strong>内核收到请求后会建立一个信号联系，当数据准备就绪，内核会主动把数据从内核复制到用户空间，等所有操作都完成之后，内核会发起一个通知告诉应用</strong>，我们称这种一劳永逸的模式为异步IO模型。</p>
+<p>术语描述： <strong>应用告知内核启动某个操作，并让内核在整个操作完成之后，通知应用</strong>，这种模型与信号驱动模型的主要区别在于，信号驱动IO只是由内核通知我们合适可以<strong>开始下一个IO操作</strong>，而异步IO模型是由内核通知我们<strong>操作什么时候完成</strong>。</p>
+<p><img src="v2-5095ab1ffe868a2577bc15310d740293_720w.jpg" alt="img"></p>
+<p>总结：<strong>异步IO的优化思路是解决了应用程序需要先后发送询问请求、发送接收数据请求两个阶段的模式，在异步IO的模式下，只需要向内核发送一次请求就可以完成状态询问和数拷贝的所有操作</strong>。</p>
+<h3 id="对比">对比</h3>
+<p><img src="image-20220924165755097.png" alt="image-20220924165755097"></p>
+<p>阻塞IO模型、非阻塞IO模型、IO复用模型和信号驱动IO模型都是同步的IO模型。原因是因为，无论以上那种模型，真正的数据拷贝过程，都是同步进行的。还可以细分为，阻塞IO为同步阻塞IO，其他为同步非阻塞IO</p>
+<h3 id="java中的io模型">Java中的IO模型</h3>
+<p>在Java中，提供了一些关于使用IO的API，可以供开发者来读写外部数据和文件，我们称这些API为Java IO，主要有三种，BIO(<strong>同步阻塞I/O</strong>)、NIO(<strong>同步非阻塞模式</strong>)和AIO(<strong>异步非阻塞I/O模型</strong>)。</p>
+<p><img src="../netty-1-01-1-ios.png" alt="微信公众号：bugstack虫洞栈 & bio、nio、aio"></p>
+<h4 id="bio">BIO</h4>
+<p>对应着阻塞I/O模型,代码如下：</p>
+<pre><code class="language-java">package com.zt.javastudy.netty.bio;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.ServerSocket;
+import java.net.Socket;
+
+/**
+ * 同步阻塞服务端
+ *
+ * @author zhengtao on 2021/9/28
+ */
+public class BioServer {
+    public static void main(String[] args) throws IOException {
+        ServerSocket serverSocket = new ServerSocket(3333);
+        // 接收到客户端连接请求之后为每个客户端创建一个新的线程进行链路处理
+        new Thread(() -&gt; {
+            while (true) {
+                try {
+                    // 阻塞方法获取新的连接
+                    Socket socket = serverSocket.accept();
+
+                    // 每一个新的连接都创建一个线程，负责读取数据
+                    new Thread(() -&gt; {
+                        try {
+                            int len;
+                            byte[] data = new byte[1024];
+                            InputStream inputStream = socket.getInputStream();
+                            // 按字节流方式读取数据
+                            while ((len = inputStream.read(data)) != -1) {
+                                System.out.println(new String(data, 0, len));
+                            }
+                        } catch (IOException e) {
+                        }
+                    }).start();
+
+                } catch (IOException e) {
+                }
+
+            }
+        }).start();
+
+    }
+}
+</code></pre>
+<pre><code class="language-java">package com.zt.javastudy.netty.bio;
+
+import java.io.IOException;
+import java.net.Socket;
+import java.util.Date;
+
+/**
+ * 同步阻塞客户端
+ *
+ * @author zhengtao on 2021/9/28
+ */
+public class BioClient {
+    public static void main(String[] args) {
+        new Thread(() -&gt; {
+            try {
+                Socket socket = new Socket(&quot;127.0.0.1&quot;, 3333);
+                while (true) {
+                    try {
+                        socket.getOutputStream().write((new Date() + &quot;: hello world&quot;).getBytes());
+                        Thread.sleep(2000);
+                    } catch (Exception e) {
+                    }
+                }
+            } catch (IOException e) {
+            }
+        }).start();
+
+    }
+}
+
+</code></pre>
+<h4 id="nio">NIO</h4>
+<p>传统IO基于流(字节流和字符流)进行操作，而NIO基于Channel和Buffer(缓冲区)进行操作，数据总是从通道读取到缓冲区中，或者从缓冲区写入到通道中。</p>
+<p>NIO和传统IO之间第一个最大的区别是，<strong>IO是面向流的，NIO是面向缓冲区的</strong>。 Java IO面向流意味着<strong>每次从流中读一个或多个字节，直至读取所有字节，它们没有被缓存在任何地方</strong>。此外，它不能前后移动流中的数据。如果需要前后移动从流中读取的数据，需要先将它缓存到一个缓冲区。<strong>NIO的缓冲导向方法略有不同。数据读取到一个它稍后处理的缓冲区，需要时可在缓冲区中前后移动。这就增加了处理过程中的灵活性</strong>。但是，还需要检查是否该缓冲区中包含所有您需要处理的数据。而且，需确保当更多的数据读入缓冲区时，不要覆盖缓冲区里尚未处理的数据。</p>
+<p>IO的各种流是<strong>阻塞的</strong>。这意味着，<strong>当一个线程调用read() 或 write()时，该线程被阻塞，直到有一些数据被读取，或数据完全写入</strong>。该线程在此期间不能再干任何事情了。 NIO的非阻塞模式，<strong>使一个线程从某通道发送请求读取数据，但是它仅能得到目前可用的数据，如果目前没有数据可用时，就什么都不会获取。而不是保持线程阻塞，所以直至数据变得可以读取之前，该线程可以继续做其他的事情</strong>。 非阻塞写也是如此。一个线程请求写入一些数据到某通道，但不需要等待它完全写入，这个线程同时可以去做别的事情。 <strong>线程通常将非阻塞IO的空闲时间用于在其它通道上执行IO操作，所以一个单独的线程现在可以管理多个输入和输出通道</strong>（channel）</p>
+<h5 id="buffer">Buffer</h5>
+<p>Buffer（缓冲区），它包含一些要写入或要读出的数据。关键Buffer实现有：ByteBuffer, CharBuffer, DoubleBuffer, FloatBuffer, IntBuffer, LongBuffer, ShortBuffer，分别对应基本数据类型: byte, char, double, float, int, long, short</p>
+<h5 id="channel">Channel</h5>
+<p>channel（通道），它就像自来水管一样，数据通过channel读取和写入，通道和流的不同之处在于，通道是双向的（全双工的），既可以用来进行读操作，又可以用来进行写操作。流只是在一个方向上移动（要么写InputStream、要么读OutputStream）。</p>
+<h5 id="selector">Selector</h5>
+<p>多路复用器提供选择已经就绪的任务的能力，Selector会不断轮询注册在其上的Channel，如果某个Channel上面发生读或写事件，这个Channel就处于就绪状态，会被Selector轮询出来，然后通过SelectionKey可以获取就绪Channel的集合，进行后续的IO操作。</p>
+<p>通道注册到Selector时可以指定自己关注的事件</p>
+<ul>
+<li>SelectionKey.OP_CONNECT：连接就绪，某个channel成功连接到服务端</li>
+<li>SelectionKey.OP_ACCEPT：接收就绪，服务端准备好接收新进入的连接</li>
+<li>SelectionKey.OP_READ：读就绪，有数据可读了</li>
+<li>SelectionKey.OP_WRITE：写就绪，待写数据</li>
+</ul>
+<p>服务端代码</p>
+<pre><code class="language-java">package com.zt.javastudy.netty.nio;
+
+import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.nio.ByteBuffer;
+import java.nio.channels.SelectionKey;
+import java.nio.channels.Selector;
+import java.nio.channels.ServerSocketChannel;
+import java.nio.channels.SocketChannel;
+import java.nio.charset.StandardCharsets;
+import java.util.Iterator;
+import java.util.Set;
+
+/**
+ * @author zhengtao on 2022/10/27
+ */
+public class NIOServer implements Runnable {
+    public NIOServer(Selector selector) {
+        this.selector = selector;
+    }
+
+    private Selector selector;
+
+    @Override
+    public void run() {
+        while (true) {
+            try {
+                selector.select(1000);
+                Set&lt;SelectionKey&gt; keys = selector.selectedKeys();
+                Iterator&lt;SelectionKey&gt; it = keys.iterator();
+                SelectionKey key = null;
+                while (it.hasNext()) {
+                    key = it.next();
+                    it.remove();
+                    try {
+                        handleInput(key);
+                    } catch (Exception e) {
+                        key.cancel();
+                        if (key.channel() != null) {
+                            key.channel().close();
+                        }
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void handleInput(SelectionKey key) throws IOException {
+        if (!key.isValid()) {
+            return;
+        }
+
+        // 服务端ServerSocketChannel
+        if (key.isAcceptable()) {
+            ServerSocketChannel serverSocketChannel = (ServerSocketChannel) key.channel();
+            // 与客户端建立连接
+            SocketChannel socketChannel = serverSocketChannel.accept();
+            socketChannel.configureBlocking(false);
+            socketChannel.register(selector, SelectionKey.OP_READ);
+            System.out.println(&quot;客户端连接了&quot;);
+        }
+
+
+        if (key.isReadable()) {
+            SocketChannel socketChannel = (SocketChannel) key.channel();
+            ByteBuffer readBuffer = ByteBuffer.allocate(1024);
+            int readBytes = socketChannel.read(readBuffer);
+            if (readBytes &gt; 0) {
+                readBuffer.flip();
+                byte[] bytes = new byte[readBuffer.remaining()];
+                readBuffer.get(bytes);
+                String req = new String(bytes, StandardCharsets.UTF_8);
+                System.out.println(&quot;服务端收到客户端消息:&quot; + req);
+                // 写消息
+                String msg = &quot;客户端你好现在是:&quot; + System.currentTimeMillis();
+                byte[] resp = msg.getBytes(StandardCharsets.UTF_8);
+                ByteBuffer writeBuffer = ByteBuffer.allocate(resp.length);
+                writeBuffer.put(resp);
+                writeBuffer.flip();
+                socketChannel.write(writeBuffer);
+            } else if (readBytes &lt; 0) {
+                key.cancel();
+                socketChannel.close();
+            }
+        }
+    }
+
+    public static void main(String[] args) throws IOException {
+        // 打开服务端管道，用于监听客户端的连接，它是所有客户端连接的父管道
+        ServerSocketChannel socketChannel = ServerSocketChannel.open();
+
+        // 绑定监听端口，设置连接为非阻塞模式
+        socketChannel.socket().bind(new InetSocketAddress(&quot;localhost&quot;, 8888));
+        socketChannel.configureBlocking(false);
+
+        // 创建Reactor线程，创建多路复用器并启动线程
+        Selector selector = Selector.open();
+        new Thread(new NIOServer(selector)).start();
+
+        // 将服务端channel注册到多路复用器上，并监听连接事件
+        socketChannel.register(selector, SelectionKey.OP_ACCEPT);
+        System.out.println(&quot;服务端启动了&quot;);
+    }
+}
+</code></pre>
+<p>客户端代码</p>
+<pre><code class="language-java">package com.zt.javastudy.netty.nio;
+
+import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.nio.ByteBuffer;
+import java.nio.channels.SelectionKey;
+import java.nio.channels.Selector;
+import java.nio.channels.SocketChannel;
+import java.nio.charset.StandardCharsets;
+import java.util.Iterator;
+import java.util.Set;
+
+/**
+ * @author zhengtao
+ */
+public class NIOClient implements Runnable {
+    private Selector selector;
+
+    public NIOClient(Selector selector) {
+        this.selector = selector;
+    }
+
+    @Override
+    public void run() {
+        while (true) {
+            try {
+                selector.select(1000);
+                Set&lt;SelectionKey&gt; keys = selector.selectedKeys();
+                Iterator&lt;SelectionKey&gt; it = keys.iterator();
+                SelectionKey key;
+                while (it.hasNext()) {
+                    key = it.next();
+                    it.remove();
+                    try {
+                        handleInput(key);
+                    } catch (Exception e) {
+                        key.cancel();
+                        if (key.channel() != null) {
+                            key.channel().close();
+                        }
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void handleInput(SelectionKey key) throws IOException {
+        if (!key.isValid()) {
+            return;
+        }
+
+        // 客户端SocketChannel
+        SocketChannel socketChannel = (SocketChannel) key.channel();
+        if (key.isConnectable()) {
+            if (socketChannel.finishConnect()) {
+                socketChannel.register(selector, SelectionKey.OP_READ);
+                doWrite(socketChannel);
+            } else {
+                System.exit(1);
+            }
+        }
+
+        if (key.isReadable()) {
+            ByteBuffer readBuffer = ByteBuffer.allocate(1024);
+            int readBytes = socketChannel.read(readBuffer);
+            if (readBytes &gt; 0) {
+                readBuffer.flip();
+                byte[] bytes = new byte[readBuffer.remaining()];
+                readBuffer.get(bytes);
+                String req = new String(bytes, StandardCharsets.UTF_8);
+                System.out.println(&quot;客户端收到服务端消息:&quot; + req);
+                doWrite(socketChannel);
+            } else if (readBytes &lt; 0) {
+                key.cancel();
+                socketChannel.close();
+            }
+        }
+    }
+
+    private void doWrite(SocketChannel socketChannel) throws IOException {
+        // 写消息
+        String msg = &quot;服务端你好现在是:&quot; + System.currentTimeMillis();
+        byte[] resp = msg.getBytes(StandardCharsets.UTF_8);
+        ByteBuffer writeBuffer = ByteBuffer.allocate(resp.length);
+        writeBuffer.put(resp);
+        writeBuffer.flip();
+        socketChannel.write(writeBuffer);
+    }
+
+    public static void main(String[] args) throws IOException {
+        // 打开客户端管道，设置连接为非阻塞模式
+        SocketChannel socketChannel = SocketChannel.open();
+        socketChannel.configureBlocking(false);
+
+        // 连接到服务端
+        boolean isConnect = socketChannel.connect(new InetSocketAddress(&quot;localhost&quot;, 8888));
+
+        // 创建Reactor线程，创建多路复用器并启动线程
+        Selector selector = Selector.open();
+        if (isConnect) {
+            socketChannel.register(selector, SelectionKey.OP_READ);
+        } else {
+            socketChannel.register(selector, SelectionKey.OP_CONNECT);
+        }
+        new Thread(new NIOClient(selector)).start();
+    }
+}
+</code></pre>
+<h4 id="aio">AIO</h4>
+<p>服务端代码</p>
+<pre><code class="language-java">package com.zt.javastudy.aio;
+
+import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.nio.channels.AsynchronousServerSocketChannel;
+import java.util.concurrent.CountDownLatch;
+
+/**
+ * @author zhengtao
+ * @create 2022/10/30 15:44
+ */
+public class AioServer implements Runnable {
+    AsynchronousServerSocketChannel serverSocketChannel;
+    CountDownLatch latch;
+
+    public AioServer(AsynchronousServerSocketChannel serverSocketChannel) {
+        this.serverSocketChannel = serverSocketChannel;
+    }
+
+    @Override
+    public void run() {
+        latch = new CountDownLatch(1);
+        doAccept();
+        try {
+            latch.await();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void doAccept() {
+        serverSocketChannel.accept(this, new AcceptCompletionHandler());
+    }
+
+    public static void main(String[] args) throws IOException {
+        // 打开服务端管道，用于监听客户端的连接，它是所有客户端连接的父管道
+        AsynchronousServerSocketChannel serverSocketChannel = AsynchronousServerSocketChannel.open();
+        serverSocketChannel.bind(new InetSocketAddress(8888));
+        new Thread(new AioServer(serverSocketChannel)).start();
+        System.out.println(&quot;服务端启动了&quot;);
+    }
+}
+
+</code></pre>
+<pre><code class="language-java">package com.zt.javastudy.aio;
+
+import java.nio.ByteBuffer;
+import java.nio.channels.AsynchronousSocketChannel;
+import java.nio.channels.CompletionHandler;
+
+/**
+ * @author zhengtao
+ * @create 2022/10/30 16:08
+ */
+public class AcceptCompletionHandler implements CompletionHandler&lt;AsynchronousSocketChannel, AioServer&gt; {
+    @Override
+    public void completed(AsynchronousSocketChannel result, AioServer attachment) {
+        // 接收客户端连接
+        attachment.serverSocketChannel.accept(attachment, this);
+
+        // 读取消息
+        ByteBuffer buffer = ByteBuffer.allocate(1024);
+        result.read(buffer, buffer, new ReadCompletionHandler(result));
+    }
+
+    @Override
+    public void failed(Throwable exc, AioServer attachment) {
+        exc.printStackTrace();
+        attachment.latch.countDown();
+    }
+}
+</code></pre>
+<pre><code class="language-java">package com.zt.javastudy.aio;
+
+import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.channels.AsynchronousSocketChannel;
+import java.nio.channels.CompletionHandler;
+import java.nio.charset.StandardCharsets;
+
+/**
+ * @author zhengtao
+ * @create 2022/10/30 16:53
+ */
+public class ReadCompletionHandler implements CompletionHandler&lt;Integer, ByteBuffer&gt; {
+    private AsynchronousSocketChannel channel;
+
+    public ReadCompletionHandler(AsynchronousSocketChannel channel) {
+        this.channel = channel;
+    }
+
+    @Override
+    public void completed(Integer result, ByteBuffer attachment) {
+        attachment.flip();
+        byte[] body = new byte[attachment.remaining()];
+        attachment.get(body);
+        try {
+            String req = new String(body, StandardCharsets.UTF_8);
+            System.out.println(&quot;服务端收到客户端消息:&quot; + req);
+            doWrite(channel);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void failed(Throwable exc, ByteBuffer attachment) {
+        try {
+            this.channel.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void doWrite(AsynchronousSocketChannel channel) throws IOException {
+        // 写消息
+        String msg = &quot;客户端你好现在是:&quot; + System.currentTimeMillis();
+        byte[] resp = msg.getBytes(StandardCharsets.UTF_8);
+        ByteBuffer writeBuffer = ByteBuffer.allocate(resp.length);
+        writeBuffer.put(resp);
+        writeBuffer.flip();
+        channel.write(writeBuffer);
+    }
+}
+</code></pre>
+<p>客户端代码</p>
+<pre><code class="language-java">package com.zt.javastudy.aio;
+
+import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.nio.ByteBuffer;
+import java.nio.channels.AsynchronousSocketChannel;
+import java.nio.channels.CompletionHandler;
+import java.nio.charset.StandardCharsets;
+import java.util.concurrent.CountDownLatch;
+
+/**
+ * @author zhengtao
+ * @create 2022/10/30 17:53
+ * aio 客户端
+ */
+public class AioClient implements CompletionHandler&lt;Void, AioClient&gt;, Runnable {
+    private AsynchronousSocketChannel channel;
+    private CountDownLatch latch;
+
+    public AioClient(AsynchronousSocketChannel channel) {
+        this.channel = channel;
+    }
+
+    @Override
+    public void run() {
+        latch = new CountDownLatch(1);
+        channel.connect(new InetSocketAddress(&quot;localhost&quot;, 8888), this, this);
+        try {
+            latch.await();
+        } catch (InterruptedException e1) {
+            e1.printStackTrace();
+        }
+        try {
+            channel.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void completed(Void result, AioClient attachment) {
+        String msg = &quot;服务端你好现在是:&quot; + System.currentTimeMillis();
+        byte[] req = msg.getBytes(StandardCharsets.UTF_8);
+        ByteBuffer writeBuffer = ByteBuffer.allocate(req.length);
+        writeBuffer.put(req);
+        writeBuffer.flip();
+        channel.write(writeBuffer, writeBuffer, new CompletionHandler&lt;Integer, ByteBuffer&gt;() {
+            @Override
+            public void completed(Integer result, ByteBuffer buffer) {
+                if (buffer.hasRemaining()) {
+                    channel.write(buffer, buffer, this);
+                } else {
+                    ByteBuffer readBuffer = ByteBuffer.allocate(1024);
+                    channel.read(readBuffer, readBuffer, new CompletionHandler&lt;Integer, ByteBuffer&gt;() {
+                        @Override
+                        public void completed(Integer result, ByteBuffer buffer) {
+                            buffer.flip();
+                            byte[] bytes = new byte[buffer.remaining()];
+                            buffer.get(bytes);
+                            String body;
+                            body = new String(bytes, StandardCharsets.UTF_8);
+                            System.out.println(&quot;客户端收到服务端消息 : &quot; + body);
+                            latch.countDown();
+                        }
+
+                        @Override
+                        public void failed(Throwable exc, ByteBuffer attachment) {
+                            try {
+                                channel.close();
+                                latch.countDown();
+                            } catch (IOException e) {
+                                // ingnore on close
+                            }
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void failed(Throwable exc, ByteBuffer attachment) {
+                try {
+                    channel.close();
+                    latch.countDown();
+                } catch (IOException e) {
+                    // ingnore on close
+                }
+            }
+        });
+    }
+
+    @Override
+    public void failed(Throwable exc, AioClient attachment) {
+        exc.printStackTrace();
+        try {
+            channel.close();
+            latch.countDown();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void main(String[] args) throws IOException {
+        // 打开客户端管道
+        AsynchronousSocketChannel channel = AsynchronousSocketChannel.open();
+        new Thread(new AioClient(channel)).start();
+    }
+}
+</code></pre>
+<h3 id="原生nio和netty的对比">原生NIO和Netty的对比</h3>
+<ul>
+<li>NIO的类库比较复杂，需要搞懂Buffer、channel、Selector等</li>
+<li>需要自己处理很多特殊情况，比如客户端断连，重连，网络闪断，半包读写，失败缓存，网络拥塞等问题</li>
+<li>存在一些bug，比如epoll bug，它会导致Selector空轮询，最终导致cpu 100%</li>
+</ul>
+<p>所以用netty哈哈，下面正式进入netty学习</p>
+<h3 id="netty对io模式的支持">Netty对IO模式的支持</h3>
+<p><img src="20201110130411325.png" alt="img"></p>
+<ol>
+<li>
+<p>为什么不建议阻塞I/0 (BIO/OIO)</p>
+<p>连接数高的情况下:阻塞 -&gt; 耗资源、效率低。</p>
+</li>
+<li>
+<p>为什么删掉已经做好的AIO支持?</p>
+<ul>
+<li>Windows实现成熟，但其很少用做服务器</li>
+<li>Linux常用做服务器，但其AlO实现不够成熟</li>
+<li>Linux下AIO相比较NIO的性能提升不明显</li>
+</ul>
+</li>
+</ol>
+<p>所以netty选择支持NIO</p>
+<h3 id="netty核心组件">Netty核心组件</h3>
+<p>Netty 的逻辑处理架构为典型网络分层架构设计，共分为<strong>网络通信层、事件调度层、服务编排层</strong>，每一层各司其职</p>
+<p><img src="Ciqc1F-NO9KAUOtaAAE1S5uRlDE275.png" alt="Drawing 1.png"></p>
+<h4 id="bootstrap">Bootstrap</h4>
+<p>网络通信层的职责是执行网络 I/O 的操作。它支持多种网络协议和 I/O 模型的连接操作。当网络数据读取到内核缓冲区后，会触发各种网络事件，这些网络事件会分发给事件调度层进行处理。</p>
+<p>网络通信层的<strong>核心组件</strong>包含<strong>BootStrap、ServerBootStrap、Channel</strong>三个组件。</p>
+<p>Netty 中的引导器共分为两种类型：一个为<strong>用于客户端的 Bootstrap</strong>，另一个为<strong>用于服务端的 ServerBootStrap</strong>。Bootstrap 作为整个 Netty 客户端和服务端的<strong>程序入口</strong>，可以把 Netty 的核心组件像搭积木一样组装在一起，串接了 Netty 所有的核心组件</p>
+<h4 id="channel-1">Channel</h4>
+<p>Channel “通道”，它是<strong>网络通信的载体</strong>。Channel提供了基本的 API 用于网络 I/O 操作，如 register、bind、connect、read、write、flush 等。Netty 自己实现的 Channel 是以 JDK NIO Channel 为基础的，相比较于 JDK NIO，Netty 的 Channel 提供了更高层次的抽象，同时屏蔽了底层 Socket 的复杂性，赋予了 Channel 更加强大的功能，你在使用 Netty 时基本不需要再与 Java Socket 类直接打交道。</p>
+<h4 id="eventloopgroup">EventLoopGroup</h4>
+<p>EventLoopGroup 本质是一个Reactor 线程池，它实际就是EventLoop的数组，EventLoop的职责是处理所有注册到本线程多路复用器Selector上的channel，Selector的轮询操作由绑定的EventLoop线程run方法驱动。</p>
+<p><img src="CgqCHl-NPG6APzDfAAbX5ACAFh8001.png" alt="Drawing 4.png"></p>
+<p>从上图中，我们可以总结出 EventLoopGroup、EventLoop、Channel 的几点关系。</p>
+<ol>
+<li>
+<p>一个 EventLoopGroup 往往包含一个或者多个 EventLoop。EventLoop 用于处理 Channel 生命周期内的所有 I/O 事件，如 accept、connect、read、write 等 I/O 事件。</p>
+</li>
+<li>
+<p>EventLoop 同一时间会与一个线程绑定，每个 EventLoop 负责处理多个 Channel。</p>
+</li>
+<li>
+<p>每新建一个 Channel，EventLoopGroup 会选择一个 EventLoop 与其绑定。该 Channel 在生命周期内都可以对 EventLoop 进行多次绑定和解绑。</p>
+</li>
+</ol>
+<h5 id="reactor">Reactor</h5>
+<p>网络框架的设计离不开 I/O 线程模型，线程模型的优劣直接决定了系统的吞吐量、可扩展性、安全性等。目前主流的网络框架几乎都采用了 I/O 多路复用的方案。Reactor 模式作为其中的事件分发器，负责将读写事件分发给对应的读写事件处理者。大名鼎鼎的 Java 并发包作者 Doug Lea，在 <em>Scalable I/O in Java</em> 一文中阐述了服务端开发中 I/O 模型的演进过程。Netty 中<strong>三种 Reactor 线程模型</strong>也来源于这篇经典文章。下面我们对这三种 Reactor 线程模型做一个详细的分析。</p>
+<h6 id="单线程模型">单线程模型</h6>
+<p><img src="Ciqc1F-ZNCCANWF0AAG4qWOzD48243.png" alt="1.png">上图描述了 Reactor 的单线程模型结构，在 Reactor 单线程模型中，所有 I/O 操作（包括连接建立、数据读写、事件分发等），都是由一个线程完成的。单线程模型逻辑简单，缺陷也十分明显：</p>
+<ul>
+<li>一个线程支持处理的连接数非常有限，CPU 很容易打满，性能方面有明显瓶颈；</li>
+<li>当多个事件被同时触发时，只要有一个事件没有处理完，其他后面的事件就无法执行，这就会造成消息积压及请求超时；</li>
+<li>线程在处理 I/O 事件时，Select 无法同时处理连接建立、事件分发等操作；</li>
+<li>如果 I/O 线程一直处于满负荷状态，很可能造成服务端节点不可用。</li>
+</ul>
+<h6 id="多线程模型">多线程模型</h6>
+<p><img src="Ciqc1F-ZNCyAeFxmAAH_Xaxv5gc975.png" alt="2.png">由于单线程模型有性能方面的瓶颈，多线程模型作为解决方案就应运而生了。Reactor 多线程模型将业务逻辑交给多个线程进行处理。除此之外，多线程模型其他的操作与单线程模型是类似的，例如读取数据依然保留了串行化的设计。当客户端有数据发送至服务端时，Select 会监听到可读事件，数据读取完毕后提交到业务线程池中并发处理。</p>
+<h4 id="主从多线程模型">主从多线程模型</h4>
+<p><img src="CgqCHl-ZNDiAPgGOAAHx74H-t44265.png" alt="3.png">主从多线程模型由多个 Reactor 线程组成，每个 Reactor 线程都有独立的 Selector 对象。MainReactor 仅负责处理客户端连接的 Accept 事件，连接建立成功后将新创建的连接对象注册至 SubReactor。再由 SubReactor 分配线程池中的 I/O 线程与其连接绑定，它将负责连接生命周期内所有的 I/O 事件。</p>
+<p>Netty 推荐使用主从多线程模型，这样就可以轻松达到成千上万规模的客户端连接。在海量客户端并发请求的场景下，主从多线程模式甚至可以适当增加 SubReactor 线程的数量，从而利用多核能力提升系统的吞吐量。</p>
+<p>介绍了上述三种 Reactor 线程模型，再结合它们各自的架构图，我们能大致总结出 Reactor 线程模型运行机制的四个步骤，分别为<strong>连接注册</strong>、<strong>事件轮询</strong>、<strong>事件分发</strong>、<strong>任务处理</strong>，如下图所示。</p>
+<p><img src="CgqCHl-ZNEGAMU-zAAEsYdWKArA085.png" alt="4.png"></p>
+<ul>
+<li>连接注册：Channel 建立后，注册至 Reactor 线程中的 Selector 选择器。</li>
+<li>事件轮询：轮询 Selector 选择器中已注册的所有 Channel 的 I/O 事件。</li>
+<li>事件分发：为准备就绪的 I/O 事件分配相应的处理线程。</li>
+<li>任务处理：Reactor 线程还负责任务队列中的非 I/O 任务，每个 Worker 线程从各自维护的任务队列中取出任务异步执行。</li>
+</ul>
+<p>以上介绍了 Reactor 线程模型的演进过程和基本原理，Netty 也同样遵循 Reactor 线程模型的运行机制，下面我们来了解一下 Netty 是如何实现 Reactor 线程模型的。</p>
+<p>Netty 通过创建不同的 EventLoopGroup 参数配置，就可以支持 Reactor 的三种线程模型：</p>
+<ol>
+<li>
+<p><strong>单线程模型</strong>：EventLoopGroup 只包含一个 EventLoop，Boss 和 Worker 使用同一个EventLoopGroup；</p>
+</li>
+<li>
+<p><strong>多线程模型</strong>：EventLoopGroup 包含多个 EventLoop，Boss 和 Worker 使用同一个EventLoopGroup；</p>
+</li>
+<li>
+<p><strong>主从多线程模型</strong>：EventLoopGroup 包含多个 EventLoop，Boss 是主 Reactor，Worker 是从 Reactor，它们分别使用不同的 EventLoopGroup，主 Reactor  负责监听客户端的 Accept 事件,当事件触发时，将事件注册到从 Reactor。每新建一个 Channel， 只选择一个 NioEventLoop 与其绑定。所以说 Channel 生命周期的所有事件处理都是<strong>线程独立</strong>的，不同的 NioEventLoop 线程之间不会发生任何交集。</p>
+<p>NioEventLoop 完成数据读取后，会调用绑定的 ChannelPipeline 进行事件传播，ChannelPipeline 也是<strong>线程安全</strong>的，数据会被传递到 ChannelPipeline 的第一个 ChannelHandler 中。数据处理完成后，将加工完成的数据再传递给下一个 ChannelHandler，整个过程是<strong>串行化</strong>执行，不会发生线程上下文切换的问题</p>
+</li>
+</ol>
+<h4 id="channelpipeline">ChannelPipeline</h4>
+<p>一个负责处理网络事件的<strong>责任链</strong>，负责管理和执行ChannelHandler。网络事件以事件流的形式在ChannelPipeline中流转，并根据执行策略调度ChannelHandler执行。</p>
+<p>创建一个 Channel 都会绑定一个新的 ChannelPipeline，ChannelPipeline 中每加入一个 ChannelHandler 都会绑定一个 ChannelHandlerContext。ChannelHandlerContext 用于保存 ChannelHandler 上下文，通过 ChannelHandlerContext 我们可以知道 ChannelPipeline 和 ChannelHandler 的关联关系。</p>
+<h4 id="channelhandler">ChannelHandler</h4>
+<p>用户定制和扩展的关键接口。可以用于消息编解码、心跳、认证等</p>
+<h4 id="总体流程">总体流程</h4>
+<p><img src="image-20221030235232006.png" alt="image-20221030235232006"></p>
+<h3 id="tcp粘包拆包">TCP粘包/拆包</h3>
+<p>​    TCP是个“流”协议，所谓流就是没有界限的一串数据。大家可以想想河里的流水,它们是连成一片的，其间并没有分界线。TCP底层并不了解上层业务数据的具体含义，它会根据TCP缓冲区的实际情况进行包的划分，所以在业务上认为完整的包，可能会被TCP拆分成多个包进行发送，也有可能把多个小的包封装成一个大的数椐包发送，这就是所谓的TCP粘包和拆包问题。</p>
+<p><img src="image-20221030205333963.png" alt="image-20221030205333963"></p>
+<p>​	 假设客户端分别发送两个数据包D1和D2给服务端，由于服务端一次性的字节数是不确定的.故可能存在以下4种情况。</p>
+<ol>
+<li>服务端分两次读取到了两个独立的数据包，分别是DI和D2，没有粘包和拆包</li>
+<li>服务端一次接收到了两个数裾包，D1和D2粘合在一起，被称为TCP粘包</li>
+<li>服务端分两次读取到了 两个数据包，笫一次读取到了完整的D1包和D2包的部分内容，第二次读取到了 D2包的剩余内容，这被称为TCP拆包；</li>
+<li>服务端分两次读取到了 两个数据包，第一次读取到了D1包的部分内容,第二次读取到了 D1 包的剩余内容和D2包的整包</li>
+</ol>
+<p>如果此时服务端TCP接收滑窗非常小，而数裾包D1和D2比较大，很有可能会发生第5种可能，即服务端分多次才能将DI和D2包接收完全，期间发生多次拆包。</p>
+<h4 id="tcp粘包拆包发生的原因">TCP粘包/拆包发生的原因</h4>
+<ol>
+<li>应用程序write写入的字节大小大于套接口发送缓冲区大小</li>
+<li>进行MSS大小的TCP分段；</li>
+<li>以太网帧的payload大于MTU进行IP分片</li>
+</ol>
+<p><img src="image-20221030210014904.png" alt="image-20221030210014904"></p>
+<h4 id="解决策略">解决策略</h4>
+<p>​	由于底层的TCP无法理解上层的业务数据，<strong>所以在底层是无法保证数据包不被拆分和重组的</strong>，这个问题只能通过上层的应用协议栈设计来解决，归纳如下</p>
+<ul>
+<li>
+<p>消息定长.例如每个报文的大小为同定长度200字节，如果不够，空位补空格</p>
+</li>
+<li>
+<p>在包尾增加回车换行符进行分割，例如FTP协议</p>
+</li>
+<li>
+<p>将消息分为消息头和消息体，消息头中包含表示消息总长度（或者消息体长度）   的字段，通常设计思路为消息头的第一个字段使用int32来表示消息的总长度</p>
+</li>
+<li>
+<p>更复杂的应用层协议</p>
+</li>
+</ul>
+<h4 id="netty的解决办法">Netty的解决办法</h4>
+
+    </div>
+    <div class="article-footer">
+<blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接: </strong>
+      <a href="https://wzgl998877.github.io/2022/01/netty/" title="Netty 学习" target="_blank" rel="external">https://wzgl998877.github.io/2022/01/netty/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong>License: </strong>
+        <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN</a>
+    </li>
+  </ul>
+</blockquote>
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/wzgl998877/" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="https://wzgl998877.github.io/avatar.png" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/wzgl998877/" target="_blank"><span class="text-dark">microzheng</span><small class="ml-1x">努力会说谎，但努力不会白费</small></a></h3>
+        <div>不想搬砖的码农</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+    </div>
+  </article>
+</div><nav class="bar bar-footer clearfix" data-stick-bottom>
+    <div class="bar-inner">
+        <ul class="pager pull-left">
+            <li class="prev">
+                <a href="https://wzgl998877.github.io/2022/01/spring%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0/" title="spring源码学习"><i
+                        class="icon icon-angle-left"
+                        aria-hidden="true"></i><span>&nbsp;&nbsp;下一篇</span></a>
+            </li>
+            <li class="next">
+                <a href="https://wzgl998877.github.io/2022/01/mybatis-%E6%8A%80%E6%9C%AF%E5%86%85%E5%B9%95%E5%AD%A6%E4%B9%A0/"
+                    title="mybatis 技术内幕学习"><span>上一篇&nbsp;&nbsp;</span><i
+                        class="icon icon-angle-right" aria-hidden="true"></i></a>
+            </li>
+            
+            <li class="toggle-toc">
+                <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false"
+                    title="文章目录" role="button">
+                    <span>[&nbsp;</span><span>文章目录</span>
+                    <i class="text-collapsed icon icon-anchor"></i>
+                    <i class="text-in icon icon-close"></i>
+                    <span>]</span>
+                </a>
+            </li>
+        </ul>
+        <div class="bar-right">
+            <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter"
+                data-mobile-sites="weibo,qq,qzone"></div>
+        </div>
+    </div>
+</nav>
+
+
+</main><footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+<ul class="social-links">
+    <li><a href="https://github.com/wzgl998877/" target="_blank" title="github" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-github"></i></a></li>
+    <li><a href="https://wzgl998877.github.io/index.xml" target="_blank" title="rss" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-rss"></i></a></li>
+</ul>
+  <div class="copyright">
+    &copy;2022  -
+    2023
+    <div class="publishby">
+        Theme by <a href="https://github.com/wzgl998877/" target="_blank"> microzheng </a>base on<a href="https://github.com/xiaoheiAh/hugo-theme-pure" target="_blank"> pure</a>.
+    </div>
+    
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_SVG"></script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+            showMathMenu: false, //disables context menu
+            tex2jax: {
+            inlineMath: [ ['$','$'], ['\\(','\\)'] ]
+           }
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+<script>
+    window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/highlight.min.js"></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/python.min.js" defer></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/javascript.min.js" defer></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/java.min.js" defer></script><script>
+    hljs.configure({
+        tabReplace: '    ', 
+        classPrefix: ''     
+        
+    })
+    hljs.initHighlightingOnLoad();
+</script>
+<script src="https://wzgl998877.github.io/js/application.min.a94ab19cb63a95c8d7fbd7b85cab3ddeea8c369bdf75b9cab6708787ead123af.js"></script>
+<script src="https://wzgl998877.github.io/js/plugin.min.19c5bcb2fb0789ab4f2b7834e5ceb5e92635645605bab902c1024b25f1502364.js"></script>
+
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(未命名)',
+            },
+            ROOT_URL: 'https:\/\/wzgl998877.github.io\/',
+            CONTENT_URL: 'https:\/\/wzgl998877.github.io\/\/searchindex.json ',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script type="text/javascript" src="https://wzgl998877.github.io/js/insight.min.4a2d52de4bfff73e0c688404fe3d17c9a3ae12d9888e1e1ac9c690e4890de2ded50fe55f2b819c2ba55435a76f396f3ea6805765f0b0af5635cdf74ea459eab0.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+<script>
+    tocbot.init({
+        
+        tocSelector: '.js-toc',
+        
+        contentSelector: '.js-toc-content',
+        
+        headingSelector: 'h1, h2, h3',
+        
+        hasInnerContainers: true,
+    });
+</script>
+
+
+  </body>
+</html>

@@ -1,0 +1,1669 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <title>
+        消息队列介绍 - 码农的学习笔记
+      </title>
+        <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    
+    <meta name="theme-color" content="#000000" />
+    
+    <meta http-equiv="window-target" content="_top" />
+    
+    
+    <meta name="description" content="[TOC] 消息队列介绍 消息队列主要应用场景为异步、削峰、解耦。 异步解耦 场景一：用户注册，注册时需要发送短信及邮件，并且需要写库 串行模式。流程如下： ​" />
+    <meta name="generator" content="Hugo 0.91.2 with theme pure" />
+    <title>消息队列介绍 - 码农的学习笔记</title>
+    
+    
+    <link rel="stylesheet" href="https://wzgl998877.github.io/css/style.min.a85959a41e7abcc0db1f81f44bd264649303417f91b536e87dcde644340fea6d.css">
+    
+    <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/9.15.10/styles/github.min.css" async>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css" async>
+    <meta property="og:title" content="消息队列介绍" />
+<meta property="og:description" content="[TOC] 消息队列介绍 消息队列主要应用场景为异步、削峰、解耦。 异步解耦 场景一：用户注册，注册时需要发送短信及邮件，并且需要写库 串行模式。流程如下： ​" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wzgl998877.github.io/2022/01/mq%E6%80%BB%E7%BB%93/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-01-09T11:24:40+08:00" />
+<meta property="article:modified_time" content="2022-01-09T11:24:40+08:00" />
+
+<meta itemprop="name" content="消息队列介绍">
+<meta itemprop="description" content="[TOC] 消息队列介绍 消息队列主要应用场景为异步、削峰、解耦。 异步解耦 场景一：用户注册，注册时需要发送短信及邮件，并且需要写库 串行模式。流程如下： ​"><meta itemprop="datePublished" content="2022-01-09T11:24:40+08:00" />
+<meta itemprop="dateModified" content="2022-01-09T11:24:40+08:00" />
+<meta itemprop="wordCount" content="13464">
+<meta itemprop="keywords" content="消息队列," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="消息队列介绍"/>
+<meta name="twitter:description" content="[TOC] 消息队列介绍 消息队列主要应用场景为异步、削峰、解耦。 异步解耦 场景一：用户注册，注册时需要发送短信及邮件，并且需要写库 串行模式。流程如下： ​"/>
+
+    <!--[if lte IE 9]>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+      <![endif]-->
+
+    <!--[if lt IE 9]>
+        <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+      <![endif]-->
+  </head>
+
+  
+  
+
+  <body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage"><header class="header" itemscope itemtype="http://schema.org/WPHeader">
+    <div class="slimContent">
+      <div class="navbar-header">
+        <div class="profile-block text-center">
+          <a id="avatar" href="https://github.com/wzgl998877/" target="_blank">
+            <img class="img-circle img-rotate" src="https://wzgl998877.github.io/avatar.png" width="200" height="200">
+          </a>
+          <h2 id="name" class="hidden-xs hidden-sm">microzheng</h2>
+          <h3 id="title" class="hidden-xs hidden-sm hidden-md">努力会说谎，但努力不会白费</h3>
+          <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i>Shenzhen China</small>
+        </div><div class="search" id="search-form-wrap">
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i
+                        class="icon icon-search"></i></button>
+            </span>
+        </div>
+        <div class="ins-search">
+            <div class="ins-search-mask"></div>
+            <div class="ins-search-container">
+                <div class="ins-input-wrapper">
+                    <input type="text" class="ins-search-input" placeholder="想要查找什么..."
+                        x-webkit-speech />
+                    <button type="button" class="close ins-close ins-selectable" data-dismiss="modal"
+                        aria-label="Close"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="ins-section-wrapper">
+                    <div class="ins-section-container"></div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+        <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+        <ul class="nav navbar-nav main-nav">
+            <li class="menu-item menu-item-home">
+                <a href="/">
+                    <i class="icon icon-home-fill"></i>
+                  <span class="menu-title">主页</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-archives">
+                <a href="/posts/">
+                    <i class="icon icon-archives-fill"></i>
+                  <span class="menu-title">归档</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-categories">
+                <a href="/categories/">
+                    <i class="icon icon-folder"></i>
+                  <span class="menu-title">分类</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-tags">
+                <a href="/tags/">
+                    <i class="icon icon-tags"></i>
+                  <span class="menu-title">标签</span>
+                </a>
+            </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+<aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content"><p>enjoy~</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+      <div class="widget">
+    <h3 class="widget-title"> 分类</h3>
+    <div class="widget-body">
+        <ul class="category-list">
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/git/" class="category-list-link">git</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/java/" class="category-list-link">java</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/spring/" class="category-list-link">spring</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/" class="category-list-link">中间件</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E4%BA%91%E5%8E%9F%E7%94%9F/" class="category-list-link">云原生</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E5%B8%B8%E7%94%A8%E6%A1%86%E6%9E%B6/" class="category-list-link">常用框架</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="category-list-link">数据库</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E6%97%A5%E5%B8%B8%E6%80%BB%E7%BB%93/" class="category-list-link">日常总结</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E7%AE%97%E6%B3%95/" class="category-list-link">算法</a><span class="category-list-count">2</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/" class="category-list-link">系统设计</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/" class="category-list-link">网络编程</a><span class="category-list-count">3</span></li>
+        </ul>
+    </div>
+</div>
+      <div class="widget">
+    <h3 class="widget-title"> 标签</h3>
+    <div class="widget-body">
+        <ul class="tag-list">
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/http/" class="tag-list-link">http</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/java%E5%9F%BA%E7%A1%80/" class="tag-list-link">java基础</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/java%E5%B9%B6%E5%8F%91/" class="tag-list-link">java并发</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/jvm/" class="tag-list-link">jvm</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/leetcode/" class="tag-list-link">leetcode</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/mybatis/" class="tag-list-link">mybatis</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/mysql/" class="tag-list-link">mysql</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/netty/" class="tag-list-link">netty</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/redis/" class="tag-list-link">redis</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/rpc/" class="tag-list-link">rpc</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/spring/" class="tag-list-link">spring</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/websocket/" class="tag-list-link">websocket</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" class="tag-list-link">消息队列</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="tag-list-link">设计模式</a><span
+                    class="tag-list-count">1</span></li>
+            
+        </ul>
+
+    </div>
+</div>
+      
+<div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+        <ul class="recent-post-list list-unstyled no-thumbnail">
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://wzgl998877.github.io/2022/11/springcloud/" class="title">SpringCloud</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2022-11-07 19:15:43 &#43;0800 CST" itemprop="datePublished">2022-11-07</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://wzgl998877.github.io/2022/09/docker%E5%92%8Ck8s/" class="title">Docker和k8s</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2022-09-09 10:26:21 &#43;0800 CST" itemprop="datePublished">2022-09-09</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://wzgl998877.github.io/2022/05/redis%E6%80%BB%E7%BB%93/" class="title">Redis学习</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2022-05-06 15:21:49 &#43;0800 CST" itemprop="datePublished">2022-05-06</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://wzgl998877.github.io/2022/03/git%E7%9B%B8%E5%85%B3/" class="title">git相关</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2022-03-02 20:03:24 &#43;0800 CST" itemprop="datePublished">2022-03-02</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://wzgl998877.github.io/2022/02/mysql%E6%80%BB%E7%BB%93/" class="title">Mysql总结</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2022-02-28 23:43:20 &#43;0800 CST" itemprop="datePublished">2022-02-28</time>
+                    </p>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+  </div>
+</aside>
+
+    
+    
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <h4 class="toc-title">文章目录</h4>
+    <nav id="toc" class="js-toc toc">
+
+    </nav>
+  </div>
+</aside>
+<main class="main" role="main"><div class="content">
+  <article id="-" class="article article-type-" itemscope
+    itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      <h1 itemprop="name">
+  <a
+    class="article-title"
+    href="/2022/01/mq%E6%80%BB%E7%BB%93/"
+    >消息队列介绍</a
+  >
+</h1>
+
+      <div class="article-meta">
+        
+<span class="article-date">
+  <i class="icon icon-calendar-check"></i>&nbsp;
+<a href="https://wzgl998877.github.io/2022/01/mq%E6%80%BB%E7%BB%93/" class="article-date">
+  <time datetime="2022-01-09 11:24:40 &#43;0800 CST" itemprop="datePublished">2022-01-09</time>
+</a>
+</span>
+<span class="article-category">
+  <i class="icon icon-folder"></i>&nbsp;
+  <a class="article-category-link" href="/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/"> 中间件 </a>
+</span>  
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>&nbsp;
+    <a class="article-tag-link" href="/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/"> 消息队列 </a>
+  </span>
+
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 13464字</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 27分 </span>
+      </div>
+    </div>
+    <div class="article-entry marked-body js-toc-content" itemprop="articleBody">
+      <p>[TOC]</p>
+<h2 id="消息队列介绍">消息队列介绍</h2>
+<p>消息队列主要应用场景为异步、削峰、解耦。</p>
+<h3 id="异步解耦">异步解耦</h3>
+<p>场景一：用户注册，注册时需要发送短信及邮件，并且需要写库</p>
+<ul>
+<li>串行模式。流程如下：
+<img src="https://img-blog.csdnimg.cn/img_convert/25b35d17075b92e8ce78b8686a48eb23.png#pic_center" alt="流程"></li>
+</ul>
+<p>​      缺点：流程不断加长，影响用户体验。</p>
+<ul>
+<li>
+<p>显然就会想到使用异步解决，发邮件的同时可以发短信，流程如下：</p>
+<p><img src="https://blog-10039692.file.myqcloud.com/1506329879062_698_1506329881428.png" alt=""></p>
+<p>缺点：流程越多，在注册时需要调很多其他接口，代码耦合严重，出现问题不好排查</p>
+</li>
+<li>
+<p>使用消息队列，流程如下：</p>
+</li>
+</ul>
+<p><img src="https://blog-10039692.file.myqcloud.com/1506329904257_4240_1506329906692.png" alt=""></p>
+<p>注册接口只需要写库，并且推送到消息队列，至于其他业务订阅消息队列即可，达到了异步并且解耦</p>
+<h3 id="削峰">削峰</h3>
+<p>场景二：秒杀活动，一般由于瞬时访问量过大，服务器接收过大，会导致流量暴增，相关系统无法处理请求甚至崩溃。而加入消息队列后，系统作为消费者，根据自身应用的能力进行消息的消费，不受大流量的影响。流程如下：</p>
+<p><img src="https://blog-10039692.file.myqcloud.com/1506330074201_6290_1506330076616.png" alt=""></p>
+<h2 id="常见消息队列">常见消息队列</h2>
+<p><img src="https://blog-10039692.file.myqcloud.com/1506330751030_7532_1506330753496.png" alt=""></p>
+<h2 id="消息模型">消息模型</h2>
+<p>最初的消息队列，就是一个严格意义上的队列。在计算机领域，“队列（Queue）”是一种数据结构，有完整而严格的定义。队列的定义是这样的：队列是先进先出（FIFO, First-In-First-Out）的线性表（Linear List）。在具体应用中通常用链表或者数组来实现。队列只允许在后端（称为 rear）进行插入操作，在前端（称为 front）进行删除操作。</p>
+<p>这个定义里面包含几个关键点，第一个是先进先出，这里面隐含着的一个要求是，在消息入队出队过程中，需要保证这些消息<strong>严格有序</strong>，按照什么顺序写进队列，必须按照同样的顺序从队列中读出来。不过，队列是没有“读”这个操作的，“读”就是出队，也就是从队列中“删除”这条消息。</p>
+<p>**早期的消息队列，就是按照“队列”的数据结构来设计的。**我们一起看下这个图，生产者（Producer）发消息就是入队操作，消费者（Consumer）收消息就是出队也就是删除操作，服务端存放消息的容器自然就称为“队列”。</p>
+<p>这就是最初的一种消息模型：队列模型。</p>
+<p><img src="b18f43f67ae1b0d24d88f0ba39708a84.jpg" alt="img"></p>
+<p>如果有多个生产者往同一个队列里面发送消息，这个队列中可以消费到的消息，就是这些生产者生产的所有消息的合集。消息的顺序就是这些生产者发送消息的自然顺序。如果有多个消费者接收同一个队列的消息，这些消费者之间实际上是竞争的关系，每个消费者只能收到队列中的一部分消息，也就是说任何一条消息只能被其中的一个消费者收到。</p>
+<p>如果需要将一份消息数据分发给多个消费者，要求每个消费者都能收到全量的消息，例如，对于一份订单数据，风控系统、分析系统、支付系统等都需要接收消息。这个时候，单个队列就满足不了需求，一个可行的解决方式是，为每个消费者创建一个单独的队列，让生产者发送多份。</p>
+<p>显然这是个比较蠢的做法，同样的一份消息数据被复制到多个队列中会浪费资源，更重要的是，生产者必须知道有多少个消费者。为每个消费者单独发送一份消息，这实际上违背了消息队列“解耦”这个设计初衷。</p>
+<p>为了解决这个问题，演化出了另外一种消息模型：<strong>发布 - 订阅模型（Publish-Subscribe Pattern）</strong></p>
+<p><img src="d5c0742113b2a6f5a419e1ffc3327354.jpg" alt="img"></p>
+<p>在发布 - 订阅模型中，消息的发送方称为发布者（Publisher），消息的接收方称为订阅者（Subscriber），服务端存放消息的容器称为主题（Topic）。发布者将消息发送到主题中，订阅者在接收消息之前需要先“订阅主题”。“订阅”在这里既是一个动作，同时还可以认为是主题在消费时的一个逻辑副本，每份订阅中，订阅者都可以接收到主题的所有消息。</p>
+<p>在消息领域的历史上很长的一段时间，队列模式和发布 - 订阅模式是并存的，有些消息队列同时支持这两种消息模型，比如 ActiveMQ。我们仔细对比一下这两种模型，生产者就是发布者，消费者就是订阅者，队列就是主题，并没有本质的区别。<strong>它们最大的区别其实就是，一份消息数据能不能被消费多次的问题。</strong></p>
+<p>实际上，在这种发布 - 订阅模型中，如果只有一个订阅者，那它和队列模型就基本是一样的了。也就是说，发布 - 订阅模型在功能层面上是可以兼容队列模型的。</p>
+<p>现代的消息队列产品使用的消息模型大多是这种发布 - 订阅模型。</p>
+<h3 id="rabbitmq-的消息模型">RabbitMQ 的消息模型</h3>
+<p>RabbitMQ，它是少数依然坚持使用队列模型的产品之一。那它是怎么解决多个消费者的问题呢？在 RabbitMQ 中，Exchange 位于生产者和队列之间，生产者并不关心将消息发送给哪个队列，而是将消息发送给 Exchange，由 Exchange 上配置的策略来决定将消息投递到哪些队列中。</p>
+<p><img src="2df04ce80ff54702240df8598f277ca5.jpg" alt="img"></p>
+<p>同一份消息如果需要被多个消费者来消费，需要配置 Exchange 将消息发送到多个队列，每个队列中都存放一份完整的消息数据，可以为一个消费者提供消费服务。这也可以变相地实现新发布 - 订阅模型中，“一份消息数据可以被多个订阅者来多次消费”这样的功能。</p>
+<h3 id="rocketmq-的消息模型">RocketMQ 的消息模型</h3>
+<p>RocketMQ 使用的消息模型是标准的发布 - 订阅模型，在 RocketMQ 的术语表中，生产者、消费者和主题与我在上面讲的发布 - 订阅模型中的概念是完全一样的。</p>
+<p>但是，在 RocketMQ 也有队列（Queue）这个概念，并且队列在 RocketMQ 中是一个非常重要的概念，那队列在 RocketMQ 中的作用是什么呢？这就要从消息队列的消费机制说起。</p>
+<p>几乎所有的消息队列产品都使用一种非常朴素的“请求 - 确认”机制，确保消息不会在传递过程中由于网络或服务器故障丢失。具体的做法也非常简单。在生产端，生产者先将消息发送给服务端，也就是 Broker，服务端在收到消息并将消息写入主题或者队列中后，会给生产者发送确认的响应。</p>
+<p>如果生产者没有收到服务端的确认或者收到失败的响应，则会重新发送消息；在消费端，消费者在收到消息并完成自己的消费业务逻辑（比如，将数据保存到数据库中）后，也会给服务端发送消费成功的确认，服务端只有收到消费确认后，才认为一条消息被成功消费，否则它会给消费者重新发送这条消息，直到收到对应的消费成功确认。</p>
+<p>这个确认机制很好地保证了消息传递过程中的可靠性，但是，引入这个机制在消费端带来了一个不小的问题。什么问题呢？为了确保消息的有序性，在某一条消息被成功消费之前，下一条消息是不能被消费的，否则就会出现消息空洞，违背了有序性这个原则。</p>
+<p>也就是说，每个主题在任意时刻，至多只能有一个消费者实例在进行消费，那就没法通过水平扩展消费者的数量来提升消费端总体的消费性能。为了解决这个问题，RocketMQ 在主题下面增加了队列的概念。</p>
+<p>**每个主题包含多个队列，通过多个队列来实现多实例并行生产和消费。**需要注意的是，<strong>RocketMQ 只在队列上保证消息的有序性，主题层面是无法保证消息的严格顺序的</strong>。</p>
+<p>RocketMQ 中，订阅者的概念是通过消费组（Consumer Group）来体现的。每个消费组都消费主题中一份完整的消息，不同消费组之间消费进度彼此不受影响，也就是说，一条消息被 Consumer Group1 消费过，也会再给 Consumer Group2 消费。</p>
+<p>消费组中包含多个消费者，同一个组内的消费者是竞争消费的关系，每个消费者负责消费组内的一部分消息。如果一条消息被消费者 Consumer1 消费了，那同组的其他消费者就不会再收到这条消息。</p>
+<p>在 Topic 的消费过程中，由于消息需要被不同的组进行多次消费，所以消费完的消息并不会立即被删除，这就需要 <strong>RocketMQ 为每个消费组在每个队列上维护一个消费位置</strong>（Consumer Offset），这个位置之前的消息都被消费过，之后的消息都没有被消费过，每成功消费一条消息，消费位置就加一。这个消费位置是非常重要的概念，我们在使用消息队列的时候，丢消息的原因大多是由于消费位置处理不当导致的。</p>
+<p>RocketMQ 的消息模型如图所示：</p>
+<p><img src="465142ab5b5096f283118c307e8cc117.jpg" alt="img"></p>
+<h4 id="例子">例子</h4>
+<p>假设有一个主题 MyTopic，我们为主题创建 5 个队列，分布到 2 个 Broker 中。</p>
+<p><img src="dd3f4c5e40f58b62c2d89554b579a72f.jpg" alt="img"></p>
+<p>先说消息生产这一端，假设我们有 3 个生产者实例：Produer0，Produer1 和 Producer2。</p>
+<p>这 3 个生产者是如何对应到 2 个 Broker 的，又是如何对应到 5 个队列的呢？这个很简单，<strong>不用对应，随便发</strong>。每个生产者可以在 5 个队列中轮询发送，也可以随机选一个队列发送，或者只往某个队列发送，这些都可以。比如 Producer0 要发 5 条消息，可以都发到队列 Q0 里面，也可以 5 个队列每个队列发一条。</p>
+<p>然后说消费端，很多同学没有搞清楚消费组、消费者和队列这几个概念的对应关系。</p>
+<p>每个消费组就是一份订阅，它要消费主题 MyTopic 下，所有队列的全部消息。注意，队列里的消息并不是消费掉就没有了，这里的“消费”，只是去队列里面读了消息，并没有删除，消费完这条消息还是在队列里面。</p>
+<p>多个消费组在消费同一个主题时，消费组之间是互不影响的。比如我们有 2 个消费组：G0 和 G1。G0 消费了哪些消息，G1 是不知道的，也不用知道。G0 消费过的消息，G1 还可以消费。即使 G0 积压了很多消息，对 G1 来说也没有任何影响。</p>
+<p>然后我们再说消费组的内部，一个消费组中可以包含多个消费者的实例。比如说消费组 G1，包含了 2 个消费者 C0 和 C1，那这 2 个消费者又是怎么和主题 MyTopic 的 5 个队列对应的呢？</p>
+<p>由于消费确认机制的限制，这里面有一个原则是，在同一个消费组里面，每个队列只能被一个消费者实例占用。至于如何分配，这里面有很多策略，我就不展开说了。总之保证每个队列分配一个消费者就行了。比如，我们可以让消费者 C0 消费 Q0，Q1 和 Q2，C1 消费 Q3 和 Q4，如果 C0 宕机了，会触发重新分配，这时候 C1 同时消费全部 5 个队列。</p>
+<p>再强调一下，队列占用只是针对消费组内部来说的，对于其他的消费组来说是没有影响的。比如队列 Q2 被消费组 G1 的消费者 C1 占用了，对于消费组 G2 来说，是完全没有影响的，G2 也可以分配它的消费者来占用和消费队列 Q2。</p>
+<p>最后说一下消费位置，每个消费组内部维护自己的一组消费位置，每个队列对应一个消费位置。消费位置在服务端保存，并且，<strong>消费位置和消费者是没有关系的</strong>。每个消费位置一般就是一个整数，记录这个消费组中，这个队列消费到哪个位置了，这个位置之前的消息都成功消费了，之后的消息都没有消费或者正在消费。</p>
+<p>我把咱们这个例子的消费位置整理成下面的表格，便于你理解。</p>
+<p><img src="2c78c72078002444e758f9dde1386585.jpg" alt="img"></p>
+<p>你可以看到，这个表格中并没有消费者这一列，也就是说消费者和消费位置是没有关系的。</p>
+<h3 id="kafka-的消息模型">Kafka 的消息模型</h3>
+<p>我们再来看看另一种常见的消息队列 Kafka，Kafka 的消息模型和 RocketMQ 是完全一样的，我刚刚讲的所有 RocketMQ 中对应的概念，和生产消费过程中的确认机制，都完全适用于 Kafka。唯一的区别是，在 Kafka 中，队列这个概念的名称不一样，Kafka 中对应的名称是“分区（Partition）”，含义和功能是没有任何区别的。</p>
+<h2 id="rocketmq详解">RocketMQ详解</h2>
+<h3 id="技术架构">技术架构</h3>
+<p><img src="rocketmq_architecture_1-16551086029661.png" alt="img"></p>
+<p>RocketMQ架构上主要分为四部分，如上图所示:</p>
+<ul>
+<li>
+<p>Producer：消息发布的角色，支持分布式集群方式部署。Producer通过MQ的负载均衡模块选择相应的Broker集群队列进行消息投递，投递的过程支持快速失败并且低延迟。</p>
+</li>
+<li>
+<p>Consumer：消息消费的角色，支持分布式集群方式部署。支持以push推，pull拉两种模式对消息进行消费。同时也支持集群方式和广播方式的消费，它提供实时消息订阅机制，可以满足大多数用户的需求。</p>
+</li>
+<li>
+<p>NameServer：NameServer是一个非常简单的Topic<strong>路由注册中心</strong>，其角色类似Dubbo中的zookeeper，支持Broker的动态注册与发现。主要包括两个功能：</p>
+<ul>
+<li>Broker管理，NameServer接受Broker集群的注册信息并且保存下来作为路由信息的基本数据。然后提供心跳检测机制，检查Broker是否还存活；</li>
+<li>路由信息管理，每个NameServer将保存关于Broker集群的整个路由信息和用于客户端查询的队列信息。</li>
+</ul>
+<p>然后Producer和Consumser通过NameServer就可以知道整个Broker集群的路由信息，从而进行消息的投递和消费。NameServer通常也是集群的方式部署，各实例间相互不进行信息通讯。<strong>Broker是向每一台NameServer注册自己的路由信息，所以每一个NameServer实例上面都保存一份完整的路由信息</strong>。当某个NameServer因某种原因下线了，Broker仍然可以向其它NameServer同步其路由信息，Producer和Consumer仍然可以动态感知Broker的路由的信息。</p>
+</li>
+<li>
+<p>BrokerServer：Broker主要负责<strong>消息的存储、投递和查询以及服务高可用保证</strong>，为了实现这些功能，Broker包含了以下几个重要子模块。</p>
+<ol>
+<li>Remoting Module：整个Broker的实体，负责处理来自Client端的请求。</li>
+<li>Client Manager：负责管理客户端(Producer/Consumer)和维护Consumer的Topic订阅信息。</li>
+<li>Store Service：提供方便简单的API接口处理消息存储到物理硬盘和查询功能。</li>
+<li>HA Service：高可用服务，提供Master Broker 和 Slave Broker之间的数据同步功能。</li>
+<li>Index Service：根据特定的Message key对投递到Broker的消息进行索引服务，以提供消息的快速查询。</li>
+</ol>
+</li>
+</ul>
+<p><img src="rocketmq_architecture_2-16551086264223.png" alt="img"></p>
+<h3 id="部署架构">部署架构</h3>
+<p><img src="rocketmq_architecture_3.png" alt="img"></p>
+<h4 id="rocketmq-网络部署特点">RocketMQ 网络部署特点</h4>
+<ul>
+<li>NameServer是一个几乎无状态节点，可集群部署，节点之间无任何信息同步。</li>
+<li>Broker部署相对复杂，Broker分为Master与Slave，一个Master可以对应多个Slave，但是一个Slave只能对应一个Master，Master与Slave 的对应关系通过指定相同的BrokerName，不同的BrokerId 来定义，BrokerId为0表示Master，非0表示Slave。Master也可以部署多个。每个Broker与NameServer集群中的所有节点建立<strong>长连接</strong>，定时注册Topic信息到所有NameServer。 注意：当前RocketMQ版本在部署架构上支持一Master多Slave，但只有BrokerId=1的从服务器才会参与消息的读负载。</li>
+<li>Producer与NameServer集群中的其中一个节点（随机选择）建立长连接，定期从NameServer获取Topic路由信息，并向提供Topic 服务的Master建立长连接，且定时向Master发送心跳。Producer完全无状态，可集群部署。</li>
+<li>Consumer与NameServer集群中的其中一个节点（随机选择）建立长连接，定期从NameServer获取Topic路由信息，并向提供Topic服务的Master、Slave建立长连接，且定时向Master、Slave发送心跳。Consumer既可以从Master订阅消息，也可以从Slave订阅消息，消费者在向Master拉取消息时，Master服务器会根据拉取偏移量与最大偏移量的距离（判断是否读老消息，产生读I/O），以及从服务器是否可读等因素建议下一次是从Master还是Slave拉取。</li>
+</ul>
+<p>结合部署架构图，描述集群工作流程：</p>
+<ul>
+<li>启动NameServer，NameServer起来后监听端口，等待Broker、Producer、Consumer连上来，相当于一个路由控制中心。</li>
+<li>Broker启动，跟所有的NameServer保持长连接，定时发送心跳包。心跳包中包含当前Broker信息(IP+端口等)以及存储所有Topic信息。注册成功后，NameServer集群中就有Topic跟Broker的映射关系。</li>
+<li>收发消息前，先创建Topic，创建Topic时需要指定该Topic要存储在哪些Broker上，也可以在发送消息时自动创建Topic。</li>
+<li>Producer发送消息，启动时先跟NameServer集群中的其中一台建立长连接，并从NameServer中获取当前发送的Topic存在哪些Broker上，轮询从队列列表中选择一个队列，然后与队列所在的Broker建立长连接从而向Broker发消息。</li>
+<li>Consumer跟Producer类似，跟其中一台NameServer建立长连接，获取当前订阅Topic存在哪些Broker上，然后直接跟Broker建立连接通道，开始消费消息。</li>
+</ul>
+<h3 id="代码详解">代码详解</h3>
+<p>个人认为如果想了解一个中间件，可以先由整体架构、思想进行学习，然后对每部分进行深入研究，后面就对每一个部分进行详解，由简入繁，先看NameServer是怎么实现的</p>
+<h4 id="nameserver">NameServer</h4>
+<p>作为注册中心，基本通讯流程如下：</p>
+<p>(1) Broker启动后需要完成一次将自己注册至NameServer的操作；随后<strong>每隔30s时间定时向NameServer上报Topic路由信息</strong>。</p>
+<p>(2) 消息生产者Producer作为客户端发送消息时候，需要根据消息的Topic从本地缓存的TopicPublishInfoTable获取路由信息。如果没有则更新路由信息会从NameServer上重新拉取，同时Producer会默认每隔30s向NameServer拉取一次路由信息。</p>
+<p>(3) 消息生产者Producer根据2）中获取的路由信息选择一个队列（MessageQueue）进行消息发送；Broker作为消息的接收者接收消息并落盘存储。</p>
+<p>(4) 消息消费者Consumer根据2）中获取的路由信息，并再完成客户端的负载均衡后，选择其中的某一个或者某几个消息队列来拉取消息并进行消费。</p>
+<p>作为注册中心主要包含以下几个部分：路由注册、 路由删除、路由发现，主要由以下几个map实现</p>
+<pre><code class="language-java">private final Map&lt;String/* topic */, Map&lt;String, QueueData&gt;&gt; topicQueueTable;
+private final Map&lt;String/* brokerName */, BrokerData&gt; brokerAddrTable;
+private final Map&lt;String/* clusterName */, Set&lt;String/* brokerName */&gt;&gt; clusterAddrTable;
+private final Map&lt;BrokerAddrInfo/* brokerAddr */, BrokerLiveInfo&gt; brokerLiveTable;
+private final Map&lt;BrokerAddrInfo/* brokerAddr */, List&lt;String&gt;/* Filter Server */&gt; filterServerTable;
+private final Map&lt;String/* topic */, Map&lt;String/*brokerName*/, TopicQueueMappingInfo&gt;&gt; topicQueueMappingInfoTable;
+</code></pre>
+<ul>
+<li>
+<p>topicQueueTable:Topic消息队列路由信息，消息发送时根据路由表进行负载均衡。</p>
+</li>
+<li>
+<p>brokerAddrTable:Broker基础信息，包含brokerName、所属集群名称、主备Broker地址。</p>
+</li>
+<li>
+<p>clusterAddrTable:Broker集群信息，存储集群中所有Broker名称。</p>
+</li>
+<li>
+<p>brokerLiveTable:Broker状态信息。NameServer每次收到心跳包时会替换该信息。</p>
+</li>
+<li>
+<p>filterServerTable:Broker上的FilterServer列表，用于类模式消息过滤。</p>
+</li>
+</ul>
+<h5 id="路由注册">路由注册</h5>
+<p>路由注册是通过Broker与NameServer的心跳功能实现的。</p>
+<ul>
+<li>
+<p>Broker启动时向集群中所有的NameServer发送心跳语句(心跳包中包含BrokerId、Broker地址、Broker名称、Broker所属集群名称、Broker关联的FilterServer列表)，<strong>每隔30s向集群中</strong>所有NameServer发送心跳包</p>
+</li>
+<li>
+<p>NameServer收到Broker心跳包时会更新<strong>brokerLiveTable缓存中BrokerLiveInfo的lastUpdateTimestamp</strong>，然后Name Server<strong>每隔10s扫描brokerLiveTable</strong>，<strong>如果连续120s没有收到心跳包</strong>，NameServer将移除该Broker的路由信息同时关闭Socket连接</p>
+</li>
+</ul>
+<h6 id="broker-发送心跳包">broker 发送心跳包</h6>
+<pre><code class="language-java">//每隔30s上报Broker信息到NameServer
+scheduledFutures.add(this.scheduledExecutorService.scheduleAtFixedRate(new AbstractBrokerRunnable(this.getBrokerIdentity()) {
+    @Override
+    public void run2() {
+        try {
+            if (System.currentTimeMillis() &lt; shouldStartTime) {
+                BrokerController.LOG.info(&quot;Register to namesrv after {}&quot;, shouldStartTime);
+                return;
+            }
+            if (isIsolated) {
+                BrokerController.LOG.info(&quot;Skip register for broker is isolated&quot;);
+                return;
+            }
+            BrokerController.this.registerBrokerAll(true, false, brokerConfig.isForceRegister());
+        } catch (Throwable e) {
+            BrokerController.LOG.error(&quot;registerBrokerAll Exception&quot;, e);
+        }
+    }
+}, 1000 * 10, Math.max(10000, Math.min(brokerConfig.getRegisterNameServerPeriod(), 60000)), TimeUnit.MILLISECONDS));
+</code></pre>
+<p>这个其实就是使用了定时任务来实现<strong>每隔30s向集群中</strong>所有NameServer发送心跳包</p>
+<h6 id="nameserver收到broker心跳包">NameServer收到Broker心跳包</h6>
+<pre><code class="language-java">public RegisterBrokerResult registerBroker(
+    final String clusterName,
+    final String brokerAddr,
+    final String brokerName,
+    final long brokerId,
+    final String haServerAddr,
+    final Long timeoutMillis,
+    final Boolean enableActingMaster,
+    final TopicConfigSerializeWrapper topicConfigWrapper,
+    final List&lt;String&gt; filterServerList,
+    final Channel channel) {
+    RegisterBrokerResult result = new RegisterBrokerResult();
+    try {
+        try {
+            // 加锁
+            this.lock.writeLock().lockInterruptibly();
+            // 维护clusterAddrTable
+            Set&lt;String&gt; brokerNames = this.clusterAddrTable.computeIfAbsent(clusterName, k -&gt; new HashSet&lt;&gt;());
+            brokerNames.add(brokerName);
+
+            boolean registerFirst = false;
+            // 维护brokerAddrTable
+            BrokerData brokerData = this.brokerAddrTable.get(brokerName);
+            // 第一次注册,则创建brokerData
+            if (null == brokerData) {
+                registerFirst = true;
+                brokerData = new BrokerData(clusterName, brokerName, new HashMap&lt;&gt;());
+                this.brokerAddrTable.put(brokerName, brokerData);
+            }
+            // 非第一次注册,更新Broker
+            boolean isOldVersionBroker = enableActingMaster == null;
+            brokerData.setEnableActingMaster(!isOldVersionBroker &amp;&amp; enableActingMaster);
+
+            Map&lt;Long, String&gt; brokerAddrsMap = brokerData.getBrokerAddrs();
+
+            boolean isMinBrokerIdChanged = false;
+            long prevMinBrokerId = 0;
+            if (!brokerAddrsMap.isEmpty()) {
+                prevMinBrokerId = Collections.min(brokerAddrsMap.keySet());
+            }
+
+            if (brokerId &lt; prevMinBrokerId) {
+                isMinBrokerIdChanged = true;
+            }
+
+            //Switch slave to master: first remove &lt;1, IP:PORT&gt; in namesrv, then add &lt;0, IP:PORT&gt;
+            //The same IP:PORT must only have one record in brokerAddrTable
+            brokerAddrsMap.entrySet().removeIf(item -&gt; null != brokerAddr &amp;&amp; brokerAddr.equals(item.getValue()) &amp;&amp; brokerId != item.getKey());
+
+            //If Local brokerId stateVersion bigger than the registering one,
+            String oldBrokerAddr = brokerAddrsMap.get(brokerId);
+            if (null != oldBrokerAddr &amp;&amp; !oldBrokerAddr.equals(brokerAddr)) {
+                BrokerLiveInfo oldBrokerInfo = brokerLiveTable.get(new BrokerAddrInfo(clusterName, oldBrokerAddr));
+
+                if (null != oldBrokerInfo) {
+                    long oldStateVersion = oldBrokerInfo.getDataVersion().getStateVersion();
+                    long newStateVersion = topicConfigWrapper.getDataVersion().getStateVersion();
+                    if (oldStateVersion &gt; newStateVersion) {
+                        log.warn(&quot;Registered Broker conflicts with the existed one, just ignore.: Cluster:{}, BrokerName:{}, BrokerId:{}, &quot; +
+                                 &quot;Old BrokerAddr:{}, Old Version:{}, New BrokerAddr:{}, New Version:{}.&quot;,
+                                 clusterName, brokerName, brokerId, oldBrokerAddr, oldStateVersion, brokerAddr, newStateVersion);
+                        //Remove the rejected brokerAddr from brokerLiveTable.
+                        brokerLiveTable.remove(new BrokerAddrInfo(clusterName, brokerAddr));
+                        return result;
+                    }
+                }
+            }
+
+            String oldAddr = brokerAddrsMap.put(brokerId, brokerAddr);
+            registerFirst = registerFirst || (StringUtils.isEmpty(oldAddr));
+
+            boolean isMaster = MixAll.MASTER_ID == brokerId;
+            boolean isPrimeSlave = !isOldVersionBroker &amp;&amp; !isMaster
+                &amp;&amp; brokerId == Collections.min(brokerAddrsMap.keySet());
+            // 维护topicQueueTable
+            if (null != topicConfigWrapper &amp;&amp; (isMaster || isPrimeSlave)) {
+
+                ConcurrentMap&lt;String, TopicConfig&gt; tcTable =
+                    topicConfigWrapper.getTopicConfigTable();
+                if (tcTable != null) {
+                    for (Map.Entry&lt;String, TopicConfig&gt; entry : tcTable.entrySet()) {
+                        if (registerFirst || this.isTopicConfigChanged(clusterName, brokerAddr,
+                                                                       topicConfigWrapper.getDataVersion(), brokerName,
+                                                                       entry.getValue().getTopicName())) {
+                            final TopicConfig topicConfig = entry.getValue();
+                            if (isPrimeSlave) {
+                                // Wipe write perm for prime slave
+                                topicConfig.setPerm(topicConfig.getPerm() &amp; (~PermName.PERM_WRITE));
+                            }
+                            this.createAndUpdateQueueData(brokerName, topicConfig);
+                        }
+                    }
+                }
+
+                if (this.isBrokerTopicConfigChanged(clusterName, brokerAddr, topicConfigWrapper.getDataVersion()) || registerFirst) {
+                    TopicConfigAndMappingSerializeWrapper mappingSerializeWrapper = TopicConfigAndMappingSerializeWrapper.from(topicConfigWrapper);
+                    Map&lt;String, TopicQueueMappingInfo&gt; topicQueueMappingInfoMap = mappingSerializeWrapper.getTopicQueueMappingInfoMap();
+                    //the topicQueueMappingInfoMap should never be null, but can be empty
+                    for (Map.Entry&lt;String, TopicQueueMappingInfo&gt; entry : topicQueueMappingInfoMap.entrySet()) {
+                        if (!topicQueueMappingInfoTable.containsKey(entry.getKey())) {
+                            topicQueueMappingInfoTable.put(entry.getKey(), new HashMap&lt;String, TopicQueueMappingInfo&gt;());
+                        }
+                        //Note asset brokerName equal entry.getValue().getBname()
+                        //here use the mappingDetail.bname
+                        topicQueueMappingInfoTable.get(entry.getKey()).put(entry.getValue().getBname(), entry.getValue());
+                    }
+                }
+            }
+            // 维护brokerLiveTable
+            BrokerAddrInfo brokerAddrInfo = new BrokerAddrInfo(clusterName, brokerAddr);
+            BrokerLiveInfo prevBrokerLiveInfo = this.brokerLiveTable.put(brokerAddrInfo,
+                                                                         new BrokerLiveInfo(
+                                                                             System.currentTimeMillis(),
+                                                                             timeoutMillis == null ? DEFAULT_BROKER_CHANNEL_EXPIRED_TIME : timeoutMillis,
+                                                                             topicConfigWrapper == null ? new DataVersion() : topicConfigWrapper.getDataVersion(),
+                                                                             channel,
+                                                                             haServerAddr));
+            if (null == prevBrokerLiveInfo) {
+                log.info(&quot;new broker registered, {} HAService: {}&quot;, brokerAddrInfo, haServerAddr);
+            }
+            // 维护filterServerList
+            if (filterServerList != null) {
+                if (filterServerList.isEmpty()) {
+                    this.filterServerTable.remove(brokerAddrInfo);
+                } else {
+                    this.filterServerTable.put(brokerAddrInfo, filterServerList);
+                }
+            }
+
+            if (MixAll.MASTER_ID != brokerId) {
+                String masterAddr = brokerData.getBrokerAddrs().get(MixAll.MASTER_ID);
+                if (masterAddr != null) {
+                    BrokerAddrInfo masterAddrInfo = new BrokerAddrInfo(clusterName, masterAddr);
+                    BrokerLiveInfo masterLiveInfo = this.brokerLiveTable.get(masterAddrInfo);
+                    if (masterLiveInfo != null) {
+                        result.setHaServerAddr(masterLiveInfo.getHaServerAddr());
+                        result.setMasterAddr(masterAddr);
+                    }
+                }
+            }
+
+            if (isMinBrokerIdChanged &amp;&amp; namesrvConfig.isNotifyMinBrokerIdChanged()) {
+                notifyMinBrokerIdChanged(brokerAddrsMap, null,
+                                         this.brokerLiveTable.get(brokerAddrInfo).getHaServerAddr());
+            }
+        } finally {
+            this.lock.writeLock().unlock();
+        }
+    } catch (Exception e) {
+        log.error(&quot;registerBroker Exception&quot;, e);
+    }
+
+    return result;
+}
+</code></pre>
+<p>这个代码看起来很复杂，实际上很简单</p>
+<p><img src="./NameServer%E5%A4%84%E7%90%86%E8%B7%AF%E7%94%B1%E6%B3%A8%E5%86%8C.png" alt=""></p>
+<p>因为NameServe与Broker保持长连接，所以需要心跳机制来检测连接是否存在，做法为，Broker状态存储在brokerLiveTable中，NameServer每收到一个心跳包，将更新brokerLiveTable中关于Broker的信息(lastUpdateTimestamp主要是上次更新时间)以及路由表（topicQueueTable、brokerAddrTable、brokerLiveTable、filterServerTable）。更新上述路由表（HashTable）使用了锁粒度较少的<strong>读写锁</strong>，允许多个消息发送者（Producer）并发读，保证消息发送时的高并发。但同一时刻NameServer只处理一个Broker心跳包，多个心跳包请求串行执行</p>
+<h5 id="路由删除">路由删除</h5>
+<p>NameServer会<strong>每隔10s扫描brokerLiveTable状态表</strong>，如果<strong>BrokerLive的lastUpdateTimestamp的时间戳距当前时间超过120s</strong>，则认为Broker失效，移除该Broker，关闭<strong>与Broker的长连接</strong>，并同时更新topicQueueTable、brokerAddrTable、brokerLiveTable、filterServerTable。RocktMQ有两个触发点来触发路由删除。</p>
+<ol>
+<li>NameServer每隔10s扫描brokerLiveTable检测上次心跳包与当前系统时间的时间差，如果时间戳大于120s，则需要移除该Broker信息。</li>
+<li>Broker在正常被关闭的情况下，会执行unregisterBroker指令。</li>
+</ol>
+<pre><code class="language-java">// 启动NameServer后，每隔10s扫描brokerLiveTable
+this.scanExecutorService.scheduleAtFixedRate(NamesrvController.this.routeInfoManager::scanNotActiveBroker,
+            5, this.namesrvConfig.getScanNotActiveBrokerInterval(), TimeUnit.MILLISECONDS);          
+</code></pre>
+<pre><code class="language-java">public void scanNotActiveBroker() {
+    try {
+        log.info(&quot;start scanNotActiveBroker&quot;);
+        // 遍历brokerLiveTable，如果BrokerLive的lastUpdateTimestamp的时间戳距当前时间超过120s，关闭Channel，然后删除与该Broker相关的路由信息
+        for (Entry&lt;BrokerAddrInfo, BrokerLiveInfo&gt; next : this.brokerLiveTable.entrySet()) {
+            long last = next.getValue().getLastUpdateTimestamp();
+            long timeoutMillis = next.getValue().getHeartbeatTimeoutMillis();
+            if ((last + timeoutMillis) &lt; System.currentTimeMillis()) {
+                RemotingUtil.closeChannel(next.getValue().getChannel());
+                log.warn(&quot;The broker channel expired, {} {}ms&quot;, next.getKey(), timeoutMillis);
+                this.onChannelDestroy(next.getKey());
+            }
+        }
+    } catch (Exception e) {
+        log.error(&quot;scanNotActiveBroker exception&quot;, e);
+    }
+}
+</code></pre>
+<p>看下</p>
+<pre><code class="language-java">public void onChannelDestroy(BrokerAddrInfo brokerAddrInfo) {
+    UnRegisterBrokerRequestHeader unRegisterRequest = new UnRegisterBrokerRequestHeader();
+    boolean needUnRegister = false;
+    if (brokerAddrInfo != null) {
+        try {
+            try {
+                this.lock.readLock().lockInterruptibly();
+                needUnRegister = setupUnRegisterRequest(unRegisterRequest, brokerAddrInfo);
+            } finally {
+                this.lock.readLock().unlock();
+            }
+        } catch (Exception e) {
+            log.error(&quot;onChannelDestroy Exception&quot;, e);
+        }
+    }
+
+    if (needUnRegister) {
+        boolean result = this.submitUnRegisterBrokerRequest(unRegisterRequest);
+        log.info(&quot;the broker's channel destroyed, submit the unregister request at once, &quot; +
+                 &quot;broker info: {}, submit result: {}&quot;, unRegisterRequest, result);
+    }
+}
+// 把要删除的路由信息放入到队列中
+public boolean submitUnRegisterBrokerRequest(UnRegisterBrokerRequestHeader unRegisterRequest) {
+    return this.unRegisterService.submit(unRegisterRequest);
+}
+// 启动时，启动了该线程
+public void run() {
+    while (!this.isStopped()) {
+        try {
+            // 每三秒钟从队列中拉取然后进行路由删除逻辑
+            final UnRegisterBrokerRequestHeader request = unRegisterQueue.poll(3, TimeUnit.SECONDS);
+            if (request != null) {
+                Set&lt;UnRegisterBrokerRequestHeader&gt; unRegisterRequests = new HashSet&lt;&gt;();
+                unRegisterQueue.drainTo(unRegisterRequests);
+
+                // Add polled request
+                unRegisterRequests.add(request);
+
+                this.routeInfoManager.unRegisterBroker(unRegisterRequests);
+            }
+        } catch (Throwable e) {
+            log.error(&quot;Handle unregister broker request failed&quot;, e);
+        }
+    }
+}
+</code></pre>
+<p>这里为什么要先放到队列，然后再每隔三秒钟去队列拉取并不是很理解</p>
+<pre><code class="language-java">public void unRegisterBroker(Set&lt;UnRegisterBrokerRequestHeader&gt; unRegisterRequests) {
+    try {
+        try {
+            Set&lt;String&gt; removedBroker = new HashSet&lt;&gt;();
+            Set&lt;String&gt; reducedBroker = new HashSet&lt;&gt;();
+            Map&lt;String, BrokerStatusChangeInfo&gt; needNotifyBrokerMap = new HashMap&lt;&gt;();
+
+            this.lock.writeLock().lockInterruptibly();
+            for (final UnRegisterBrokerRequestHeader unRegisterRequest : unRegisterRequests) {
+                final String brokerName = unRegisterRequest.getBrokerName();
+                final String clusterName = unRegisterRequest.getClusterName();
+
+                BrokerAddrInfo brokerAddrInfo = new BrokerAddrInfo(clusterName, unRegisterRequest.getBrokerAddr());
+
+                BrokerLiveInfo brokerLiveInfo = this.brokerLiveTable.remove(brokerAddrInfo);
+                log.info(&quot;unregisterBroker, remove from brokerLiveTable {}, {}&quot;,
+                         brokerLiveInfo != null ? &quot;OK&quot; : &quot;Failed&quot;,
+                         brokerAddrInfo
+                        );
+
+                this.filterServerTable.remove(brokerAddrInfo);
+
+                boolean removeBrokerName = false;
+                boolean isMinBrokerIdChanged = false;
+                BrokerData brokerData = this.brokerAddrTable.get(brokerName);
+                if (null != brokerData) {
+                    if (!brokerData.getBrokerAddrs().isEmpty() &amp;&amp;
+                        unRegisterRequest.getBrokerId().equals(Collections.min(brokerData.getBrokerAddrs().keySet()))) {
+                        isMinBrokerIdChanged = true;
+                    }
+                    String addr = brokerData.getBrokerAddrs().remove(unRegisterRequest.getBrokerId());
+                    log.info(&quot;unregisterBroker, remove addr from brokerAddrTable {}, {}&quot;,
+                             addr != null ? &quot;OK&quot; : &quot;Failed&quot;,
+                             brokerAddrInfo
+                            );
+                    if (brokerData.getBrokerAddrs().isEmpty()) {
+                        this.brokerAddrTable.remove(brokerName);
+                        log.info(&quot;unregisterBroker, remove name from brokerAddrTable OK, {}&quot;,
+                                 brokerName
+                                );
+
+                        removeBrokerName = true;
+                    } else if (isMinBrokerIdChanged) {
+                        needNotifyBrokerMap.put(brokerName, new BrokerStatusChangeInfo(
+                            brokerData.getBrokerAddrs(), addr, null));
+                    }
+                }
+
+                if (removeBrokerName) {
+                    Set&lt;String&gt; nameSet = this.clusterAddrTable.get(clusterName);
+                    if (nameSet != null) {
+                        boolean removed = nameSet.remove(brokerName);
+                        log.info(&quot;unregisterBroker, remove name from clusterAddrTable {}, {}&quot;,
+                                 removed ? &quot;OK&quot; : &quot;Failed&quot;,
+                                 brokerName);
+
+                        if (nameSet.isEmpty()) {
+                            this.clusterAddrTable.remove(clusterName);
+                            log.info(&quot;unregisterBroker, remove cluster from clusterAddrTable {}&quot;,
+                                     clusterName
+                                    );
+                        }
+                    }
+                    removedBroker.add(brokerName);
+                } else {
+                    reducedBroker.add(brokerName);
+                }
+            }
+
+            cleanTopicByUnRegisterRequests(removedBroker, reducedBroker);
+
+            if (!needNotifyBrokerMap.isEmpty() &amp;&amp; namesrvConfig.isNotifyMinBrokerIdChanged()) {
+                notifyMinBrokerIdChanged(needNotifyBrokerMap);
+            }
+        } finally {
+            this.lock.writeLock().unlock();
+        }
+    } catch (Exception e) {
+        log.error(&quot;unregisterBroker Exception&quot;, e);
+    }
+}
+</code></pre>
+<p>这段代码就是，执行删除路由的逻辑，具体逻辑没什么好说的，就是在维护几个map，但需要注意又用到了<strong>写锁</strong>，这可能就是高手的代码，处处有锁。</p>
+<h5 id="路由发现">路由发现</h5>
+<p>路由发现是非实时的，当Topic路由出现变化后，NameServer<strong>不主动推送给客户端</strong>，而是由<strong>客户端定时拉取主题最新的路由</strong></p>
+<pre><code class="language-java">public RemotingCommand getRouteInfoByTopic(ChannelHandlerContext ctx,
+                                           RemotingCommand request) throws RemotingCommandException {
+    final RemotingCommand response = RemotingCommand.createResponseCommand(null);
+    final GetRouteInfoRequestHeader requestHeader =
+        (GetRouteInfoRequestHeader) request.decodeCommandCustomHeader(GetRouteInfoRequestHeader.class);
+
+    if (requestHeader.getTopic().indexOf(GetRouteInfoRequestHeader.split) &lt; 0) {
+        TopicRouteData topicRouteData = this.namesrvController.getRouteInfoManager().pickupTopicRouteData(requestHeader.getTopic());
+
+        if (topicRouteData != null) {
+            if (this.namesrvController.getNamesrvConfig().isOrderMessageEnable()) {
+                String orderTopicConf =
+                    this.namesrvController.getKvConfigManager().getKVConfig(NamesrvUtil.NAMESPACE_ORDER_TOPIC_CONFIG,
+                                                                            requestHeader.getTopic());
+                topicRouteData.setOrderTopicConf(orderTopicConf);
+            }
+
+            byte[] content = topicRouteData.encode();
+            response.setBody(content);
+            response.setCode(ResponseCode.SUCCESS);
+            response.setRemark(null);
+            return response;
+        }
+
+        response.setCode(ResponseCode.TOPIC_NOT_EXIST);
+        response.setRemark(&quot;No topic route info in name server for the topic: &quot; + requestHeader.getTopic()
+                           + FAQUrl.suggestTodo(FAQUrl.APPLY_TOPIC_URL));
+        return response;
+    }
+
+    String[] topics = requestHeader.getTopic().split(String.valueOf(GetRouteInfoRequestHeader.split));
+    TopicRouteDatas topicRouteDatas = new TopicRouteDatas();
+
+    for (String topic : topics) {
+        //调用RouteInfoManager的方法,从路由表topicQueueTable、brokerAddrTable、filterServerTable中分别填充TopicRouteData的List&lt;QueueData&gt;、List&lt;BrokerData&gt;、filterServer
+        TopicRouteData topicRouteData = this.namesrvController.getRouteInfoManager().pickupTopicRouteData(topic);
+        if (topicRouteData == null) {
+            continue;
+        }
+        // 如果找到主题对应你的路由信息并且该主题为顺序消息，则从NameServer KVConfig中获取关于顺序消息相关的配置填充路由信息
+        if (this.namesrvController.getNamesrvConfig().isOrderMessageEnable()) {
+            String orderTopicConf =
+                this.namesrvController.getKvConfigManager().getKVConfig(NamesrvUtil.NAMESPACE_ORDER_TOPIC_CONFIG, topic);
+            topicRouteData.setOrderTopicConf(orderTopicConf);
+        }
+
+        topicRouteDatas.getTopics().put(topic, topicRouteData);
+    }
+    response.setBody(topicRouteDatas.encode());
+    response.setCode(ResponseCode.SUCCESS);
+    response.setRemark(null);
+    return response;
+}
+</code></pre>
+<h5 id="总结">总结</h5>
+<p><img src="epub_23768928_45" alt="img"></p>
+<p>NameServer是一种典型的心跳机制，即定时任务发起心跳，收到心跳记录心跳时间，再使用定时任务扫描判断心跳是否超过设置时间。</p>
+<h4 id="producer">Producer</h4>
+<p>作为生产者，需要搞清的东西是，消息的发送过程，即发到哪个broker哪个Topic哪个队列</p>
+<p>Producer端在发送消息的时候，会先根据Topic找到指定的TopicPublishInfo，在获取了TopicPublishInfo路由信息后，RocketMQ的客户端在默认方式下selectOneMessageQueue()方法会从TopicPublishInfo中的messageQueueList中选择一个队列（MessageQueue）进行发送消息。具体的容错策略均在MQFaultStrategy这个类中定义。这里有一个sendLatencyFaultEnable开关变量，如果开启，在随机递增取模的基础上，再过滤掉not available的Broker代理。所谓的&quot;latencyFaultTolerance&quot;，是指对之前失败的，按一定的时间做退避。例如，如果上次请求的latency超过550Lms，就退避3000Lms；超过1000L，就退避60000L；如果关闭，采用随机递增取模的方式选择一个队列（MessageQueue）来发送消息，latencyFaultTolerance机制是实现消息发送高可用的核心关键所在。</p>
+<h5 id="启动流程">启动流程</h5>
+<p><img src="./%E7%94%9F%E4%BA%A7%E8%80%85%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B.png" alt=""></p>
+<p>这个生产者的启动流程看起来比较复杂，所以需要看下,代码入口在DefaultMQProducerImpl的start方法</p>
+<pre><code class="language-java">public void start(final boolean startFactory) throws MQClientException {
+    switch (this.serviceState) {
+        case CREATE_JUST:
+            this.serviceState = ServiceState.START_FAILED;
+            // 检查生产者组是否满足要求
+            this.checkConfig();
+            // 更改当前instanceName为进程ID
+            if (!this.defaultMQProducer.getProducerGroup().equals(MixAll.CLIENT_INNER_PRODUCER_GROUP)) {
+                this.defaultMQProducer.changeInstanceNameToPID();
+            }
+            // 获得MQ客户端实例
+            this.mQClientFactory = MQClientManager.getInstance().getOrCreateMQClientInstance(this.defaultMQProducer, rpcHook);
+            // 注册实例到生产者表中
+            boolean registerOK = mQClientFactory.registerProducer(this.defaultMQProducer.getProducerGroup(), this);
+            if (!registerOK) {
+                this.serviceState = ServiceState.CREATE_JUST;
+                throw new MQClientException(&quot;The producer group[&quot; + this.defaultMQProducer.getProducerGroup()
+                                            + &quot;] has been created before, specify another name please.&quot; + FAQUrl.suggestTodo(FAQUrl.GROUP_NAME_DUPLICATE_URL),
+                                            null);
+            }
+
+            this.topicPublishInfoTable.put(this.defaultMQProducer.getCreateTopicKey(), new TopicPublishInfo());
+            // 启动生产者
+            if (startFactory) {
+                mQClientFactory.start();
+            }
+
+            log.info(&quot;the producer [{}] start OK. sendMessageWithVIPChannel={}&quot;, this.defaultMQProducer.getProducerGroup(),
+                     this.defaultMQProducer.isSendMessageWithVIPChannel());
+            this.serviceState = ServiceState.RUNNING;
+            break;
+        case RUNNING:
+        case START_FAILED:
+        case SHUTDOWN_ALREADY:
+            throw new MQClientException(&quot;The producer service state not OK, maybe started once, &quot;
+                                        + this.serviceState
+                                        + FAQUrl.suggestTodo(FAQUrl.CLIENT_SERVICE_NOT_OK),
+                                        null);
+        default:
+            break;
+    }
+
+    this.mQClientFactory.sendHeartbeatToAllBrokerWithLock();
+
+    RequestFutureHolder.getInstance().startScheduledTask(this);
+
+}
+</code></pre>
+<p>这段代码跟着流程图来看就好了，下面这个代码有点意思的</p>
+<pre><code class="language-java">public MQClientInstance getOrCreateMQClientInstance(final ClientConfig clientConfig, RPCHook rpcHook) {
+    // 构建客户端ID
+    String clientId = clientConfig.buildMQClientId();
+    // 根据clientId获取
+    MQClientInstance instance = this.factoryTable.get(clientId);
+    // 如果为空就创建实例，并放入实例表中
+    if (null == instance) {
+        instance =
+            new MQClientInstance(clientConfig.cloneClientConfig(),
+                                 this.factoryIndexGenerator.getAndIncrement(), clientId, rpcHook);
+        // 这里可以学习下，在上面已经判断为空的基础上，再判断一次
+        MQClientInstance prev = this.factoryTable.putIfAbsent(clientId, instance);
+        if (prev != null) {
+            instance = prev;
+            log.warn(&quot;Returned Previous MQClientInstance for clientId:[{}]&quot;, clientId);
+        } else {
+            log.info(&quot;Created new MQClientInstance for clientId:[{}]&quot;, clientId);
+        }
+    }
+
+    return instance;
+}
+</code></pre>
+<blockquote>
+<p>MQClientInstance prev = this.factoryTable.putIfAbsent(clientId, instance);说有意思是因为，自己在写代码时，进行了为空判断后在循环内，基本不会再进行判断，而这个代码就解决了并发出现的问题</p>
+</blockquote>
+<h5 id="发送流程">发送流程</h5>
+<p><img src="image-20220728225217118.png" alt="image-20220728225217118"></p>
+<p>根据上图一步步的进行看源码即可，看下来就觉得比较长，但是也没什么比较精妙的地方感觉</p>
+<pre><code class="language-java">private SendResult sendDefaultImpl(
+    Message msg,
+    final CommunicationMode communicationMode,
+    final SendCallback sendCallback,
+    final long timeout
+) throws MQClientException, RemotingException, MQBrokerException, InterruptedException {
+    // 校验生产者状态
+    this.makeSureStateOK();
+    // 参数校验
+    Validators.checkMessage(msg, this.defaultMQProducer);
+    final long invokeID = random.nextLong();
+    long beginTimestampFirst = System.currentTimeMillis();
+    long beginTimestampPrev = beginTimestampFirst;
+    long endTimestamp = beginTimestampFirst;
+    // 尝试获取主题的路由信息
+    TopicPublishInfo topicPublishInfo = this.tryToFindTopicPublishInfo(msg.getTopic());
+    if (topicPublishInfo != null &amp;&amp; topicPublishInfo.ok()) {
+        boolean callTimeout = false;
+        MessageQueue mq = null;
+        Exception exception = null;
+        SendResult sendResult = null;
+        int timesTotal = communicationMode == CommunicationMode.SYNC ? 1 + this.defaultMQProducer.getRetryTimesWhenSendFailed() : 1;
+        int times = 0;
+        String[] brokersSent = new String[timesTotal];
+        for (; times &lt; timesTotal; times++) {
+            String lastBrokerName = null == mq ? null : mq.getBrokerName();
+            // 选择消息队列
+            MessageQueue mqSelected = this.selectOneMessageQueue(topicPublishInfo, lastBrokerName);
+            if (mqSelected != null) {
+                mq = mqSelected;
+                brokersSent[times] = mq.getBrokerName();
+                try {
+                    beginTimestampPrev = System.currentTimeMillis();
+                    if (times &gt; 0) {
+                        //Reset topic with namespace during resend.
+                        msg.setTopic(this.defaultMQProducer.withNamespace(msg.getTopic()));
+                    }
+                    long costTime = beginTimestampPrev - beginTimestampFirst;
+                    if (timeout &lt; costTime) {
+                        callTimeout = true;
+                        break;
+                    }
+
+                    sendResult = this.sendKernelImpl(msg, mq, communicationMode, sendCallback, topicPublishInfo, timeout - costTime);
+                    endTimestamp = System.currentTimeMillis();
+                    //
+                    this.updateFaultItem(mq.getBrokerName(), endTimestamp - beginTimestampPrev, false);
+                    switch (communicationMode) {
+                        case ASYNC:
+                            return null;
+                        case ONEWAY:
+                            return null;
+                        case SYNC:
+                            if (sendResult.getSendStatus() != SendStatus.SEND_OK) {
+                                if (this.defaultMQProducer.isRetryAnotherBrokerWhenNotStoreOK()) {
+                                    continue;
+                                }
+                            }
+
+                            return sendResult;
+                        default:
+                            break;
+                    }
+                } catch (RemotingException e) {
+                    endTimestamp = System.currentTimeMillis();
+                    this.updateFaultItem(mq.getBrokerName(), endTimestamp - beginTimestampPrev, true);
+                    log.warn(String.format(&quot;sendKernelImpl exception, resend at once, InvokeID: %s, RT: %sms, Broker: %s&quot;, invokeID, endTimestamp - beginTimestampPrev, mq), e);
+                    log.warn(msg.toString());
+                    exception = e;
+                    continue;
+                } catch (MQClientException e) {
+                    endTimestamp = System.currentTimeMillis();
+                    this.updateFaultItem(mq.getBrokerName(), endTimestamp - beginTimestampPrev, true);
+                    log.warn(String.format(&quot;sendKernelImpl exception, resend at once, InvokeID: %s, RT: %sms, Broker: %s&quot;, invokeID, endTimestamp - beginTimestampPrev, mq), e);
+                    log.warn(msg.toString());
+                    exception = e;
+                    continue;
+                } catch (MQBrokerException e) {
+                    endTimestamp = System.currentTimeMillis();
+                    this.updateFaultItem(mq.getBrokerName(), endTimestamp - beginTimestampPrev, true);
+                    log.warn(String.format(&quot;sendKernelImpl exception, resend at once, InvokeID: %s, RT: %sms, Broker: %s&quot;, invokeID, endTimestamp - beginTimestampPrev, mq), e);
+                    log.warn(msg.toString());
+                    exception = e;
+                    if (this.defaultMQProducer.getRetryResponseCodes().contains(e.getResponseCode())) {
+                        continue;
+                    } else {
+                        if (sendResult != null) {
+                            return sendResult;
+                        }
+
+                        throw e;
+                    }
+                } catch (InterruptedException e) {
+                    endTimestamp = System.currentTimeMillis();
+                    this.updateFaultItem(mq.getBrokerName(), endTimestamp - beginTimestampPrev, false);
+                    log.warn(String.format(&quot;sendKernelImpl exception, throw exception, InvokeID: %s, RT: %sms, Broker: %s&quot;, invokeID, endTimestamp - beginTimestampPrev, mq), e);
+                    log.warn(msg.toString());
+                    throw e;
+                }
+            } else {
+                break;
+            }
+        }
+
+        if (sendResult != null) {
+            return sendResult;
+        }
+
+        String info = String.format(&quot;Send [%d] times, still failed, cost [%d]ms, Topic: %s, BrokersSent: %s&quot;,
+                                    times,
+                                    System.currentTimeMillis() - beginTimestampFirst,
+                                    msg.getTopic(),
+                                    Arrays.toString(brokersSent));
+
+        info += FAQUrl.suggestTodo(FAQUrl.SEND_MSG_FAILED);
+
+        MQClientException mqClientException = new MQClientException(info, exception);
+        if (callTimeout) {
+            throw new RemotingTooMuchRequestException(&quot;sendDefaultImpl call timeout&quot;);
+        }
+
+        if (exception instanceof MQBrokerException) {
+            mqClientException.setResponseCode(((MQBrokerException) exception).getResponseCode());
+        } else if (exception instanceof RemotingConnectException) {
+            mqClientException.setResponseCode(ClientErrorCode.CONNECT_BROKER_EXCEPTION);
+        } else if (exception instanceof RemotingTimeoutException) {
+            mqClientException.setResponseCode(ClientErrorCode.ACCESS_BROKER_TIMEOUT);
+        } else if (exception instanceof MQClientException) {
+            mqClientException.setResponseCode(ClientErrorCode.BROKER_NOT_EXIST_EXCEPTION);
+        }
+
+        throw mqClientException;
+    }
+
+    validateNameServerSetting();
+
+    throw new MQClientException(&quot;No route info of this topic: &quot; + msg.getTopic() + FAQUrl.suggestTodo(FAQUrl.NO_TOPIC_ROUTE_INFO),
+                                null).setResponseCode(ClientErrorCode.NOT_FOUND_TOPIC_EXCEPTION);
+}
+</code></pre>
+<p>这个方法是主流程，参数校验包括主题名称、消息体不能为空、消息长度不能等于0且默认不能超过允许发送消息的最大长度4M（maxMessageSize=1024 * 1024 * 4）</p>
+<h6 id="trytofindtopicpublishinfo">tryToFindTopicPublishInfo</h6>
+<p>这个方法是查找主题路由信息</p>
+<pre><code class="language-java">private TopicPublishInfo tryToFindTopicPublishInfo(final String topic) {
+    // 从map中取
+    TopicPublishInfo topicPublishInfo = this.topicPublishInfoTable.get(topic);
+    if (null == topicPublishInfo || !topicPublishInfo.ok()) {
+        this.topicPublishInfoTable.putIfAbsent(topic, new TopicPublishInfo());
+        // 向NameServer查询该topic的路由信息
+        this.mQClientFactory.updateTopicRouteInfoFromNameServer(topic);
+        topicPublishInfo = this.topicPublishInfoTable.get(topic);
+    }
+
+    if (topicPublishInfo.isHaveTopicRouterInfo() || topicPublishInfo.ok()) {
+        return topicPublishInfo;
+    } else {
+        // 用默认主题去查询
+        this.mQClientFactory.updateTopicRouteInfoFromNameServer(topic, true, this.defaultMQProducer);
+        topicPublishInfo = this.topicPublishInfoTable.get(topic);
+        return topicPublishInfo;
+    }
+}
+</code></pre>
+<p>流程很简单，先在map中查，然后去NameServer去查，如果还没查到，那就使用默认主题去查</p>
+<h6 id="selectonemessagequeue">selectOneMessageQueue</h6>
+<p>选择消息队列，选择消息队列有两种方式。</p>
+<ul>
+<li>sendLatencyFaultEnable=false，默认不启用Broker故障延迟机制。</li>
+<li>sendLatencyFaultEnable=true，启用Broker故障延迟机制</li>
+</ul>
+<p>为什么要有这两种机制呢？其实就是为了填之前nameServer路由发现时没有主动推送过来的坑，NameServer检测Broker是否可用是有延迟的，最短为一次心跳检测间隔（10s）；其次，NameServer不会检测到Broker宕机后马上推送消息给消息生产者，而是消息生产者每隔30s更新一次路由信息，所以消息生产者最快感知Broker最新的路由信息也需要30s</p>
+<pre><code class="language-java">public MessageQueue selectOneMessageQueue(final TopicPublishInfo tpInfo, final String lastBrokerName) {
+    // 启用Broker故障延迟机制
+    if (this.sendLatencyFaultEnable) {
+        try {
+            int index = tpInfo.getSendWhichQueue().incrementAndGet();
+            for (int i = 0; i &lt; tpInfo.getMessageQueueList().size(); i++) {
+                int pos = Math.abs(index++) % tpInfo.getMessageQueueList().size();
+                if (pos &lt; 0)
+                    pos = 0;
+                MessageQueue mq = tpInfo.getMessageQueueList().get(pos);
+                // 根据时间戳判断broker是否可用
+                if (latencyFaultTolerance.isAvailable(mq.getBrokerName()))
+                    return mq;
+            }
+
+            final String notBestBroker = latencyFaultTolerance.pickOneAtLeast();
+            int writeQueueNums = tpInfo.getQueueIdByBroker(notBestBroker);
+            if (writeQueueNums &gt; 0) {
+                final MessageQueue mq = tpInfo.selectOneMessageQueue();
+                if (notBestBroker != null) {
+                    mq.setBrokerName(notBestBroker);
+                    mq.setQueueId(tpInfo.getSendWhichQueue().incrementAndGet() % writeQueueNums);
+                }
+                return mq;
+            } else {
+                // 移除broker不可用队列
+                latencyFaultTolerance.remove(notBestBroker);
+            }
+        } catch (Exception e) {
+            log.error(&quot;Error occurred when selecting message queue&quot;, e);
+        }
+        // 默认不启用Broker故障延迟机制
+        return tpInfo.selectOneMessageQueue();
+    }
+
+    return tpInfo.selectOneMessageQueue(lastBrokerName);
+}
+// 默认不启用Broker故障延迟机制的方法
+public MessageQueue selectOneMessageQueue(final String lastBrokerName) {
+    if (lastBrokerName == null) {
+        return selectOneMessageQueue();
+    } else {
+        for (int i = 0; i &lt; this.messageQueueList.size(); i++) {
+            // 随机选取一个队列
+            int index = this.sendWhichQueue.incrementAndGet();
+            int pos = Math.abs(index) % this.messageQueueList.size();
+            if (pos &lt; 0)
+                pos = 0;
+            MessageQueue mq = this.messageQueueList.get(pos);
+            if (!mq.getBrokerName().equals(lastBrokerName)) {
+                return mq;
+            }
+        }
+        return selectOneMessageQueue();
+    }
+}
+
+</code></pre>
+<p>默认不启用Broker故障延迟机制的方法，就是与上次失败进行判断，而启用延迟方法就比较复杂，具体是，再发送失败后，首先会调用updateFaultItem方法</p>
+<pre><code class="language-java">public void updateFaultItem(final String brokerName, final long currentLatency, boolean isolation) {
+    if (this.sendLatencyFaultEnable) {
+        // 计算broker不可用的时长
+        long duration = computeNotAvailableDuration(isolation ? 30000 : currentLatency);
+        // 更新时间戳
+        this.latencyFaultTolerance.updateFaultItem(brokerName, currentLatency, duration);
+    }
+}
+private long computeNotAvailableDuration(final long currentLatency) {
+        // 从数组{50L, 100L, 550L, 1000L, 2000L, 3000L, 15000L}中拿接近的一个时间
+        for (int i = latencyMax.length - 1; i &gt;= 0; i--) {
+            if (currentLatency &gt;= latencyMax[i])
+                return this.notAvailableDuration[i];
+        }
+
+        return 0;
+    }
+public void updateFaultItem(final String name, final long currentLatency, final long notAvailableDuration) {
+        FaultItem old = this.faultItemTable.get(name);
+        if (null == old) {
+            final FaultItem faultItem = new FaultItem(name);
+            faultItem.setCurrentLatency(currentLatency);
+            // 关键就在于这里，broker超过这个时间才可用
+            faultItem.setStartTimestamp(System.currentTimeMillis() + notAvailableDuration);
+
+            old = this.faultItemTable.putIfAbsent(name, faultItem);
+            if (old != null) {
+                old.setCurrentLatency(currentLatency);
+                old.setStartTimestamp(System.currentTimeMillis() + notAvailableDuration);
+            }
+        } else {
+            old.setCurrentLatency(currentLatency);
+            old.setStartTimestamp(System.currentTimeMillis() + notAvailableDuration);
+        }
+    }
+</code></pre>
+<p>这个代码也很简单，就是根据发送失败的时间差，从{50L, 100L, 550L, 1000L, 2000L, 3000L, 15000L}拿出一个最接近的最大的睡眠时间，并把时间戳更新进去</p>
+<h6 id="sendkernelimpl">sendKernelImpl</h6>
+<p>消息发送</p>
+<pre><code class="language-java">private SendResult sendKernelImpl(final Message msg,
+                                  final MessageQueue mq,
+                                  final CommunicationMode communicationMode,
+                                  final SendCallback sendCallback,
+                                  final TopicPublishInfo topicPublishInfo,
+                                  final long timeout) throws MQClientException, RemotingException, MQBrokerException, InterruptedException {
+    long beginStartTime = System.currentTimeMillis();
+    String brokerName = this.mQClientFactory.getBrokerNameFromMessageQueue(mq);
+    String brokerAddr = this.mQClientFactory.findBrokerAddressInPublish(brokerName);
+    if (null == brokerAddr) {
+        tryToFindTopicPublishInfo(mq.getTopic());
+        brokerName = this.mQClientFactory.getBrokerNameFromMessageQueue(mq);
+        brokerAddr = this.mQClientFactory.findBrokerAddressInPublish(brokerName);
+    }
+
+    SendMessageContext context = null;
+    if (brokerAddr != null) {
+        brokerAddr = MixAll.brokerVIPChannel(this.defaultMQProducer.isSendMessageWithVIPChannel(), brokerAddr);
+
+        byte[] prevBody = msg.getBody();
+        try {
+            //for MessageBatch,ID has been set in the generating process
+            if (!(msg instanceof MessageBatch)) {
+                // 生成消息唯一全局id
+                MessageClientIDSetter.setUniqID(msg);
+            }
+
+            boolean topicWithNamespace = false;
+            if (null != this.mQClientFactory.getClientConfig().getNamespace()) {
+                msg.setInstanceId(this.mQClientFactory.getClientConfig().getNamespace());
+                topicWithNamespace = true;
+            }
+
+            int sysFlag = 0;
+            boolean msgBodyCompressed = false;
+            if (this.tryToCompressMessage(msg)) {
+                sysFlag |= MessageSysFlag.COMPRESSED_FLAG;
+                sysFlag |= compressType.getCompressionFlag();
+                msgBodyCompressed = true;
+            }
+
+            final String tranMsg = msg.getProperty(MessageConst.PROPERTY_TRANSACTION_PREPARED);
+            if (Boolean.parseBoolean(tranMsg)) {
+                sysFlag |= MessageSysFlag.TRANSACTION_PREPARED_TYPE;
+            }
+            // 增强，执行勾子函数
+            if (hasCheckForbiddenHook()) {
+                CheckForbiddenContext checkForbiddenContext = new CheckForbiddenContext();
+                checkForbiddenContext.setNameSrvAddr(this.defaultMQProducer.getNamesrvAddr());
+                checkForbiddenContext.setGroup(this.defaultMQProducer.getProducerGroup());
+                checkForbiddenContext.setCommunicationMode(communicationMode);
+                checkForbiddenContext.setBrokerAddr(brokerAddr);
+                checkForbiddenContext.setMessage(msg);
+                checkForbiddenContext.setMq(mq);
+                checkForbiddenContext.setUnitMode(this.isUnitMode());
+                this.executeCheckForbiddenHook(checkForbiddenContext);
+            }
+            // 增强，执行勾子函数
+            if (this.hasSendMessageHook()) {
+                context = new SendMessageContext();
+                context.setProducer(this);
+                context.setProducerGroup(this.defaultMQProducer.getProducerGroup());
+                context.setCommunicationMode(communicationMode);
+                context.setBornHost(this.defaultMQProducer.getClientIP());
+                context.setBrokerAddr(brokerAddr);
+                context.setMessage(msg);
+                context.setMq(mq);
+                context.setNamespace(this.defaultMQProducer.getNamespace());
+                String isTrans = msg.getProperty(MessageConst.PROPERTY_TRANSACTION_PREPARED);
+                if (isTrans != null &amp;&amp; isTrans.equals(&quot;true&quot;)) {
+                    context.setMsgType(MessageType.Trans_Msg_Half);
+                }
+
+                if (msg.getProperty(&quot;__STARTDELIVERTIME&quot;) != null || msg.getProperty(MessageConst.PROPERTY_DELAY_TIME_LEVEL) != null) {
+                    context.setMsgType(MessageType.Delay_Msg);
+                }
+                this.executeSendMessageHookBefore(context);
+            }
+
+            SendMessageRequestHeader requestHeader = new SendMessageRequestHeader();
+            // 生产者组
+            requestHeader.setProducerGroup(this.defaultMQProducer.getProducerGroup());
+            // 主题名称
+            requestHeader.setTopic(msg.getTopic());
+            // 默认创建主题key
+            requestHeader.setDefaultTopic(this.defaultMQProducer.getCreateTopicKey());
+            requestHeader.setDefaultTopicQueueNums(this.defaultMQProducer.getDefaultTopicQueueNums());
+            requestHeader.setQueueId(mq.getQueueId());
+            requestHeader.setSysFlag(sysFlag);
+            requestHeader.setBornTimestamp(System.currentTimeMillis());
+            requestHeader.setFlag(msg.getFlag());
+            requestHeader.setProperties(MessageDecoder.messageProperties2String(msg.getProperties()));
+            requestHeader.setReconsumeTimes(0);
+            requestHeader.setUnitMode(this.isUnitMode());
+            requestHeader.setBatch(msg instanceof MessageBatch);
+            if (requestHeader.getTopic().startsWith(MixAll.RETRY_GROUP_TOPIC_PREFIX)) {
+                String reconsumeTimes = MessageAccessor.getReconsumeTime(msg);
+                if (reconsumeTimes != null) {
+                    requestHeader.setReconsumeTimes(Integer.valueOf(reconsumeTimes));
+                    MessageAccessor.clearProperty(msg, MessageConst.PROPERTY_RECONSUME_TIME);
+                }
+
+                String maxReconsumeTimes = MessageAccessor.getMaxReconsumeTimes(msg);
+                if (maxReconsumeTimes != null) {
+                    requestHeader.setMaxReconsumeTimes(Integer.valueOf(maxReconsumeTimes));
+                    MessageAccessor.clearProperty(msg, MessageConst.PROPERTY_MAX_RECONSUME_TIMES);
+                }
+            }
+
+            SendResult sendResult = null;
+            switch (communicationMode) {
+                case ASYNC:
+                    Message tmpMessage = msg;
+                    boolean messageCloned = false;
+                    if (msgBodyCompressed) {
+                        //If msg body was compressed, msgbody should be reset using prevBody.
+                        //Clone new message using commpressed message body and recover origin massage.
+                        //Fix bug:https://github.com/apache/rocketmq-externals/issues/66
+                        tmpMessage = MessageAccessor.cloneMessage(msg);
+                        messageCloned = true;
+                        msg.setBody(prevBody);
+                    }
+
+                    if (topicWithNamespace) {
+                        if (!messageCloned) {
+                            tmpMessage = MessageAccessor.cloneMessage(msg);
+                            messageCloned = true;
+                        }
+                        msg.setTopic(NamespaceUtil.withoutNamespace(msg.getTopic(), this.defaultMQProducer.getNamespace()));
+                    }
+
+                    long costTimeAsync = System.currentTimeMillis() - beginStartTime;
+                    if (timeout &lt; costTimeAsync) {
+                        throw new RemotingTooMuchRequestException(&quot;sendKernelImpl call timeout&quot;);
+                    }
+                    sendResult = this.mQClientFactory.getMQClientAPIImpl().sendMessage(
+                        brokerAddr,
+                        brokerName,
+                        tmpMessage,
+                        requestHeader,
+                        timeout - costTimeAsync,
+                        communicationMode,
+                        sendCallback,
+                        topicPublishInfo,
+                        this.mQClientFactory,
+                        this.defaultMQProducer.getRetryTimesWhenSendAsyncFailed(),
+                        context,
+                        this);
+                    break;
+                case ONEWAY:
+                case SYNC:
+                    long costTimeSync = System.currentTimeMillis() - beginStartTime;
+                    if (timeout &lt; costTimeSync) {
+                        throw new RemotingTooMuchRequestException(&quot;sendKernelImpl call timeout&quot;);
+                    }
+                    sendResult = this.mQClientFactory.getMQClientAPIImpl().sendMessage(
+                        brokerAddr,
+                        brokerName,
+                        msg,
+                        requestHeader,
+                        timeout - costTimeSync,
+                        communicationMode,
+                        context,
+                        this);
+                    break;
+                default:
+                    assert false;
+                    break;
+            }
+            // 增强，钩子函数
+            if (this.hasSendMessageHook()) {
+                context.setSendResult(sendResult);
+                this.executeSendMessageHookAfter(context);
+            }
+
+            return sendResult;
+        } catch (RemotingException e) {
+            if (this.hasSendMessageHook()) {
+                context.setException(e);
+                this.executeSendMessageHookAfter(context);
+            }
+            throw e;
+        } catch (MQBrokerException e) {
+            if (this.hasSendMessageHook()) {
+                context.setException(e);
+                this.executeSendMessageHookAfter(context);
+            }
+            throw e;
+        } catch (InterruptedException e) {
+            if (this.hasSendMessageHook()) {
+                context.setException(e);
+                this.executeSendMessageHookAfter(context);
+            }
+            throw e;
+        } finally {
+            msg.setBody(prevBody);
+            msg.setTopic(NamespaceUtil.withoutNamespace(msg.getTopic(), this.defaultMQProducer.getNamespace()));
+        }
+    }
+
+    throw new MQClientException(&quot;The broker[&quot; + brokerName + &quot;] not exist&quot;, null);
+}
+</code></pre>
+<p>这个消息发送实际上并没有太多的可以讲的东西，可以学习的地方有<strong>通过钩子函数实现增强</strong>，真正发送消息的代码在sendMessage</p>
+<pre><code class="language-java">public SendResult sendMessage(
+    final String addr,
+    final String brokerName,
+    final Message msg,
+    final SendMessageRequestHeader requestHeader,
+    final long timeoutMillis,
+    final CommunicationMode communicationMode,
+    final SendCallback sendCallback,
+    final TopicPublishInfo topicPublishInfo,
+    final MQClientInstance instance,
+    final int retryTimesWhenSendFailed,
+    final SendMessageContext context,
+    final DefaultMQProducerImpl producer
+) throws RemotingException, MQBrokerException, InterruptedException {
+    long beginStartTime = System.currentTimeMillis();
+    RemotingCommand request = null;
+    String msgType = msg.getProperty(MessageConst.PROPERTY_MESSAGE_TYPE);
+    boolean isReply = msgType != null &amp;&amp; msgType.equals(MixAll.REPLY_MESSAGE_FLAG);
+    if (isReply) {
+        if (sendSmartMsg) {
+            SendMessageRequestHeaderV2 requestHeaderV2 = SendMessageRequestHeaderV2.createSendMessageRequestHeaderV2(requestHeader);
+            request = RemotingCommand.createRequestCommand(RequestCode.SEND_REPLY_MESSAGE_V2, requestHeaderV2);
+        } else {
+            request = RemotingCommand.createRequestCommand(RequestCode.SEND_REPLY_MESSAGE, requestHeader);
+        }
+    } else {
+        if (sendSmartMsg || msg instanceof MessageBatch) {
+            SendMessageRequestHeaderV2 requestHeaderV2 = SendMessageRequestHeaderV2.createSendMessageRequestHeaderV2(requestHeader);
+            request = RemotingCommand.createRequestCommand(msg instanceof MessageBatch ? RequestCode.SEND_BATCH_MESSAGE : RequestCode.SEND_MESSAGE_V2, requestHeaderV2);
+        } else {
+            request = RemotingCommand.createRequestCommand(RequestCode.SEND_MESSAGE, requestHeader);
+        }
+    }
+    request.setBody(msg.getBody());
+
+    switch (communicationMode) {
+        case ONEWAY:
+            this.remotingClient.invokeOneway(addr, request, timeoutMillis);
+            return null;
+        case ASYNC:
+            final AtomicInteger times = new AtomicInteger();
+            long costTimeAsync = System.currentTimeMillis() - beginStartTime;
+            if (timeoutMillis &lt; costTimeAsync) {
+                throw new RemotingTooMuchRequestException(&quot;sendMessage call timeout&quot;);
+            }
+            this.sendMessageAsync(addr, brokerName, msg, timeoutMillis - costTimeAsync, request, sendCallback, topicPublishInfo, instance,
+                                  retryTimesWhenSendFailed, times, context, producer);
+            return null;
+        case SYNC:
+            long costTimeSync = System.currentTimeMillis() - beginStartTime;
+            if (timeoutMillis &lt; costTimeSync) {
+                throw new RemotingTooMuchRequestException(&quot;sendMessage call timeout&quot;);
+            }
+            return this.sendMessageSync(addr, brokerName, msg, timeoutMillis - costTimeSync, request);
+        default:
+            assert false;
+            break;
+    }
+
+    return null;
+}j
+</code></pre>
+<p>几种发送方式都不同，主要看下同步发送</p>
+<pre><code>
+</code></pre>
+
+    </div>
+    <div class="article-footer">
+<blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接: </strong>
+      <a href="https://wzgl998877.github.io/2022/01/mq%E6%80%BB%E7%BB%93/" title="消息队列介绍" target="_blank" rel="external">https://wzgl998877.github.io/2022/01/mq%E6%80%BB%E7%BB%93/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong>License: </strong>
+        <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN</a>
+    </li>
+  </ul>
+</blockquote>
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/wzgl998877/" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="https://wzgl998877.github.io/avatar.png" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/wzgl998877/" target="_blank"><span class="text-dark">microzheng</span><small class="ml-1x">努力会说谎，但努力不会白费</small></a></h3>
+        <div>不想搬砖的码农</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+    </div>
+  </article>
+</div><nav class="bar bar-footer clearfix" data-stick-bottom>
+    <div class="bar-inner">
+        <ul class="pager pull-left">
+            <li class="prev">
+                <a href="https://wzgl998877.github.io/2022/01/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" title="消息队列介绍"><i
+                        class="icon icon-angle-left"
+                        aria-hidden="true"></i><span>&nbsp;&nbsp;下一篇</span></a>
+            </li>
+            <li class="next">
+                <a href="https://wzgl998877.github.io/2022/01/%E6%97%A5%E5%B8%B8%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/"
+                    title="日常问题总结"><span>上一篇&nbsp;&nbsp;</span><i
+                        class="icon icon-angle-right" aria-hidden="true"></i></a>
+            </li>
+            
+            <li class="toggle-toc">
+                <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false"
+                    title="文章目录" role="button">
+                    <span>[&nbsp;</span><span>文章目录</span>
+                    <i class="text-collapsed icon icon-anchor"></i>
+                    <i class="text-in icon icon-close"></i>
+                    <span>]</span>
+                </a>
+            </li>
+        </ul>
+        <div class="bar-right">
+            <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter"
+                data-mobile-sites="weibo,qq,qzone"></div>
+        </div>
+    </div>
+</nav>
+
+
+</main><footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+<ul class="social-links">
+    <li><a href="https://github.com/wzgl998877/" target="_blank" title="github" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-github"></i></a></li>
+    <li><a href="https://wzgl998877.github.io/index.xml" target="_blank" title="rss" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-rss"></i></a></li>
+</ul>
+  <div class="copyright">
+    &copy;2022  -
+    2023
+    <div class="publishby">
+        Theme by <a href="https://github.com/wzgl998877/" target="_blank"> microzheng </a>base on<a href="https://github.com/xiaoheiAh/hugo-theme-pure" target="_blank"> pure</a>.
+    </div>
+    
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_SVG"></script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+            showMathMenu: false, //disables context menu
+            tex2jax: {
+            inlineMath: [ ['$','$'], ['\\(','\\)'] ]
+           }
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+<script>
+    window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/highlight.min.js"></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/python.min.js" defer></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/javascript.min.js" defer></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/java.min.js" defer></script><script>
+    hljs.configure({
+        tabReplace: '    ', 
+        classPrefix: ''     
+        
+    })
+    hljs.initHighlightingOnLoad();
+</script>
+<script src="https://wzgl998877.github.io/js/application.min.a94ab19cb63a95c8d7fbd7b85cab3ddeea8c369bdf75b9cab6708787ead123af.js"></script>
+<script src="https://wzgl998877.github.io/js/plugin.min.19c5bcb2fb0789ab4f2b7834e5ceb5e92635645605bab902c1024b25f1502364.js"></script>
+
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(未命名)',
+            },
+            ROOT_URL: 'https:\/\/wzgl998877.github.io\/',
+            CONTENT_URL: 'https:\/\/wzgl998877.github.io\/\/searchindex.json ',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script type="text/javascript" src="https://wzgl998877.github.io/js/insight.min.4a2d52de4bfff73e0c688404fe3d17c9a3ae12d9888e1e1ac9c690e4890de2ded50fe55f2b819c2ba55435a76f396f3ea6805765f0b0af5635cdf74ea459eab0.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+<script>
+    tocbot.init({
+        
+        tocSelector: '.js-toc',
+        
+        contentSelector: '.js-toc-content',
+        
+        headingSelector: 'h1, h2, h3',
+        
+        hasInnerContainers: true,
+    });
+</script>
+
+
+  </body>
+</html>

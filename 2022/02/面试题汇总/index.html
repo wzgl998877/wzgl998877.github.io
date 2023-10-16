@@ -1,0 +1,2962 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <title>
+        面试题汇总 - 码农的学习笔记
+      </title>
+        <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    
+    <meta name="theme-color" content="#000000" />
+    
+    <meta http-equiv="window-target" content="_top" />
+    
+    
+    <meta name="description" content="这里记录遇到、听到、见到的面试题，可以说是总结复盘的好地方 [TOC] 阿里：三个线程交替打印abc。 手写单例模式双重校验锁 分布式事务 接口幂等性 Hash" />
+    <meta name="generator" content="Hugo 0.91.2 with theme pure" />
+    <title>面试题汇总 - 码农的学习笔记</title>
+    
+    
+    <link rel="stylesheet" href="https://wzgl998877.github.io/css/style.min.a85959a41e7abcc0db1f81f44bd264649303417f91b536e87dcde644340fea6d.css">
+    
+    <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/9.15.10/styles/github.min.css" async>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css" async>
+    <meta property="og:title" content="面试题汇总" />
+<meta property="og:description" content="这里记录遇到、听到、见到的面试题，可以说是总结复盘的好地方 [TOC] 阿里：三个线程交替打印abc。 手写单例模式双重校验锁 分布式事务 接口幂等性 Hash" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wzgl998877.github.io/2022/02/%E9%9D%A2%E8%AF%95%E9%A2%98%E6%B1%87%E6%80%BB/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-02-17T10:28:04+08:00" />
+<meta property="article:modified_time" content="2022-02-17T10:28:04+08:00" />
+
+<meta itemprop="name" content="面试题汇总">
+<meta itemprop="description" content="这里记录遇到、听到、见到的面试题，可以说是总结复盘的好地方 [TOC] 阿里：三个线程交替打印abc。 手写单例模式双重校验锁 分布式事务 接口幂等性 Hash"><meta itemprop="datePublished" content="2022-02-17T10:28:04+08:00" />
+<meta itemprop="dateModified" content="2022-02-17T10:28:04+08:00" />
+<meta itemprop="wordCount" content="24087">
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="面试题汇总"/>
+<meta name="twitter:description" content="这里记录遇到、听到、见到的面试题，可以说是总结复盘的好地方 [TOC] 阿里：三个线程交替打印abc。 手写单例模式双重校验锁 分布式事务 接口幂等性 Hash"/>
+
+    <!--[if lte IE 9]>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+      <![endif]-->
+
+    <!--[if lt IE 9]>
+        <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+      <![endif]-->
+  </head>
+
+  
+  
+
+  <body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage"><header class="header" itemscope itemtype="http://schema.org/WPHeader">
+    <div class="slimContent">
+      <div class="navbar-header">
+        <div class="profile-block text-center">
+          <a id="avatar" href="https://github.com/wzgl998877/" target="_blank">
+            <img class="img-circle img-rotate" src="https://wzgl998877.github.io/avatar.png" width="200" height="200">
+          </a>
+          <h2 id="name" class="hidden-xs hidden-sm">microzheng</h2>
+          <h3 id="title" class="hidden-xs hidden-sm hidden-md">努力会说谎，但努力不会白费</h3>
+          <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i>Shenzhen China</small>
+        </div><div class="search" id="search-form-wrap">
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i
+                        class="icon icon-search"></i></button>
+            </span>
+        </div>
+        <div class="ins-search">
+            <div class="ins-search-mask"></div>
+            <div class="ins-search-container">
+                <div class="ins-input-wrapper">
+                    <input type="text" class="ins-search-input" placeholder="想要查找什么..."
+                        x-webkit-speech />
+                    <button type="button" class="close ins-close ins-selectable" data-dismiss="modal"
+                        aria-label="Close"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="ins-section-wrapper">
+                    <div class="ins-section-container"></div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+        <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+        <ul class="nav navbar-nav main-nav">
+            <li class="menu-item menu-item-home">
+                <a href="/">
+                    <i class="icon icon-home-fill"></i>
+                  <span class="menu-title">主页</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-archives">
+                <a href="/posts/">
+                    <i class="icon icon-archives-fill"></i>
+                  <span class="menu-title">归档</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-categories">
+                <a href="/categories/">
+                    <i class="icon icon-folder"></i>
+                  <span class="menu-title">分类</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-tags">
+                <a href="/tags/">
+                    <i class="icon icon-tags"></i>
+                  <span class="menu-title">标签</span>
+                </a>
+            </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+<aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content"><p>enjoy~</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+      <div class="widget">
+    <h3 class="widget-title"> 分类</h3>
+    <div class="widget-body">
+        <ul class="category-list">
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/git/" class="category-list-link">git</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/java/" class="category-list-link">java</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/spring/" class="category-list-link">spring</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/" class="category-list-link">中间件</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E4%BA%91%E5%8E%9F%E7%94%9F/" class="category-list-link">云原生</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E5%B8%B8%E7%94%A8%E6%A1%86%E6%9E%B6/" class="category-list-link">常用框架</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="category-list-link">数据库</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E6%97%A5%E5%B8%B8%E6%80%BB%E7%BB%93/" class="category-list-link">日常总结</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E7%AE%97%E6%B3%95/" class="category-list-link">算法</a><span class="category-list-count">2</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/" class="category-list-link">系统设计</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/" class="category-list-link">网络编程</a><span class="category-list-count">3</span></li>
+        </ul>
+    </div>
+</div>
+      <div class="widget">
+    <h3 class="widget-title"> 标签</h3>
+    <div class="widget-body">
+        <ul class="tag-list">
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/http/" class="tag-list-link">http</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/java%E5%9F%BA%E7%A1%80/" class="tag-list-link">java基础</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/java%E5%B9%B6%E5%8F%91/" class="tag-list-link">java并发</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/jvm/" class="tag-list-link">jvm</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/leetcode/" class="tag-list-link">leetcode</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/mybatis/" class="tag-list-link">mybatis</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/mysql/" class="tag-list-link">mysql</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/netty/" class="tag-list-link">netty</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/redis/" class="tag-list-link">redis</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/rpc/" class="tag-list-link">rpc</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/spring/" class="tag-list-link">spring</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/websocket/" class="tag-list-link">websocket</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" class="tag-list-link">消息队列</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="tag-list-link">设计模式</a><span
+                    class="tag-list-count">1</span></li>
+            
+        </ul>
+
+    </div>
+</div>
+      
+<div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+        <ul class="recent-post-list list-unstyled no-thumbnail">
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://wzgl998877.github.io/2022/11/springcloud/" class="title">SpringCloud</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2022-11-07 19:15:43 &#43;0800 CST" itemprop="datePublished">2022-11-07</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://wzgl998877.github.io/2022/09/docker%E5%92%8Ck8s/" class="title">Docker和k8s</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2022-09-09 10:26:21 &#43;0800 CST" itemprop="datePublished">2022-09-09</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://wzgl998877.github.io/2022/05/redis%E6%80%BB%E7%BB%93/" class="title">Redis学习</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2022-05-06 15:21:49 &#43;0800 CST" itemprop="datePublished">2022-05-06</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://wzgl998877.github.io/2022/03/git%E7%9B%B8%E5%85%B3/" class="title">git相关</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2022-03-02 20:03:24 &#43;0800 CST" itemprop="datePublished">2022-03-02</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://wzgl998877.github.io/2022/02/mysql%E6%80%BB%E7%BB%93/" class="title">Mysql总结</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2022-02-28 23:43:20 &#43;0800 CST" itemprop="datePublished">2022-02-28</time>
+                    </p>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+  </div>
+</aside>
+
+    
+    
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <h4 class="toc-title">文章目录</h4>
+    <nav id="toc" class="js-toc toc">
+
+    </nav>
+  </div>
+</aside>
+<main class="main" role="main"><div class="content">
+  <article id="-" class="article article-type-" itemscope
+    itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      <h1 itemprop="name">
+  <a
+    class="article-title"
+    href="/2022/02/%E9%9D%A2%E8%AF%95%E9%A2%98%E6%B1%87%E6%80%BB/"
+    >面试题汇总</a
+  >
+</h1>
+
+      <div class="article-meta">
+        
+<span class="article-date">
+  <i class="icon icon-calendar-check"></i>&nbsp;
+<a href="https://wzgl998877.github.io/2022/02/%E9%9D%A2%E8%AF%95%E9%A2%98%E6%B1%87%E6%80%BB/" class="article-date">
+  <time datetime="2022-02-17 10:28:04 &#43;0800 CST" itemprop="datePublished">2022-02-17</time>
+</a>
+</span>
+<span class="article-category">
+  <i class="icon icon-folder"></i>&nbsp;
+  <a class="article-category-link" href="/categories/%E6%97%A5%E5%B8%B8%E6%80%BB%E7%BB%93/"> 日常总结 </a>
+</span>
+
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 24087字</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 49分 </span>
+      </div>
+    </div>
+    <div class="article-entry marked-body js-toc-content" itemprop="articleBody">
+      <p>这里记录遇到、听到、见到的面试题，可以说是总结复盘的好地方</p>
+<p>[TOC]</p>
+<h3 id="阿里三个线程交替打印abc">阿里：三个线程交替打印abc。</h3>
+<h3 id="手写单例模式双重校验锁">手写单例模式双重校验锁</h3>
+<h3 id="分布式事务">分布式事务</h3>
+<h3 id="接口幂等性">接口幂等性</h3>
+<h3 id="hashmap的底层原理">HashMap的底层原理</h3>
+<p>数组+链表+红黑树</p>
+<p><a href="https://tech.meituan.com/2016/06/24/java-hashmap.html">https://tech.meituan.com/2016/06/24/java-hashmap.html</a></p>
+<h3 id="jvm相关">jvm相关</h3>
+<h3 id="mq怎么保证消息的可靠性">mq怎么保证消息的可靠性</h3>
+<h3 id="拷贝">拷贝</h3>
+<p>在拷贝中分为引用拷贝、浅拷贝、深拷贝</p>
+<h4 id="引用拷贝">引用拷贝</h4>
+<p>引用拷贝会生成一个新的对象引用地址，但是两个最终指向依然是同一个对象。</p>
+<pre><code class="language-java">class Son {
+    String name;
+    int age;
+
+    public Son(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+}
+public class test {
+    public static void main(String[] args) {
+        Son s1 = new Son(&quot;son1&quot;, 12);
+        Son s2 = s1;
+        s1.age = 22;
+        System.out.println(s1);
+        System.out.println(s2);
+        System.out.println(&quot;s1的age:&quot; + s1.age);
+        System.out.println(&quot;s2的age:&quot; + s2.age);
+        System.out.println(&quot;s1==s2&quot; + (s1 == s2));//相等
+    }
+}
+</code></pre>
+<h4 id="浅拷贝">浅拷贝</h4>
+<p>浅拷贝会创建一个新对象，新对象和原对象本身没有任何关系，<strong>新对象和原对象不等，但是新对象的属性和可能会和老对象相同</strong>。具体可以看如下区别：</p>
+<ul>
+<li>如果属性是基本类型(int,double,long,boolean等)，拷贝的就是基本类型的值；</li>
+<li>如果属性是引用类型，拷贝的就是内存地址（即复制引用但不复制引用的对象） ，因此如果其中一个对象改变了这个地址，就会影响到另一个对象。</li>
+</ul>
+<p>如果用一张图来描述一下浅拷贝，它应该是这样的：</p>
+<p><img src="1460000038523411.png" alt="image-20201217002917565"></p>
+<p>如何实现浅拷贝呢？也很简单，<strong>就是在需要拷贝的类上实现Cloneable接口并重写其clone()方法</strong>。</p>
+<pre><code class="language-java">@Data
+public class Father {
+    private String name;
+}
+@Data
+public class Son implements Cloneable{
+    private String age;
+    private Father father;
+
+    @Override
+    protected Son clone() throws CloneNotSupportedException {
+        return (Son) super.clone();
+    }
+
+    public static void main(String[] args) throws CloneNotSupportedException {
+        Son son1 = new Son();
+        son1.setAge(&quot;1&quot;);
+        Father father = new Father();
+        father.setName(&quot;爸爸&quot;);
+        son1.setFather(father);
+        // 浅拷贝
+        Son son2 = son1.clone();
+        Son son3 = new Son();
+        son3.setFather(son2.getFather());
+        son3.setAge(son2.getAge());
+        System.out.println(son1);
+        System.out.println(son2);
+        System.out.println(son3);
+        System.out.println(son1 == son2);
+        System.out.println(son1.getFather() == son2.getFather());
+        // 改变值，发现所有值都变了
+        son2.getFather().setName(&quot;儿砸&quot;);
+        son2.setAge(&quot;123&quot;);
+        System.out.println(son1);
+        System.out.println(son2);
+        System.out.println(son3);
+
+    }
+}
+</code></pre>
+<p>输出</p>
+<pre><code class="language-java">Son(age=1, father=Father(name=爸爸))
+Son(age=1, father=Father(name=爸爸))
+Son(age=1, father=Father(name=爸爸))
+false
+true
+Son(age=1, father=Father(name=儿砸))
+Son(age=123, father=Father(name=儿砸))
+Son(age=1, father=Father(name=儿砸))
+</code></pre>
+<p>很明显的看到father这个对象，复制的是引用并不是地址</p>
+<h4 id="深拷贝">深拷贝</h4>
+<p>对于上述的问题虽然拷贝的两个对象不同，但其内部的一些引用还是相同的，怎么样绝对的拷贝这个对象，使这个对象完全独立于原对象呢？就使用我们的深拷贝了。深拷贝：<strong>在对引用数据类型进行拷贝的时候，创建了一个新的对象，并且复制其内的成员变量。</strong></p>
+<p><img src="1460000038523414.png" alt="image-20201217111300466"></p>
+<p>在具体实现深拷贝上，这里提供两个方式，重写clone()方法和序列法。</p>
+<h5 id="重写clone方法">重写clone()方法</h5>
+<p>如果使用重写clone()方法实现深拷贝，那么要将类中所有自定义引用变量的类也去实现Cloneable接口实现clone()方法。对于字符类可以创建一个新的字符串实现拷贝。</p>
+<p>对于上述代码，Father类实现Cloneable接口并重写clone()方法。<strong>son的clone()方法需要对各个引用都拷贝一遍</strong>。</p>
+<pre><code class="language-java">//Father clone()方法
+@Override
+protected Father clone() throws CloneNotSupportedException {
+    return (Father) super.clone();
+}
+//Son clone()方法
+@Override
+protected Son clone() throws CloneNotSupportedException {
+    Son son= (Son) super.clone();//待返回克隆的对象
+    son.name=new String(name);
+    son.father=father.clone();
+    return son;
+}
+</code></pre>
+<p>其他代码不变，执行结果如下：</p>
+<pre><code class="language-java">Son(age=1, father=Father(name=爸爸))
+Son(age=1, father=Father(name=爸爸))
+Son(age=1, father=Father(name=爸爸))
+false
+false
+Son(age=1, father=Father(name=爸爸))
+Son(age=123, father=Father(name=儿砸))
+Son(age=1, father=Father(name=儿砸))
+</code></pre>
+<h5 id="序列法">序列法</h5>
+<p>通过fastjson完成。。。</p>
+<h2 id="spring相关">spring相关</h2>
+<h3 id="applicationcontext-和beanfactory-和-factorybean的区别以及联系">ApplicationContext 和BeanFactory 和 FactoryBean的区别以及联系</h3>
+<h4 id="factorybean">FactoryBean</h4>
+<p><strong>Spring中有两种类型的Bean，一种是普通Bean，另一种是工厂Bean，即FactoryBean</strong>，这两种Bean都被容器管理，以Bean结尾，表示它是一个Bean，不同于普通Bean的是：实现了FactoryBean<!-- raw HTML omitted -->接口的Bean，通过 getBean() 方法返回的不是FactoryBean 本身，而是 FactoryBean.getObject() 方法所返回的对象，如果想得到<code>FactoryBean</code>必须通过在 <code>'&amp;' + beanName</code>的方式获取，<strong>说白了这就是个简单工厂模式</strong>,简单例子：</p>
+<pre><code class="language-java">public interface Car {
+    void speed();
+}
+public class Moto implements Car{
+    @Override
+    public void speed() {
+        System.out.println(&quot;摩托可以开100码？&quot;);
+    }
+}
+</code></pre>
+<p>定义bean 实现FactoryBean接口</p>
+<pre><code class="language-java">@Component
+public class TestFactoryBean implements FactoryBean&lt;Car&gt; {
+    @Override
+    public Car getObject() throws Exception {
+        return new Moto();
+    }
+
+    @Override
+    public Class&lt;?&gt; getObjectType() {
+        return null;
+    }
+}
+// 测试
+@Test
+public void testBean() {
+    Object object =  SpringContextUtil.getBean(&quot;testFactoryBean&quot;);
+    System.out.println(object.getClass().getName());
+    // 结果为：com.zt.javastudy.spring.Moto
+}
+</code></pre>
+<p><strong>这也相当于 FactoryBean.getObject() 代理了getBean() 方法</strong></p>
+<h4 id="objectfactory">ObjectFactory</h4>
+<p>是一个普通的对象工厂接口，spring对ObjectFactory的应用之一就是，将创建对象 的步骤封装到ObjectFactory中 交给自定义的Scope来选择是否需要创建对象来灵活的实现scope，在spring的三级缓存中放的就是objectFactory</p>
+<h4 id="beanfactory">BeanFactory</h4>
+<p>BeanFactory是一个工厂类(接口)，<strong>是负责生产和管理bean的一个工厂，是IOC容器的顶层方法</strong></p>
+<p>通过 BeanFactory 启动 IoC 容器时，<strong>并不会初始化配置文件当中定义的 Bean</strong>，初始化的动作发生在第一次调用 getBean() 的时候。对于单实例的 Bean 来说，BeanFactory 会缓存 Bean 的实例，所以第二次使用 getBean() 方法时，可以直接从 IoC 容器的缓存中来获取 Bean 的实例了**,bean定义的载入和依赖的注入是两个独立的过程**</p>
+<p>使用</p>
+<pre><code class="language-java">BeanFactory beanFactory = new XmlBeanFactory(new ClassPathResource(&quot;applicationContext.xml&quot;));
+</code></pre>
+<h4 id="applicationcontext">ApplicationContext</h4>
+<p><strong>ApplicationContext</strong>由<strong>BeanFactory</strong>派生而来，提供了更多面向实际应用的功能</p>
+<ol>
+<li>MessageSource, 提供国际化的消息访问</li>
+<li>资源访问，如URL和文件</li>
+<li>事件传播特性，即支持aop特性</li>
+<li>载入多个（有继承关系）上下文 ，使得每一个上下文都专注于一个特定的层次，比如应用的web层</li>
+</ol>
+<p><img src="image-20220313011054367.png" alt="image-20220313011054367"></p>
+<p>使用</p>
+<pre><code class="language-java">ApplicationContext applicationContext = new ClassPathXmlApplicationContext(&quot;classpath*:applicationContext.xml&quot;);
+</code></pre>
+<h4 id="总结">总结</h4>
+<ul>
+<li>
+<p>ApplicationContext继承了BeanFactory，BeanFactory是Spring中比较原始的Factory，它不支持AOP、Web等Spring插件，而ApplicationContext不仅包含了BeanFactory的所有功能，还支持Spring的各种插件，还以一种面向框架的方式工作以及对上下文进行分层和实现继承</p>
+</li>
+<li>
+<p>BeanFactory在初始化容器时，并未实例化 Bean。直到 Bean 被调用时（调用getBean()方法）才会被实例化。对于单实例的 Bean 来说，BeanFactory 会缓存 Bean 的实例，所以第二次使用 getBean() 方法时，可以直接从 IoC 容器的缓存中来获取 Bean 的实例了。</p>
+</li>
+<li>
+<p>ApplicationContext在初始化应用上下文时，会实例化所有单实例的 Bean，所以相对来说，占用空间较大、初始化时间会比 BeanFactory 稍长。</p>
+</li>
+</ul>
+<h3 id="refresh方法">refresh方法</h3>
+<p>Spring容器创建之后，会调用它的refresh方法刷新Spring应用的上下文</p>
+<pre><code class="language-java">public void refresh() throws BeansException, IllegalStateException {
+    synchronized (this.startupShutdownMonitor) {
+        // Prepare this context for refreshing.
+        prepareRefresh();
+
+        // Tell the subclass to refresh the internal bean factory.
+        ConfigurableListableBeanFactory beanFactory = obtainFreshBeanFactory();
+
+        // Prepare the bean factory for use in this context.
+        prepareBeanFactory(beanFactory);
+
+        try {
+            // Allows post-processing of the bean factory in context subclasses.
+            postProcessBeanFactory(beanFactory);
+
+            // Invoke factory processors registered as beans in the context.
+            invokeBeanFactoryPostProcessors(beanFactory);
+
+            // Register bean processors that intercept bean creation.
+            registerBeanPostProcessors(beanFactory);
+
+            // Initialize message source for this context.
+            initMessageSource();
+
+            // Initialize event multicaster for this context.
+            initApplicationEventMulticaster();
+
+            // Initialize other special beans in specific context subclasses.
+            onRefresh();
+
+            // Check for listener beans and register them.
+            registerListeners();
+
+            // Instantiate all remaining (non-lazy-init) singletons.
+            finishBeanFactoryInitialization(beanFactory);
+
+            // Last step: publish corresponding event.
+            finishRefresh();
+        }
+
+        catch (BeansException ex) {
+            if (logger.isWarnEnabled()) {
+                logger.warn(&quot;Exception encountered during context initialization - &quot; +
+                            &quot;cancelling refresh attempt: &quot; + ex);
+            }
+
+            // Destroy already created singletons to avoid dangling resources.
+            destroyBeans();
+
+            // Reset 'active' flag.
+            cancelRefresh(ex);
+
+            // Propagate exception to caller.
+            throw ex;
+        }
+
+        finally {
+            // Reset common introspection caches in Spring's core, since we
+            // might not ever need metadata for singleton beans anymore...
+            resetCommonCaches();
+        }
+    }
+}
+</code></pre>
+<ul>
+<li>
+<p>prepareRefresh，初始化前的准备工作，例如对系统属性或者环境变量进行准备及验证</p>
+</li>
+<li>
+<p>obtainFreshBeanFactory，初始化BeanFactory，并进行XML文件读取</p>
+</li>
+<li>
+<p>prepareBeanFactory，对BeanFactory进行各种功能填充。@Qualifier与@Autowired应该是大家非常熟悉的注解，那么这两个注解正是在这一步骤中增加的支持</p>
+</li>
+<li>
+<p>postProcessBeanFactory，子类覆盖方法做额外的处理</p>
+<ul>
+<li>增加对SPEL语言的支持也就是占位符。</li>
+<li>增加对属性编辑器的支持。</li>
+<li>增加对一些内置类，比如EnvironmentAware、MessageSourceAware的信息注入。</li>
+<li>设置了依赖功能可忽略的接口。</li>
+<li>注册一些固定依赖的属性。</li>
+<li>增加AspectJ的支持（会在第7章中进行详细的讲解）。</li>
+<li>将相关环境变量及属性注册以单例模式注册</li>
+</ul>
+</li>
+<li>
+<p>invokeBeanFactoryPostProcessors，执行bean工厂的扩展方法，从Spring容器中找出BeanDefinitionRegistryPostProcessor和BeanFactoryPostProcessor接口的实现类并按照一定的规则顺序进行执行，这里代码很复杂，主要就是有两个方面<strong>一个是执行顺序，一个是执行了什么</strong></p>
+<ul>
+<li>执行顺序：ConfigurationClassPostProcessor这个postProcessBeanDefinitionRegistry方法优先级最高</li>
+<li>postProcessBeanDefinitionRegistry中processConfigBeanDefinitions为核心方法，processConfigBeanDefinitions有parse、this.reader.loadBeanDefinitions需要注意
+<ul>
+<li>parse，处理注解，注解的处理顺序为内部类、PropertySources注解、ComponentScans注解、Import注解、ImportResource注解、Bean注解、接口上的默认方法、继续递归到它的父类</li>
+<li>loadBeanDefinitions、只处理@import的类</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>registerBeanPostProcessors，注册拦截bean创建的bean处理器，这里只是注册，真正的调用是在getBean时候， 从Spring容器中找出的BeanPostProcessor接口的bean，并设置到BeanFactory的属性中</p>
+</li>
+<li>
+<p>initMessageSource，为上下文初始化Message源，即对不同语言的消息体进行国际化处理</p>
+</li>
+<li>
+<p>initApplicationEventMulticaster，初始化应用消息广播器，并放入“applicationEventMulticaster”bean中</p>
+</li>
+<li>
+<p>onRefresh，一个模板方法，不同的Spring容器做不同的事情。</p>
+<p>比如web程序的容器ServletWebServerApplicationContext中会调用createWebServer方法去<strong>创建内置的Servlet容器</strong>，这<strong>意味着tomcat等是在这一步启动的</strong>。目前SpringBoot只支持3种内置的Servlet容器：</p>
+<ul>
+<li>
+<p>Tomcat</p>
+</li>
+<li>
+<p>Jetty</p>
+</li>
+<li>
+<p>Undertow</p>
+</li>
+</ul>
+</li>
+<li>
+<p>registerListeners，在所有注册的bean中查找listener bean，注册到消息广播器中</p>
+</li>
+<li>
+<p>finishBeanFactoryInitialization，初始化（非惰性的）单例bean，<strong>这个方法是核心，调用了getBean方法</strong></p>
+</li>
+<li>
+<p>finishRefresh，完成刷新过程，通知生命周期处理器lifecycleProcessor刷新过程，同时发出Context RefreshEvent通知别人</p>
+</li>
+</ul>
+<p><img src="spring.png" alt="spring"></p>
+<h3 id="getbean">getBean</h3>
+<p><strong>这个方法就是bean的获取以及创建的方法</strong>，首先先看整体流程图</p>
+<p><img src="getBean%E6%96%B9%E6%B3%95-1647701288793.png" alt="getBean方法"></p>
+<h4 id="dogetbean">doGetBean</h4>
+<pre><code class="language-java">protected &lt;T&gt; T doGetBean(final String name, @Nullable final Class&lt;T&gt; requiredType,
+                          @Nullable final Object[] args, boolean typeCheckOnly) throws BeansException {
+	 // 处理别名BeanName、处理带&amp;符的工厂BeanName
+    final String beanName = transformedBeanName(name);
+    Object bean;
+
+    // 先尝试从缓存中获取Bean实例，这个位置就是三级缓存解决循环依赖的方法
+    Object sharedInstance = getSingleton(beanName);
+    if (sharedInstance != null &amp;&amp; args == null) {
+        if (logger.isDebugEnabled()) {
+            if (isSingletonCurrentlyInCreation(beanName)) {
+                logger.debug(&quot;Returning eagerly cached instance of singleton bean '&quot; + beanName +
+                             &quot;' that is not fully initialized yet - a consequence of a circular reference&quot;);
+            }
+            else {
+                logger.debug(&quot;Returning cached instance of singleton bean '&quot; + beanName + &quot;'&quot;);
+            }
+        }
+        // 1. 如果 sharedInstance 是普通的 Bean 实例，则下面的方法会直接返回
+        // 2. 如果 sharedInstance 是工厂Bean类型，则需要获取 getObject 方法 
+        bean = getObjectForBeanInstance(sharedInstance, name, beanName, null);
+    }
+
+    else {
+        // 原型模式循环依赖直接抛出异常.
+        if (isPrototypeCurrentlyInCreation(beanName)) {
+            throw new BeanCurrentlyInCreationException(beanName);
+        }
+
+         //  当前 bean 不存在于当前bean工厂，则到父工厂查找 bean 实例
+        BeanFactory parentBeanFactory = getParentBeanFactory();
+        if (parentBeanFactory != null &amp;&amp; !containsBeanDefinition(beanName)) {
+            // Not found -&gt; check parent.
+            String nameToLookup = originalBeanName(name);
+            if (parentBeanFactory instanceof AbstractBeanFactory) {
+                return ((AbstractBeanFactory) parentBeanFactory).doGetBean(
+                    nameToLookup, requiredType, args, typeCheckOnly);
+            }
+            else if (args != null) {
+                // Delegation to parent with explicit args.
+                return (T) parentBeanFactory.getBean(nameToLookup, args);
+            }
+            else {
+                // No args -&gt; delegate to standard getBean method.
+                return parentBeanFactory.getBean(nameToLookup, requiredType);
+            }
+        }
+
+        if (!typeCheckOnly) {
+            markBeanAsCreated(beanName);
+        }
+
+        try {
+            final RootBeanDefinition mbd = getMergedLocalBeanDefinition(beanName);
+            checkMergedBeanDefinition(mbd, beanName, args);
+
+            // Guarantee initialization of beans that the current bean depends on.
+            String[] dependsOn = mbd.getDependsOn();
+            if (dependsOn != null) {
+                for (String dep : dependsOn) {
+                    if (isDependent(beanName, dep)) {
+                        throw new BeanCreationException(mbd.getResourceDescription(), beanName,
+                                                        &quot;Circular depends-on relationship between '&quot; + beanName + &quot;' and '&quot; + dep + &quot;'&quot;);
+                    }
+                    registerDependentBean(dep, beanName);
+                    try {
+                        getBean(dep);
+                    }
+                    catch (NoSuchBeanDefinitionException ex) {
+                        throw new BeanCreationException(mbd.getResourceDescription(), beanName,
+                                                        &quot;'&quot; + beanName + &quot;' depends on missing bean '&quot; + dep + &quot;'&quot;, ex);
+                    }
+                }
+            }
+
+            // 创建单例 bean 实例
+            if (mbd.isSingleton()) {
+                sharedInstance = getSingleton(beanName, () -&gt; {
+                    try {
+                        // 真正创建 bean的地方
+                        return createBean(beanName, mbd, args);
+                    }
+                    catch (BeansException ex) {
+                        // Explicitly remove instance from singleton cache: It might have been put there
+                        // eagerly by the creation process, to allow for circular reference resolution.
+                        // Also remove any beans that received a temporary reference to the bean.
+                        destroySingleton(beanName);
+                        throw ex;
+                    }
+                });
+                bean = getObjectForBeanInstance(sharedInstance, name, beanName, mbd);
+            }
+
+            else if (mbd.isPrototype()) {
+                // It's a prototype -&gt; create a new instance.
+                Object prototypeInstance = null;
+                try {
+                    beforePrototypeCreation(beanName);
+                    prototypeInstance = createBean(beanName, mbd, args);
+                }
+                finally {
+                    afterPrototypeCreation(beanName);
+                }
+                bean = getObjectForBeanInstance(prototypeInstance, name, beanName, mbd);
+            }
+
+            else {
+                String scopeName = mbd.getScope();
+                final Scope scope = this.scopes.get(scopeName);
+                if (scope == null) {
+                    throw new IllegalStateException(&quot;No Scope registered for scope name '&quot; + scopeName + &quot;'&quot;);
+                }
+                try {
+                    Object scopedInstance = scope.get(beanName, () -&gt; {
+                        beforePrototypeCreation(beanName);
+                        try {
+                            return createBean(beanName, mbd, args);
+                        }
+                        finally {
+                            afterPrototypeCreation(beanName);
+                        }
+                    });
+                    bean = getObjectForBeanInstance(scopedInstance, name, beanName, mbd);
+                }
+                catch (IllegalStateException ex) {
+                    throw new BeanCreationException(beanName,
+                                                    &quot;Scope '&quot; + scopeName + &quot;' is not active for the current thread; consider &quot; +
+                                                    &quot;defining a scoped proxy for this bean if you intend to refer to it from a singleton&quot;,
+                                                    ex);
+                }
+            }
+        }
+        catch (BeansException ex) {
+            cleanupAfterBeanCreationFailure(beanName);
+            throw ex;
+        }
+    }
+
+    // Check if required type matches the type of the actual bean instance.
+    if (requiredType != null &amp;&amp; !requiredType.isInstance(bean)) {
+        try {
+            T convertedBean = getTypeConverter().convertIfNecessary(bean, requiredType);
+            if (convertedBean == null) {
+                throw new BeanNotOfRequiredTypeException(name, requiredType, bean.getClass());
+            }
+            return convertedBean;
+        }
+        catch (TypeMismatchException ex) {
+            if (logger.isDebugEnabled()) {
+                logger.debug(&quot;Failed to convert bean '&quot; + name + &quot;' to required type '&quot; +
+                             ClassUtils.getQualifiedName(requiredType) + &quot;'&quot;, ex);
+            }
+            throw new BeanNotOfRequiredTypeException(name, requiredType, bean.getClass());
+        }
+    }
+    return (T) bean;
+}
+</code></pre>
+<p>其中getSingleton()方法是解决<strong>循环依赖</strong>的地方</p>
+<pre><code class="language-java">// singletonObjects：完成初始化的单例对象的cache（一级缓存）
+private final Map&lt;String, Object&gt; singletonObjects = new ConcurrentHashMap&lt;String, Object&gt;(64);
+// 完成实例化但是尚未初始化的，提前暴光的单例对象的Cache （二级缓存）
+private final Map&lt;String, Object&gt; earlySingletonObjects = new HashMap&lt;String, Object&gt;(16);
+// 进入实例化阶段的单例对象工厂的cache （三级缓存）
+private final Map&lt;String, ObjectFactory&lt;?&gt;&gt; singletonFactories = new HashMap&lt;String, ObjectFactory&lt;?&gt;&gt;(16);
+protected Object getSingleton(String beanName, boolean allowEarlyReference) {
+    Object singletonObject = this.singletonObjects.get(beanName);
+    if (singletonObject == null &amp;&amp; isSingletonCurrentlyInCreation(beanName)) {
+        synchronized (this.singletonObjects) {
+            singletonObject = this.earlySingletonObjects.get(beanName);
+            if (singletonObject == null &amp;&amp; allowEarlyReference) {
+                ObjectFactory&lt;?&gt; singletonFactory = this.singletonFactories.get(beanName);
+                if (singletonFactory != null) {
+                    singletonObject = singletonFactory.getObject();
+                    this.earlySingletonObjects.put(beanName, singletonObject);
+                    this.singletonFactories.remove(beanName);
+                }
+            }
+        }
+    }
+    return singletonObject;
+}
+</code></pre>
+<p>这个方法就是先从一级缓存取，一级取不到，去二级缓存中取，二级缓存取不到，然后去三级缓存取，如果<strong>三级缓存中有那么移除三级缓存加入二级缓存</strong>，根据流程图，下一个重要的方法还是getSingleton哈哈，不过这个getSingleton中重要的是createBean方法</p>
+<h4 id="getsingleton">getSingleton</h4>
+<p><strong>如果缓存中不存在已经加载的单例bean就需要从头开始bean的加载过程了</strong>，而Spring中使用getSingleton的重载方法实现bean的加载过程。</p>
+<pre><code class="language-java">public Object getSingleton(String beanName, ObjectFactory&lt;?&gt; singletonFactory) {
+		Assert.notNull(beanName, &quot;Bean name must not be null&quot;);
+		synchronized (this.singletonObjects) {
+            // 一级缓存
+			Object singletonObject = this.singletonObjects.get(beanName);
+			if (singletonObject == null) {
+                // 是否正在创建中
+				if (this.singletonsCurrentlyInDestruction) {
+					throw new BeanCreationNotAllowedException(beanName,
+							&quot;Singleton bean creation not allowed while singletons of this factory are in destruction &quot; +
+							&quot;(Do not request a bean from a BeanFactory in a destroy method implementation!)&quot;);
+				}
+				if (logger.isDebugEnabled()) {
+					logger.debug(&quot;Creating shared instance of singleton bean '&quot; + beanName + &quot;'&quot;);
+				}
+                // 记录加载状态
+				beforeSingletonCreation(beanName);
+				boolean newSingleton = false;
+				boolean recordSuppressedExceptions = (this.suppressedExceptions == null);
+				if (recordSuppressedExceptions) {
+					this.suppressedExceptions = new LinkedHashSet&lt;&gt;();
+				}
+				try {
+                    // 回调createBean
+					singletonObject = singletonFactory.getObject();
+					newSingleton = true;
+				}
+				catch (IllegalStateException ex) {
+					// Has the singleton object implicitly appeared in the meantime -&gt;
+					// if yes, proceed with it since the exception indicates that state.
+					singletonObject = this.singletonObjects.get(beanName);
+					if (singletonObject == null) {
+						throw ex;
+					}
+				}
+				catch (BeanCreationException ex) {
+					if (recordSuppressedExceptions) {
+						for (Exception suppressedException : this.suppressedExceptions) {
+							ex.addRelatedCause(suppressedException);
+						}
+					}
+					throw ex;
+				}
+				finally {
+					if (recordSuppressedExceptions) {
+						this.suppressedExceptions = null;
+					}
+                    // 清除加载状态
+					afterSingletonCreation(beanName);
+				}
+				if (newSingleton) {
+                    // 加入缓存
+					addSingleton(beanName, singletonObject);
+				}
+			}
+			return singletonObject;
+		}
+	}
+    // this.singletonsCurrentlyInCreation.add(beanName) 将该bean加入正在加载的bean set集合中
+	protected void beforeSingletonCreation(String beanName) {
+		if (!this.inCreationCheckExclusions.contains(beanName) &amp;&amp; !this.singletonsCurrentlyInCreation.add(beanName)) {
+			throw new BeanCurrentlyInCreationException(beanName);
+		}
+	}
+    // this.singletonsCurrentlyInCreation.remove(beanName) 将该bean从正在加载bean的set集合中删除
+	protected void afterSingletonCreation(String beanName) {
+		if (!this.inCreationCheckExclusions.contains(beanName) &amp;&amp; !this.singletonsCurrentlyInCreation.remove(beanName)) {
+			throw new IllegalStateException(&quot;Singleton '&quot; + beanName + &quot;' isn't currently in creation&quot;);
+		}
+	}
+	// 清除二、三级缓存加入一级缓存
+	protected void addSingleton(String beanName, Object singletonObject) {
+		synchronized (this.singletonObjects) {
+            // 加入一级缓存
+			this.singletonObjects.put(beanName, singletonObject);
+            // 从三级缓存移除
+			this.singletonFactories.remove(beanName);
+            // 从二级缓存移除
+			this.earlySingletonObjects.remove(beanName);
+            // 加入单例注册set
+			this.registeredSingletons.add(beanName);
+		}
+	}
+	
+
+</code></pre>
+<p>在这个方法中singletonFactory.getObject会调用createBean方法去创建bean（一个完整的bean，经过了实例化、属性填充、初始化），<strong>创建完bean后会将bean加入到一级缓存</strong></p>
+<h4 id="createbean">createBean</h4>
+<pre><code class="language-java">protected Object createBean(String beanName, RootBeanDefinition mbd, @Nullable Object[] args)
+			throws BeanCreationException {
+
+		if (logger.isTraceEnabled()) {
+			logger.trace(&quot;Creating instance of bean '&quot; + beanName + &quot;'&quot;);
+		}
+		RootBeanDefinition mbdToUse = mbd;
+
+		// Make sure bean class is actually resolved at this point, and
+		// clone the bean definition in case of a dynamically resolved Class
+		// which cannot be stored in the shared merged bean definition.
+    	// 解析class
+		Class&lt;?&gt; resolvedClass = resolveBeanClass(mbd, beanName);
+		if (resolvedClass != null &amp;&amp; !mbd.hasBeanClass() &amp;&amp; mbd.getBeanClassName() != null) {
+			mbdToUse = new RootBeanDefinition(mbd);
+			mbdToUse.setBeanClass(resolvedClass);
+		}
+
+		// Prepare method overrides.
+		try {
+            // 验证和准备 覆盖的方法
+			mbdToUse.prepareMethodOverrides();
+		}
+		catch (BeanDefinitionValidationException ex) {
+			throw new BeanDefinitionStoreException(mbdToUse.getResourceDescription(),
+					beanName, &quot;Validation of method overrides failed&quot;, ex);
+		}
+
+		try {
+			// Give BeanPostProcessors a chance to return a proxy instead of the target bean instance.
+            // 给BeanPostProcessors一个返回代理而不是目标bean实例的机会
+			Object bean = resolveBeforeInstantiation(beanName, mbdToUse);
+			if (bean != null) {
+				return bean;
+			}
+		}
+		catch (Throwable ex) {
+			throw new BeanCreationException(mbdToUse.getResourceDescription(), beanName,
+					&quot;BeanPostProcessor before instantiation of bean failed&quot;, ex);
+		}
+
+		try {
+            // 真正创建bean
+			Object beanInstance = doCreateBean(beanName, mbdToUse, args);
+			if (logger.isTraceEnabled()) {
+				logger.trace(&quot;Finished creating instance of bean '&quot; + beanName + &quot;'&quot;);
+			}
+			return beanInstance;
+		}
+		catch (BeanCreationException | ImplicitlyAppearedSingletonException ex) {
+			// A previously detected exception with proper bean creation context already,
+			// or illegal singleton state to be communicated up to DefaultSingletonBeanRegistry.
+			throw ex;
+		}
+		catch (Throwable ex) {
+			throw new BeanCreationException(
+					mbdToUse.getResourceDescription(), beanName, &quot;Unexpected exception during bean creation&quot;, ex);
+		}
+	}
+</code></pre>
+<p>这段代码可以分为：</p>
+<ul>
+<li>resolveBeanClass，根据设置的class属性或者根据className来解析Class。</li>
+<li>mbdToUse.prepareMethodOverrides()，对override属性进行标记及验证。</li>
+<li>Object bean = resolveBeforeInstantiation(beanName, mbdToUse)，应用初始化前的后处理器，解析指定bean是否存在初始化前的短路操作。<strong>aop功能就是基于这里的</strong></li>
+<li>Object beanInstance = doCreateBean(beanName, mbdToUse, args)，<strong>真正核心</strong>，创建bean。</li>
+</ul>
+<h4 id="docreatebean">doCreateBean</h4>
+<pre><code class="language-java">protected Object doCreateBean(String beanName, RootBeanDefinition mbd, @Nullable Object[] args)
+			throws BeanCreationException {
+
+		// Instantiate the bean.
+		BeanWrapper instanceWrapper = null;
+		if (mbd.isSingleton()) {
+			instanceWrapper = this.factoryBeanInstanceCache.remove(beanName);
+		}
+		if (instanceWrapper == null) {
+            // 实例化，调用构造方法实例化对象
+			instanceWrapper = createBeanInstance(beanName, mbd, args);
+		}
+		Object bean = instanceWrapper.getWrappedInstance();
+		Class&lt;?&gt; beanType = instanceWrapper.getWrappedClass();
+		if (beanType != NullBean.class) {
+			mbd.resolvedTargetType = beanType;
+		}
+
+		// Allow post-processors to modify the merged bean definition.
+		synchronized (mbd.postProcessingLock) {
+			if (!mbd.postProcessed) {
+				try {
+					applyMergedBeanDefinitionPostProcessors(mbd, beanType, beanName);
+				}
+				catch (Throwable ex) {
+					throw new BeanCreationException(mbd.getResourceDescription(), beanName,
+							&quot;Post-processing of merged bean definition failed&quot;, ex);
+				}
+				mbd.postProcessed = true;
+			}
+		}
+
+		// Eagerly cache singletons to be able to resolve circular references
+		// even when triggered by lifecycle interfaces like BeanFactoryAware.
+		boolean earlySingletonExposure = (mbd.isSingleton() &amp;&amp; this.allowCircularReferences &amp;&amp;
+				isSingletonCurrentlyInCreation(beanName));
+		if (earlySingletonExposure) {
+			if (logger.isTraceEnabled()) {
+				logger.trace(&quot;Eagerly caching bean '&quot; + beanName +
+						&quot;' to allow for resolving potential circular references&quot;);
+			}
+            // 添加三级缓存
+			addSingletonFactory(beanName, () -&gt; getEarlyBeanReference(beanName, mbd, bean));
+		}
+
+		// Initialize the bean instance.
+		Object exposedObject = bean;
+		try {
+            // 填充属性
+			populateBean(beanName, mbd, instanceWrapper);
+            // 调用init方法初始化bean
+			exposedObject = initializeBean(beanName, exposedObject, mbd);
+		}
+		catch (Throwable ex) {
+			if (ex instanceof BeanCreationException &amp;&amp; beanName.equals(((BeanCreationException) ex).getBeanName())) {
+				throw (BeanCreationException) ex;
+			}
+			else {
+				throw new BeanCreationException(
+						mbd.getResourceDescription(), beanName, &quot;Initialization of bean failed&quot;, ex);
+			}
+		}
+    
+		// 循环依赖检查
+		if (earlySingletonExposure) {
+			Object earlySingletonReference = getSingleton(beanName, false);
+			if (earlySingletonReference != null) {
+				if (exposedObject == bean) {
+					exposedObject = earlySingletonReference;
+				}
+				else if (!this.allowRawInjectionDespiteWrapping &amp;&amp; hasDependentBean(beanName)) {
+					String[] dependentBeans = getDependentBeans(beanName);
+					Set&lt;String&gt; actualDependentBeans = new LinkedHashSet&lt;&gt;(dependentBeans.length);
+					for (String dependentBean : dependentBeans) {
+						if (!removeSingletonIfCreatedForTypeCheckOnly(dependentBean)) {
+							actualDependentBeans.add(dependentBean);
+						}
+					}
+					if (!actualDependentBeans.isEmpty()) {
+						throw new BeanCurrentlyInCreationException(beanName,
+								&quot;Bean with name '&quot; + beanName + &quot;' has been injected into other beans [&quot; +
+								StringUtils.collectionToCommaDelimitedString(actualDependentBeans) +
+								&quot;] in its raw version as part of a circular reference, but has eventually been &quot; +
+								&quot;wrapped. This means that said other beans do not use the final version of the &quot; +
+								&quot;bean. This is often the result of over-eager type matching - consider using &quot; +
+								&quot;'getBeanNamesForType' with the 'allowEagerInit' flag turned off, for example.&quot;);
+					}
+				}
+			}
+		}
+
+		// Register bean as disposable.
+		try {
+			registerDisposableBeanIfNecessary(beanName, bean, mbd);
+		}
+		catch (BeanDefinitionValidationException ex) {
+			throw new BeanCreationException(
+					mbd.getResourceDescription(), beanName, &quot;Invalid destruction signature&quot;, ex);
+		}
+
+		return exposedObject;
+	}
+</code></pre>
+<h5 id="创建bean的实例createbeaninstance">创建bean的实例:createBeanInstance()</h5>
+<p>该方法作用为实例化 bean</p>
+<ul>
+<li>如果存在工厂方法则使用工厂方法进行初始化。</li>
+<li>一个类有多个构造函数，每个构造函数都有不同的参数，所以需要根据参数锁定构造函数并进行初始化。</li>
+<li>如果既不存在工厂方法也不存在带有参数的构造函数，则使用默认的构造函数进行bean的实例化。</li>
+</ul>
+<h5 id="解决循环依赖addsingletonfactory">解决循环依赖:addSingletonFactory()</h5>
+<pre><code class="language-java">protected void addSingletonFactory(String beanName, ObjectFactory&lt;?&gt; singletonFactory) {
+		Assert.notNull(singletonFactory, &quot;Singleton factory must not be null&quot;);
+		synchronized (this.singletonObjects) {
+			if (!this.singletonObjects.containsKey(beanName)) {
+                // 加入三级缓存
+				this.singletonFactories.put(beanName, singletonFactory);
+                // 删除二级缓存
+				this.earlySingletonObjects.remove(beanName);
+				this.registeredSingletons.add(beanName);
+			}
+		}
+	}
+</code></pre>
+<p><strong>创建完bean的实例后，将该单例提早曝光， 将创建该单例的工厂加入三级缓存</strong></p>
+<h4 id="属性注入populatebean">属性注入:populateBean()</h4>
+<p>主要功能就是属性填充</p>
+<p>主要流程为：</p>
+<ul>
+<li>
+<p>根据注入类型（byName/byType），提取依赖的bean，并统一存入PropertyValues中。</p>
+<pre><code class="language-java">protected void autowireByName(
+			String beanName, AbstractBeanDefinition mbd, BeanWrapper bw, MutablePropertyValues pvs) {
+
+		String[] propertyNames = unsatisfiedNonSimpleProperties(mbd, bw);
+		for (String propertyName : propertyNames) {
+			if (containsBean(propertyName)) {
+                // 递归调用getBean()
+				Object bean = getBean(propertyName);
+				pvs.add(propertyName, bean);
+				registerDependentBean(propertyName, beanName);
+				if (logger.isTraceEnabled()) {
+					logger.trace(&quot;Added autowiring by name from bean name '&quot; + beanName +
+							&quot;' via property '&quot; + propertyName + &quot;' to bean named '&quot; + propertyName + &quot;'&quot;);
+				}
+			}
+			else {
+				if (logger.isTraceEnabled()) {
+					logger.trace(&quot;Not autowiring property '&quot; + propertyName + &quot;' of bean '&quot; + beanName +
+							&quot;' by name: no matching bean found&quot;);
+				}
+			}
+		}
+	}
+</code></pre>
+<p>这里面主要流程是在<strong>传入的参数pvs中找出已经加载的bean，并递归实例化，进而加入到pvs中</strong></p>
+</li>
+<li>
+<p>将所有PropertyValues中的属性填充至BeanWrapper中</p>
+<p>现在已经完成了对所有注入属性的获取，但是获取的属性是以PropertyValues形式存在的，还并没有应用到已经实例化的bean中，这一工作是在applyPropertyValues中完成。</p>
+</li>
+</ul>
+<h4 id="初始化beaninitializebean">初始化bean:initializeBean()</h4>
+<pre><code>protected Object initializeBean(final String beanName, final Object bean, @Nullable RootBeanDefinition mbd) {
+		if (System.getSecurityManager() != null) {
+			AccessController.doPrivileged((PrivilegedAction&lt;Object&gt;) () -&gt; {
+				invokeAwareMethods(beanName, bean);
+				return null;
+			}, getAccessControlContext());
+		}
+		else {
+		// 1 执行各种aware方法
+			invokeAwareMethods(beanName, bean);
+		}
+
+		Object wrappedBean = bean;
+		if (mbd == null || !mbd.isSynthetic()) {
+		// 2执行前置处理方法
+			wrappedBean = applyBeanPostProcessorsBeforeInitialization(wrappedBean, beanName);
+		}
+
+		try {
+		// 3执行初始化方法
+			invokeInitMethods(beanName, wrappedBean, mbd);
+		}
+		catch (Throwable ex) {
+			throw new BeanCreationException(
+					(mbd != null ? mbd.getResourceDescription() : null),
+					beanName, &quot;Invocation of init method failed&quot;, ex);
+		}
+		if (mbd == null || !mbd.isSynthetic()) {
+		// 4执行后置处理方法
+			wrappedBean = applyBeanPostProcessorsAfterInitialization(wrappedBean, beanName);
+		}
+
+		return wrappedBean;
+	}
+</code></pre>
+<p>具体方法为：</p>
+<ol>
+<li>invokeAwareMethods,执行各种aware方法</li>
+</ol>
+<pre><code class="language-java">if (bean instanceof Aware) {
+    if (bean instanceof BeanNameAware) {
+        ((BeanNameAware) bean).setBeanName(beanName);
+    }
+    if (bean instanceof BeanClassLoaderAware) {
+        ClassLoader bcl = getBeanClassLoader();
+        if (bcl != null) {
+            ((BeanClassLoaderAware) bean).setBeanClassLoader(bcl);
+        }
+    }
+    if (bean instanceof BeanFactoryAware) {
+        ((BeanFactoryAware) bean).setBeanFactory(AbstractAutowireCapableBeanFactory.this);
+    }
+}
+</code></pre>
+<p>这里面就是执行了各种aware方法</p>
+<ol start="2">
+<li>
+<p>applyBeanPostProcessorsBeforeInitialization,调用BeanPostProcessor的前置处理中postProcessBeforeInitialization() 方法</p>
+<pre><code class="language-java">public Object applyBeanPostProcessorsBeforeInitialization(Object existingBean, String beanName)
+    throws BeansException {
+
+    Object result = existingBean;
+    for (BeanPostProcessor processor : getBeanPostProcessors()) {
+        // 调用BeanPostProcessor的前置处理中postProcessBeforeInitialization() 方法 
+        Object current = processor.postProcessBeforeInitialization(result, beanName);
+        if (current == null) {
+            return result;
+        }
+        result = current;
+    }
+    return result;
+}
+</code></pre>
+</li>
+<li>
+<p>invokeInitMethods,初始化bean</p>
+<ul>
+<li>
+<p>如果实现了initializingBean的接口, 执行afterPropertiesSet()方法</p>
+</li>
+<li>
+<p>如果配置了自定义的init-method，执行指定的方法初始化Bean</p>
+</li>
+</ul>
+</li>
+<li>
+<p>applyBeanPostProcessorsAfterInitialization，执行BeanPostProcessor中的postProcessAfterInitialization，<strong>AOP就是在这实现的！！！</strong></p>
+</li>
+</ol>
+<p><strong>其实这也就是所谓的bean的生命周期</strong></p>
+<h4 id="循环依赖">循环依赖</h4>
+<p>什么是循环依赖？其实就是循环引用，也就是两个或者两个以上的bean互相持有对方，最终形成闭环。比如A依赖于B，B依赖于C，C又依赖于A。</p>
+<p><img src="924c8055-69cc-4ee5-a8d2-3d6a991f96fd.jpg" alt="img"></p>
+<p>首先以自己写代码为例，出现循环引用的情况：</p>
+<pre><code class="language-java">package com.zt.javastudy.spring;
+
+/**
+ * @author zhengtao
+ * @description 测试循环依赖
+ * @date 2021/4/9
+ */
+public class TestXunHuan{
+    public static void main(String[] args) {
+        System.out.println(new StudentC());
+    }
+}
+
+/**
+ * StudentC与StudentD存在循环引用
+ */
+class StudentC {
+    public StudentC() {
+        new StudentD();
+    }
+}
+
+class StudentD {
+    public StudentD() {
+        new StudentC();
+    }
+}
+</code></pre>
+<p>结果栈溢出：</p>
+<pre><code class="language-java">Exception in thread &quot;main&quot; java.lang.StackOverflowError
+</code></pre>
+<p><strong>spring中循环依赖的三种情况</strong>：</p>
+<ul>
+<li>
+<h5 id="构造器注入循环依赖">构造器注入循环依赖</h5>
+</li>
+</ul>
+<pre><code class="language-java">@Service
+public class StudentA {
+    private StudentB b;
+
+    public StudentB getB() {
+        return b;
+    }
+
+    public void setB(StudentB b) {
+        this.b = b;
+    }
+
+    /**
+     * 构造函数循环依赖
+     * @param b
+     */
+    public StudentA(StudentB b) {
+        this.b = b;
+    }
+}
+@Service
+public class StudentB {
+    private StudentA a;
+
+    public StudentA getA() {
+        return a;
+    }
+
+    public void setA(StudentA a) {
+        this.a = a;
+    }
+
+    /**
+     * 构造函数循环依赖
+     * @param a
+     */
+    public StudentB(StudentA a) {
+        this.a = a;
+    }
+}
+</code></pre>
+<ul>
+<li>
+<h5 id="field属性注入setter方法注入循环依赖">field属性注入（setter方法注入）循环依赖</h5>
+<pre><code class="language-java">@Service
+public class StudentA {
+    @Autowired
+    private StudentB b;
+
+    public StudentB getB() {
+        return b;
+    }
+
+    public void setB(StudentB b) {
+        this.b = b;
+    }
+}
+@Service
+public class StudentB {
+    @Autowired
+    private StudentA a;
+
+    public StudentA getA() {
+        return a;
+    }
+
+    public void setA(StudentA a) {
+        this.a = a;
+    }
+}
+</code></pre>
+</li>
+<li>
+<h5 id="prototype原型模式-field属性注入循环依赖"><code>prototype原型模式</code> field属性注入循环依赖</h5>
+<pre><code class="language-java">// 原型模式
+@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+@Service
+public class StudentA {
+    @Autowired
+    private StudentB b;
+
+    public StudentB getB() {
+        return b;
+    }
+
+    public void setB(StudentB b) {
+        this.b = b;
+    }
+}
+// 原型模式
+@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+@Service
+public class StudentB {
+    @Autowired
+    private StudentA a;
+
+    public StudentA getA() {
+        return a;
+    }
+
+    public void setA(StudentA a) {
+        this.a = a;
+    }
+}
+</code></pre>
+<p><strong>这种方式运行不会报错，因为原型模式的bean启动的时候不会被初始化，但在使用到这个bean的时候就报错了</strong></p>
+<p>spring 中帮我们解决了第二种field属性注入（setter方法注入）循环依赖， 是使用了三级缓存的方式来解决的：</p>
+<ol>
+<li>先从<code>一级缓存singletonObjects</code>中去获取。（如果获取到就直接return）</li>
+<li>如果获取不到或者对象正在创建中（<code>isSingletonCurrentlyInCreation()</code>），那就再从<code>二级缓存earlySingletonObjects</code>中获取。（如果获取到就直接return）</li>
+<li>如果还是获取不到，且允许singletonFactories（allowEarlyReference=true）通过<code>getObject()</code>获取。就从<code>三级缓存singletonFactory</code>.getObject()获取。<strong>（如果获取到了就从</strong><code>singletonFactories</code><strong>中移除，并且放进</strong><code>earlySingletonObjects</code><strong>。其实也就是从三级缓存</strong><code>移动（是剪切、不是复制哦~）**</code><strong>到了二级缓存）</strong></li>
+</ol>
+<p><strong>加入<code>singletonFactories</code>三级缓存的前提是执行了构造器，所以构造器的循环依赖没法解决</strong></p>
+</li>
+</ul>
+<p>这样的意义是什么呢？</p>
+<p>​	<strong>A首先完成了初始化的第一步，并且将自己提前曝光到singletonFactories中也就是加入到三级缓存中</strong>，此时进行初始化的第二步，发现自己依赖对象B，此时就尝试去get(B)，发现B还没有被create，所以走create流程，B在初始化第一步的时候发现自己依赖了对象A，于是尝试get(A)，尝试一级缓存singletonObjects(肯定没有，因为A还没初始化完全)，尝试二级缓存earlySingletonObjects（也没有），尝试三级缓存singletonFactories，由于A通过ObjectFactory将自己提前曝光了，所以B能够通过ObjectFactory.getObject拿到A对象(虽然A还没有初始化完全，但是总比没有好呀)，B拿到A对象后顺利完成了初始化阶段1、2、3，完全初始化之后将自己放入到一级缓存singletonObjects中。此时返回A中，A此时能拿到B的对象顺利完成自己的初始化阶段2、3，最终A也完成了初始化，进去了一级缓存singletonObjects中，而且更加幸运的是，由于B拿到了A的<strong>对象引用而A现在已经完成了初始化</strong>，所以B现在拿到的A对象已经完成了初始化。</p>
+<p><img src="%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96.png" alt=""></p>
+<h4 id="三级缓存失效的情况">三级缓存失效的情况</h4>
+<p>使用单例属性注入，但由于生成了代理对象，比如平时使用：<code>@Async</code>注解的场景，会通过<code>AOP</code>自动生成代理对象</p>
+<pre><code class="language-javascript">@Service
+public class TestService1 {
+
+    @Autowired
+    private TestService2 testService2;
+
+    @Async
+    public void test1() {
+    }
+}
+@Service
+public class TestService2 {
+
+    @Autowired
+    private TestService1 testService1;
+
+    public void test2() {
+    }
+}
+</code></pre>
+<p>从前面得知程序启动会报错，出现了循环依赖：</p>
+<pre><code class="language-javascript">org.springframework.beans.factory.BeanCurrentlyInCreationException: Error creating bean with name 'testService1': Bean with name 'testService1' has been injected into other beans [testService2] in its raw version as part of a circular reference, but has eventually been wrapped. This means that said other beans do not use the final version of the bean. This is often the result of over-eager type matching - consider using 'getBeanNamesOfType' with the 'allowEagerInit' flag turned off, for example.
+</code></pre>
+<p>为什么会循环依赖呢？</p>
+<p><img src="aop%E5%AF%BC%E8%87%B4%E5%A4%B1%E8%B4%A5.png" alt=""></p>
+<p>说白了，b<strong>ean初始化完成之后，后面还有一步去检查：第二级缓存 和 原始对象 是否相等</strong>。</p>
+<pre><code class="language-java">if (earlySingletonExposure) {
+    // 从二级缓存获取对象
+    Object earlySingletonReference = getSingleton(beanName, false);
+    if (earlySingletonReference != null) {
+        if (exposedObject == bean) {
+            // 替换成代理对象，所以最后加入缓存的代理对象
+            exposedObject = earlySingletonReference;
+        }
+        else if (!this.allowRawInjectionDespiteWrapping &amp;&amp; hasDependentBean(beanName)) {
+            String[] dependentBeans = getDependentBeans(beanName);
+            Set&lt;String&gt; actualDependentBeans = new LinkedHashSet&lt;&gt;(dependentBeans.length);
+            for (String dependentBean : dependentBeans) {
+                if (!removeSingletonIfCreatedForTypeCheckOnly(dependentBean)) {
+                    actualDependentBeans.add(dependentBean);
+                }
+            }
+            if (!actualDependentBeans.isEmpty()) {
+                throw new BeanCurrentlyInCreationException(beanName,
+                                                           &quot;Bean with name '&quot; + beanName + &quot;' has been injected into other beans [&quot; +
+                                                           StringUtils.collectionToCommaDelimitedString(actualDependentBeans) +
+                                                           &quot;] in its raw version as part of a circular reference, but has eventually been &quot; +
+                                                           &quot;wrapped. This means that said other beans do not use the final version of the &quot; +
+                                                           &quot;bean. This is often the result of over-eager type matching - consider using &quot; +
+                                                           &quot;'getBeanNamesOfType' with the 'allowEagerInit' flag turned off, for example.&quot;);
+            }
+        }
+    }
+}
+</code></pre>
+<p><strong>走到这段代码，发现第二级缓存 和 原始对象不相等，所以抛出了循环依赖的异常。</strong></p>
+<p>如果这时候把TestService1改个名字，改成：TestService6，其他的都不变。</p>
+<pre><code class="language-javascript">@Service
+publicclass TestService6 {
+
+    @Autowired
+    private TestService2 testService2;
+
+    @Async
+    public void test1() {
+    }
+}
+</code></pre>
+<p>再重新启动一下程序，神奇般的好了。</p>
+<p>what？ 这又是为什么？</p>
+<p>这就要从spring的bean加载顺序说起了，默认情况下，spring是按照文件完整路径递归查找的，按路径+文件名排序，排在前面的先加载。所以TestService1比TestService2先加载，而改了文件名称之后，TestService2比TestService6先加载。</p>
+<p>为什么TestService2比TestService6先加载就没问题呢？</p>
+<p>答案在下面这张图中：</p>
+<p><img src="aop%E6%88%90%E5%8A%9F.png" alt=""></p>
+<p>这种情况testService6中其实第二级缓存是空的，不需要跟原始对象判断，所以不会抛出循环依赖。</p>
+<h5 id="dependson循环依赖">DependsOn循环依赖</h5>
+<p>还有一种有些特殊的场景，比如我们需要在实例化Bean A之前，先实例化Bean B，这个时候就可以使用<code>@DependsOn</code>注解。</p>
+<pre><code class="language-javascript">@DependsOn(value = &quot;testService2&quot;)
+@Service
+public class TestService1 {
+
+    @Autowired
+    private TestService2 testService2;
+
+    public void test1() {
+    }
+}
+@DependsOn(value = &quot;testService1&quot;)
+@Service
+public class TestService2 {
+
+    @Autowired
+    private TestService1 testService1;
+
+    public void test2() {
+    }
+}
+</code></pre>
+<p>程序启动之后，执行结果：</p>
+<pre><code class="language-javascript">Circular depends-on relationship between 'testService2' and 'testService1'
+</code></pre>
+<p>这个例子中本来如果TestService1和TestService2都没有加<code>@DependsOn</code>注解是没问题的，反而加了这个注解会出现循环依赖问题。答案在<code>AbstractBeanFactory</code>类的<code>doGetBean</code>方法的这段代码中：它会<strong>检查dependsOn的实例有没有循环依赖，如果有循环依赖则抛异常</strong></p>
+<h4 id="为什么要三级缓存解决循环依赖">为什么要三级缓存解决循环依赖</h4>
+<pre><code class="language-java">@Component
+public class A {
+    // A中注入了B
+    @Autowired
+    private B b;
+}
+
+@Component
+public class B {
+    // B中也注入了A
+    @Autowired
+    private A a;
+}
+</code></pre>
+<h5 id="不考虑aop">不考虑aop</h5>
+<p>可以将三级缓存去掉，因为不考虑aop时，三级缓存工厂就是实例化的对象</p>
+<h5 id="考虑aop">考虑aop</h5>
+<p>我们对A进行了<code>AOP</code>代理的话，那么此时<code>getEarlyBeanReference</code>将返回一个代理后的对象，而不是实例化阶段创建的对象，这样就意味着B中注入的A将是一个代理对象而不是A的实例化阶段创建后的对象。</p>
+<ol>
+<li>
+<p>明明初始化的时候是A对象，那么Spring是在哪里将代理对象放入到容器中的呢？还是这段代码</p>
+<pre><code class="language-java">if (earlySingletonExposure) {
+    // 从二级缓存获取对象
+    Object earlySingletonReference = getSingleton(beanName, false);
+    if (earlySingletonReference != null) {
+        if (exposedObject == bean) {
+            // 替换成代理对象，所以最后加入缓存的代理对象
+            exposedObject = earlySingletonReference;
+        }
+        else if (!this.allowRawInjectionDespiteWrapping &amp;&amp; hasDependentBean(beanName)) {
+            String[] dependentBeans = getDependentBeans(beanName);
+            Set&lt;String&gt; actualDependentBeans = new LinkedHashSet&lt;&gt;(dependentBeans.length);
+            for (String dependentBean : dependentBeans) {
+                if (!removeSingletonIfCreatedForTypeCheckOnly(dependentBean)) {
+                    actualDependentBeans.add(dependentBean);
+                }
+            }
+            if (!actualDependentBeans.isEmpty()) {
+                throw new BeanCurrentlyInCreationException(beanName,
+                                                           &quot;Bean with name '&quot; + beanName + &quot;' has been injected into other beans [&quot; +
+                                                           StringUtils.collectionToCommaDelimitedString(actualDependentBeans) +
+                                                           &quot;] in its raw version as part of a circular reference, but has eventually been &quot; +
+                                                           &quot;wrapped. This means that said other beans do not use the final version of the &quot; +
+                                                           &quot;bean. This is often the result of over-eager type matching - consider using &quot; +
+                                                           &quot;'getBeanNamesOfType' with the 'allowEagerInit' flag turned off, for example.&quot;);
+            }
+        }
+    }
+}
+</code></pre>
+<pre><code class="language-java">protected Object getSingleton(String beanName, boolean allowEarlyReference) {
+    Object singletonObject = this.singletonObjects.get(beanName);
+    if (singletonObject == null &amp;&amp; isSingletonCurrentlyInCreation(beanName)) {
+        synchronized (this.singletonObjects) {
+            singletonObject = this.earlySingletonObjects.get(beanName);
+            if (singletonObject == null &amp;&amp; allowEarlyReference) {
+                ObjectFactory&lt;?&gt; singletonFactory = this.singletonFactories.get(beanName);
+                if (singletonFactory != null) {
+                    // 获取代理对象
+                    singletonObject = singletonFactory.getObject();
+                    this.earlySingletonObjects.put(beanName, singletonObject);
+                    this.singletonFactories.remove(beanName);
+                }
+            }
+        }
+    }
+    return singletonObject;
+}
+</code></pre>
+<ol>
+<li>初始化的时候是对A对象本身进行初始化，而容器中以及注入到B中的都是代理对象，这样不会有问题吗？</li>
+</ol>
+<p>不会，这是因为不管是<code>cglib</code>代理还是<code>jdk</code>动态代理生成的代理类，内部都持有一个目标类的引用，当调用代理对象的方法时，实际会去调用目标对象的方法，A完成初始化相当于代理对象自身也完成了初始化</p>
+<ol start="3">
+<li>三级缓存为什么要使用工厂而不是直接使用引用？换而言之，为什么需要这个三级缓存，直接通过二级缓存暴露一个引用不行吗？</li>
+</ol>
+<p><strong>这个工厂的目的在于延迟对实例化阶段生成的对象的代理，只有真正发生循环依赖的时候，才去提前生成代理对象，否则只会创建一个工厂并将其放入到三级缓存中，但是不会去通过这个工厂去真正创建对象</strong></p>
+<p>因为spring不知道会不会有代理对象，所以他会把所有bean都放到三级缓存工厂中去，而只有在循环依赖的时候才会去调用 singletonFactory.getObject()获取代理对象，如果不要三级缓存，那么意味着所有的Bean在这一步都要完成<code>AOP</code>代理</p>
+</li>
+</ol>
+<h4 id="总结-1">总结</h4>
+<p>面试官：”Spring是如何解决的循环依赖？“</p>
+<p>答：Spring通过三级缓存解决了循环依赖，其中一级缓存为单例池（<code>singletonObjects</code>）,二级缓存为早期曝光对象<code>earlySingletonObjects</code>，三级缓存为早期曝光对象工厂（<code>singletonFactories</code>）。当A、B两个类发生循环引用时，在A完成实例化后，就使用实例化后的对象去创建一个对象工厂，并添加到三级缓存中，如果A被AOP代理，那么通过这个工厂获取到的就是A代理后的对象，如果A没有被AOP代理，那么这个工厂获取到的就是A实例化的对象。当A进行属性注入时，会去创建B，同时B又依赖了A，所以创建B的同时又会去调用getBean(a)来获取需要的依赖，此时的getBean(a)会从缓存中获取，第一步，先获取到三级缓存中的工厂；第二步，调用对象工工厂的getObject方法来获取到对应的对象，得到这个对象后将其注入到B中。紧接着B会走完它的生命周期流程，包括初始化、后置处理器等。当B创建完后，会将B再注入到A中，此时A再完成它的整个生命周期。至此，循环依赖结束！</p>
+<p>面试官：”为什么要使用三级缓存呢？二级缓存能解决循环依赖吗？“</p>
+<p>答：如果要使用二级缓存解决循环依赖，意味着所有Bean在实例化后就要完成AOP代理，这样违背了Spring设计的原则，Spring在设计之初就是通过<code>AnnotationAwareAspectJAutoProxyCreator</code>这个后置处理器来在Bean生命周期的最后一步来完成AOP代理，而不是在实例化后就立马进行AOP代理。</p>
+<h3 id="bean的生命周期">bean的生命周期</h3>
+<p>Bean 的生命周期概括起来就是 <strong>4 个阶段</strong>：</p>
+<ol>
+<li>实例化（Instantiation）</li>
+<li>属性赋值（Populate）</li>
+<li>初始化（Initialization）</li>
+<li>销毁（Destruction）</li>
+</ol>
+<p>细说就是这张图</p>
+<p><img src="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2020/2/15/1704860a4de235aa~tplv-t2oaga2asx-zoom-in-crop-mark:1304:0:0:0.awebp" alt="img"></p>
+<h4 id="实例化">实例化</h4>
+<p>解析xml配置或注解的配置的类，得到BeanDefinition 再通过BeanDefinition 反射创建bean对象</p>
+<p>具体步骤为：</p>
+<p>1、Bean 容器找到配置文件中 Spring Bean 的定义，通过资源接口Resource,得到Bean属性和配置
+2、解析后得到BeanDefinition 
+3、根据相应的构造方法，利用 Java Reflection API 创建一个Bean的实例</p>
+<h4 id="属性赋值">属性赋值</h4>
+<p>设置对象属性，并对对象中的加了@Autowired注解的属性进行属性填充</p>
+<h4 id="初始化">初始化</h4>
+<p>初始化步骤较多，可以分为初始化前、初始化、初始化后</p>
+<h5 id="初始化前">初始化前</h5>
+<ol>
+<li>
+<p>回调Aware方法，比如BeanNameAware，BeanFactoryAware, ApplicationContextAware</p>
+<blockquote>
+<p>Aware方法是什么？</p>
+<p>Spring的依赖注入的最大亮点是所有的Bean对Spring容器的存在是没有意识的，我们可以将Spring容器换成其他的容器，Spring容器中的Bean的耦合度因此也是极低的。但是我们在实际的开发中，我们却经常要<strong>用到Spring容器本身的功能资源</strong>，所以Spring容器中的Bean此时就要意识到Spring容器的存在才能调用Spring所提供的资源。我们通过Spring提供的一系列接口Spring Aware来实现具体的功能。<strong>Aware接口是回调，监听器和观察者设计模式的混合，它表示bean有资格通过回调方式被Spring容器通知</strong>，也就是说：<strong>直接或间接实现了这个接口的类，都具有被spring容器通知的能力， 通过让bean 实现 Aware 接口，则能在 bean 中获得相应的 Spring 容器资源</strong>。</p>
+</blockquote>
+<ul>
+<li>如果 Bean 实现了 BeanNameAware 接口，调用 setBeanName()方法，传入Bean的name。</li>
+<li>如果 Bean 实现了 BeanFactoryAware接口，调用setBeanFactory()方法，将bean所在的对象的引用传递过来</li>
+<li>或者ApplicationContextAware接口，调用setApplicationContext()方法，将bean所在的对象的引用传递过来</li>
+<li>与上面的类似，如果实现了其他 *.Aware接口，就调用相应的方法。</li>
+</ul>
+<p>例子</p>
+<p>定义一个bean实现BeanNameAware，那么在setBeanName方法中就可以得到，bean的name</p>
+<pre><code class="language-java">@Component(&quot;测试beanName&quot;)
+public class TestBeanNameAware implements BeanNameAware {
+    @Override
+    public void setBeanName(String s) {
+        System.out.println(s);
+    }
+}
+</code></pre>
+<p>创建一个bean，实现ApplicationContextAware接口，那么通过setApplicationContext接口就能得到spring容器</p>
+<pre><code class="language-java">@Component
+public class SpringContextUtil implements ApplicationContextAware {
+    private static ApplicationContext APPLICATIONCONTEXT;
+
+    @Override
+    public void setApplicationContext(ApplicationContext context) throws BeansException {
+        APPLICATIONCONTEXT = context;
+    }
+
+    /**
+     * 根据名字获取bean对象
+     *
+     * @param name
+     * @param &lt;T&gt;
+     * @return
+     * @throws BeansException
+     */
+    @SuppressWarnings(&quot;unchecked&quot;)
+    public static &lt;T&gt; T getBean(String name) throws BeansException {
+        return (T) APPLICATIONCONTEXT.getBean(name);
+    }
+
+    public static &lt;T&gt; T getBean(Class&lt;T&gt; requiredType) {
+        return APPLICATIONCONTEXT.getBean(requiredType);
+    }
+
+    /**
+     * 获取所有的实现接口
+     *
+     * @param requiredType
+     * @return
+     */
+    public static &lt;T&gt; Map&lt;String, T&gt; getBeanOfTypes(Class&lt;T&gt; requiredType) {
+
+        return APPLICATIONCONTEXT.getBeansOfType(requiredType);
+    }
+}
+</code></pre>
+<p>测试</p>
+<pre><code class="language-java">@Test
+public void test() {
+    // 在TestBeanName初始化之前就会进行setBeanName方法
+    SpringContextUtil.getBean(TestBeanNameAware.class);
+    // 结果为打印出来的是测试beanName
+}
+</code></pre>
+</li>
+<li>
+<p>调用BeanPostProcessor的前置处理中postProcessBeforeInitialization() 方法</p>
+</li>
+</ol>
+<h5 id="初始化-1">初始化</h5>
+<ol>
+<li>
+<p>如果实现了initializingBean的接口, 执行afterPropertiesSet()方法</p>
+<blockquote>
+<p>这里需要注意到经常使用的一个注解，<strong>@PostConstruct</strong>，该注解执行顺序为，postProcessBeforeInitialization() -&gt; <strong>@PostConstruct</strong> -&gt; afterPropertiesSet</p>
+</blockquote>
+</li>
+<li>
+<p>如果配置了自定义的init-method，执行指定的方法初始化Bean</p>
+</li>
+</ol>
+<h5 id="初始化后">初始化后</h5>
+<ol>
+<li>如果实现了 BeanPostProcessor 对象，执行postProcessAfterInitialization() 方法，<strong>aop就是在这里进行实现的</strong></li>
+</ol>
+<h5 id="销毁">销毁</h5>
+<ol>
+<li>
+<p>调用由 @PreDestroy 注解的方法</p>
+</li>
+<li>
+<p>当要销毁 Bean 的时候，如果 Bean 实现了 DisposableBean 接口，执行 destroy()方法</p>
+</li>
+<li>
+<p>当要销毁 Bean 的时候，如果 Bean 在配置文件中的定义包含 destroy-method 属性，执行指定的方法</p>
+</li>
+</ol>
+<h4 id="aop">AOP</h4>
+<p>aop面向切面编程，主要用于事务、日志等</p>
+<ul>
+<li>
+<p><strong>切点</strong>(Poincut)：<strong>具体定位的连接点</strong>：在哪些类，哪些方法上切入（<strong>where</strong>）</p>
+<p>语法</p>
+<pre><code class="language-java">@Pointcut(&quot;execution(* com.zt.javastudy.grammar.*.test(..))&quot;)
+*：匹配任何数量字符；
+..：匹配任何数量字符的重复，如在类型模式中匹配任何数量子包；而在方法参数模式中匹配任何数量参数。
++：匹配指定类型的子类型；仅能作为后缀放在类型模式后边。
+第一个占位符* 是表示返回值类型任意
+(..) 代表方法参数任意
+</code></pre>
+</li>
+<li>
+<p><strong>连接点</strong>(Join point)：被切点筛选出来的地方，<strong>Spring只支持方法执行这一种Joinpoint</strong></p>
+</li>
+<li>
+<p><strong>增强/通知</strong>(Advice)： 在方法执行的什么时间（**when:**方法前/方法后/方法前后）做什么（**what:**增强的功能）</p>
+<ul>
+<li>Before 前置通知，在方法被调用之前调用</li>
+<li>After 后置通知，在方法完成之后调用</li>
+<li>After-returning 返回通知，在方法成功执行之后调用</li>
+<li>After-throwing 异常通知， 在方法抛出异常之后调用</li>
+<li>Around 环绕通知，在被通知的方法调用之前和调用之后调用</li>
+</ul>
+</li>
+<li>
+<p>切面（Aspect）= 切入点 + 通知，通俗点就是：<strong>在什么时机，什么地方，做什么增强！</strong></p>
+</li>
+<li>
+<p><strong>织入</strong>(Weaving)：将<code>增强/通知</code>添加到目标类的具体连接点上的过程,通过代理实现，jdk动态代理和cglib</p>
+</li>
+</ul>
+<pre><code class="language-java">@Component
+public class AopStudy {
+    // 连接点
+    public void test(){
+        System.out.println(&quot;真正的方法执行啦&quot;);
+    }
+}
+@Component
+// 切面
+@Aspect
+public class AopRun {
+    // 切点
+    @Pointcut(&quot;execution(* com.zt.javastudy.aop.AopStudy.test(..))&quot;)
+    public void test() {
+
+    }
+
+    @Before(&quot;test()&quot;)
+    public void beforeTest() {
+        System.out.println(&quot;beforeTest&quot;);
+    }
+
+    @After(&quot;test()&quot;)
+    public void afterTest() {
+        System.out.println(&quot;afterTest&quot;);
+    }
+
+    @Around(&quot;test()&quot;)
+    public void arountTest(ProceedingJoinPoint point) {
+        System.out.println(&quot;around1&quot;);
+        try {
+            point.proceed();
+        } catch (Throwable throwable) {
+            throwable.printStackTrace();
+        }
+        System.out.println(&quot;around2&quot;);
+    }
+}
+</code></pre>
+<h5 id="aop代码实现">aop代码实现</h5>
+<p>说了很多遍了，<strong>在BeanPostProcessor 对象中的postProcessAfterInitialization() 方法实现aop</strong></p>
+<pre><code class="language-java">@Override
+public Object applyBeanPostProcessorsAfterInitialization(Object existingBean, String beanName)
+    throws BeansException {
+
+    Object result = existingBean;
+    for (BeanPostProcessor processor : getBeanPostProcessors()) {
+        Object current = processor.postProcessAfterInitialization(result, beanName);
+        if (current == null) {
+            return result;
+        }
+        result = current;
+    }
+    return result;
+}
+</code></pre>
+<p>调用postProcessAfterInitialization方法</p>
+<pre><code class="language-java">/**
+	 * Create a proxy with the configured interceptors if the bean is
+	 * identified as one to proxy by the subclass.
+	 * @see #getAdvicesAndAdvisorsForBean
+	 */
+// 注释就告诉我们这是创建aop代理的地方
+	@Override
+	public Object postProcessAfterInitialization(@Nullable Object bean, String beanName) {
+		if (bean != null) {
+			Object cacheKey = getCacheKey(bean.getClass(), beanName);
+			if (this.earlyProxyReferences.remove(cacheKey) != bean) {
+                // 关键方法 如果需要被代理那么就封装指定的bean
+				return wrapIfNecessary(bean, beanName, cacheKey);
+			}
+		}
+		return bean;
+	}
+protected Object wrapIfNecessary(Object bean, String beanName, Object cacheKey) {
+		if (StringUtils.hasLength(beanName) &amp;&amp; this.targetSourcedBeans.contains(beanName)) {
+			return bean;
+		}
+		if (Boolean.FALSE.equals(this.advisedBeans.get(cacheKey))) {
+			return bean;
+		}
+    	// 给定的bean是否一个基础设施类如果是就不需要增强
+		if (isInfrastructureClass(bean.getClass()) || shouldSkip(bean.getClass(), beanName)) {
+			this.advisedBeans.put(cacheKey, Boolean.FALSE);
+			return bean;
+		}
+
+		// Create proxy if we have advice.
+    	// 获取增加方法或增强器
+		Object[] specificInterceptors = getAdvicesAndAdvisorsForBean(bean.getClass(), beanName, null);
+		if (specificInterceptors != DO_NOT_PROXY) {
+			this.advisedBeans.put(cacheKey, Boolean.TRUE);
+            // 创建代理
+			Object proxy = createProxy(
+					bean.getClass(), beanName, specificInterceptors, new SingletonTargetSource(bean));
+			this.proxyTypes.put(cacheKey, proxy.getClass());
+			return proxy;
+		}
+
+		this.advisedBeans.put(cacheKey, Boolean.FALSE);
+		return bean;
+	}
+</code></pre>
+<p>基础设施类包括：<strong>Spring跳过的是适用于当前bean的Advisor的Advice/Aspect对象，说人话就是我们定义的切面注解@AspectJ</strong></p>
+<h4 id="获取增强方法或者增强器">获取增强方法或者增强器</h4>
+<pre><code class="language-java">protected Object[] getAdvicesAndAdvisorsForBean(
+			Class&lt;?&gt; beanClass, String beanName, @Nullable TargetSource targetSource) {
+
+		List&lt;Advisor&gt; advisors = findEligibleAdvisors(beanClass, beanName);
+		if (advisors.isEmpty()) {
+			return DO_NOT_PROXY;
+		}
+		return advisors.toArray();
+	}
+	protected List&lt;Advisor&gt; findEligibleAdvisors(Class&lt;?&gt; beanClass, String beanName) {
+        // 获取所有的增强
+		List&lt;Advisor&gt; candidateAdvisors = findCandidateAdvisors();
+        // 寻找所有增强中适用于bean的增强并应用
+		List&lt;Advisor&gt; eligibleAdvisors = findAdvisorsThatCanApply(candidateAdvisors, beanClass, beanName);
+		extendAdvisors(eligibleAdvisors);
+		if (!eligibleAdvisors.isEmpty()) {
+			eligibleAdvisors = sortAdvisors(eligibleAdvisors);
+		}
+		return eligibleAdvisors;
+	}
+</code></pre>
+<h5 id="获取增强器">获取增强器</h5>
+<pre><code>protected List&lt;Advisor&gt; findCandidateAdvisors() {
+		// Add all the Spring advisors found according to superclass rules.
+		List&lt;Advisor&gt; advisors = super.findCandidateAdvisors();
+		// Build Advisors for all AspectJ aspects in the bean factory.
+		if (this.aspectJAdvisorsBuilder != null) {
+			advisors.addAll(this.aspectJAdvisorsBuilder.buildAspectJAdvisors());
+		}
+		return advisors;
+	}
+	
+</code></pre>
+<p>这里的代码过于复杂，主要思路就是</p>
+<ul>
+<li>获取所有beanName，这一步骤中所有在beanFacotry中注册的Bean都会被提取出来。</li>
+<li>遍历所有beanName，并找出声明AspectJ注解的类，进行进一步的处理。</li>
+<li>对标记为AspectJ注解的类进行增强器的提取。</li>
+<li>将提取结果加入缓存</li>
+</ul>
+<p>代码首先完成了对增强器的获取，包括获取注解以及根据注解生成增强的步骤，然后考虑到在配置中可能会将增强配置成延迟初始化，那么需要在首位加入同步实例化增强器以保证增强使用之前的实例化，最后是对DeclareParents注解的获取。</p>
+<h5 id="寻找匹配的增强器">寻找匹配的增强器</h5>
+<pre><code>protected List&lt;Advisor&gt; findAdvisorsThatCanApply(
+			List&lt;Advisor&gt; candidateAdvisors, Class&lt;?&gt; beanClass, String beanName) {
+
+		ProxyCreationContext.setCurrentProxiedBeanName(beanName);
+		try {
+			return AopUtils.findAdvisorsThatCanApply(candidateAdvisors, beanClass);
+		}
+		finally {
+			ProxyCreationContext.setCurrentProxiedBeanName(null);
+		}
+	}
+</code></pre>
+<p>上个函数中已经完成了所有增强器的解析，但是对于所有增强器来讲，并不一定都适用于当前的Bean，还要挑取出适合的增强器，也就是满足我们配置的通配符的增强器，这个函数就完成了这一工作。</p>
+<h4 id="创建代理">创建代理</h4>
+<p>​	就是真正创建代理的地方</p>
+<pre><code class="language-java">protected Object createProxy(Class&lt;?&gt; beanClass, @Nullable String beanName,
+			@Nullable Object[] specificInterceptors, TargetSource targetSource) {
+
+		if (this.beanFactory instanceof ConfigurableListableBeanFactory) {
+			AutoProxyUtils.exposeTargetClass((ConfigurableListableBeanFactory) this.beanFactory, beanName, beanClass);
+		}
+
+		ProxyFactory proxyFactory = new ProxyFactory();
+		proxyFactory.copyFrom(this);
+
+		if (!proxyFactory.isProxyTargetClass()) {
+			if (shouldProxyTargetClass(beanClass, beanName)) {
+				proxyFactory.setProxyTargetClass(true);
+			}
+			else {
+				evaluateProxyInterfaces(beanClass, proxyFactory);
+			}
+		}
+
+		Advisor[] advisors = buildAdvisors(beanName, specificInterceptors);
+		proxyFactory.addAdvisors(advisors);
+		proxyFactory.setTargetSource(targetSource);
+		customizeProxyFactory(proxyFactory);
+
+		proxyFactory.setFrozen(this.freezeProxy);
+		if (advisorsPreFiltered()) {
+			proxyFactory.setPreFiltered(true);
+		}
+
+		return proxyFactory.getProxy(getProxyClassLoader());
+	}
+</code></pre>
+<pre><code class="language-java">public Object getProxy(@Nullable ClassLoader classLoader) {
+		return createAopProxy().getProxy(classLoader);
+}
+protected final synchronized AopProxy createAopProxy() {
+		if (!this.active) {
+			activate();
+		}
+		return getAopProxyFactory().createAopProxy(this);
+}
+// 真正的代码
+public AopProxy createAopProxy(AdvisedSupport config) throws AopConfigException {
+		if (!IN_NATIVE_IMAGE &amp;&amp;
+				(config.isOptimize() || config.isProxyTargetClass() || hasNoUserSuppliedProxyInterfaces(config))) {
+			Class&lt;?&gt; targetClass = config.getTargetClass();
+			if (targetClass == null) {
+				throw new AopConfigException(&quot;TargetSource cannot determine target class: &quot; +
+						&quot;Either an interface or a target is required for proxy creation.&quot;);
+			}
+			if (targetClass.isInterface() || Proxy.isProxyClass(targetClass)) {
+				return new JdkDynamicAopProxy(config);
+			}
+			return new ObjenesisCglibAopProxy(config);
+		}
+		else {
+			return new JdkDynamicAopProxy(config);
+		}
+	}
+	
+</code></pre>
+<p>上面的代码主要是确定使用哪种代理方式进行代理，总的来说就是：</p>
+<ul>
+<li>
+<p>如果指定了(proxy-target-classs设为true)使用Cglib，那么就会使用Cglib的方式</p>
+<p>springboot默认将这个开启，也就是说<strong>springboot中默认使用cglib代理</strong>，在配置类中AopAutoConfiguration</p>
+<pre><code class="language-java">@Configuration(proxyBeanMethods = false)
+@ConditionalOnClass(Advice.class)
+static class AspectJAutoProxyingConfiguration {
+
+    @Configuration(proxyBeanMethods = false)
+    @EnableAspectJAutoProxy(proxyTargetClass = false)
+    @ConditionalOnProperty(prefix = &quot;spring.aop&quot;, name = &quot;proxy-target-class&quot;, havingValue = &quot;false&quot;,
+                           matchIfMissing = false)
+    static class JdkDynamicAutoProxyConfiguration {
+
+    }
+
+    @Configuration(proxyBeanMethods = false)
+    @EnableAspectJAutoProxy(proxyTargetClass = true)
+    @ConditionalOnProperty(prefix = &quot;spring.aop&quot;, name = &quot;proxy-target-class&quot;, havingValue = &quot;true&quot;,
+                           matchIfMissing = true)
+    static class CglibAutoProxyConfiguration {
+
+    }
+
+}
+</code></pre>
+</li>
+<li>
+<p>如果没有指定(或为false)</p>
+<ul>
+<li>被代理类实现了自己的接口，那么就采用JDK动态代理的方式</li>
+<li>如果没有实现那么就使用Cglib</li>
+</ul>
+</li>
+</ul>
+<h5 id="jdk动态代理和cglib">jdk动态代理和cglib</h5>
+<h2 id="3-jdk动态代理和cglib对比">3. jdk动态代理和cglib对比</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">动态代理</th>
+<th style="text-align:center">cglib</th>
+<th style="text-align:center">jdk</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">是否提供子类代理</td>
+<td style="text-align:center">是</td>
+<td style="text-align:center">否</td>
+</tr>
+<tr>
+<td style="text-align:center">是否提供接口代理</td>
+<td style="text-align:center">是</td>
+<td style="text-align:center">是</td>
+</tr>
+<tr>
+<td style="text-align:center">区别</td>
+<td style="text-align:center">必须依赖于CGLib的类库，但是它需要类来实现任何接口代理的是指定的类生成一个子类，覆盖其中的方法</td>
+<td style="text-align:center">实现InvocationHandler，使用Proxy.newProxyInstance产生代理对象，被代理的对象必须要实现接口</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Cglib和jdk动态代理的区别？</strong></p>
+</blockquote>
+<p>1、Jdk动态代理：利用拦截器（必须实现InvocationHandler）加上反射机制生成一个代理接口的匿名类，在调用具体方法前调用InvokeHandler来处理
+2、 Cglib动态代理：利用ASM框架，对代理对象类生成的class文件加载进来，通过修改其字节码生成子类来处理</p>
+<blockquote>
+<p><strong>JDK动态代理和cglib字节码生成的区别？</strong></p>
+</blockquote>
+<p>1、JDK动态代理只能对实现了接口的类生成代理，而不能针对类
+2、Cglib是针对类实现代理，主要是对指定的类生成一个子类，覆盖其中的方法，并覆盖其中方法的增强，但是因为采用的是继承，所以该类或方法最好不要生成final，对于final类或方法，是无法继承的</p>
+<blockquote>
+<p><strong>Cglib比JDK快？</strong></p>
+</blockquote>
+<p>1、cglib底层是ASM字节码生成框架，但是字节码技术生成代理类，在JDL1.6之前比使用java反射的效率要高
+2、在jdk6之后逐步对JDK动态代理进行了优化，在调用次数比较少时效率高于cglib代理效率
+3、只有在大量调用的时候cglib的效率高，但是在1.8的时候JDK的效率已高于cglib
+4、Cglib不能对声明final的方法进行代理，因为cglib是动态生成代理对象，final关键字修饰的类不可变只能被引用不能被修改</p>
+<blockquote>
+<p>为什么jdk只能对实现了接口的类生成代理？</p>
+</blockquote>
+<p>因为<strong>代理对象继承了 JAVA 标准类库 <code>Proxy.java</code> 类</strong>，所以只能通过实现目标接口来代理</p>
+<h6 id="jdk动态代理">jdk动态代理</h6>
+<pre><code class="language-java">/**
+ * @author zhengtao
+ * @description jdk 动态代理学习
+ * @date 2021/4/29
+ */
+public interface IJdkProxyStudy {
+    /**
+     * 目标方法
+     */
+     void add();
+}
+public class JdkProxyStudyImpl implements IJdkProxyStudy {
+    @Override
+    public void add() {
+        System.out.println(&quot;add&quot;);
+    }
+}
+public class MyInvocationHandler implements InvocationHandler {
+    // 目标对象
+    private Object target;
+
+    public MyInvocationHandler(Object target) {
+        super();
+        this.target = target;
+    }
+
+    /**
+     * 执行目标对象的方法
+     * @param proxy
+     * @param method
+     * @param args
+     * @return
+     * @throws Throwable
+     */
+    @Override
+    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+        System.out.println(&quot;before&quot;);
+        // 执行目标对象的方法
+        Object result = method.invoke(target, args);
+        System.out.println(&quot;after&quot;);
+        return result;
+    }
+
+    /**
+     * 获得目标对象的代理对象
+     * @return 代理对象
+     */
+    public Object getProxy(){
+        return Proxy.newProxyInstance(Thread.currentThread().getContextClassLoader(), target.getClass().getInterfaces(), this);
+    }
+}
+</code></pre>
+<p>测试jdk动态代理：</p>
+<pre><code class="language-java">    @Test
+    public void testJdkProxy(){
+        // 接口
+        IJdkProxyStudy jdkProxyStudy = new JdkProxyStudyImpl();
+        MyInvocationHandler invocationHandler = new MyInvocationHandler(jdkProxyStudy);
+        IJdkProxyStudy proxy = (IJdkProxyStudy) invocationHandler.getProxy();
+        proxy.add();
+        // 没有实现接口的类，使用jdk代理报错
+        CglibTest cglibTest = new CglibTest();
+        MyInvocationHandler invocationHandler1 = new MyInvocationHandler(cglibTest);
+        CglibTest proxy1 = (CglibTest) invocationHandler1.getProxy();
+        proxy1.test();
+    }
+	/** 结果
+	before
+	add
+	after
+	*/
+</code></pre>
+<p>我们再次来回顾一下使用JDK代理的方式，在整个创建过程中，对于InvocationHandler的创建是最为核心的，在自定义的InvocationHandler中需要重写3个函数。</p>
+<ul>
+<li>构造函数，将代理的对象传入。</li>
+<li>invoke方法，此方法中实现了AOP增强的所有逻辑。</li>
+<li>getProxy方法，此方法千篇一律，但是必不可少。</li>
+</ul>
+<p>Spring中JDK代理实现：</p>
+<ol>
+<li><strong>invoke方法:</strong></li>
+</ol>
+<pre><code>/**
+	 * Implementation of {@code InvocationHandler.invoke}.
+	 * &lt;p&gt;Callers will see exactly the exception thrown by the target,
+	 * unless a hook method throws an exception.
+	 */
+	@Override
+	@Nullable
+	public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+		Object oldProxy = null;
+		boolean setProxyContext = false;
+
+		TargetSource targetSource = this.advised.targetSource;
+		Object target = null;
+
+		try {
+			if (!this.equalsDefined &amp;&amp; AopUtils.isEqualsMethod(method)) {
+				// The target does not implement the equals(Object) method itself.
+				return equals(args[0]);
+			}
+			else if (!this.hashCodeDefined &amp;&amp; AopUtils.isHashCodeMethod(method)) {
+				// The target does not implement the hashCode() method itself.
+				return hashCode();
+			}
+			else if (method.getDeclaringClass() == DecoratingProxy.class) {
+				// There is only getDecoratedClass() declared -&gt; dispatch to proxy config.
+				return AopProxyUtils.ultimateTargetClass(this.advised);
+			}
+			else if (!this.advised.opaque &amp;&amp; method.getDeclaringClass().isInterface() &amp;&amp;
+					method.getDeclaringClass().isAssignableFrom(Advised.class)) {
+				// Service invocations on ProxyConfig with the proxy config...
+				return AopUtils.invokeJoinpointUsingReflection(this.advised, method, args);
+			}
+
+			Object retVal;
+
+			if (this.advised.exposeProxy) {
+				// Make invocation available if necessary.
+				oldProxy = AopContext.setCurrentProxy(proxy);
+				setProxyContext = true;
+			}
+
+			// Get as late as possible to minimize the time we &quot;own&quot; the target,
+			// in case it comes from a pool.
+			target = targetSource.getTarget();
+			Class&lt;?&gt; targetClass = (target != null ? target.getClass() : null);
+
+			// Get the interception chain for this method.
+			List&lt;Object&gt; chain = this.advised.getInterceptorsAndDynamicInterceptionAdvice(method, targetClass);
+
+			// Check whether we have any advice. If we don't, we can fallback on direct
+			// reflective invocation of the target, and avoid creating a MethodInvocation.
+			if (chain.isEmpty()) {
+				// We can skip creating a MethodInvocation: just invoke the target directly
+				// Note that the final invoker must be an InvokerInterceptor so we know it does
+				// nothing but a reflective operation on the target, and no hot swapping or fancy proxying.
+				Object[] argsToUse = AopProxyUtils.adaptArgumentsIfNecessary(method, args);
+				retVal = AopUtils.invokeJoinpointUsingReflection(target, method, argsToUse);
+			}
+			else {
+				// We need to create a method invocation...
+				MethodInvocation invocation =
+						new ReflectiveMethodInvocation(proxy, target, method, args, targetClass, chain);
+				// Proceed to the joinpoint through the interceptor chain.
+				retVal = invocation.proceed();
+			}
+
+			// Massage return value if necessary.
+			Class&lt;?&gt; returnType = method.getReturnType();
+			if (retVal != null &amp;&amp; retVal == target &amp;&amp;
+					returnType != Object.class &amp;&amp; returnType.isInstance(proxy) &amp;&amp;
+					!RawTargetAccess.class.isAssignableFrom(method.getDeclaringClass())) {
+				// Special case: it returned &quot;this&quot; and the return type of the method
+				// is type-compatible. Note that we can't help if the target sets
+				// a reference to itself in another returned object.
+				retVal = proxy;
+			}
+			else if (retVal == null &amp;&amp; returnType != Void.TYPE &amp;&amp; returnType.isPrimitive()) {
+				throw new AopInvocationException(
+						&quot;Null return value from advice does not match primitive return type for: &quot; + method);
+			}
+			return retVal;
+		}
+		finally {
+			if (target != null &amp;&amp; !targetSource.isStatic()) {
+				// Must have come from TargetSource.
+				targetSource.releaseTarget(target);
+			}
+			if (setProxyContext) {
+				// Restore old proxy.
+				AopContext.setCurrentProxy(oldProxy);
+			}
+		}
+	}
+</code></pre>
+<p>上面的函数中最主要的工作就是创建了一个拦截器链，并使用ReflectiveMethodInvocation类进行了链的封装，而在ReflectiveMethodInvocation类的proceed方法中实现了拦截器的逐一调用</p>
+<ol start="2">
+<li><strong>getProxy方法</strong></li>
+</ol>
+<pre><code class="language-java">public Object getProxy(@Nullable ClassLoader classLoader) {
+		if (logger.isTraceEnabled()) {
+			logger.trace(&quot;Creating JDK dynamic proxy: &quot; + this.advised.getTargetSource());
+		}
+		return Proxy.newProxyInstance(classLoader, this.proxiedInterfaces, this);
+	}
+</code></pre>
+<p>Cglib代理学习：</p>
+<pre><code class="language-java">public class CglibTest {
+    public void test(){
+        System.out.println(&quot;test&quot;);
+    }
+}
+public class CgLibProxy  implements MethodInterceptor {
+    // 目标对象
+    private Object target;
+
+    public CgLibProxy(Object target) {
+        super();
+        this.target = target;
+    }
+
+    @Override
+    public Object intercept(Object o, Method method, Object[] objects, MethodProxy methodProxy) throws Throwable {
+        System.out.println(&quot;before test&quot;);
+        Object result = methodProxy.invokeSuper(o, objects);
+        System.out.println(&quot;after test&quot;);
+        return result;
+    }
+    public Object getProxy(){
+        Enhancer enhancer = new Enhancer();
+        enhancer.setSuperclass(this.target.getClass());
+        enhancer.setCallback(this);
+        Object proxy = enhancer.create();
+        return proxy;
+    }
+}
+</code></pre>
+<p>测试：</p>
+<pre><code class="language-java">    @Test
+    public void testCglibProxy(){
+        CglibTest cglibTest = new CglibTest();
+        CgLibProxy cgLibProxy = new CgLibProxy(cglibTest);
+        CglibTest proxy = (CglibTest) cgLibProxy.getProxy();
+        proxy.test();
+    }
+    结果
+    before test
+	test
+	after test
+</code></pre>
+<p>spring中怎么实现的就不多讲了。</p>
+<ol start="3">
+<li>静态代理</li>
+</ol>
+<pre><code class="language-java">public interface StaticProxy {
+    void test();
+}
+public class StaticProxyImpl implements StaticProxy {
+    @Override
+    public void test() {
+        System.out.println(&quot;test&quot;);
+    }
+}
+public class StaticProxyTest implements StaticProxy {
+    private StaticProxy staticProxy;
+
+    public StaticProxyTest(StaticProxy staticProxy) {
+        this.staticProxy = staticProxy;
+    }
+
+    @Override
+    public void test() {
+        System.out.println(&quot;before test&quot;);
+        this.staticProxy.test();
+        System.out.println(&quot;after test&quot;);
+    }
+}
+</code></pre>
+<p>测试</p>
+<pre><code class="language-java"> 	@Test
+    public void testStaticProxy(){
+        StaticProxy staticProxy = new StaticProxyTest(new StaticProxyImpl());
+        staticProxy.test();
+    }
+    结果
+    before test
+	test
+	after test
+</code></pre>
+<p>静态代理感觉起来就是每个类都必须有一个代理类来具体实现，所以就效率不高。</p>
+<h3 id="springmvc">springmvc</h3>
+<p>Spring MVC是一个基于Java的实现了<strong>MVC设计模式</strong>的<strong>请求驱动类型</strong>(指的就是使用请求-响应模型)的轻量级Web框架，通过把Model(模型)，View(视图)，Controller(控制器)分离，将web层进行职责解耦，把复杂的web应用分成逻辑清晰的几部分，简化开发，减少出错，方便组内开发人员之间的配合。</p>
+<h4 id="springmvc的组件">springmvc的组件</h4>
+<ul>
+<li>前端控制器 DispatcherServlet：接收请求、响应结果，相当于转发器，有了DispatcherServlet 就减少了其它组件之间的耦合度。</li>
+<li>处理器映射器 HandlerMapping：根据请求的URL来查找Handler</li>
+<li>处理器适配器 HandlerAdapter：负责执行Handler</li>
+<li>处理器 Handler：处理器，需要程序员开发</li>
+<li>视图解析器 ViewResolver：进行视图的解析，根据视图逻辑名将ModelAndView解析成真正的视图（view）</li>
+<li>视图View：View是一个接口， 它的实现类支持不同的视图类型，如jsp，freemarker，pdf等等</li>
+</ul>
+<h4 id="springmvc的流程">SpringMVC的流程</h4>
+<ol>
+<li>
+<p>用户发送请求至前端控制器DispatcherServlet；</p>
+</li>
+<li>
+<p>DispatcherServlet收到请求后，调用HandlerMapping处理器映射器，请求获取Handler；</p>
+</li>
+<li>
+<p>处理器映射器根据请求url找到具体的处理器Handler，生成处理器对象及处理器拦截器(如果有则生成)，一并返回给DispatcherServlet；</p>
+</li>
+<li>
+<p>DispatcherServlet 调用 HandlerAdapter处理器适配器，请求执行Handler；</p>
+</li>
+<li>
+<p>HandlerAdapter 经过适配调用 具体处理器进行处理业务逻辑；</p>
+</li>
+<li>
+<p>Handler执行完成返回ModelAndView；</p>
+</li>
+<li>
+<p>HandlerAdapter将Handler执行结果ModelAndView返回给DispatcherServlet；</p>
+</li>
+<li>
+<p>DispatcherServlet将ModelAndView传给ViewResolver视图解析器进行解析；</p>
+</li>
+<li>
+<p>ViewResolver解析后返回具体View；</p>
+</li>
+<li>
+<p>DispatcherServlet对View进行渲染视图（即将模型数据填充至视图中）</p>
+</li>
+<li>
+<p>DispatcherServlet响应用户。</p>
+<p><img src="20180708224853769" alt="img"></p>
+</li>
+</ol>
+<h4 id="springmvc的优点">Springmvc的优点</h4>
+<ol>
+<li>与Spring框架集成（如IoC容器、AOP等）</li>
+<li>可以支持各种视图技术（jsp，freemarker）</li>
+<li>清晰的角色划分：前端控制器（DispatcherServlet）、请求到处理器映射（HandlerMapping）、处理器适配器（HandlerAdapter）、视图解析器（ViewResolver）、处理器或页面控制器（Controller）、验证器（   Validator）、命令对象（Command  请求参数绑定到的对象就叫命令对象）、表单对象（Form Object 提供给表单展示和提交到的对象就叫表单对象）</li>
+<li>支持各种请求资源的映射策略。</li>
+</ol>
+<h3 id="tomcat怎么启动的">tomcat怎么启动的</h3>
+<h3 id="springboot">springboot</h3>
+<h4 id="springbootapplication">@SpringBootApplication</h4>
+<p>@SpringBootApplication 注解其实是一个组合注解。包含@SpringBootConfiguration、@EnableAutoConfiguration 和 @ComponentScan</p>
+<ul>
+<li>
+<p>@SpringBootConfiguration：组合了 @Configuration 注解，实现配置文件的功能。</p>
+</li>
+<li>
+<p>@EnableAutoConfiguration：打开<strong>自动配置</strong>的功能，也可以关闭某个自动配置的选项， 例如：<code>java 如关闭数据源自动配置功能： @SpringBootApplication(exclude = { DataSourceAutoConfiguration.class })。</code></p>
+</li>
+<li>
+<p>@ComponentScan：Spring组件扫描。</p>
+</li>
+</ul>
+<h4 id="自动装配">自动装配</h4>
+<p>SpringBoot 定义了一套接口规范，这套规范规定：SpringBoot 在启动时会扫描外部引用 jar 包中的<code>META-INF/spring.factories</code>文件，将文件中配置的类型信息加载到 Spring 容器（此处涉及到 JVM 类加载机制与 Spring 的容器知识），并执行类中定义的各种操作。对于外部 jar 来说，只需要按照 SpringBoot 定义的标准，就能将自己的功能装置进 SpringBoot。</p>
+<p>springboot中是通过@EnableAutoConfiguration实现自动装配的</p>
+<pre><code class="language-java">@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+@Inherited
+@AutoConfigurationPackage
+@Import(AutoConfigurationImportSelector.class)
+public @interface EnableAutoConfiguration {
+
+	String ENABLED_OVERRIDE_PROPERTY = &quot;spring.boot.enableautoconfiguration&quot;;
+
+	/**
+	 * Exclude specific auto-configuration classes such that they will never be applied.
+	 * @return the classes to exclude
+	 */
+	Class&lt;?&gt;[] exclude() default {};
+
+	/**
+	 * Exclude specific auto-configuration class names such that they will never be
+	 * applied.
+	 * @return the class names to exclude
+	 * @since 1.3.0
+	 */
+	String[] excludeName() default {};
+
+}
+</code></pre>
+<p>注解中是导入了AutoConfigurationImportSelector类，这个类实现了 <code>ImportSelector</code>接口，实现了selectImports，该方法主要用于<strong>获取所有符合条件的类的全限定类名，这些类需要被加载到 IoC 容器中</strong></p>
+<pre><code class="language-java">@Override
+public String[] selectImports(AnnotationMetadata annotationMetadata) {
+    if (!isEnabled(annotationMetadata)) {
+        return NO_IMPORTS;
+    }
+    AutoConfigurationMetadata autoConfigurationMetadata = AutoConfigurationMetadataLoader
+        .loadMetadata(this.beanClassLoader);
+    AutoConfigurationEntry autoConfigurationEntry = getAutoConfigurationEntry(autoConfigurationMetadata,
+                                                                              annotationMetadata);
+    return StringUtils.toStringArray(autoConfigurationEntry.getConfigurations());
+}
+</code></pre>
+<p>核心方法是getAutoConfigurationEntry</p>
+<pre><code class="language-java">protected AutoConfigurationEntry getAutoConfigurationEntry(AutoConfigurationMetadata autoConfigurationMetadata,
+			AnnotationMetadata annotationMetadata) {
+    // 判断自动装配开关是否打开
+		if (!isEnabled(annotationMetadata)) {
+			return EMPTY_ENTRY;
+		}
+    // 获取`EnableAutoConfiguration`注解中的 `exclude` 和 `excludeName`
+		AnnotationAttributes attributes = getAttributes(annotationMetadata);
+		// 获取需要自动装配的所有配置类
+    List&lt;String&gt; configurations = getCandidateConfigurations(annotationMetadata, attributes);
+		configurations = removeDuplicates(configurations);
+		Set&lt;String&gt; exclusions = getExclusions(annotationMetadata, attributes);
+		checkExcludedClasses(configurations, exclusions);
+    // 移除exclude中的配置
+		configurations.removeAll(exclusions);
+    // 根据条件注解筛选出符合条件的配置类
+		configurations = filter(configurations, autoConfigurationMetadata);
+		fireAutoConfigurationImportEvents(configurations, exclusions);
+		return new AutoConfigurationEntry(configurations, exclusions);
+	}
+</code></pre>
+<ol>
+<li>
+<p>判断自动装配开关是否打开。默认<code>spring.boot.enableautoconfiguration=true</code>，可在 <code>application.properties</code> 或 <code>application.yml</code> 中设置</p>
+</li>
+<li>
+<p>用于获取<code>EnableAutoConfiguration</code>注解中的 <code>exclude</code> 和 <code>excludeName</code>。</p>
+</li>
+<li>
+<p><strong>getCandidateConfigurations 方法</strong>通过SpringFactoriesLoader.loadFactoryNames获取需要自动装配的所有配置类，读取<code>META-INF/spring.factories</code></p>
+</li>
+</ol>
+<pre><code class="language-java">spring-boot/spring-boot-project/spring-boot-autoconfigure/src/main/resources/META-INF/spring.factories
+</code></pre>
+<p>从下图可以看到这个文件的配置内容都被我们读取到了。<code>XXXAutoConfiguration</code>的作用就是按需加载组件。不光是这个依赖下的<code>META-INF/spring.factories</code>被读取到，所有 Spring Boot Starter 下的<code>META-INF/spring.factories</code>都会被读取到。</p>
+<blockquote>
+<p>所以如果要想自己的代码被springboot配置，只需要添加<code>META-INF/spring.factories</code>并进行配置，例如druid 数据库连接池的 Spring Boot Starter 就创建了<code>META-INF/spring.factories</code>文件。</p>
+</blockquote>
+<ol start="4">
+<li>filter 筛选符合条件的配置类</li>
+</ol>
+<h5 id="总结-2">总结</h5>
+<p>Spring Boot 通过<code>@EnableAutoConfiguration</code>开启自动装配，通过 SpringFactoriesLoader 最终加载<code>META-INF/spring.factories</code>中的自动配置类实现自动装配，自动配置类其实就是通过<code>@Conditional</code>按需加载的配置类</p>
+<!-- raw HTML omitted -->
+<h4 id="spring依赖来源">spring依赖来源</h4>
+<h3 id="spring事务">spring事务</h3>
+<p>Spring 框架中，事务管理相关最重要的 3 个接口如下：</p>
+<ul>
+<li>
+<p>TransactionDefinition： 事务定义信息(事务隔离级别、传播行为、超时、只读、回滚规则)。</p>
+</li>
+<li>
+<p>PlatformTransactionManager： （平台）事务管理器，Spring 事务策略的核心，约束了事务常用的方法。</p>
+<blockquote>
+<p>通过这个接口，Spring 为各个平台如 JDBC(DataSourceTransactionManager)、Hibernate(HibernateTransactionManager)、JPA(JpaTransactionManager)等都提供了对应的事务管理器，但是具体的实现就是各个平台自己的事情了。</p>
+</blockquote>
+<pre><code class="language-java">public interface PlatformTransactionManager {
+  //获得事务
+  TransactionStatus getTransaction(@Nullable TransactionDefinition var1) throws TransactionException;
+  //提交事务
+  void commit(TransactionStatus var1) throws TransactionException;
+  //回滚事务
+  void rollback(TransactionStatus var1) throws TransactionException;
+}Copy to clipboardErrorCopied
+</code></pre>
+</li>
+<li>
+<p>TransactionStatus： 事务运行状态。</p>
+<pre><code class="language-java">public interface TransactionStatus{
+  boolean isNewTransaction(); // 是否是新的事务
+  boolean hasSavepoint(); // 是否有恢复点
+  void setRollbackOnly();  // 设置为只回滚
+  boolean isRollbackOnly(); // 是否为只回滚
+  boolean isCompleted; // 是否已完成
+}Copy to clipboardErrorCopied
+</code></pre>
+</li>
+</ul>
+<ol>
+<li>
+<p>注解@EnableTransactionManagement 实现事务相关的Bean加载（现在自动配置使用AutoConfiguration实现）</p>
+</li>
+<li>
+<p>TransactionInterceptor 主要的实现类，继承TransactionAspectSupport（定义了事务实现的方式）</p>
+</li>
+<li>
+<p>实现原理为使用AOP+ThreadLocal实现。</p>
+</li>
+</ol>
+<h4 id="enabletransactionmanagement">@EnableTransactionManagement</h4>
+<p><code>@EnableTransactionManagement</code> 是开启注解式事务的注解</p>
+<pre><code>@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+@Import(TransactionManagementConfigurationSelector.class)
+public @interface EnableTransactionManagement {
+
+	/**
+	 * 用来表示默认使用JDK Dynamic Proxy还是CGLIB Proxy
+	 */
+	boolean proxyTargetClass() default false;
+
+	/**
+	 * 表示以Proxy-based方式实现AOP还是以Weaving-based方式实现AOP
+	 */
+	AdviceMode mode() default AdviceMode.PROXY;
+
+	/**
+	 * 顺序
+	 */
+	int order() default Ordered.LOWEST_PRECEDENCE;
+
+}
+</code></pre>
+<p><code>@EnableTransactionManagement</code> 注解看起来并没有特别之处，都是一些属性的配置。但它却通过 <code>@Import</code> 引入了另一个配置 <code>TransactionManagentConfigurationSelector</code> 。</p>
+<!-- raw HTML omitted -->
+<h4 id="transactionmanangementconfigurationselector">TransactionManangementConfigurationSelector</h4>
+<p>在Spring中， <code>Selector</code> 通常都是用来选择一些Bean，向容器注册BeanDefinition的(严格意义上Selector仅时选择过程，注册的具体过程是在 <code>ConfigurationClasspathPostProcessor</code> 解析时，调用 <code>ConfigurationClassParser</code> 触发)。
+主要的逻辑就是根据代理模式，注册不同的BeanDefinition。
+对Proxy的模式而言，注入的有两个：</p>
+<ul>
+<li>AutoProxyRegistrar</li>
+<li>ProxyTransactionManagementConfiguration</li>
+</ul>
+<h5 id="autoproxyregistrar">AutoProxyRegistrar</h5>
+<p>Registrar同样也是用来向容器注册Bean的，在Proxy的模式下，它会调用 <code>AopConfigUtils.registerAutoProxyCreatorIfNecessary(registry);</code> 向容器中注册 <code>InfrastructureAdvisorAutoProxyCreator</code> 。而这个类就是我们上文提到的 <code>AbstractAdvisorAutoProxyCreator</code> 的子类。
+从而，我们完成了我们的第一个条件——AOP代理。</p>
+<h5 id="proxytransactionmanagementconfiguration">ProxyTransactionManagementConfiguration</h5>
+<pre><code class="language-java">@Configuration
+public class ProxyTransactionManagementConfiguration extends AbstractTransactionManagementConfiguration {
+
+	@Bean(name = TransactionManagementConfigUtils.TRANSACTION_ADVISOR_BEAN_NAME)
+	@Role(BeanDefinition.ROLE_INFRASTRUCTURE)
+	public BeanFactoryTransactionAttributeSourceAdvisor transactionAdvisor() {
+		BeanFactoryTransactionAttributeSourceAdvisor advisor = new BeanFactoryTransactionAttributeSourceAdvisor();
+		advisor.setTransactionAttributeSource(transactionAttributeSource());
+		advisor.setAdvice(transactionInterceptor());
+		if (this.enableTx != null) {
+			advisor.setOrder(this.enableTx.&lt;Integer&gt;getNumber(&quot;order&quot;));
+		}
+		return advisor;
+	}
+
+	@Bean
+	@Role(BeanDefinition.ROLE_INFRASTRUCTURE)
+	public TransactionAttributeSource transactionAttributeSource() {
+		return new AnnotationTransactionAttributeSource();
+	}
+
+	@Bean
+	@Role(BeanDefinition.ROLE_INFRASTRUCTURE)
+	public TransactionInterceptor transactionInterceptor() {
+		TransactionInterceptor interceptor = new TransactionInterceptor();
+		interceptor.setTransactionAttributeSource(transactionAttributeSource());
+		if (this.txManager != null) {
+            // 注入事务管理器
+			interceptor.setTransactionManager(this.txManager);
+		}
+		return interceptor;
+	}
+
+}
+</code></pre>
+<p><code>ProxyTransactionManagementConfiguration</code> 是一个配置类，如果算上其继承的父类，一共是声明了四个类：</p>
+<ol>
+<li>TransactionalEventListenerFactory</li>
+<li>BeanFactoryTransactionAttributeSourceAdvisor</li>
+<li>TransactionAttributeSource</li>
+<li>TransactionInterceptor</li>
+</ol>
+<p>后三个类相对比较重要，我们一一分析。</p>
+<h6 id="beanfactorytransactionattributesourceadvisor">BeanFactoryTransactionAttributeSourceAdvisor</h6>
+<p>从名字看就知道这是一个Advisor 切面，那么它身上应该有Pointcut 切点和advice通知，切点是<code>TransactionAttributeSourcePointcut</code> ，主要是一些filter和matches之类的方法，筛选<strong>使用了@Transactional 注解的方法或类</strong>。如果有这个，则利用所设置的advice（也就是TransactionInterceptor）进行AOP，生成代理对象。</p>
+<h6 id="transactionattributesource">TransactionAttributeSource</h6>
+<p><code>TransactionAttributeSource</code> 只是一个接口，扩展了 <code>TransactionDefinition</code> ，增加了 <code>isCandidateClass()</code> 的方法(可以用来帮助Pointcut匹配)。实际创建的是AnnotationTransactionAttributeSource, <strong>用于解析@Transactional注解</strong></p>
+<h6 id="transactioninterceptor">TransactionInterceptor</h6>
+<p>这里主要做了两件事，一指定事务管理器PlatformTransactionManager，二完成通知处理即增强</p>
+<pre><code>	@Nullable
+	protected Object invokeWithinTransaction(Method method, @Nullable Class&lt;?&gt; targetClass,
+			final InvocationCallback invocation) throws Throwable {
+
+		
+		TransactionAttributeSource tas = getTransactionAttributeSource();
+		final TransactionAttribute txAttr = (tas != null ? tas.getTransactionAttribute(method, targetClass) : null);
+		final TransactionManager tm = determineTransactionManager(txAttr);
+
+		//省略部分代码
+        
+        //获取事物管理器
+		PlatformTransactionManager ptm = asPlatformTransactionManager(tm);
+		final String joinpointIdentification = methodIdentification(method, targetClass, txAttr);
+
+		if (txAttr == null || !(ptm instanceof CallbackPreferringPlatformTransactionManager)) {
+			// 打开事务(内部就是getTransactionStatus的过程)
+			TransactionInfo txInfo = createTransactionIfNecessary(ptm, txAttr, joinpointIdentification);
+
+			Object retVal;
+			try {
+				// 执行业务逻辑 invocation.proceedWithInvocation();
+			}
+			catch (Throwable ex) {
+				// 异常回滚
+				completeTransactionAfterThrowing(txInfo, ex);
+				throw ex;
+			}
+			finally {
+				cleanupTransactionInfo(txInfo);
+			}
+
+			//省略部分代码
+            
+            //提交事物
+			commitTransactionAfterReturning(txInfo);
+			return retVal;
+		}
+</code></pre>
+<p>事务失效场景，</p>
+<h4 id="事务的传播机制">事务的传播机制</h4>
+<p>spring 对事务的控制，是使用 aop 切面实现的，我们不用关心事务的开始，提交 ，回滚，只需要在方法上加 <code>@Transactional</code> 注解，这时候就有问题了。</p>
+<ul>
+<li>场景一： serviceA 方法调用了 serviceB 方法，但两个方法都有事务，这个时候如果 serviceB 方法异常，是让 serviceB 方法提交，还是两个一起回滚。</li>
+<li>场景二：serviceA 方法调用了 serviceB 方法，但是只有 serviceA 方法加了事务，是否把 serviceB 也加入 serviceA 的事务，如果 serviceB 异常，是否回滚 serviceA 。</li>
+<li>场景三：serviceA 方法调用了 serviceB 方法，两者都有事务，serviceB 已经正常执行完，但 serviceA 异常，是否需要回滚 serviceB 的数据。</li>
+</ul>
+<p>所谓spring事务的传播机制，就是定义在存在多个事务同时存在的时候，spring应该如何处理这些事务的行为。这些属性在TransactionDefinition中定义</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">常量名称</th>
+<th style="text-align:left">常量解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">PROPAGATION_REQUIRED</td>
+<td style="text-align:left">支持当前事务，如果当前存在事务，则使用该事务。 如果当前没有事务，则创建一个新的事务。是 Spring 默认的事务的传播</td>
+</tr>
+<tr>
+<td style="text-align:left">PROPAGATION_SUPPORTS</td>
+<td style="text-align:left">支持当前事务，如果当前存在事务，则使用该事务，如果当前不存在事务，则以非事务的方式运行</td>
+</tr>
+<tr>
+<td style="text-align:left">PROPAGATION_MANDATORY</td>
+<td style="text-align:left">支持当前事务，如果当前存在事务，则使用该事务，如果当前事务不存在则抛出异常</td>
+</tr>
+<tr>
+<td style="text-align:left">PROPAGATION_REQUIRES_NEW</td>
+<td style="text-align:left">新建事务，如果当前存在事务，把当前事务挂起。新建的事务将和被挂起的事务没有任何关系，是两个独立的事务，外层事务失败回滚之后，不能回滚内层事务执行的结果，内层事务失败抛出异常，外层事务捕获，也可以不处理回滚操作</td>
+</tr>
+<tr>
+<td style="text-align:left">PROPAGATION_NOT_SUPPORTED</td>
+<td style="text-align:left">以非事务方式执行操作，如果当前存在事务，就把当前事务挂起。</td>
+</tr>
+<tr>
+<td style="text-align:left">PROPAGATION_NEVER</td>
+<td style="text-align:left">以非事务方式执行，如果当前存在事务，则抛出异常。</td>
+</tr>
+<tr>
+<td style="text-align:left">PROPAGATION_NESTED</td>
+<td style="text-align:left">嵌套事务。如果当前存在事务，它将会成为父级事务的一个子事务，方法结束后并没有提交，只有等父事务结束才提交。如果没有活动事务，则按REQUIRED属性执行</td>
+</tr>
+</tbody>
+</table>
+<h3 id="spring缓存">spring缓存</h3>
+<h3 id="分库分表">分库分表</h3>
+<p>shardingjdbc</p>
+<h3 id="springjdbcmybatis">springjdbc，mybatis</h3>
+<h3 id="重复支付">重复支付</h3>
+<h3 id="怎么保证状态的一致性状态机">怎么保证状态的一致性，状态机</h3>
+<h3 id="springboot启动类的理解">springboot启动类的理解</h3>
+<h3 id="enablexxx">@EnableXXX</h3>
+<p>在 <code>SpringBoot</code>中 <code>@Enable</code>的实现方式用两种。</p>
+<ul>
+<li>
+<p>注解驱动的方式，我们以 <code>@EnableWebMvc</code>为例进行探究；</p>
+</li>
+<li>
+<p>接口编程的方式，我们以 <code>@EnableCaching</code>为例进行探究。</p>
+</li>
+</ul>
+<h4 id="注解驱动方式enablewebmvc">注解驱动方式（<code>@EnableWebMvc</code>）</h4>
+<p>在 <code>Spring Boot</code>项目中，当我们可以使用 <code>@EnableWebMvc</code>注解用来激活我们的 <code>Spring MVC</code>相关的配置，接下来进入源码一探究竟。</p>
+<pre><code>@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.TYPE)
+@Documented
+@Import(DelegatingWebMvcConfiguration.class)
+public @interface EnableWebMvc {
+}
+</code></pre>
+<p>通过观察上面的源码，我们就可以大胆的猜测，其实使用 <code>@EnableWebMvc</code>注解的作用就是导入 <code>DelegatingWebMvcConfiguration.class</code>这个类，接下来我们就进入这个类看看。</p>
+<pre><code>@Configuration
+public class DelegatingWebMvcConfiguration extends WebMvcConfigurationSupport {
+
+    ........
+    @Override
+    protected void addInterceptors(InterceptorRegistry registry) {
+        this.configurers.addInterceptors(registry);
+    }
+
+    @Override
+    protected void addResourceHandlers(ResourceHandlerRegistry registry) {
+        this.configurers.addResourceHandlers(registry);
+    }
+    ........
+}
+</code></pre>
+<p>进入到这个类中我们发现了这个 <code>@Configuration</code>注解，到这儿我们好像明白了写什么。首先这个 <code>DelegatingWebMvcConfiguration</code>类继承了 <code>WebMvcConfigurationSupport</code>类，重写了里面的关于 <code>WebMvc</code>的相关配置，然后作为一个配置类加载到我们的 <code>Spring</code>容器中。至此来实现启动（激活）<code>WebMvc</code>模块。</p>
+<h4 id="接口编程的方式enablecaching">接口编程的方式（<code>@EnableCaching</code>）</h4>
+<p>在 <code>Spring Boot</code>项目中，当我们可以使用 <code>@EnableCaching</code>注解用来激活我们的缓存相关的配置，接着进入源码看看到底做了什么。</p>
+<pre><code>@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+@Import(CachingConfigurationSelector.class)
+public @interface EnableCaching {
+
+    boolean proxyTargetClass() default false;
+    AdviceMode mode() default AdviceMode.PROXY;
+    int order() default Ordered.LOWEST_PRECEDENCE;
+
+}
+</code></pre>
+<p>这里 <code>@EnableCaching</code>同样是使用 <code>@Import</code>导入了一个配置类，而它导入的是 <code>CachingConfigurationSelector</code>，接着我进入这个类看一看。</p>
+<pre><code>public class CachingConfigurationSelector extends AdviceModeImportSelector&lt;EnableCaching&gt; {
+
+    .....
+  
+    @Override
+    public String[] selectImports(AdviceMode adviceMode) {
+        switch (adviceMode) {
+            case PROXY:
+                return getProxyImports();
+            case ASPECTJ:
+                return getAspectJImports();
+            default:
+                return null;
+        }
+    }
+    .....
+}
+</code></pre>
+<p>发现其实这个类没有被注解标注，但是它继承了 <code>AdviceModeImportSelector&lt;enablecaching&gt;</code>，而这个类又继承了 <code>ImportSelector</code>，并且我们可以看看 <code>ImportSelector</code>的代码：</p>
+<pre><code>public interface ImportSelector {
+
+    /**
+     * Select and return the names of which class(es) should be imported based on
+     * the {@link AnnotationMetadata} of the importing @{@link Configuration} class.
+     */
+    String[] selectImports(AnnotationMetadata importingClassMetadata);
+
+}
+</code></pre>
+<p>这个类中只用一个方法，那就是 <code>selectImports</code>。也就是说当我们重写了这个方法之后，我们可以在方法中添加自己的逻辑判断，来决定最后导入哪些配置类。这样就可以实现灵活的加载配置。这个方法的返回值 <code>String[]</code>里面存放的是所有复合条件的配置类的<strong>全路径信息</strong>。</p>
+<h3 id="mysql中事务怎么实现的">mysql中事务怎么实现的</h3>
+<h3 id="heading"></h3>
+
+    </div>
+    <div class="article-footer">
+<blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接: </strong>
+      <a href="https://wzgl998877.github.io/2022/02/%E9%9D%A2%E8%AF%95%E9%A2%98%E6%B1%87%E6%80%BB/" title="面试题汇总" target="_blank" rel="external">https://wzgl998877.github.io/2022/02/%E9%9D%A2%E8%AF%95%E9%A2%98%E6%B1%87%E6%80%BB/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong>License: </strong>
+        <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN</a>
+    </li>
+  </ul>
+</blockquote>
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/wzgl998877/" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="https://wzgl998877.github.io/avatar.png" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/wzgl998877/" target="_blank"><span class="text-dark">microzheng</span><small class="ml-1x">努力会说谎，但努力不会白费</small></a></h3>
+        <div>不想搬砖的码农</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+    </div>
+  </article>
+</div><nav class="bar bar-footer clearfix" data-stick-bottom>
+    <div class="bar-inner">
+        <ul class="pager pull-left">
+            <li class="prev">
+                <a href="https://wzgl998877.github.io/2022/02/leetcode%E5%88%B7%E9%A2%98%E6%80%BB%E7%BB%93/" title="LeetCode刷题总结"><i
+                        class="icon icon-angle-left"
+                        aria-hidden="true"></i><span>&nbsp;&nbsp;下一篇</span></a>
+            </li>
+            <li class="next">
+                <a href="https://wzgl998877.github.io/2022/02/mysql%E6%80%BB%E7%BB%93/"
+                    title="Mysql总结"><span>上一篇&nbsp;&nbsp;</span><i
+                        class="icon icon-angle-right" aria-hidden="true"></i></a>
+            </li>
+            
+            <li class="toggle-toc">
+                <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false"
+                    title="文章目录" role="button">
+                    <span>[&nbsp;</span><span>文章目录</span>
+                    <i class="text-collapsed icon icon-anchor"></i>
+                    <i class="text-in icon icon-close"></i>
+                    <span>]</span>
+                </a>
+            </li>
+        </ul>
+        <div class="bar-right">
+            <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter"
+                data-mobile-sites="weibo,qq,qzone"></div>
+        </div>
+    </div>
+</nav>
+
+
+</main><footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+<ul class="social-links">
+    <li><a href="https://github.com/wzgl998877/" target="_blank" title="github" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-github"></i></a></li>
+    <li><a href="https://wzgl998877.github.io/index.xml" target="_blank" title="rss" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-rss"></i></a></li>
+</ul>
+  <div class="copyright">
+    &copy;2022  -
+    2023
+    <div class="publishby">
+        Theme by <a href="https://github.com/wzgl998877/" target="_blank"> microzheng </a>base on<a href="https://github.com/xiaoheiAh/hugo-theme-pure" target="_blank"> pure</a>.
+    </div>
+    
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_SVG"></script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+            showMathMenu: false, //disables context menu
+            tex2jax: {
+            inlineMath: [ ['$','$'], ['\\(','\\)'] ]
+           }
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+<script>
+    window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/highlight.min.js"></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/python.min.js" defer></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/javascript.min.js" defer></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/java.min.js" defer></script><script>
+    hljs.configure({
+        tabReplace: '    ', 
+        classPrefix: ''     
+        
+    })
+    hljs.initHighlightingOnLoad();
+</script>
+<script src="https://wzgl998877.github.io/js/application.min.a94ab19cb63a95c8d7fbd7b85cab3ddeea8c369bdf75b9cab6708787ead123af.js"></script>
+<script src="https://wzgl998877.github.io/js/plugin.min.19c5bcb2fb0789ab4f2b7834e5ceb5e92635645605bab902c1024b25f1502364.js"></script>
+
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(未命名)',
+            },
+            ROOT_URL: 'https:\/\/wzgl998877.github.io\/',
+            CONTENT_URL: 'https:\/\/wzgl998877.github.io\/\/searchindex.json ',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script type="text/javascript" src="https://wzgl998877.github.io/js/insight.min.4a2d52de4bfff73e0c688404fe3d17c9a3ae12d9888e1e1ac9c690e4890de2ded50fe55f2b819c2ba55435a76f396f3ea6805765f0b0af5635cdf74ea459eab0.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+<script>
+    tocbot.init({
+        
+        tocSelector: '.js-toc',
+        
+        contentSelector: '.js-toc-content',
+        
+        headingSelector: 'h1, h2, h3',
+        
+        hasInnerContainers: true,
+    });
+</script>
+
+
+  </body>
+</html>
