@@ -20,7 +20,7 @@
     <meta http-equiv="window-target" content="_top" />
     
     
-    <meta name="description" content="" />
+    <meta name="description" content="[TOC] 容器 容器- Container，容器其实是一种沙盒技术。沙盒就是能够像一个集装箱一样，把你的应用“装”起来的技术。这样，应用与应用之间，就因" />
     <meta name="generator" content="Hugo 0.91.2 with theme pure" />
     <title>Docker和k8s - 码农的学习笔记</title>
     
@@ -30,19 +30,19 @@
     <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/9.15.10/styles/github.min.css" async>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css" async>
     <meta property="og:title" content="Docker和k8s" />
-<meta property="og:description" content="" />
+<meta property="og:description" content="[TOC] 容器 容器- Container，容器其实是一种沙盒技术。沙盒就是能够像一个集装箱一样，把你的应用“装”起来的技术。这样，应用与应用之间，就因" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://wzgl998877.github.io/2022/09/docker%E5%92%8Ck8s/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-09-09T10:26:21+08:00" />
 <meta property="article:modified_time" content="2022-09-09T10:26:21+08:00" />
 
 <meta itemprop="name" content="Docker和k8s">
-<meta itemprop="description" content=""><meta itemprop="datePublished" content="2022-09-09T10:26:21+08:00" />
+<meta itemprop="description" content="[TOC] 容器 容器- Container，容器其实是一种沙盒技术。沙盒就是能够像一个集装箱一样，把你的应用“装”起来的技术。这样，应用与应用之间，就因"><meta itemprop="datePublished" content="2022-09-09T10:26:21+08:00" />
 <meta itemprop="dateModified" content="2022-09-09T10:26:21+08:00" />
-<meta itemprop="wordCount" content="0">
+<meta itemprop="wordCount" content="3655">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Docker和k8s"/>
-<meta name="twitter:description" content=""/>
+<meta name="twitter:description" content="[TOC] 容器 容器- Container，容器其实是一种沙盒技术。沙盒就是能够像一个集装箱一样，把你的应用“装”起来的技术。这样，应用与应用之间，就因"/>
 
     <!--[if lte IE 9]>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -323,12 +323,291 @@
   <a class="article-category-link" href="/categories/%E4%BA%91%E5%8E%9F%E7%94%9F/"> 云原生 </a>
 </span>
 
-		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 0字</span>
-		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 0分 </span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 3655字</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 8分 </span>
       </div>
     </div>
     <div class="article-entry marked-body js-toc-content" itemprop="articleBody">
-      
+      <p>[TOC]</p>
+<h2 id="容器">容器</h2>
+<p>容器- Container，<strong>容器其实是一种沙盒技术</strong>。沙盒就是能够像一个集装箱一样，把你的应用“装”起来的技术。这样，应用与应用之间，就因为有了<strong>边界</strong>而不至于相互干扰；而被装进集装箱的应用，也可以被方便地搬来搬去</p>
+<p><img src="a8bf426d370b71608b6ec8645ba65cd8.jpg" alt="img"></p>
+<h3 id="namespace">namespace</h3>
+<p>命名空间。Namespace 是 Linux 内核的一项功能，该功能对内核资源(进程 ID、主机名、用户 ID、文件名、网络访问和进程间通信等相关资源)进行隔离，使得进程都可以在单独的命名空间中运行，并且只可以访问当前命名空间的资源。创建容器进程时，<strong>指定了这个进程所需要启用的一组 Namespace 参数</strong>。这样，容器就只能“看”到当前 Namespace 所限定的资源、文件、设备、状态，或者配置。而对于宿主机以及其他不相关的程序，它就完全看不到了。<strong>容器，其实是一种特殊的进程而已</strong>。<strong>相当于给进程盖了一间小板房</strong>，这样就实现了系统全局资源和进程局部资源的隔离。</p>
+<h3 id="cgroups">cgroups</h3>
+<p>全称是 Linux Control Group， 用来实现对进程的 CPU、内存等资源的优先级和配额限制。限制一个进程组能够使用的资源上限，包括 CPU、内存、磁盘、网络带宽等等。<strong>相当于给进程的小板房加了一个天花板</strong>。</p>
+<h3 id="chroot">chroot</h3>
+<p>chroot 它可以更改进程的根目录，也就是限制访问文件系统，创建<strong>一份完全独立的文件系统</strong>，<strong>相当于给进程的小板房铺上了地砖。</strong></p>
+<h3 id="创建一个容器">创建一个容器</h3>
+<ol>
+<li>启用 Linux Namespace 配置。</li>
+<li>设置指定的 Cgroups 参数。</li>
+<li>切换进程的根目录（Change Root）。</li>
+</ol>
+<h3 id="与虚拟机对比">与虚拟机对比</h3>
+<p><img src="d1bb34cda8744514ba4c233435bf4e96.jpg" alt="img"></p>
+<p>虚拟机的工作原理，名为 Hypervisor 的软件是虚拟机最主要的部分。<strong>它通过硬件虚拟化功能，模拟出了运行一个操作系统需要的各种硬件，比如 CPU、内存、I/O 设备</strong>等等。然后，<strong>它在这些虚拟的硬件上安装了一个新的操作系统，即 Guest OS</strong>。这样，用户的应用进程就可以运行在这个虚拟的机器中，它能看到的自然也只有 Guest OS 的文件和目录，以及这个机器里的虚拟设备。这就是为什么虚拟机也能起到将不同的应用进程相互隔离的作用。</p>
+<p><img src="image-20231201154519399.png" alt="image-20231201154519399"></p>
+<h2 id="镜像">镜像</h2>
+<p>其实我们在其他场合中也曾经见到过“镜像”这个词，比如最常见的光盘镜像，重装电脑时使用的硬盘镜像，还有虚拟机系统镜像。这些“镜像”都有一些相同点：<strong>只读，不允许修改，以标准格式存储了一系列的文件，然后在需要的时候再从中提取出数据运行起来。 容器技术里的镜像也是同样的道理</strong>。容器的镜像<strong>封装了应用程序以及它运行所需要的所有依赖</strong>。它还有一个更为专业的名字，叫作：<strong>rootfs（根文件系统）</strong>：<strong>挂载在容器根目录上、用来为容器进程提供隔离后执行环境的文件系统</strong>。rootfs 只是一个操作系统所包含的文件、配置和目录，<strong>并不包括操作系统内核</strong>。rootfs 只包括了操作系统的“躯壳”，并没有包括操作系统的“灵魂”。<strong>同一台机器上的所有容器，都共享宿主机操作系统的内核</strong></p>
+<blockquote>
+<p>由于 rootfs 里打包的不只是应用，而是整个操作系统的文件和目录，也就意味着，应用以及它运行所需要的所有依赖，都被封装在了一起。正是由于 rootfs 的存在，容器才有了一个被反复宣传至今的重要特性：一致性。打通了应用在本地开发和远端执行环境之间难以逾越的鸿沟。</p>
+</blockquote>
+<p><!-- raw HTML omitted -->镜像是容器静态的定义，容器是镜像运行时的实体<!-- raw HTML omitted --></p>
+<p><img src="59a1cd035e21fe297072b20475d3c833.jpg" alt="img"></p>
+<h3 id="unionfs">UnionFS</h3>
+<p>联合文件系统(Union File System)，最<strong>主要的功能是将多个不同位置的目录联合挂载（union mount）到同一个目录下</strong>。比如，我现在有两个目录 A 和 B，它们分别有两个文件：</p>
+<pre><code class="language-shell">$ tree
+.
+├── A
+│  ├── a
+│  └── x
+└── B
+  ├── b
+  └── x
+</code></pre>
+<p>然后，我使用联合挂载的方式，将这两个目录挂载到一个公共的目录 C 上：</p>
+<pre><code class="language-shell">$ mkdir C
+$ mount -t aufs -o dirs=./A:./B none ./C
+</code></pre>
+<p>这时，我再查看目录 C 的内容，就能看到目录 A 和 B 下的文件被合并到了一起：</p>
+<pre><code class="language-shell">$ tree ./C
+./C
+├── a
+├── b
+└── x
+</code></pre>
+<p><!-- raw HTML omitted -->文件联合系统是docker实现镜像的基本原理<!-- raw HTML omitted -->，太复杂了还没搞懂</p>
+<h2 id="docker">Docker</h2>
+<p>Docker is an open platform for developing, shipping, and running applications. Docker enables you to separate your applications from your infrastructure so you can deliver software quickly. With Docker, you can manage your infrastructure in the same ways you manage your applications. By taking advantage of Docker&rsquo;s methodologies for shipping, testing, and deploying code, you can significantly reduce the delay between writing code and running it in production.
+Docker 是一个用于开发、发布和运行应用程序的开放平台。Docker 使您能够将应用程序与基础架构分离，以便快速交付软件。借助 Docker，您可以像管理应用程序一样管理基础架构。通过利用 Docker 的方法来交付、测试和部署代码，可以显著减少编写代码和在生产环境中运行代码之间的延迟。</p>
+<p>Docker provides the ability to package and run an application in a loosely isolated environment called a container. The isolation and security lets you run many containers simultaneously on a given host. Containers are lightweight and contain everything needed to run the application, so you don&rsquo;t need to rely on what&rsquo;s installed on the host. You can share containers while you work, and be sure that everyone you share with gets the same container that works in the same way.
+Docker 提供了在<strong>容器中打包和运行应用程序的功能</strong>。隔离和安全性允许您在给定主机上同时运行<strong>多个容器</strong>。容器是轻量级的，包含运行应用程序所需的一切，因此无需依赖主机上安装的内容。您可以在工作时共享容器，并确保与您共享的每个人都能获得以相同方式工作的相同容器。</p>
+<p>Docker是一种开源平台，用于开发、交付和运行应用程序。它利用<strong>容器化技术</strong>，使得开发者能够将应用程序及其所有依赖项打包到一个称为容器的独立单元中。这个容器包含了应用程序的代码、运行时、系统工具、库以及设置，确保应用程序能够在不同的环境中以一致的方式运行。</p>
+<h3 id="docker架构">Docker架构</h3>
+<p><img src="docker-architecture.webp" alt="Docker Architecture diagram"></p>
+<ul>
+<li>Docker client：客户端，用户使用的</li>
+<li>Docker daemon：守护进程，负责构建、运行和分发Docker 容器等，管理docker容器的</li>
+<li>Registry：镜像仓库</li>
+</ul>
+<p>Docker 使用<strong>客户端-服务端架构</strong> 客户端与 Docker 守护程序通信，后者负责构建、运行和分发 Docker 容器的繁重工作。Docker 客户端和守护程序可以在同一系统上运行，也可以将 Docker 客户端连接到远程 Docker 守护程序。Docker 客户端和守护程序使用 REST API、UNIX 套接字或网络接口进行通信。</p>
+<h3 id="docker命令">Docker命令</h3>
+<p>Docker 提供了许多命令，用于管理容器、镜像、网络等方面的各种操作。以下是一些常用的 Docker 命令：</p>
+<ol>
+<li>
+<p><strong>容器生命周期管理：</strong></p>
+<ul>
+<li><code>docker run</code>: 运行一个容器。</li>
+<li><code>docker start</code>: 启动已停止的容器。</li>
+<li><code>docker stop</code>: 停止一个运行中的容器。</li>
+<li><code>docker restart</code>: 重启一个容器。</li>
+<li><code>docker pause</code>: 暂停容器的所有进程。</li>
+<li><code>docker unpause</code>: 恢复容器的所有进程。</li>
+<li><code>docker rm</code>: 删除一个或多个容器。</li>
+</ul>
+</li>
+<li>
+<p><strong>容器信息查看：</strong></p>
+<ul>
+<li><code>docker ps</code>: 列出运行中的容器。</li>
+<li><code>docker ps -a</code>: 列出所有容器，包括停止的。</li>
+<li><code>docker inspect</code>: 查看容器详细信息。</li>
+</ul>
+</li>
+<li>
+<p><strong>镜像管理：</strong></p>
+<ul>
+<li><code>docker images</code> 或 <code>docker image ls</code>: 列出本地镜像。</li>
+<li><code>docker pull</code>: 从远程仓库拉取镜像。</li>
+<li><code>docker rmi</code>: 删除一个或多个本地镜像。</li>
+</ul>
+</li>
+<li>
+<p><strong>构建和提交镜像：</strong></p>
+<ul>
+<li><code>docker build</code>: 根据 Dockerfile 构建镜像。</li>
+<li><code>docker commit</code>: 提交容器为新的镜像。</li>
+</ul>
+</li>
+<li>
+<p><strong>容器日志和执行：</strong></p>
+<ul>
+<li><code>docker logs</code>: 查看容器的日志。</li>
+<li><code>docker exec</code>: 在运行中的容器中执行命令。</li>
+</ul>
+</li>
+<li>
+<p><strong>网络：</strong></p>
+<ul>
+<li><code>docker network ls</code>: 列出 Docker 网络。</li>
+<li><code>docker network inspect</code>: 查看网络详细信息。</li>
+</ul>
+</li>
+<li>
+<p><strong>其他常用命令：</strong></p>
+<ul>
+<li>
+<p><code>docker version</code>: 显示 Docker 版本信息。</p>
+</li>
+<li>
+<p><code>docker info</code>: 显示 Docker 系统信息。</p>
+</li>
+<li>
+<p><code>docker-compose</code>: 使用 Docker Compose 工具。</p>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="使用docker运行一个应用">使用Docker运行一个应用</h3>
+<p>将一个应用运行在docker中，需要两步</p>
+<ul>
+<li>构建docker镜像</li>
+<li>使用docker运行</li>
+</ul>
+<p>Docker中制作容器镜像使用的是Dockerfile</p>
+<h4 id="dockerfile介绍">Dockerfile介绍</h4>
+<p>Docker can build images automatically by reading the instructions from a <code>Dockerfile</code>. A <code>Dockerfile</code> is a text document that contains all the commands a user could call on the command line to assemble an image.</p>
+<p>Docker 可以通过读取“Dockerfile”中的指令<strong>自动构建镜像</strong>。 “Dockerfile”是一个文本文档，其中包含用户可以在命令行上调用来构建镜像的所有命令。<!-- raw HTML omitted -->Dockerfile 是用于构建 Docker 镜像的脚本文件<!-- raw HTML omitted -->,语法的简单介绍如下：</p>
+<ol>
+<li>
+<p><strong><code>FROM</code>：</strong> 指定基础镜像，即构建新镜像所基于的镜像。通常是操作系统或者包含运行时环境的基础镜像。</p>
+<pre><code>DockerfileCopy code
+FROM openjdk:11
+</code></pre>
+</li>
+<li>
+<p><strong><code>WORKDIR</code>：</strong> 设置容器内的工作目录，即后续指令执行的基准目录。</p>
+<pre><code>DockerfileCopy code
+WORKDIR /app
+</code></pre>
+</li>
+<li>
+<p><strong><code>COPY</code> 或 <code>ADD</code>：</strong> 将本地文件或目录复制到容器中。<code>COPY</code> 用于复制本地文件，而 <code>ADD</code> 不仅复制文件，还支持 URL 和解压缩。</p>
+<pre><code>DockerfileCopy code
+COPY src/ /app/src
+</code></pre>
+</li>
+<li>
+<p><strong><code>RUN</code>：</strong> 在容器内执行命令，通常用于安装软件包、更新系统、配置环境等。</p>
+<pre><code>DockerfileCopy code
+RUN apt-get update &amp;&amp; apt-get install -y some-package
+</code></pre>
+</li>
+<li>
+<p><strong><code>EXPOSE</code>：</strong> 指定容器监听的网络端口。该指令并不会实际映射或打开端口，仅作为文档描述。</p>
+<pre><code>DockerfileCopy code
+EXPOSE 8080
+</code></pre>
+</li>
+<li>
+<p><strong><code>CMD</code> 或 <code>ENTRYPOINT</code>：</strong> 定义容器启动时执行的命令。<code>CMD</code> 用于指定默认的执行命令，<code>ENTRYPOINT</code> 用于指定容器启动时运行的可执行文件。</p>
+<pre><code>DockerfileCopy code
+CMD [&quot;java&quot;, &quot;-jar&quot;, &quot;app.jar&quot;]
+</code></pre>
+</li>
+<li>
+<p><strong><code>ENV</code>：</strong> 设置环境变量，用于配置容器内部的环境。</p>
+<pre><code>DockerfileCopy code
+ENV JAVA_HOME /usr/lib/jvm/java-11-openjdk
+</code></pre>
+</li>
+<li>
+<p><strong><code>VOLUME</code>：</strong> 创建一个挂载点，用于让容器与主机或其他容器共享数据。</p>
+<pre><code>DockerfileCopy code
+VOLUME /data
+</code></pre>
+</li>
+<li>
+<p><strong><code>USER</code>：</strong> 设置运行时的用户名或 UID，并切换到该用户。</p>
+<pre><code>DockerfileCopy code
+USER appuser
+</code></pre>
+</li>
+<li>
+<p><strong><code>ARG</code>：</strong> 定义构建时传递给镜像的参数。</p>
+<pre><code>DockerfileCopy code
+ARG VERSION=latest
+</code></pre>
+</li>
+</ol>
+<h4 id="步骤">步骤</h4>
+<ol>
+<li>
+<p>建一个springboot项目，随便写一个接口</p>
+<pre><code class="language-java">package com.zt.study.docker.study.controller;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+/**
+ * @author zhengtao on 2023/12/2
+ */
+@RestController
+public class TestController {
+
+    @RequestMapping(&quot;/hello&quot;)
+    public String helloWorld() {
+        return &quot;hello world&quot;;
+    }
+}
+</code></pre>
+</li>
+<li>
+<p>编写Dockerfile文件</p>
+<pre><code class="language-shell">#使用 OpenJDK 8 作为基础镜像
+FROM openjdk:8
+
+# 设置工作目录
+WORKDIR /java
+
+# 复制文件
+COPY *.jar /java/docker-study.jar
+
+# 暴露端口
+EXPOSE 8080
+
+# 启动命令
+CMD [&quot;java&quot;,&quot;-jar&quot;,&quot;/java/docker-study.jar&quot;]
+</code></pre>
+</li>
+</ol>
+<p>将jar文件和Dockerfile文件放在linux上同一层级</p>
+<ol start="3">
+<li>使用docker build命令打包镜像</li>
+</ol>
+<pre><code class="language-shell"># -t 为命名，.代表在此层目录找Dockerfile
+docker build -t docker-study .
+</code></pre>
+<p><img src="image-20231202165734868.png" alt="image-20231202165734868"></p>
+<ol start="4">
+<li>
+<p>使用docker run命名运行容器</p>
+<pre><code class="language-shell"># -d 代表在后台运行，-p代表暴露端口，即将容器的端口 8080 发布到本机上的8080
+docker run -dp 127.0.0.1:8080:8080 docker-study
+</code></pre>
+</li>
+<li>
+<p>使用docker ps看是否启动成功</p>
+<p><img src="image-20231202170424284.png" alt="image-20231202170424284"></p>
+<p>也可以使用curl http://localhost:8080/hello验证</p>
+<p><img src="image-20231202170459988.png" alt="image-20231202170459988"></p>
+</li>
+<li>
+<p>可以将这个镜像推到docker hub中https://hub.docker.com/</p>
+<p>先在自己的仓库中新建一个docker-study仓库</p>
+<pre><code class="language-shell"># 登录到你自己的docker hub账号，比如我的wzgl998877
+docker login -u YOUR-USER-NAME
+
+# 把镜像命名修改为你自己的镜像名称
+docker tag getting-started YOUR-USER-NAME/getting-started
+
+# 推送到docker hub
+docker push YOUR-USER-NAME/getting-started
+</code></pre>
+</li>
+</ol>
+
     </div>
     <div class="article-footer">
 <blockquote class="mt-2x">
