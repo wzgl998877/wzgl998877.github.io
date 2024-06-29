@@ -93,11 +93,11 @@
     
     <item>
       <title>Java 编程思想学习</title>
-      <link>https://wzgl998877.github.io/2022/01/java-%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3%E5%AD%A6%E4%B9%A0/</link>
+      <link>https://wzgl998877.github.io/2022/01/java%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3/</link>
       <pubDate>Sun, 09 Jan 2022 11:24:40 +0800</pubDate>
       
-      <guid>https://wzgl998877.github.io/2022/01/java-%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3%E5%AD%A6%E4%B9%A0/</guid>
-      <description>Java 编程思想学习 第1章 对象导论 好像看不下去，。。。 第2章 一切都是对象 用引用操作对象：每种编程语言都有自己的操纵内存中元素的方式。java中操纵</description>
+      <guid>https://wzgl998877.github.io/2022/01/java%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3/</guid>
+      <description>[TOC] Java 编程思想学习 第1章 对象导论 好像看不下去，。。。 第2章 一切都是对象 用引用操作对象：每种编程语言都有自己的操纵内存中元素的方式。java中操</description>
     </item>
     
     <item>
@@ -116,6 +116,15 @@
       
       <guid>https://wzgl998877.github.io/2022/01/mybatis-%E6%8A%80%E6%9C%AF%E5%86%85%E5%B9%95%E5%AD%A6%E4%B9%A0/</guid>
       <description>mybatis 技术内幕学习 Jdbc 复习 通过JDBC查询数据库数据，一般需要以下七个步骤： 加载JDBC驱动； 建立并获取数据库连接； 创建 JDBC Statements 对象； 设置SQL语句的</description>
+    </item>
+    
+    <item>
+      <title>mybatis 技术内幕学习</title>
+      <link>https://wzgl998877.github.io/2022/01/mybatis/</link>
+      <pubDate>Sun, 09 Jan 2022 11:24:40 +0800</pubDate>
+      
+      <guid>https://wzgl998877.github.io/2022/01/mybatis/</guid>
+      <description>[toc] Jdbc 复习 通过JDBC查询数据库数据，一般需要以下七个步骤： 加载JDBC驱动； 建立并获取数据库连接； 创建 JDBC Statements 对象； 设置SQL语句的传入参数； 执</description>
     </item>
     
     <item>
@@ -179,15 +188,6 @@
       
       <guid>https://wzgl998877.github.io/2022/01/%E6%97%A5%E5%B8%B8%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/</guid>
       <description>[TOC] 日常问题总结 工作中总是会遇到各种各样的问题，只有总结下来才是一笔财富。 fastjson的一些技巧 在工作中总是遇到给前端的字段需要是下划线的</description>
-    </item>
-    
-    <item>
-      <title>消息队列介绍</title>
-      <link>https://wzgl998877.github.io/2022/01/mq%E6%80%BB%E7%BB%93/</link>
-      <pubDate>Sun, 09 Jan 2022 11:24:40 +0800</pubDate>
-      
-      <guid>https://wzgl998877.github.io/2022/01/mq%E6%80%BB%E7%BB%93/</guid>
-      <description>[TOC] 消息队列介绍 消息队列主要应用场景为异步、削峰、解耦。 异步解耦 场景一：用户注册，注册时需要发送短信及邮件，并且需要写库 串行模式。流程如下： ​</description>
     </item>
     
   </channel>

@@ -39,7 +39,7 @@
 <meta itemprop="name" content="Docker和k8s">
 <meta itemprop="description" content="[TOC] 容器 容器- Container，容器其实是一种沙盒技术。沙盒就是能够像一个集装箱一样，把你的应用“装”起来的技术。这样，应用与应用之间，就因"><meta itemprop="datePublished" content="2022-09-09T10:26:21+08:00" />
 <meta itemprop="dateModified" content="2022-09-09T10:26:21+08:00" />
-<meta itemprop="wordCount" content="3655">
+<meta itemprop="wordCount" content="10189">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Docker和k8s"/>
 <meta name="twitter:description" content="[TOC] 容器 容器- Container，容器其实是一种沙盒技术。沙盒就是能够像一个集装箱一样，把你的应用“装”起来的技术。这样，应用与应用之间，就因"/>
@@ -152,7 +152,7 @@
             <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/spring/" class="category-list-link">spring</a><span class="category-list-count">1</span></li>
             <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/" class="category-list-link">中间件</a><span class="category-list-count">3</span></li>
             <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E4%BA%91%E5%8E%9F%E7%94%9F/" class="category-list-link">云原生</a><span class="category-list-count">1</span></li>
-            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E5%B8%B8%E7%94%A8%E6%A1%86%E6%9E%B6/" class="category-list-link">常用框架</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E5%B8%B8%E7%94%A8%E6%A1%86%E6%9E%B6/" class="category-list-link">常用框架</a><span class="category-list-count">4</span></li>
             <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="category-list-link">数据库</a><span class="category-list-count">3</span></li>
             <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E6%97%A5%E5%B8%B8%E6%80%BB%E7%BB%93/" class="category-list-link">日常总结</a><span class="category-list-count">3</span></li>
             <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E7%AE%97%E6%B3%95/" class="category-list-link">算法</a><span class="category-list-count">2</span></li>
@@ -188,7 +188,7 @@
             
             
             <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/mybatis/" class="tag-list-link">mybatis</a><span
-                    class="tag-list-count">1</span></li>
+                    class="tag-list-count">2</span></li>
             
             
             <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/mysql/" class="tag-list-link">mysql</a><span
@@ -323,8 +323,8 @@
   <a class="article-category-link" href="/categories/%E4%BA%91%E5%8E%9F%E7%94%9F/"> 云原生 </a>
 </span>
 
-		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 3655字</span>
-		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 8分 </span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 10189字</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 21分 </span>
       </div>
     </div>
     <div class="article-entry marked-body js-toc-content" itemprop="articleBody">
@@ -383,7 +383,7 @@ $ mount -t aufs -o dirs=./A:./B none ./C
 Docker 是一个用于开发、发布和运行应用程序的开放平台。Docker 使您能够将应用程序与基础架构分离，以便快速交付软件。借助 Docker，您可以像管理应用程序一样管理基础架构。通过利用 Docker 的方法来交付、测试和部署代码，可以显著减少编写代码和在生产环境中运行代码之间的延迟。</p>
 <p>Docker provides the ability to package and run an application in a loosely isolated environment called a container. The isolation and security lets you run many containers simultaneously on a given host. Containers are lightweight and contain everything needed to run the application, so you don&rsquo;t need to rely on what&rsquo;s installed on the host. You can share containers while you work, and be sure that everyone you share with gets the same container that works in the same way.
 Docker 提供了在<strong>容器中打包和运行应用程序的功能</strong>。隔离和安全性允许您在给定主机上同时运行<strong>多个容器</strong>。容器是轻量级的，包含运行应用程序所需的一切，因此无需依赖主机上安装的内容。您可以在工作时共享容器，并确保与您共享的每个人都能获得以相同方式工作的相同容器。</p>
-<p>Docker是一种开源平台，用于开发、交付和运行应用程序。它利用<strong>容器化技术</strong>，使得开发者能够将应用程序及其所有依赖项打包到一个称为容器的独立单元中。这个容器包含了应用程序的代码、运行时、系统工具、库以及设置，确保应用程序能够在不同的环境中以一致的方式运行。</p>
+<p>Docker是一种开源平台，用于开发、交付和运行应用程序。它利用<strong>容器化技术</strong>，使得开发者能够将应用程序及其所有依赖项打包到一个称为容器的独立单元中。这个容器包含了应用程序的代码、运行时、系统工具、库以及设置，确保应用程序能够在不同的环境中以一致的方式运行。<strong>Docker 是一种容器技术的实现，提供了工具和平台，使容器更易于创建和管理</strong></p>
 <h3 id="docker架构">Docker架构</h3>
 <p><img src="docker-architecture.webp" alt="Docker Architecture diagram"></p>
 <ul>
@@ -607,6 +607,433 @@ docker push YOUR-USER-NAME/getting-started
 </code></pre>
 </li>
 </ol>
+<h3 id="制作一条流水线">制作一条流水线</h3>
+<h2 id="kubernetes">Kubernetes</h2>
+<h3 id="概念">概念</h3>
+<p>Kubernetes 是一个可移植、可扩展的开源平台，用于管理容器化的工作负载和服务，可促进声明式配置和自动化。 Kubernetes 拥有一个庞大且快速增长的生态，其服务、支持和工具的使用范围相当广泛。</p>
+<p><strong>Kubernetes</strong> 这个名字源于希腊语，意为“舵手”或“飞行员”。k8s 这个缩写是因为 k 和 s 之间有八个字符的关系。</p>
+<p>Kubernetes 是一个容器编排平台和集群管理系统</p>
+<p>Kubernetes 为你提供：</p>
+<ul>
+<li>
+<p><strong>服务发现和负载均衡</strong></p>
+<p>Kubernetes 可以使用 DNS 名称或自己的 IP 地址来暴露容器。 如果进入容器的流量很大， Kubernetes 可以负载均衡并分配网络流量，从而使部署稳定。</p>
+</li>
+<li>
+<p><strong>存储编排</strong></p>
+<p>Kubernetes 允许你自动挂载你选择的存储系统，例如本地存储、公共云提供商等。</p>
+</li>
+<li>
+<p><strong>自动部署和回滚</strong></p>
+<p>你可以使用 Kubernetes 描述已部署容器的所需状态， 它可以以受控的速率将实际状态更改为期望状态。 例如，你可以自动化 Kubernetes 来为你的部署创建新容器， 删除现有容器并将它们的所有资源用于新容器。</p>
+</li>
+<li>
+<p><strong>自动完成装箱计算</strong></p>
+<p>你为 Kubernetes 提供许多节点组成的集群，在这个集群上运行容器化的任务。 你告诉 Kubernetes 每个容器需要多少 CPU 和内存 (RAM)。 Kubernetes 可以将这些容器按实际情况调度到你的节点上，以最佳方式利用你的资源。</p>
+</li>
+<li>
+<p><strong>自我修复</strong></p>
+<p>Kubernetes 将重新启动失败的容器、替换容器、杀死不响应用户定义的运行状况检查的容器， 并且在准备好服务之前不将其通告给客户端。</p>
+</li>
+<li>
+<p><strong>密钥与配置管理</strong></p>
+<p>Kubernetes 允许你存储和管理敏感信息，例如密码、OAuth 令牌和 SSH 密钥。 你可以在不重建容器镜像的情况下部署和更新密钥和应用程序配置，也无需在堆栈配置中暴露密钥。</p>
+</li>
+<li>
+<p><strong>批处理执行</strong> 除了服务外，Kubernetes 还可以管理你的批处理和 CI（持续集成）工作负载，如有需要，可以替换失败的容器。</p>
+</li>
+<li>
+<p><strong>水平扩缩</strong> 使用简单的命令、用户界面或根据 CPU 使用率自动对你的应用进行扩缩。</p>
+</li>
+<li>
+<p><strong>IPv4/IPv6 双栈</strong> 为 Pod（容器组）和 Service（服务）分配 IPv4 和 IPv6 地址。</p>
+</li>
+<li>
+<p><strong>为可扩展性设计</strong> 在不改变上游源代码的情况下为你的 Kubernetes 集群添加功能。</p>
+</li>
+</ul>
+<p>Kubernetes 不仅仅是一个编排系统，实际上它消除了编排的需要。 编排的技术定义是执行已定义的工作流程：首先执行 A，然后执行 B，再执行 C。 而 Kubernetes 包含了一组独立可组合的控制过程，可以持续地将当前状态驱动到所提供的预期状态。 你不需要在乎如何从 A 移动到 C，也不需要集中控制，这使得系统更易于使用且功能更强大、 系统更健壮，更为弹性和可扩展。</p>
+<h3 id="架构">架构</h3>
+<p><img src="components-of-kubernetes.svg" alt="Components of Kubernetes"></p>
+<p>k8s中，有两个主要的组件集合，分别是Control Plane（控制平面）和Data Plane（数据平面）。它们协同工作以管理和运行容器化应用程序。集群里的计算机被称为“节点”（Node），可以是实机也可以是虚机，<strong>少量的节点用作控制面来执行集群的管理维护工作，其他的大部分节点都被划归数据面，用来跑业务应用</strong>，控制面的节点在 Kubernetes 里叫做 Master Node，一般简称为 Master，它是整个集群里最重要的部分，可以说是 Kubernetes 的大脑和心脏。 数据面的节点叫做 Worker Node，一般就简称为 Worker 或者 Node，相当于 Kubernetes 的手和脚，在 Master 的指挥下干活。</p>
+<ol>
+<li><strong>Control Plane（控制平面）:</strong>
+<ul>
+<li>作用： 控制平面是负责管理整个Kubernetes集群的核心组件集合。做出全局决策（例如，调度），以及检测和响应集群事件。它们决策何时启动、停止和重新调度应用程序容器，以及维护集群的期望状态。控制平面组件确保系统处于所需的状态，并对集群中的各种事件做出响应。</li>
+<li>核心组件：
+<ul>
+<li><strong>kube-apiserver</strong>：是整个 Kubernetes 系统的唯一入口，它对外公开了一系列的 RESTful API，并且加上了验证、授权等功能，所有其他组件都只能和它直接通信，可以说是 Kubernetes 里的<strong>联络员</strong></li>
+<li><strong>etcd：</strong> 是一个高可用的分布式 <strong>Key-Value 数据库</strong>，用来持久化存储系统里的各种资源对象和状态，相当于 Kubernetes 里的<strong>配置管理员</strong>。注意它只与 apiserver 有直接联系，也就是说任何其他组件想要读写 etcd 里的数据都必须经过 apiserver。</li>
+<li><strong>kube-scheduler：</strong> 负责容器的编排工作，检查节点的资源状态，把 Pod 调度到最适合的节点上运行，相当于<strong>部署人员</strong>。</li>
+<li><strong>kube-controller-manager：<strong>负责维护容器和节点等资源的状态，实现故障检测、服务迁移、应用伸缩等功能，相当于</strong>监控运维人员</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Data Plane（数据平面）:</strong>
+<ul>
+<li>作用： 数据平面负责实际运行应用程序容器，并处理它们之间的网络通信。当应用程序容器接收到请求时，数据平面确保请求得到满足，并将响应返回给请求方。</li>
+<li>核心组件：
+<ul>
+<li><strong>kubelet：<strong>kubelet 是 Node 的代理，在每个Node上运行，负责管理 Node 相关的绝大部分操作，在每个节点上运行，负责管理该节点上的Pod和容器，Node 上只有它能够与 apiserver 通信，实现状态报告、命令下发、启停容器等功能，相当于是 Node 上的一个</strong>小管家</strong>。</li>
+<li><strong>kube-proxy：<strong>它是 Node 的网络代理，在每个节点上运行，维护网络规则并处理集群内部的网络通信。它使得Pod能够相互通信，并提供负载均衡。相当于是专职的</strong>小邮差</strong>。</li>
+<li><strong>container-runtime</strong>：使 Kubernetes 能够有效运行容器的基本组件。它负责管理 Kubernetes 环境中容器的执行和生命周期。是真正干活的<strong>苦力</strong>。常见的<strong>container-runtime</strong>有docker（早期k8s默认）、Containerd（由docker公司开发的，现在广泛使用）、CRI-O （Red Hat 团队开发的容器运行时，专门为 Kubernetes 而设计）</li>
+</ul>
+</li>
+<li>插件：
+<ul>
+<li><strong>DNS</strong> ：它在 Kubernetes 集群里实现了域名解析服务，能够让我们以域名而不是 IP 地址的方式来互相通信，是服务发现和负载均衡的基础。由于它对微服务、服务网格等架构至关重要，所以基本上是 Kubernetes 的必备插件。</li>
+<li><strong>Dashboard</strong> ：就是仪表盘，为 Kubernetes 提供了一个图形化的操作界面，非常直观友好，虽然大多数 Kubernetes 工作都是使用命令行 kubectl，但有的时候在 Dashboard 上查看信息也是挺方便的。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<p>总体而言，Control Plane是Kubernetes集群的大脑，负责决策和管理集群状态，而Data Plane是实际运行应用程序容器的地方，负责处理应用程序的网络通信。这种分离使得Kubernetes具有高度的<strong>可扩展性和灵活性</strong>。</p>
+<blockquote>
+<p><strong>容器</strong>是一种沙盒技术**。Docker** 是一种容器技术的实现，提供了工具和平台，使容器更易于创建和管理。<strong>Kubernetes</strong> 是一个容器编排平台和集群管理系统,<strong>Kubernetes 又用到了docker来管理容器的执行和生命周期</strong></p>
+</blockquote>
+<h3 id="安装k8s">安装k8s</h3>
+<p>可以通过kubeadm安装k8s</p>
+<ul>
+<li>
+<p><strong>安装kubeadm</strong> ， yum install -y kubeadm kubelet kubectl</p>
+<p>如果报这种错，error execution phase preflight: [preflight] Some fatal errors occurred: [ERROR FileContent&ndash;proc-sys-net-bridge-bridge-nf-call-iptables]: /proc/sys/net/bridge/bridge-nf-call-iptables contents are not set to 1 [preflight] If you know what you are doing</p>
+<p><strong>编辑 vim /etc/sysctl.conf 加上</strong></p>
+<p><strong>net.bridge.bridge-nf-call-iptables = 1</strong>
+<strong>net.ipv4.ip_forward = 1</strong></p>
+</li>
+<li>
+<p><strong>启动kubeadm</strong>，</p>
+<ul>
+<li>
+<p>kubeadm init &ndash;pod-network-cidr=10.244.0.0/16 &ndash;image-repository=registry.cn-hangzhou.aliyuncs.com/google_containers</p>
+<blockquote>
+<ul>
+<li>
+<p>会返回一串信息</p>
+<p>Your Kubernetes control-plane has initialized successfully!</p>
+</li>
+</ul>
+<p>​     To start using your cluster, you need to run the following as a regular user:</p>
+<p>mkdir -p HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf ​HOME/.kube/config
+sudo chown ​(id -u):(id -g) ​HOME/.kube/config</p>
+<p>You should now deploy a pod network to the cluster.
+Run &ldquo;kubectl apply -f [podnetwork].yaml&rdquo; with one of the options listed at:
+<a href="https://kubernetes.io/docs/concepts/cluster-administration/addons/">https://kubernetes.io/docs/concepts/cluster-administration/addons/</a></p>
+<p>Then you can join any number of worker nodes by running the following on each as root:</p>
+<p>kubeadm join 172.20.21.165:6443 &ndash;token zi2uoy.asuxj73ev826r9fu <br>
+&ndash;discovery-token-ca-cert-hash sha256:10dfdef0ddb9a2c41b45e0ec5c0fffbfecdf0f45062f04620c07a1124883029c</p>
+</blockquote>
+</li>
+<li>
+<p>依次执行 mkdir -p HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf HOME/.kube/config
+sudo chown (id -u):(id -g) HOME/.kube/config</p>
+</li>
+<li>
+<p>如果有多台机器，那么去其他的机器上执行kubeadm join 172.20.21.165:6443 &ndash;token zi2uoy.asuxj73ev826r9fu <br>
+&ndash;discovery-token-ca-cert-hash sha256:10dfdef0ddb9a2c41b45e0ec5c0fffbfecdf0f45062f04620c07a1124883029c</p>
+</li>
+<li>
+<p>如果只有一台机器则执行kubectl taint nodes &ndash;all node-role.kubernetes.io/master-</p>
+</li>
+</ul>
+</li>
+<li>
+<p>安装网络插件</p>
+<p>kubectl apply -f <a href="https://github.com/flannel-io/flannel/releases/latest/download/kube-flannel.yml">https://github.com/flannel-io/flannel/releases/latest/download/kube-flannel.yml</a></p>
+</li>
+<li>
+<p>kubectl version、kubectl get nodes 检测是否安装成功</p>
+<p>kubectl version 后返回
+Client Version: version.Info{Major:&ldquo;1&rdquo;, Minor:&ldquo;17&rdquo;, GitVersion:&ldquo;v1.17.3&rdquo;, GitCommit:&ldquo;06ad960bfd03b39c8310aaf92d1e7c12ce618213&rdquo;, GitTreeState:&ldquo;clean&rdquo;, BuildDate:&ldquo;2020-02-11T18:14:22Z&rdquo;, GoVersion:&ldquo;go1.13.6&rdquo;, Compiler:&ldquo;gc&rdquo;, Platform:&ldquo;linux/amd64&rdquo;}
+Server Version: version.Info{Major:&ldquo;1&rdquo;, Minor:&ldquo;17&rdquo;, GitVersion:&ldquo;v1.17.17&rdquo;, GitCommit:&ldquo;f3abc15296f3a3f54e4ee42e830c61047b13895f&rdquo;, GitTreeState:&ldquo;clean&rdquo;, BuildDate:&ldquo;2021-01-13T13:13:00Z&rdquo;, GoVersion:&ldquo;go1.13.15&rdquo;, Compiler:&ldquo;gc&rdquo;, Platform:&ldquo;linux/amd64&rdquo;}</p>
+<p>kubectl get nodes 后返回，若status为ready代表成功</p>
+<p>NAME               STATUS   ROLES    AGE   VERSION
+devops1722021165   Ready    master   17h   v1.17.3</p>
+</li>
+</ul>
+<h3 id="使用k8s部署一个应用">使用k8s部署一个应用</h3>
+<h4 id="yaml">YAML</h4>
+<p><strong>Kubernetes使用YAML作为主要的配置语言</strong>，通过YAML文件来<strong>定义和配置</strong>各种Kubernetes资源对象，使得用户可以方便地以<strong>声明性</strong>的方式描述应用程序的结构和部署要求。</p>
+<ul>
+<li>声明式编程：告诉“机器”你想要的是什么(what)，让机器想出如何去做(how)。如：sql、yaml等</li>
+<li>命令式编程：命令“机器”如何去做事情(how)，这样不管你想要的是什么(what)，它都会按照你的命令实现。如：大部分编程语言、Dockerfile等</li>
+</ul>
+<h4 id="kubectl-常用命令">kubectl 常用命令</h4>
+<ol>
+<li>
+<p><strong>创建资源（例如 Pod、Deployment）：</strong></p>
+<pre><code class="language-bash"># 创建或更新
+kubectl apply -f &lt;yaml-file&gt;
+# 只创建
+kubectl create -f &lt;yaml-file&gt;
+</code></pre>
+</li>
+<li>
+<p><strong>删除资源：</strong></p>
+<pre><code class="language-bash">kubectl delete -f &lt;yaml-file&gt;
+</code></pre>
+</li>
+<li>
+<p>查看资源</p>
+<ul>
+<li>**查看集群信息：**kubectl cluster-info</li>
+<li><strong>查看集群节点</strong>：kubectl get nodes</li>
+<li>**查看所有命名空间：**kubectl get namespaces</li>
+<li>**查看 Pod 列表：**kubectl get pods</li>
+<li>**查看 Deployment 列表：**kubectl get deployments</li>
+<li>**查看 Service 列表：**kubectl get services</li>
+<li>**查看 ConfigMap 列表：**kubectl get configmaps</li>
+<li>**查看 Secret 列表：**kubectl get secrets</li>
+<li>**查看事件：**kubectl get events</li>
+</ul>
+</li>
+<li>
+<p>查看资源详情</p>
+<ul>
+<li><strong>查看 Pod 详细信息</strong>： kubectl describe pod <!-- raw HTML omitted --></li>
+<li><strong>查看 Deployment 详细信息</strong>：kubectl describe deployment <!-- raw HTML omitted --></li>
+<li><strong>查看 Service 详细信息</strong>：kubectl describe service <!-- raw HTML omitted --></li>
+<li><strong>查看 ConfigMap 详细信息</strong>：kubectl describe configmap <!-- raw HTML omitted --></li>
+<li>**查看 Secret 详细信息：**kubectl describe secret <!-- raw HTML omitted --></li>
+</ul>
+</li>
+<li>
+<p><strong>执行命令进入 Pod</strong>：</p>
+</li>
+</ol>
+<pre><code class="language-bash">kubectl exec -it &lt;pod-name&gt; -- /bin/bash
+</code></pre>
+<ol start="6">
+<li><strong>在 Pod 中执行命令：</strong></li>
+</ol>
+<pre><code class="language-bash">kubectl exec &lt;pod-name&gt; -- &lt;command&gt;
+</code></pre>
+<h4 id="例子">例子</h4>
+<ul>
+<li>先写一个docker-study-deployment.yaml文件</li>
+</ul>
+<pre><code class="language-yaml">apiVersion: apps/v1                # 使用的 Kubernetes API 版本
+kind: Deployment                   # 定义的 Kubernetes 资源类型为 Deployment
+metadata:
+  name: docker-study-deployment    # Deployment 对象的名称
+spec:
+  selector:
+    matchLabels:
+      app: docker-study             # 选择器，匹配 Pod 的标签以确定控制哪些 Pod
+  replicas: 2                       # 副本数量，指定要运行的 Pod 实例数量
+  template:
+    metadata:
+      labels:
+        app: docker-study           # Pod 模板的标签
+    spec:
+      containers:
+      - name: docker-study          # 容器的名称
+        image: wzgl998877/docker-study  # 容器的镜像
+        ports:
+        - containerPort: 80         # 容器监听的端口
+        volumeMounts:
+        - mountPath: &quot;/usr/share/docker-study/html&quot;  # 容器内部的挂载路径
+          name: docker-study-vol    # 卷的名称
+      volumes:
+      - name: docker-study-vol      # 卷的名称
+        emptyDir: {}                # 创建一个空目录的卷
+
+</code></pre>
+<ul>
+<li>
+<p>创建对象 kubectl apply -f docker-study-deployment.yaml</p>
+</li>
+<li>
+<p>使用kubectl get pods</p>
+<p>NAME                                       READY   STATUS    RESTARTS   AGE
+docker-study-deployment-695f9b8649-5fsnc   1/1     Running   0          8m3s
+docker-study-deployment-695f9b8649-d5z56   1/1     Running   0          8m2s</p>
+</li>
+</ul>
+<h3 id="k8s的api对象">k8s的API对象</h3>
+<p><img src="9ebab7d513a211a926dd69f7535ac175.png" alt="img"></p>
+<p>有了 Pod 之后，我们希望能一次启动多个应用的实例，这样就需要 Deployment 这个 Pod 的多实例管理器；而有了这样一组相同的 Pod 后，我们又需要通过一个固定的 IP 地址和端口以负载均衡的方式访问它，于是就有了 Service。
+可是，如果现在两个不同 Pod 之间不仅有“访问关系”，还要求在发起时加上授权信息。最典型的例子就是 Web 应用对数据库访问时需要 Credential（数据库的用户名和密码）信息。那么，在 Kubernetes 中这样的关系又如何处理呢？
+Kubernetes 项目提供了一种叫作 Secret 的对象，它其实是一个保存在 Etcd 里的键值对数据。这样，你把 Credential 信息以 Secret 的方式存在 Etcd 里，Kubernetes 就会在你指定的 Pod（比如，Web 应用的 Pod）启动时，自动把 Secret 里的数据以 Volume 的方式挂载到容器里。这样，这个 Web 应用就可以访问数据库了。</p>
+<h4 id="pod">pod</h4>
+<p><em>Pod</em> are the smallest deployable units of computing that you can create and manage in Kubernetes.
+<strong>Pod 是您可以在 Kubernetes 中创建和管理的最小的可部署计算单元。pod 是容器的封装,包含一个或多个共享相同网络命名空间和存储卷的容器,是 Kubernetes 的原子调度单位</strong>。</p>
+<p>pod的状态</p>
+<ul>
+<li>Pending。这个状态意味着，Pod 的 YAML 文件已经提交给了 Kubernetes，API 对象已经被创建并保存在 Etcd 当中。但是，这个 Pod 里有些容器因为某种原因而不能被顺利创建。比如，调度不成功。</li>
+<li>Running。这个状态下，Pod 已经调度成功，跟一个具体的节点绑定。它包含的容器都已经创建成功，并且至少有一个正在运行中。</li>
+<li>Succeeded。这个状态意味着，Pod 里的所有容器都正常运行完毕，并且已经退出了。这种情况在运行一次性任务时最为常见。</li>
+<li>Failed。这个状态下，Pod 里至少有一个容器以不正常的状态（非 0 的返回码）退出。这个状态的出现，意味着你得想办法 Debug 这个容器的应用，比如查看 Pod 的 Events 和日志。</li>
+<li>Unknown。这是一个异常状态，意味着 Pod 的状态不能持续地被 kubelet 汇报给 kube-apiserver，这很有可能是主从节点（Master 和 Kubelet）间的通信出现了问题。</li>
+</ul>
+<h4 id="deployments">Deployments</h4>
+<p>多实例控制器，<strong>能够让应用永不宕机</strong>，多用来发布<strong>无状态</strong>的应用，用来管理pod。</p>
+<pre><code class="language-yaml">apiVersion: apps/v1                # 使用的 Kubernetes API 版本
+kind: Deployment                   # 定义的 Kubernetes 资源类型为 Deployment
+metadata:
+  name: docker-study-deployment    # Deployment 对象的名称
+spec:
+  selector:
+    matchLabels:
+      app: docker-study             # 选择器，匹配 Pod 的标签以确定控制哪些 Pod
+  replicas: 2                       # 副本数量，指定要运行的 Pod 实例数量
+  # 以上为控制器的定义，以下为被控制的对象
+  template:
+    metadata:
+      labels:
+        app: docker-study           # Pod 模板的标签
+    spec:
+      containers:
+      - name: docker-study          # 容器的名称
+        image: wzgl998877/docker-study  # 容器的镜像
+        ports:
+        - containerPort: 80         # 容器监听的端口
+        volumeMounts:
+        - mountPath: &quot;/usr/share/docker-study/html&quot;  # 容器内部的挂载路径
+          name: docker-study-vol    # 卷的名称
+      volumes:
+      - name: docker-study-vol      # 卷的名称
+        emptyDir: {}                # 创建一个空目录的卷
+
+</code></pre>
+<ul>
+<li>
+<p>selector： 它的作用是“筛选”出要被 Deployment 管理的 Pod 对象，下属字段“matchLabels”定义了 Pod 对象应该携带的 label，它必须和“template”里 Pod 定义的“labels”完全相同</p>
+</li>
+<li>
+<p>replicas：副本数量”的意思，指定要在 Kubernetes 集群里运行多少个 Pod 实例，Pod 的个数大于 2 的时候，就会有旧的 Pod 被删除；反之，就会有新的 Pod 被创建，做到了<strong>让应用永不宕机</strong></p>
+</li>
+<li>
+<p>template：以下就是被控制的对象</p>
+</li>
+</ul>
+<h4 id="replicaset">ReplicaSet</h4>
+<p><code>ReplicaSet</code> 是用于维护一组 Pod 副本数量的资源对象。<code>ReplicaSet</code> 的主要目标是确保在集群中始终运行指定数量的相同 Pod 副本，由 <code>Deployment</code> 控制和管理。Deployment操作 ReplicaSet 的个数和属性，进而实现<strong>水平扩展 / 收缩</strong>和<strong>滚动更新</strong>。</p>
+<p><img src="711c07208358208e91fa7803ebc73058.jpg" alt="img"></p>
+<pre><code class="language-yaml">apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: nginx-set
+  labels:
+    app: nginx
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.7.9
+</code></pre>
+<ul>
+<li>
+<p><strong>水平扩展 / 收缩</strong>：修改replicas数量即可，执行命令修改 kubectl scale deployment deployment deployment-name  &ndash;replicas=4，或者直接修改yaml文件中的replicas值</p>
+</li>
+<li>
+<p><strong>滚动更新</strong>：<strong>滚动更新是在不中断服务的情况下逐步替换现有的 Pod</strong>，以部署新的应用程序版本或配置。<strong>通过修改 ReplicaSet 中的 Pod 模板</strong>，可以触发滚动更新。ReplicaSet 会逐步替换当前的 Pod，确保在更新的过程中保持服务可用性。</p>
+<p>当你修改了 Deployment 里的 Pod 定义之后，Deployment Controller 会使用这个修改后的 Pod 模板，创建一个新的 <strong>ReplicaSet</strong>，这个新的 ReplicaSet 的初始 Pod 副本数是：0。 然后Deployment Controller 开始将这个<strong>新的 ReplicaSet</strong> 所控制的 Pod 副本数从 0 个变成 1 个，即：“水平扩展”出一个副本。 紧接着，Deployment Controller 又将<strong>旧的 ReplicaSet</strong>所控制的旧 Pod 副本数减少一个，即：“水平收缩”成两个副本。 如此交替进行，新 ReplicaSet 管理的 Pod 副本数，从 0 个变成 1 个，再变成 2 个，最后变成 3 个。而旧的 ReplicaSet 管理的 Pod 副本数则从 3 个变成 2 个，再变成 1 个，最后变成 0 个。这样，就完成了这一组 Pod 的版本升级过程。 将一个集群中正在运行的多个 Pod 版本，交替地逐一升级的过程，就是“滚动更新”。</p>
+<p>滚动更新的策略：Deployment Controller 还会确保，在任何时间窗口内，只有指定比例的 Pod 处于离线状态。同时，它也会确保，在任何时间窗口内，只有指定比例的新 Pod 被创建出来。这两个比例的值都是可以配置的，默认都是 DESIRED 值的 25%。</p>
+<pre><code class="language-yaml">spec:
+  selector:
+    matchLabels:
+      app: docker-study
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    minReadySeconds: 60
+	progressDeadlineSeconds: 600
+</code></pre>
+<p>maxSurge 指定的是除了 DESIRED 数量之外，在一次“滚动”中，Deployment 控制器还可以创建多少个新 Pod；而 maxUnavailable 指的是，在一次“滚动”中，Deployment 控制器可以删除多少个旧 Pod。minReadySeconds，定义了新的 Pod 在被认为是可用之前必须运行的最短时间（以秒为单位）。如果设置了 <code>minReadySeconds</code>，Kubernetes 将等待至少这么长时间，然后开始进行下一个 Pod 的更新。<code>progressDeadlineSeconds</code> 定义了 Deployment 更新的最长时间。如果更新超过指定的时间，Deployment 将被标记为失败，这有助于避免无限期地等待更新完成的情况。</p>
+<p><img src="bbc4560a053dee904e45ad66aac7145d.jpg" alt="img"></p>
+</li>
+<li>
+<p>回滚版本</p>
+<pre><code class="language-shell"># 查看历史版本
+kubectl rollout history deployment/deployment-name
+# 回滚到对应版本
+kubectl rollout undo deployment/deployment-name --to-revision=2
+# 回滚到上一个版本
+kubectl rollout undo deployment/deployment-name
+</code></pre>
+</li>
+</ul>
+<h4 id="service">service</h4>
+<p>实现了<strong>负载均衡</strong>和<strong>服务发现</strong>。Kubernetes 会给它分配一个<strong>静态 IP 地址</strong>，然后它再去自动管理、维护后面动态变化的 Pod 集合，当客户端访问 Service，它就<strong>根据某种策略</strong>，把流量转发给后面的某个 <strong>Pod</strong>。</p>
+<pre><code class="language-yaml"># 定义一个 Kubernetes Service
+apiVersion: v1
+kind: Service
+
+# 设置 Service 的元数据，包括名称
+metadata:
+  name: docker-study-svc
+
+# 指定 Service 的规格
+spec:
+  # 选择带有标签 app: docker-study 的 Pod 作为后端
+  selector:
+    app: docker-study
+
+  # 定义 Service 的端口映射
+  ports:
+  - 
+    # Service 暴露的端口
+    port: 80
+    
+    # 将流量转发到后端 Pod 的端口
+    targetPort: 80
+    
+    # 指定使用的协议（TCP）
+    protocol: TCP
+
+</code></pre>
+<p>使用kubectl apply -f docker-study-svc.yaml</p>
+<p>发现访问不通service对应的ip</p>
+<pre><code class="language-bash"># 2.添加需要加载的模块写入脚本文件
+[root@master ~]# cat &lt;&lt;EOF&gt; /etc/sysconfig/modules/ipvs.modules
+#!/bin/bash
+modprobe -- ip_vs
+modprobe -- ip_vs_rr
+modprobe -- ip_vs_wrr
+modprobe -- ip_vs_sh
+modprobe -- nf_conntrack
+EOF
+# 3.为脚本添加执行权限
+[root@master ~]# chmod +x /etc/sysconfig/modules/ipvs.modules
+# 4.执行脚本文件
+[root@master ~]# /bin/bash /etc/sysconfig/modules/ipvs.modules
+# 5.查看对应的模块是否加载成功
+[root@master ~]# lsmod | grep -e -ip_vs -e nf_conntrack
+nf_conntrack_netlink    49152  0 
+nfnetlink              20480  3 nf_conntrack_netlink,ip_set
+nf_conntrack          155648  5 xt_conntrack,nf_nat,nf_conntrack_netlink,xt_MASQUERADE,ip_vs
+nf_defrag_ipv6         24576  2 nf_conntrack,ip_vs
+nf_defrag_ipv4         16384  1 nf_conntrack
+libcrc32c              16384  4 nf_conntrack,nf_nat,xfs,ip_vs
+
+</code></pre>
+<h3 id="statefulset">StatefulSet</h3>
+<p><code>StatefulSet</code> 是一种控制器（Controller），用于管理<strong>有状态</strong>应用的部署</p>
+<h3 id="daemonset">DaemonSet</h3>
+<p>DaemonSet 的主要作用，是让你在 Kubernetes 集群里，运行一个 Daemon Pod。 这个 Pod 有如下三个特征：</p>
+<ul>
+<li>这个 Pod 运行在 Kubernetes 集群里的每一个节点（Node）上；</li>
+<li>每个节点上只有一个这样的 Pod 实例；</li>
+<li>当有新的节点加入 Kubernetes 集群后，该 Pod 会自动地在新节点上被创建出来；而当旧节点被删除后，它上面的 Pod 也相应地会被回收掉。</li>
+</ul>
+<p>它通常用于运行类似于<strong>日志收集器、监控代理、网络插件</strong>等与节点相关的服务</p>
+<h3 id="job和cornjob">Job和CornJob</h3>
 
     </div>
     <div class="article-footer">
@@ -682,7 +1109,7 @@ docker push YOUR-USER-NAME/getting-started
 </ul>
   <div class="copyright">
     &copy;2022  -
-    2023
+    2024
     <div class="publishby">
         Theme by <a href="https://github.com/wzgl998877/" target="_blank"> microzheng </a>base on<a href="https://github.com/xiaoheiAh/hugo-theme-pure" target="_blank"> pure</a>.
     </div>

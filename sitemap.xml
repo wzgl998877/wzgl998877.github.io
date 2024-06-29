@@ -185,7 +185,7 @@
   </url>
   
   <url>
-    <loc>https://wzgl998877.github.io/2022/01/java-%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3%E5%AD%A6%E4%B9%A0/</loc>
+    <loc>https://wzgl998877.github.io/2022/01/java%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3/</loc>
     <lastmod>2022-01-09T11:24:40+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
@@ -228,6 +228,13 @@
   
   <url>
     <loc>https://wzgl998877.github.io/2022/01/mybatis-%E6%8A%80%E6%9C%AF%E5%86%85%E5%B9%95%E5%AD%A6%E4%B9%A0/</loc>
+    <lastmod>2022-01-09T11:24:40+08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://wzgl998877.github.io/2022/01/mybatis/</loc>
     <lastmod>2022-01-09T11:24:40+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>

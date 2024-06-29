@@ -2,7 +2,7 @@
 <html lang="zh">
   <head>
     <title>
-        Netty 学习 - Pure theme for Hugo
+        mybatis 技术内幕学习 - 码农的学习笔记
       </title>
         <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -20,29 +20,29 @@
     <meta http-equiv="window-target" content="_top" />
     
     
-    <meta name="description" content="Netty 学习 虽然说netty，用的少但是感觉比较流行，值得研究！！！ Netty 是一个 NIO 客户端-服务器框架，可以快速轻松地开发网络应用程序，例如协议服务器和" />
+    <meta name="description" content="[toc] Jdbc 复习 通过JDBC查询数据库数据，一般需要以下七个步骤： 加载JDBC驱动； 建立并获取数据库连接； 创建 JDBC Statements 对象； 设置SQL语句的传入参数； 执" />
     <meta name="generator" content="Hugo 0.91.2 with theme pure" />
-    <title>Netty 学习 - Pure theme for Hugo</title>
+    <title>mybatis 技术内幕学习 - 码农的学习笔记</title>
     
     
-    <link rel="stylesheet" href="https://wzgl998877.github.io/css/style.min.e64d754037c0ee0ec4e20ab1d6f07740ace61729bc03850559b8caa21ae4a597.css">
+    <link rel="stylesheet" href="https://wzgl998877.github.io/css/style.min.a85959a41e7abcc0db1f81f44bd264649303417f91b536e87dcde644340fea6d.css">
     
     <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/9.15.10/styles/github.min.css" async>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css" async>
-    <meta property="og:title" content="Netty 学习" />
-<meta property="og:description" content="Netty 学习 虽然说netty，用的少但是感觉比较流行，值得研究！！！ Netty 是一个 NIO 客户端-服务器框架，可以快速轻松地开发网络应用程序，例如协议服务器和" />
+    <meta property="og:title" content="mybatis 技术内幕学习" />
+<meta property="og:description" content="[toc] Jdbc 复习 通过JDBC查询数据库数据，一般需要以下七个步骤： 加载JDBC驱动； 建立并获取数据库连接； 创建 JDBC Statements 对象； 设置SQL语句的传入参数； 执" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://wzgl998877.github.io/2022/01/netty-%E5%AD%A6%E4%B9%A0/" /><meta property="article:section" content="posts" />
+<meta property="og:url" content="https://wzgl998877.github.io/2022/01/mybatis/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-01-09T11:24:40+08:00" />
 <meta property="article:modified_time" content="2022-01-09T11:24:40+08:00" />
 
-<meta itemprop="name" content="Netty 学习">
-<meta itemprop="description" content="Netty 学习 虽然说netty，用的少但是感觉比较流行，值得研究！！！ Netty 是一个 NIO 客户端-服务器框架，可以快速轻松地开发网络应用程序，例如协议服务器和"><meta itemprop="datePublished" content="2022-01-09T11:24:40+08:00" />
+<meta itemprop="name" content="mybatis 技术内幕学习">
+<meta itemprop="description" content="[toc] Jdbc 复习 通过JDBC查询数据库数据，一般需要以下七个步骤： 加载JDBC驱动； 建立并获取数据库连接； 创建 JDBC Statements 对象； 设置SQL语句的传入参数； 执"><meta itemprop="datePublished" content="2022-01-09T11:24:40+08:00" />
 <meta itemprop="dateModified" content="2022-01-09T11:24:40+08:00" />
-<meta itemprop="wordCount" content="529">
-<meta itemprop="keywords" content="Netty," /><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Netty 学习"/>
-<meta name="twitter:description" content="Netty 学习 虽然说netty，用的少但是感觉比较流行，值得研究！！！ Netty 是一个 NIO 客户端-服务器框架，可以快速轻松地开发网络应用程序，例如协议服务器和"/>
+<meta itemprop="wordCount" content="870">
+<meta itemprop="keywords" content="mybatis," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="mybatis 技术内幕学习"/>
+<meta name="twitter:description" content="[toc] Jdbc 复习 通过JDBC查询数据库数据，一般需要以下七个步骤： 加载JDBC驱动； 建立并获取数据库连接； 创建 JDBC Statements 对象； 设置SQL语句的传入参数； 执"/>
 
     <!--[if lte IE 9]>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -147,12 +147,15 @@
     <h3 class="widget-title"> 分类</h3>
     <div class="widget-body">
         <ul class="category-list">
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/git/" class="category-list-link">git</a><span class="category-list-count">1</span></li>
             <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/java/" class="category-list-link">java</a><span class="category-list-count">3</span></li>
-            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/" class="category-list-link">中间件</a><span class="category-list-count">1</span></li>
-            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E5%B8%B8%E7%94%A8%E6%A1%86%E6%9E%B6/" class="category-list-link">常用框架</a><span class="category-list-count">3</span></li>
-            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="category-list-link">数据库</a><span class="category-list-count">2</span></li>
-            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E6%97%A5%E5%B8%B8%E6%80%BB%E7%BB%93/" class="category-list-link">日常总结</a><span class="category-list-count">2</span></li>
-            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E7%AE%97%E6%B3%95/" class="category-list-link">算法</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/spring/" class="category-list-link">spring</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/" class="category-list-link">中间件</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E4%BA%91%E5%8E%9F%E7%94%9F/" class="category-list-link">云原生</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E5%B8%B8%E7%94%A8%E6%A1%86%E6%9E%B6/" class="category-list-link">常用框架</a><span class="category-list-count">4</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="category-list-link">数据库</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E6%97%A5%E5%B8%B8%E6%80%BB%E7%BB%93/" class="category-list-link">日常总结</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E7%AE%97%E6%B3%95/" class="category-list-link">算法</a><span class="category-list-count">2</span></li>
             <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/" class="category-list-link">系统设计</a><span class="category-list-count">1</span></li>
             <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/" class="category-list-link">网络编程</a><span class="category-list-count">3</span></li>
         </ul>
@@ -181,22 +184,22 @@
             
             
             <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/leetcode/" class="tag-list-link">leetcode</a><span
-                    class="tag-list-count">1</span></li>
+                    class="tag-list-count">2</span></li>
             
             
             <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/mybatis/" class="tag-list-link">mybatis</a><span
-                    class="tag-list-count">1</span></li>
+                    class="tag-list-count">2</span></li>
             
             
             <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/mysql/" class="tag-list-link">mysql</a><span
-                    class="tag-list-count">1</span></li>
-            
-            
-            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/mysql/" class="tag-list-link">mysql</a><span
-                    class="tag-list-count">1</span></li>
+                    class="tag-list-count">2</span></li>
             
             
             <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/netty/" class="tag-list-link">netty</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/redis/" class="tag-list-link">redis</a><span
                     class="tag-list-count">1</span></li>
             
             
@@ -205,7 +208,7 @@
             
             
             <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/spring/" class="tag-list-link">spring</a><span
-                    class="tag-list-count">1</span></li>
+                    class="tag-list-count">2</span></li>
             
             
             <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/websocket/" class="tag-list-link">websocket</a><span
@@ -213,7 +216,7 @@
             
             
             <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" class="tag-list-link">消息队列</a><span
-                    class="tag-list-count">1</span></li>
+                    class="tag-list-count">2</span></li>
             
             
             <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="tag-list-link">设计模式</a><span
@@ -231,50 +234,50 @@
             <li>
                 <div class="item-inner">
                     <p class="item-title">
-                        <a href="https://wzgl998877.github.io/2022/01/mysql%E6%98%AF%E6%80%8E%E6%A0%B7%E8%BF%90%E8%A1%8C%E7%9A%84/" class="title">Mysql是怎样运行的</a>
+                        <a href="https://wzgl998877.github.io/2022/11/springcloud/" class="title">SpringCloud</a>
                     </p>
                     <p class="item-date">
-                        <time datetime="2022-01-12 11:24:40 &#43;0800 CST" itemprop="datePublished">2022-01-12</time>
+                        <time datetime="2022-11-07 19:15:43 &#43;0800 CST" itemprop="datePublished">2022-11-07</time>
                     </p>
                 </div>
             </li>
             <li>
                 <div class="item-inner">
                     <p class="item-title">
-                        <a href="https://wzgl998877.github.io/2022/01/java-%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" class="title">Java 并发编程</a>
+                        <a href="https://wzgl998877.github.io/2022/09/docker%E5%92%8Ck8s/" class="title">Docker和k8s</a>
                     </p>
                     <p class="item-date">
-                        <time datetime="2022-01-09 11:24:40 &#43;0800 CST" itemprop="datePublished">2022-01-09</time>
+                        <time datetime="2022-09-09 10:26:21 &#43;0800 CST" itemprop="datePublished">2022-09-09</time>
                     </p>
                 </div>
             </li>
             <li>
                 <div class="item-inner">
                     <p class="item-title">
-                        <a href="https://wzgl998877.github.io/2022/01/java-%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3%E5%AD%A6%E4%B9%A0/" class="title">Java 编程思想学习</a>
+                        <a href="https://wzgl998877.github.io/2022/05/redis%E6%80%BB%E7%BB%93/" class="title">Redis学习</a>
                     </p>
                     <p class="item-date">
-                        <time datetime="2022-01-09 11:24:40 &#43;0800 CST" itemprop="datePublished">2022-01-09</time>
+                        <time datetime="2022-05-06 15:21:49 &#43;0800 CST" itemprop="datePublished">2022-05-06</time>
                     </p>
                 </div>
             </li>
             <li>
                 <div class="item-inner">
                     <p class="item-title">
-                        <a href="https://wzgl998877.github.io/2022/01/leetcode/" class="title">LeetCode</a>
+                        <a href="https://wzgl998877.github.io/2022/03/git%E7%9B%B8%E5%85%B3/" class="title">git相关</a>
                     </p>
                     <p class="item-date">
-                        <time datetime="2022-01-09 11:24:40 &#43;0800 CST" itemprop="datePublished">2022-01-09</time>
+                        <time datetime="2022-03-02 20:03:24 &#43;0800 CST" itemprop="datePublished">2022-03-02</time>
                     </p>
                 </div>
             </li>
             <li>
                 <div class="item-inner">
                     <p class="item-title">
-                        <a href="https://wzgl998877.github.io/2022/01/linux%E5%B7%A5%E4%BD%9C%E6%97%A5%E5%B8%B8%E5%91%BD%E4%BB%A4/" class="title">Linux工作日常命令</a>
+                        <a href="https://wzgl998877.github.io/2022/02/mysql%E6%80%BB%E7%BB%93/" class="title">Mysql总结</a>
                     </p>
                     <p class="item-date">
-                        <time datetime="2022-01-09 11:24:40 &#43;0800 CST" itemprop="datePublished">2022-01-09</time>
+                        <time datetime="2022-02-28 23:43:20 &#43;0800 CST" itemprop="datePublished">2022-02-28</time>
                     </p>
                 </div>
             </li>
@@ -302,8 +305,8 @@
       <h1 itemprop="name">
   <a
     class="article-title"
-    href="/2022/01/netty-%E5%AD%A6%E4%B9%A0/"
-    >Netty 学习</a
+    href="/2022/01/mybatis/"
+    >mybatis 技术内幕学习</a
   >
 </h1>
 
@@ -311,43 +314,139 @@
         
 <span class="article-date">
   <i class="icon icon-calendar-check"></i>&nbsp;
-<a href="https://wzgl998877.github.io/2022/01/netty-%E5%AD%A6%E4%B9%A0/" class="article-date">
+<a href="https://wzgl998877.github.io/2022/01/mybatis/" class="article-date">
   <time datetime="2022-01-09 11:24:40 &#43;0800 CST" itemprop="datePublished">2022-01-09</time>
 </a>
 </span>
 <span class="article-category">
   <i class="icon icon-folder"></i>&nbsp;
-  <a class="article-category-link" href="/categories/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/"> 网络编程 </a>
+  <a class="article-category-link" href="/categories/%E5%B8%B8%E7%94%A8%E6%A1%86%E6%9E%B6/"> 常用框架 </a>
 </span>  
   <span class="article-tag">
     <i class="icon icon-tags"></i>&nbsp;
-    <a class="article-tag-link" href="/tags/netty/"> Netty </a>
+    <a class="article-tag-link" href="/tags/mybatis/"> mybatis </a>
   </span>
 
-		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 529字</span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 870字</span>
 		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 2分 </span>
       </div>
     </div>
     <div class="article-entry marked-body js-toc-content" itemprop="articleBody">
-      <h1 id="netty-学习">Netty 学习</h1>
-<p>虽然说netty，用的少但是感觉比较流行，值得研究！！！</p>
-<p><strong>Netty</strong> 是一个 <strong>NIO</strong> 客户端-服务器框架，可以快速轻松地开发网络应用程序，例如协议服务器和客户端。它极大地简化和精简了<strong>网络编程</strong>，比如TCP和UDP 套接字服务器。</p>
-<p>那么什么是NIO？或者说什么是IO？</p>
-<h2 id="io">IO</h2>
-<p>I/O 其实就是 input 和 output 的缩写，即输入/输出。比如我们用键盘来敲代码其实就是输入，那显示器显示图案就是输出，这其实就是 I/O。</p>
+      <p>[toc]</p>
+<h2 id="jdbc-复习">Jdbc 复习</h2>
+<p>通过JDBC查询数据库数据，一般需要以下七个步骤：</p>
+<blockquote>
+<ol>
+<li>加载JDBC驱动；</li>
+<li>建立并获取数据库连接；</li>
+<li>创建 JDBC Statements 对象；</li>
+<li>设置SQL语句的传入参数；</li>
+<li>执行SQL语句并获得查询结果；</li>
+<li>对查询结果进行转换处理并将处理结果返回；</li>
+<li>释放相关资源（关闭Connection，关闭Statement，关闭ResultSet）；</li>
+</ol>
+</blockquote>
+<p>代码如下：</p>
+<pre><code class="language-java">package com.zt.javastudy.mybatis;
+
+import com.alibaba.fastjson.JSONObject;
+import lombok.extern.slf4j.Slf4j;
+
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * jdbc连接数据库
+ *
+ * @author zhengtao on 2021/9/16
+ */
+@Slf4j
+public class JdbcTest {
+    public static List&lt;Map&lt;String,Object&gt;&gt; queryForList(){
+        Connection connection = null;
+        ResultSet rs = null;
+        PreparedStatement stmt = null;
+        List&lt;Map&lt;String,Object&gt;&gt; resultList = new ArrayList&lt;&gt;();
+
+        try {
+            // 加载JDBC驱动
+            Class.forName(&quot;com.mysql.jdbc.Driver&quot;).newInstance();
+            String url = &quot;jdbc:mysql://172.20.2.131:3506/journey?allowMultiQueries=true&amp;Unicode=true&amp;characterEncoding=UTF-8&amp;useSSL=false&quot;;
+            String user = &quot;loan&quot;;
+            String password = &quot;JLpaymysql8.0!&quot;;
+            // 获取数据库连接
+            connection = DriverManager.getConnection(url,user,password);
+
+            String sql = &quot;select * from t_user where user_id = ? &quot;;
+            // 创建Statement对象（每一个Statement为一次数据库执行请求）
+            stmt = connection.prepareStatement(sql);
+
+            // 设置传入参数
+            stmt.setString(1, &quot;1027604989&quot;);
+
+            // 执行SQL语句
+            rs = stmt.executeQuery();
+
+            // 处理查询结果（将查询结果转换成List&lt;Map&gt;格式）
+            ResultSetMetaData rsmd = rs.getMetaData();
+            int num = rsmd.getColumnCount();
+
+            while(rs.next()){
+                Map map = new HashMap();
+                for(int i = 0;i &lt; num;i++){
+                    String columnName = rsmd.getColumnName(i+1);
+                    map.put(columnName,rs.getString(columnName));
+                }
+                resultList.add(map);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                // 关闭结果集
+                if (rs != null) {
+                    rs.close();
+                }
+                // 关闭执行
+                if (stmt != null) {
+                    stmt.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return resultList;
+    }
+
+    public static void main(String[] args) {
+        List&lt;Map&lt;String,Object&gt;&gt; list = queryForList();
+        log.info(&quot;jdbc查询结果为:{}&quot;, JSONObject.toJSONString(list));
+    }
+
+}
+</code></pre>
+<h2 id="mybatis">Mybatis</h2>
+<h3 id="orm">ORM</h3>
+<p><strong>对象关系映射</strong> ,用于实现面向对象编程语言里不同类型系统的数据之间的转换，可以狭义的理解为，将对象与表对应起来，开发者只使用面向对象编程，与数据对象直接交互，crud就直接变成了面向对象编程。</p>
+<h3 id="核心功能">核心功能</h3>
 <ul>
-<li>
-<p>磁盘 I/O 指的是硬盘和内存之间的输入输出。读取本地文件的时候，要将磁盘的数据拷贝到内存中，修改本地文件的时候，需要把修改后的数据拷贝到磁盘中。</p>
-</li>
-<li>
-<p>网络 I/O 指的是网卡与内存之间的输入输出。当网络上的数据到来时，网卡需要将数据拷贝到内存中。当要发送数据给网络上的其他人时，需要将数据从内存拷贝到网卡里。</p>
-</li>
+<li>将包含 if 等标签的复杂数据库操作语句解析为纯粹的 SQL 语句</li>
+<li>将数据库操作节点和映射接口中的抽象方法进行绑定，在抽象方法被调用时执行数据库连接操作。</li>
+<li>将输入参数对象转换为数据库操作语句中的参数</li>
+<li>将数据库操作语句中的返回结果转化为对象</li>
 </ul>
-<p>那为什么都要跟内存交互呢?</p>
-<p>我们的指令最终是由 CPU 执行的，究其原因是 CPU 与内存交互的速度远高于 CPU 和这些外部设备直接交互的速度。</p>
-<p>因此都是和内存交互，当然假设没有内存，让 CPU 直接和外部设备交互，那也算 I/O。</p>
-<p>总结下：<strong>I/O 就是指内存与外部设备之间的交互</strong>（数据拷贝）。</p>
-<p>根据UNIX网络编程对I/O模型的分类，UNIX提供了5种I/O模型，阻塞I/O模型、非阻塞I/O模型、I/O复用模型、信号驱动I/O模型、异步I/O</p>
+<p>MyBatis 是一款优秀的持久层框架，它支持自定义 SQL、存储过程以及高级映射。MyBatis 免除了几乎所有的 JDBC 代码以及设置参数和获取结果集的工作。MyBatis 可以通过简单的 XML 或注解来配置和映射原始类型、接口和 Java POJO（Plain Old Java Objects，普通老式 Java 对象）为数据库中的记录。</p>
+<p>使用 mybatis 一般有以下几步：</p>
+<blockquote>
+</blockquote>
+<p>接口映射到数据库sql的实现-MapperMethod</p>
 
     </div>
     <div class="article-footer">
@@ -355,7 +454,7 @@
   <ul class="post-copyright list-unstyled">
     <li class="post-copyright-link hidden-xs">
       <strong>本文链接: </strong>
-      <a href="https://wzgl998877.github.io/2022/01/netty-%E5%AD%A6%E4%B9%A0/" title="Netty 学习" target="_blank" rel="external">https://wzgl998877.github.io/2022/01/netty-%E5%AD%A6%E4%B9%A0/</a>
+      <a href="https://wzgl998877.github.io/2022/01/mybatis/" title="mybatis 技术内幕学习" target="_blank" rel="external">https://wzgl998877.github.io/2022/01/mybatis/</a>
     </li>
     <li class="post-copyright-license">
       <strong>License: </strong>
@@ -386,7 +485,7 @@
     <div class="bar-inner">
         <ul class="pager pull-left">
             <li class="prev">
-                <a href="https://wzgl998877.github.io/2022/01/spring%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0/" title="spring源码学习"><i
+                <a href="https://wzgl998877.github.io/2022/01/netty/" title="Netty 学习"><i
                         class="icon icon-angle-left"
                         aria-hidden="true"></i><span>&nbsp;&nbsp;下一篇</span></a>
             </li>
@@ -423,7 +522,7 @@
 </ul>
   <div class="copyright">
     &copy;2022  -
-    2022
+    2024
     <div class="publishby">
         Theme by <a href="https://github.com/wzgl998877/" target="_blank"> microzheng </a>base on<a href="https://github.com/xiaoheiAh/hugo-theme-pure" target="_blank"> pure</a>.
     </div>

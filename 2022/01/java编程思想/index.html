@@ -20,7 +20,7 @@
     <meta http-equiv="window-target" content="_top" />
     
     
-    <meta name="description" content="Java 编程思想学习 第1章 对象导论 好像看不下去，。。。 第2章 一切都是对象 用引用操作对象：每种编程语言都有自己的操纵内存中元素的方式。java中操纵" />
+    <meta name="description" content="[TOC] Java 编程思想学习 第1章 对象导论 好像看不下去，。。。 第2章 一切都是对象 用引用操作对象：每种编程语言都有自己的操纵内存中元素的方式。java中操" />
     <meta name="generator" content="Hugo 0.91.2 with theme pure" />
     <title>Java 编程思想学习 - 码农的学习笔记</title>
     
@@ -30,19 +30,19 @@
     <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/9.15.10/styles/github.min.css" async>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css" async>
     <meta property="og:title" content="Java 编程思想学习" />
-<meta property="og:description" content="Java 编程思想学习 第1章 对象导论 好像看不下去，。。。 第2章 一切都是对象 用引用操作对象：每种编程语言都有自己的操纵内存中元素的方式。java中操纵" />
+<meta property="og:description" content="[TOC] Java 编程思想学习 第1章 对象导论 好像看不下去，。。。 第2章 一切都是对象 用引用操作对象：每种编程语言都有自己的操纵内存中元素的方式。java中操" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://wzgl998877.github.io/2022/01/java-%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3%E5%AD%A6%E4%B9%A0/" /><meta property="article:section" content="posts" />
+<meta property="og:url" content="https://wzgl998877.github.io/2022/01/java%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-01-09T11:24:40+08:00" />
 <meta property="article:modified_time" content="2022-01-09T11:24:40+08:00" />
 
 <meta itemprop="name" content="Java 编程思想学习">
-<meta itemprop="description" content="Java 编程思想学习 第1章 对象导论 好像看不下去，。。。 第2章 一切都是对象 用引用操作对象：每种编程语言都有自己的操纵内存中元素的方式。java中操纵"><meta itemprop="datePublished" content="2022-01-09T11:24:40+08:00" />
+<meta itemprop="description" content="[TOC] Java 编程思想学习 第1章 对象导论 好像看不下去，。。。 第2章 一切都是对象 用引用操作对象：每种编程语言都有自己的操纵内存中元素的方式。java中操"><meta itemprop="datePublished" content="2022-01-09T11:24:40+08:00" />
 <meta itemprop="dateModified" content="2022-01-09T11:24:40+08:00" />
-<meta itemprop="wordCount" content="14457">
+<meta itemprop="wordCount" content="14458">
 <meta itemprop="keywords" content="Java基础," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Java 编程思想学习"/>
-<meta name="twitter:description" content="Java 编程思想学习 第1章 对象导论 好像看不下去，。。。 第2章 一切都是对象 用引用操作对象：每种编程语言都有自己的操纵内存中元素的方式。java中操纵"/>
+<meta name="twitter:description" content="[TOC] Java 编程思想学习 第1章 对象导论 好像看不下去，。。。 第2章 一切都是对象 用引用操作对象：每种编程语言都有自己的操纵内存中元素的方式。java中操"/>
 
     <!--[if lte IE 9]>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -152,7 +152,7 @@
             <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/spring/" class="category-list-link">spring</a><span class="category-list-count">1</span></li>
             <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/" class="category-list-link">中间件</a><span class="category-list-count">3</span></li>
             <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E4%BA%91%E5%8E%9F%E7%94%9F/" class="category-list-link">云原生</a><span class="category-list-count">1</span></li>
-            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E5%B8%B8%E7%94%A8%E6%A1%86%E6%9E%B6/" class="category-list-link">常用框架</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E5%B8%B8%E7%94%A8%E6%A1%86%E6%9E%B6/" class="category-list-link">常用框架</a><span class="category-list-count">4</span></li>
             <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="category-list-link">数据库</a><span class="category-list-count">3</span></li>
             <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E6%97%A5%E5%B8%B8%E6%80%BB%E7%BB%93/" class="category-list-link">日常总结</a><span class="category-list-count">3</span></li>
             <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E7%AE%97%E6%B3%95/" class="category-list-link">算法</a><span class="category-list-count">2</span></li>
@@ -188,7 +188,7 @@
             
             
             <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/mybatis/" class="tag-list-link">mybatis</a><span
-                    class="tag-list-count">1</span></li>
+                    class="tag-list-count">2</span></li>
             
             
             <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/mysql/" class="tag-list-link">mysql</a><span
@@ -305,7 +305,7 @@
       <h1 itemprop="name">
   <a
     class="article-title"
-    href="/2022/01/java-%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3%E5%AD%A6%E4%B9%A0/"
+    href="/2022/01/java%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3/"
     >Java 编程思想学习</a
   >
 </h1>
@@ -314,7 +314,7 @@
         
 <span class="article-date">
   <i class="icon icon-calendar-check"></i>&nbsp;
-<a href="https://wzgl998877.github.io/2022/01/java-%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3%E5%AD%A6%E4%B9%A0/" class="article-date">
+<a href="https://wzgl998877.github.io/2022/01/java%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3/" class="article-date">
   <time datetime="2022-01-09 11:24:40 &#43;0800 CST" itemprop="datePublished">2022-01-09</time>
 </a>
 </span>
@@ -327,12 +327,13 @@
     <a class="article-tag-link" href="/tags/java%E5%9F%BA%E7%A1%80/"> Java基础 </a>
   </span>
 
-		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 14457字</span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 14458字</span>
 		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 29分 </span>
       </div>
     </div>
     <div class="article-entry marked-body js-toc-content" itemprop="articleBody">
-      <h1 id="java-编程思想学习">Java 编程思想学习</h1>
+      <p>[TOC]</p>
+<h1 id="java-编程思想学习">Java 编程思想学习</h1>
 <h2 id="第1章---对象导论">第1章   对象导论</h2>
 <p>好像看不下去，。。。</p>
 <h2 id="第2章---一切都是对象">第2章   一切都是对象</h2>
@@ -1090,7 +1091,7 @@ void test36(){
 <p>结果</p>
 </li>
 </ol>
-<p><img src="C:%5CUsers%5Czhengtao%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20201015165642804.png" alt="image-20201015165642804"></p>
+<p><img src="image-20201015165642804.png" alt="image-20201015165642804"></p>
 <ol start="7">
 <li>
 <p>异常说明， java  鼓励人们把方法可能会抛出的异常告知使用此方法的调用者，java 提供了相应的语法（并强制使用这个语法），它属于方法声明的一部分，紧跟在形式参数列表之后，使用附加的关键字 throws，后面接一个所有潜在异常类型的列表。代码必须与异常说明保持一致。如果方法里的代码产生了异常却没有进行处理，编译器会发现问题并提醒你：要么处理这个异常，要么就在异常说明中表明此方法将产生异常。但可以声明方法将抛出异常，实际上却不抛出，编译器相信这个声明，并强制此方法的用户像真的抛出异常那样使用这个方法。这样做的好处是，为异常先占个位置，以后就可以抛出这种异常而不用修改已有的代码，在定义抽象基类和接口时这种能力很重要，这样派生类或接口实现就能够抛出这些预先声明的异常。</p>
@@ -1531,7 +1532,7 @@ public class Apple {
   <ul class="post-copyright list-unstyled">
     <li class="post-copyright-link hidden-xs">
       <strong>本文链接: </strong>
-      <a href="https://wzgl998877.github.io/2022/01/java-%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3%E5%AD%A6%E4%B9%A0/" title="Java 编程思想学习" target="_blank" rel="external">https://wzgl998877.github.io/2022/01/java-%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3%E5%AD%A6%E4%B9%A0/</a>
+      <a href="https://wzgl998877.github.io/2022/01/java%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3/" title="Java 编程思想学习" target="_blank" rel="external">https://wzgl998877.github.io/2022/01/java%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3/</a>
     </li>
     <li class="post-copyright-license">
       <strong>License: </strong>
@@ -1599,7 +1600,7 @@ public class Apple {
 </ul>
   <div class="copyright">
     &copy;2022  -
-    2023
+    2024
     <div class="publishby">
         Theme by <a href="https://github.com/wzgl998877/" target="_blank"> microzheng </a>base on<a href="https://github.com/xiaoheiAh/hugo-theme-pure" target="_blank"> pure</a>.
     </div>
