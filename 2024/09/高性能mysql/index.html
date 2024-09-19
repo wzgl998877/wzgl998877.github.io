@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <title>
+        高性能Mysql - 码农的学习笔记
+      </title>
+        <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    
+    <meta name="theme-color" content="#000000" />
+    
+    <meta http-equiv="window-target" content="_top" />
+    
+    
+    <meta name="description" content="[TOC] 高性能Mysql 字段类型 整数类型 有两种类型的数字：整数(whole number)和实数（real number，带有小数部分的数字）。如果存" />
+    <meta name="generator" content="Hugo 0.91.2 with theme pure" />
+    <title>高性能Mysql - 码农的学习笔记</title>
+    
+    
+    <link rel="stylesheet" href="https://wzgl998877.github.io/css/style.min.a85959a41e7abcc0db1f81f44bd264649303417f91b536e87dcde644340fea6d.css">
+    
+    <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/9.15.10/styles/github.min.css" async>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css" async>
+    <meta property="og:title" content="高性能Mysql" />
+<meta property="og:description" content="[TOC] 高性能Mysql 字段类型 整数类型 有两种类型的数字：整数(whole number)和实数（real number，带有小数部分的数字）。如果存" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wzgl998877.github.io/2024/09/%E9%AB%98%E6%80%A7%E8%83%BDmysql/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2024-09-11T20:03:12+08:00" />
+<meta property="article:modified_time" content="2024-09-11T20:03:12+08:00" />
+
+<meta itemprop="name" content="高性能Mysql">
+<meta itemprop="description" content="[TOC] 高性能Mysql 字段类型 整数类型 有两种类型的数字：整数(whole number)和实数（real number，带有小数部分的数字）。如果存"><meta itemprop="datePublished" content="2024-09-11T20:03:12+08:00" />
+<meta itemprop="dateModified" content="2024-09-11T20:03:12+08:00" />
+<meta itemprop="wordCount" content="16151">
+<meta itemprop="keywords" content="mysql," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="高性能Mysql"/>
+<meta name="twitter:description" content="[TOC] 高性能Mysql 字段类型 整数类型 有两种类型的数字：整数(whole number)和实数（real number，带有小数部分的数字）。如果存"/>
+
+    <!--[if lte IE 9]>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+      <![endif]-->
+
+    <!--[if lt IE 9]>
+        <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+      <![endif]-->
+  </head>
+
+  
+  
+
+  <body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage"><header class="header" itemscope itemtype="http://schema.org/WPHeader">
+    <div class="slimContent">
+      <div class="navbar-header">
+        <div class="profile-block text-center">
+          <a id="avatar" href="https://github.com/wzgl998877/" target="_blank">
+            <img class="img-circle img-rotate" src="https://wzgl998877.github.io/avatar.png" width="200" height="200">
+          </a>
+          <h2 id="name" class="hidden-xs hidden-sm">microzheng</h2>
+          <h3 id="title" class="hidden-xs hidden-sm hidden-md">努力会说谎，但努力不会白费</h3>
+          <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i>Shenzhen China</small>
+        </div><div class="search" id="search-form-wrap">
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i
+                        class="icon icon-search"></i></button>
+            </span>
+        </div>
+        <div class="ins-search">
+            <div class="ins-search-mask"></div>
+            <div class="ins-search-container">
+                <div class="ins-input-wrapper">
+                    <input type="text" class="ins-search-input" placeholder="想要查找什么..."
+                        x-webkit-speech />
+                    <button type="button" class="close ins-close ins-selectable" data-dismiss="modal"
+                        aria-label="Close"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="ins-section-wrapper">
+                    <div class="ins-section-container"></div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+        <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+        <ul class="nav navbar-nav main-nav">
+            <li class="menu-item menu-item-home">
+                <a href="/">
+                    <i class="icon icon-home-fill"></i>
+                  <span class="menu-title">主页</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-archives">
+                <a href="/posts/">
+                    <i class="icon icon-archives-fill"></i>
+                  <span class="menu-title">归档</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-categories">
+                <a href="/categories/">
+                    <i class="icon icon-folder"></i>
+                  <span class="menu-title">分类</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-tags">
+                <a href="/tags/">
+                    <i class="icon icon-tags"></i>
+                  <span class="menu-title">标签</span>
+                </a>
+            </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+<aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content"><p>enjoy~</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+      <div class="widget">
+    <h3 class="widget-title"> 分类</h3>
+    <div class="widget-body">
+        <ul class="category-list">
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/git/" class="category-list-link">git</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/java/" class="category-list-link">java</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/spring/" class="category-list-link">spring</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/" class="category-list-link">中间件</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E4%BA%91%E5%8E%9F%E7%94%9F/" class="category-list-link">云原生</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E5%B8%B8%E7%94%A8%E6%A1%86%E6%9E%B6/" class="category-list-link">常用框架</a><span class="category-list-count">4</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="category-list-link">数据库</a><span class="category-list-count">4</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E6%97%A5%E5%B8%B8%E6%80%BB%E7%BB%93/" class="category-list-link">日常总结</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E7%AE%97%E6%B3%95/" class="category-list-link">算法</a><span class="category-list-count">2</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/" class="category-list-link">系统设计</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/" class="category-list-link">网络编程</a><span class="category-list-count">3</span></li>
+        </ul>
+    </div>
+</div>
+      <div class="widget">
+    <h3 class="widget-title"> 标签</h3>
+    <div class="widget-body">
+        <ul class="tag-list">
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/http/" class="tag-list-link">http</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/java%E5%9F%BA%E7%A1%80/" class="tag-list-link">java基础</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/java%E5%B9%B6%E5%8F%91/" class="tag-list-link">java并发</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/jvm/" class="tag-list-link">jvm</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/leetcode/" class="tag-list-link">leetcode</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/mybatis/" class="tag-list-link">mybatis</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/mysql/" class="tag-list-link">mysql</a><span
+                    class="tag-list-count">3</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/netty/" class="tag-list-link">netty</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/redis/" class="tag-list-link">redis</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/rpc/" class="tag-list-link">rpc</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/spring/" class="tag-list-link">spring</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/websocket/" class="tag-list-link">websocket</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" class="tag-list-link">消息队列</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="tag-list-link">设计模式</a><span
+                    class="tag-list-count">1</span></li>
+            
+        </ul>
+
+    </div>
+</div>
+      
+<div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+        <ul class="recent-post-list list-unstyled no-thumbnail">
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://wzgl998877.github.io/2024/09/%E9%AB%98%E6%80%A7%E8%83%BDmysql/" class="title">高性能Mysql</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2024-09-11 20:03:12 &#43;0800 CST" itemprop="datePublished">2024-09-11</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://wzgl998877.github.io/2022/11/springcloud/" class="title">SpringCloud</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2022-11-07 19:15:43 &#43;0800 CST" itemprop="datePublished">2022-11-07</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://wzgl998877.github.io/2022/09/docker%E5%92%8Ck8s/" class="title">Docker和k8s</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2022-09-09 10:26:21 &#43;0800 CST" itemprop="datePublished">2022-09-09</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://wzgl998877.github.io/2022/05/redis%E6%80%BB%E7%BB%93/" class="title">Redis学习</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2022-05-06 15:21:49 &#43;0800 CST" itemprop="datePublished">2022-05-06</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://wzgl998877.github.io/2022/03/git%E7%9B%B8%E5%85%B3/" class="title">git相关</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2022-03-02 20:03:24 &#43;0800 CST" itemprop="datePublished">2022-03-02</time>
+                    </p>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+  </div>
+</aside>
+
+    
+    
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <h4 class="toc-title">文章目录</h4>
+    <nav id="toc" class="js-toc toc">
+
+    </nav>
+  </div>
+</aside>
+<main class="main" role="main"><div class="content">
+  <article id="-" class="article article-type-" itemscope
+    itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      <h1 itemprop="name">
+  <a
+    class="article-title"
+    href="/2024/09/%E9%AB%98%E6%80%A7%E8%83%BDmysql/"
+    >高性能Mysql</a
+  >
+</h1>
+
+      <div class="article-meta">
+        
+<span class="article-date">
+  <i class="icon icon-calendar-check"></i>&nbsp;
+<a href="https://wzgl998877.github.io/2024/09/%E9%AB%98%E6%80%A7%E8%83%BDmysql/" class="article-date">
+  <time datetime="2024-09-11 20:03:12 &#43;0800 CST" itemprop="datePublished">2024-09-11</time>
+</a>
+</span>
+<span class="article-category">
+  <i class="icon icon-folder"></i>&nbsp;
+  <a class="article-category-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"> 数据库 </a>
+</span>  
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>&nbsp;
+    <a class="article-tag-link" href="/tags/mysql/"> mysql </a>
+  </span>
+
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 16151字</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 33分 </span>
+      </div>
+    </div>
+    <div class="article-entry marked-body js-toc-content" itemprop="articleBody">
+      <p>[TOC]</p>
+<h1 id="高性能mysql">高性能Mysql</h1>
+<h2 id="字段类型">字段类型</h2>
+<h3 id="整数类型">整数类型</h3>
+<p>有两种类型的数字：整数(whole number)和实数（real number，带有小数部分的数字）。如果存储整数，可以使用这几种整数类型：TINYINT、SMALLINT、MEDIUMINT、INT或BIGINT。它们分别使用8、16、24、32和64位存储空间。可以存储的值的范围从-2(N-1)到2(N-1)-1，其中N是存储空间的位数。整数类型有可选的UNSIGNED属性，表示不允许负值，这大致可以使正数的上限提高一倍。例如，TINYINT UNSIGNED可以存储的值的范围是0～255，而TINYINT的值的存储范围是-128～127。<strong>有符号和无符号类型使用相同的存储空间，并具有相同的性能</strong>，因此可以根据数据实际范围选择合适的类型。<strong>MySQL可以为整数类型指定宽度，例如，INT(11)，这对大多数应用毫无意义：它不会限制值的合法范围</strong>，只是规定了MySQL的一些交互工具（例如，MySQL命令行客户端用来显示字符的个数。对于存储和计算来说，<strong>INT(1)和INT(20)是相同的</strong>。</p>
+<p><img src="mqjdtizqn6.png" alt="img"></p>
+<h3 id="实数类型">实数类型</h3>
+<p>FLOAT和DOUBLE类型支持使用标准的浮点运算进行近似计算。如果你需要知道浮点运算是怎么计算的，则需要研究平台的浮点数的具体实现方式。有两种方式可以指定浮点列所需的精度，这可能会导致MySQL以静默方式选择不同的数据类型，或者在存储值时对其进行近似处理。这些精度说明符是非标准的，因此我们建议只指定数据类型，不指定精度。<strong>浮点类型通常比DECIMAL使用更少的空间来存储相同范围的值</strong>。<strong>FLOAT列使用4字节的存储空间。DOUBLE占用8字节</strong>，比FLOAT具有更高的精度和更大的值范围。与整数类型一样，你只能选择存储类型；MySQL会使用DOUBLE进行浮点类型的内部计算。</p>
+<p>由于额外的空间需求和计算成本，应该尽量只在对小数进行精确计算时才使用ECIMAL——例如，存储财务数据。但在一些大容量的场景，可以考虑使用BIGINT代替DECIMAL，将需要存储的货币单位根据小数的位数乘以相应的倍数即可。假设要存储财务数据并精确到万分之一分，则可以把所有金额乘以一百万，<strong>然后将结果存储在BIGINT里，这样可以同时避免浮点存储计算不精确和DECIMAL精确计算代价高的问题</strong>。</p>
+<h3 id="字符串类型">字符串类型</h3>
+<p>MySQL支持多种字符串数据类型，每种类型还有许多变体。每个字符串列可以有自己的字符集和该字符集的排序规则集。<strong>VARCHAR和CHAR是两种最主要的字符串类型</strong>。下面的描述假设使用的存储引擎是InnoDB。先来看看VARCHAR和CHAR值通常是如何存储在磁盘上的。请注意，存储引擎在内存中存储CHAR或VARCHAR值的方式可能与在磁盘上存储该值的方式不同，并且服务器在从存储引擎检索该值时可能会将其转换为另一种存储格式。下面是关于两种类型的一些比较。</p>
+<ul>
+<li>
+<p><strong>VARCHAR</strong>用于存储可变长度的字符串，是最常见的字符串数据类型。它比固定长度的类型更节省空间，因为它仅使用必要的空间（即，更少的空间用于存储更短的值）。<strong>VARCHAR需要额外使用1或2字节记录字符串的长度：如果列的最大长度小于或等于255字节，则只使用1字节表示，否则使用2字节</strong>。假设采用latin1字符集，一个VARCHAR(10)的列需要11字节的存储空间。VARCHAR(1000)的列则需要1002个字节，因为需要2字节存储长度信息。<strong>VARCHAR节省了存储空间，所以对性能也有帮助。但是，由于行是可变长度的，在更新时可能会增长，这会导致额外的工作。如果行的增长使得原位置无法容纳更多内容，则处理行为取决于所使用的存储引擎</strong>。例如，InnoDB可能需要<strong>分割页面</strong>来容纳行。其他一些存储引擎也许不在原数据位置更新数据。下面这些情况使用VARCHAR是合适的：字符串列的最大长度远大于平均长度；列的更新很少，所以碎片不是问题；使用了像UTF-8这样复杂的字符集，每个字符都使用不同的字节数进行存储。InnoDB更为复杂，它可以将过长的VARCHAR值存储为BLOB。我们稍后再讨论</p>
+</li>
+<li>
+<p>CHAR是固定长度的：MySQL总是为定义的字符串长度分配足够的空间。当存储CHAR值时，<strong>MySQL删除所有尾随空格。如果需要进行比较，值会用空格填充</strong>。</p>
+</li>
+</ul>
+<p>与CHAR和VARCHAR类似的类型还有BINARY和VARBINARY，它们存储的是二进制字符串。二进制字符串与常规字符串非常相似，但它们存储的是字节而不是字符。填充也不同：MySQL填充BINANRY用的是\0（零字节）而不是空格，并且在检索时不会去除填充值。当需要存储二进制数据，并且希望MySQL将值作为字节而不是字符进行比较时，这些类型非常有用。字节比较的优势不仅仅是大小写不敏感。MySQL比较BINARY字符串时，每次按一个字节，并且根据该字节的数值进行比较。因此，二进制比较比字符比较简单得多，因此速度更快。</p>
+<blockquote>
+<p>使用VARCHAR(5)和VARCHAR(200)存储&rsquo;hello&rsquo;的空间开销是一样的。那么使用更短的列有什么优势吗？事实证明有很大的优势。较大的列会使用更多的内存，因为MySQL通常会在内部分配固定大小的内存块来保存值。这对于使用内存临时表的排序或操作来说尤其糟糕。在利用磁盘临时表进行文件排序时也同样糟糕。最好的策略是只分配真正需要的空间。</p>
+</blockquote>
+<ul>
+<li>
+<p>BLOB和TEXT类型BLOB和TEXT都是为存储很大的数据而设计的字符串数据类型，分别采用二进制和字符方式存储。实际上，它们分别属于两组不同的数据类型家族：字符类型是TINYTEXT、SMALLTEXT、TEXT、MEDIUMTEXT和LONGTEXT；二进制类型是TINYBLOB、SMALLBLOB、BLOB、MEDIUMBLOB、LONGBLOB。BLOB是SMALLBLOB的同义词，TEXT是SMALLTEXT的同义词。与其他数据类型不同，<strong>MySQL把每个BLOB和TEXT值当作一个具有自己标识的对象来处理。存储引擎通常会专门存储它们。当BLOB和TEXT值太大时，InnoDB会使用独立的“外部”存储区域，此时每个值在行内需要1～4字节的存储空间，然后在外部存储区域需要足够的空间来存储实际的值</strong>。<strong>BLOB和TEXT家族之间的唯一区别是，BLOB类型存储的是二进制数据，没有排序规则或字符集，但TEXT类型有字符集和排序规则</strong>。MySQL对BLOB和TEXT列的排序与其他类型不同：它只对这些列的最前max_sort_length字节而不是整个字符串做排序。如果只需要按前面少数几个字符排序，可以减小max_sort_length服务器变量的值。MySQL不能将BLOB和TEXT数据类型的完整字符串放入索引，也不能使用索引进行排序。</p>
+</li>
+<li>
+<p>有时可以使用<strong>ENUM（枚举）列代替常规的字符串类型</strong>。ENUM列可以存储一组预定义的不同字符串值。MySQL在存储枚举时非常紧凑，会根据列表值的数量压缩到1或者2字节中。在内部会将每个值在列表中的位置保存为整数</p>
+</li>
+</ul>
+<h3 id="日期和时间类型">日期和时间类型</h3>
+<p>MySQL中有很多数据类型用以支持各种各样的日期和时间值，比如YEAR和DATE。MySQL可以存储的最小时间粒度是微秒。大多数时间类型都没有其他选择，因此不存在哪一种是最佳选择的问题。唯一的问题是，当需要同时存储日期和时间时该怎么做。MySQL提供了两种非常相似的数据类型来实现这一需求：DATETIME和TIMESTAMP。对于许多应用程序来说，两者都可以，但在某些场景，一个比另一</p>
+<ul>
+<li>DATETIME这种类型可以保存大范围的数值，从1000年到9999年，精度为1微秒。<strong>它以YYYYMMDDHHMMSS格式存储压缩成整数的日期和时间，且与时区无关。这需要8字节的存储空间</strong>。默认情况下，MySQL以可排序、无歧义的格式显示DATETIME值，例如，2008-01-16 22：37：08。这是ANSI表示日期和时间的标准方式。</li>
+<li>TIMESTAMP顾名思义，<strong>TIMESTAMP类型存储自1970年1月1日格林尼治标准时间(GMT)午夜以来经过的秒数——与UNIX时间戳相同</strong>。<strong>TIMESTAMP只使用4字节的存储空间</strong>，所以它的范围比DATETIME小得多：<strong>只能表示从1970年到2038年1月19日</strong></li>
+</ul>
+<h3 id="位压缩数据类型">位压缩数据类型</h3>
+<p>MySQL有几种使用值中的单个位来紧凑地存储数据的类型。所有这些位压缩类型，不管底层存储和处理方式如何，从技术上来说都是字符串类型。</p>
+<ul>
+<li>BIT可以使用BIT列存储一个或多个true/false值。BIT(1)定义一个包含1位的字段，BIT(2)存储2位的字段，依此类推；BIT列的最大长度为64位。InnoDB将每一列存储为足够容纳这些位的最小整数类型，所以使用BIT列不会节省任何存储空间。MySQL在处理时会将BIT视为字符串类型，而不是数字类型。当检索BIT(1)的值时，结果是一个包含二进制值0或1的字符串，而不是ASCII码的“0”或“1”。但是，如果在数字上下文中检索该值，则会将BIT字符串转换为数字。</li>
+<li>SET如果需要存储多个true/false值，可以考虑使用MySQL原生的SET数据类型，可以将多列组合成一列，这在MySQL内部是以一组打包的位的集合来表示的。这样可以更有效地利用存储空间，MySQL具有FIND_IN_SET()和FIELD()等函数，使其易于在查询中使用。</li>
+</ul>
+<h3 id="json数据类型">JSON数据类型</h3>
+<p><strong>MySQL有原生的JSON数据类型，可以方便地直接在表中的JSON结构部分进行操作。纯粹主义者可能会认为，在数据库中存储原始JSON是一种反范式，因为理想情况下，schema应该是JSON中具体字段的表示</strong>。新手在查看JSON数据类型时，可能会发现这是避免创建和管理独立字段的捷径。</p>
+<p><strong>总的来说，决定使用原生SQL还是JSON取决于在数据库中存储JSON的便捷性是否大于性能</strong>。如果每天访问这些数据数百万次或数十亿次，速度差异就会累加起来</p>
+<h3 id="选择标识符">选择标识符</h3>
+<p>一般来说，<strong>标识符是引用行及通常使其唯一的方式</strong>。例如，如果你有一个关于用户的表，可能希望为每个用户分配一个数字ID或唯一的用户名。此字段可能是主键中的部分或全部。为标识符列选择合适的数据类型非常重要。与其他列相比，更有可能将标识符列与其他值（例如，在联接中）进行比较，并使用它们进行查找。标识符列也可能在其他表中作为外键，因此为标识符列选择数据类型时，应该与联接表中的对应列保持一致。（正如我们在本章前面演示的，在关联表中使用相同的数据类型是一个好主意，因为这些列很可能在联接中使用。）</p>
+<ul>
+<li>整数类型整数通常是标识符的最佳选择，因为它们速度快，并且可以自动递增。AUTO_INCREMENT是一个列属性，可以为新的行自动生成一个整数类型的值。例如，计费系统可能需要为每个客户生成新发票，使用AUTO_INCREMENT意味着生成的第一张发票是1，第二张是2，依此类推。请注意，应该确保选择适合预期数据增长的整数大小，与整数意外耗尽有关的系统停机事故可不止发生一次。</li>
+<li>对于标识符来说，ENUM和SET类型通常是糟糕的选择，尽管对某些只包含固定状态或者类型的静态“定义表”来说可能是没有问题的。ENUM和SET列适用于保存</li>
+<li>字符串类型如果可能，应避免使用字符串类型作为标识符的数据类型**，因为它们很消耗空间，而且通常比整数类型慢**。对于完全“随机”的字符串要非常小心，如MD5()、SHA1()或UUID()生成的字符串。这些函数生成的新值会任意分布在很大的空间内，这会减慢INSERT和某些类型的SELECT查询的速度：
+<ul>
+<li>因为插入的值会写到索引的随机位置，所以会使得INSERT查询变慢。这会导致页分裂、磁盘随机访问，以及对于聚簇存储引擎产生聚簇索引碎片。</li>
+<li>SELECT查询也会变慢，因为逻辑上相邻的行会广泛分布在磁盘和内存中。</li>
+<li>对于所有类型的查询，随机值都会导致缓存的性能低下，因为它们会破坏引用的局部性，而这正是缓存的工作原理。如果整个数据集都是“热的”，那么将任何特定部分的数据缓存到内存中都没有任何好处，而且如果工作集比内存大，缓存就会出现大量刷新和不命中。果存储通用唯一标识符(UUID)值，则应该删除破折号，或者更好的做法是，使用UNHEX()函数将UUID值转换为16字节的数字，并将其存储在一个BINARY(16)列中。可以使用HEX()函数以十六进制格式检索值。</li>
+</ul>
+</li>
+</ul>
+<h3 id="特殊数据类型">特殊数据类型</h3>
+<p>某些类型的数据并不直接对应于可用的内置类型。<strong>IPv4地址就是一个很好的例子。人们通常使用VARCHAR(15)列来存储IP地址。然而，它们实际上是32位无符号整数，而不是字符串。用小数点将地址分成四段的表示方法只是为了让人们阅读容易，所以应该将I P地址存储为无符号整数</strong>。MySQL提供了INET_ATON()和INET_NTOA()函数来在这两种表示形式之间进行转换。使用的空间从VARCHAR(15)的约16字节缩减到无符号32位整数的4字节。如果你担心数据库的可读性，不想继续使用函数查看行数据，请记住MySQL有视图，可以使用视图来简化数据查看的复杂性。</p>
+<h2 id="mysql-schema设计中的陷阱">MySQL schema设计中的陷阱</h2>
+<p>尽管设计原则有好有坏，但MySQL的实现方式会带来一些问题，这意味着你也可能会犯MySQL特有的错误。本节讨论我们在MySQL schema设计中观察到的问题。它可能会帮助你避免这些错误，并让你选择更适合MySQL具体实现的替代方案。</p>
+<h3 id="太多的列">太多的列</h3>
+<p><strong>MySQL的存储引擎API通过在服务器和存储引擎之间以行缓冲区格式复制行来工作</strong>；然后，<strong>服务器将缓冲区解码为列。将行缓冲区转换为具有解码列的行数据结构的操作代价是非常高的</strong>。InnoDB的行格式总是需要转换的。这种转换的成本取决于列数。<strong>当调查一个具有非常宽的表（数百列）的客户的高CPU消耗问题时，我们发现这种转换代价可能会变得非常昂贵</strong>，尽管实际上只使用了几列。如果计划使用数百列，请注意服务器的性能特征会有所不同。</p>
+<h3 id="太多的联接">太多的联接</h3>
+<p>所谓的实体属性值(entity attribute value，EAV)设计模式是一种被普遍认为糟糕的设计模式的典型案例，尤其是在MySQL中效果不佳。<strong>MySQL限制每个联接有61个表</strong>，而E AV模式设计的数据库需要许多自联接。我们已经看到不少E AV模式设计的数据库最终超过了这个限制。然而，<strong>即使联接数远小于61，规划和优化查询的成本对MySQL来说也会成为问题</strong>。一个粗略的经验法则是，如果需要以高并发性快速执行查询，那么每个查询最好少于十几个的表。</p>
+<h3 id="全能的枚举">全能的枚举</h3>
+<p><strong>要小心过度使用ENUM</strong>。下面是我们看到的一个例子：schema中大量地散布着这种模式。在任何具有枚举值类型的数据库中，这可能是一个值得商榷的设计决策</p>
+<h3 id="变相的枚举">变相的枚举</h3>
+<p>ENUM列允许在列中保存一组已定义值中的单个值。SET列则允许在列中保存一组已定义值中的一个或多个值。有时很容易混淆。这里有一个例子：如果这里真和假两种情况不会同时出现，那么毫无疑问应该使用ENUM列而不是SET列。</p>
+<h3 id="null不是虚拟值">NULL不是虚拟值</h3>
+<p>我们之前说过避免使用NULL的好处，并且建议尽可能考虑其他选择。即使需要在表中存储事实上的“空值”，也可能不需要使用NULL。也许可以使用0、特殊值或空字符串作为代替。<strong>但是遵循这个原则也不要走极端。当需要表示未知值时，不要太害怕使用NULL。在某些情况下，使用NULL比使用某个虚拟常数更好。从受约束类型的域中选择一个值，例如使用-1表示一个未知的整数，可能会使代码复杂化，容易引入bug，并通常会把事情搞得一团糟</strong>。处理NULL并不容易，但通常比其他替代方案更好</p>
+<h3 id="小结">小结</h3>
+<ul>
+<li>尽量避免在设计中出现极端情况，例如，强制执行非常复杂的查询或者包含很多列的表设计（很多的意思是介于有点多和非常多之间）。</li>
+<li>使用小的、简单的、适当的数据类型，并避免使用NULL，除非确实是对真实数据进行建模的正确方法。</li>
+<li>尝试使用相同的数据类型来存储相似或相关的值，尤其是在联接条件中使用这些值时。</li>
+<li>注意可变长度字符串，它可能会导致临时表和排序的全长内存分配不乐观。</li>
+<li>如果可能的话，尝试使用整数作为标识符。</li>
+<li>避免使用一些传统的MySQL技巧，例如，指定浮点数的精度或整数的显示宽度。</li>
+<li>小心使用ENUM和SET类型。它们很方便，但也可能被滥用，有时还很棘手。另外最好避免使用BIT类型。</li>
+</ul>
+<h2 id="创建高性能的索引">创建高性能的索引</h2>
+<p>索引，在MySQL中也叫作键(key)，是存储引擎用于快速找到记录的一种数据结构。本章将讨论索引的一些有用的特性。要想获得好的性能，索引至关重要。尤其是当表中的数据量越来越大时，索引对性能的影响愈发重要。在数据量较小且负载较低时，缺少合适的索引对性能的影响可能还不明显，但当数据量逐渐增大时，性能会急剧下降。不过，索引却经常被忽略，有时候甚至被误解，所以在实际案例中，经常会遇到由糟糕索引导致的问题。这也是为什么我们把本章放在了全书靠前的位置，甚至比查询优化还要靠前。索引优化应该是对查询性能优化最有效的手段了。索引能够轻易将查询性能提高几个数量级，“最优”的索引有时比一个“好的”索引性能要好两个数量级。创建一个真正“最优”的索引经常需要重写查询</p>
+<p>InnoDB存储引擎有一个被称为<strong>自适应哈希索引</strong>的特性。<strong>当InnoDB发现某些索引值被非常频繁地被访问时，它会在原有的B-tree索引之上，在内存中再构建一个哈希索引</strong>。这就让B-tree索引也具备了一些哈希索引的优势，例如，可以实现非常快速的哈希查找。这个过程是完全自动化的，用户无法进行控制或者配置。不过，可以通过参数彻底关闭自适应哈希索引这个特性</p>
+<ul>
+<li>全值匹配 全值匹配指的是和索引中的所有列匹配，例如，前面提到的索引可用于查找姓名为Cuba Allen、出生于1960-01-01的人。</li>
+<li>匹配最左前缀例如，前面提到的索引可用于查找所有姓为Allen的人，即只使用索引的第一列。</li>
+<li>匹配列前缀 也可以只匹配某一列的值的开头部分。例如，前面提到的索引可用于查找所有姓以J开头的人。这里也只使用了索引的第一列。</li>
+<li>匹配范围值例如，前面提到的索引可用于查找姓在Allen和Barrymore之间的人。这里也只使用了索引的第一列。精确匹配某一列而范围匹配另外一列前面提到的索引也可用于查找所有姓为Allen，并且名字是字母K开头（比如Kim、Karl等）的人，即第一列last_name是全匹配，第二列first_name是范围匹配。</li>
+<li>只访问索引的查询 B-tree索引通常可以支持“只访问索引的查询”，即查询只需要访问索引，而无须访问数据行。后面我们将单独讨论这种“<strong>覆盖索引</strong>”的优化。因为索引树中的节点是有序的，所以除了按值查找，索引还可以用于查询中的ORDER BY操作（按顺序查找）。</li>
+<li>一般来说，如果B-tree可以按照某种方式查找到值，那么也可以按照这种方式去排序。所以，如果ORDER BY子句满足前面列出的几种查询类型，则这个索引也可以用于这类排序场景。下面是一些关于B-tree索引的限制。</li>
+</ul>
+<h3 id="不能使用索引">不能使用索引</h3>
+<ul>
+<li>如果不是按照索引的最左列开始查找，则无法使用索引。例如，上面例子中的索引无法用于查找名字为Bill的人，也无法查找某个特定生日的人，因为这两列都不是最左数据列。类似地，也无法查找姓氏以某个字母结尾的人。</li>
+<li>不能跳过索引中的列。也就是说，前面所述的索引无法用于查找姓为Smith并且在某个特定日期出生的人。如果不指定名(first_name)，则MySQL只能使用索引的第一列。</li>
+<li>如果查询中有某列的范围查询，则其右边所有列都无法使用索引优化查找。例如，有查询WHERE last_name=&lsquo;Smith&rsquo;AND first_name LIKE&rsquo;J%&lsquo;AND dob=&lsquo;1976-12-23&rsquo;，这个查询只能使用索引的前两列，因为这里LIKE是一个范围条件（不过，MySQL可以把其余列用于其他目的）。如果范围查询列值的数量有限，那么可以通过使用多个等于条件来代替范围条件。现在可以看到前面提到的索引列的顺序是多么重要：这些限制都和索引列的顺序有关。在优化性能的时候，可能需要使用相同的列但顺序不同的索引来满足不同类型的查询需求。也有些限制并不是B-tree本身导致的，而是MySQL查询优化器和存储引擎使用索引的方式导致的，这部分限制在未来的版本中可能就不再是限制了。</li>
+</ul>
+<h3 id="全文索引">全文索引</h3>
+<p>FULLTEXT是一种特殊类型的索引，它查找的是文本中的关键词，而不是直接比较索引中的值。全文索引和其他几类索引的匹配方式完全不一样。它有许多需要注意的细节，如停用词、词干、复数、布尔搜索等。全文索引更类似于搜索引擎做的事情，而不是简单的WHERE条件匹配。<strong>在相同的列上同时创建全文索引和基于值的B-tree索引并不会有冲突，全文索引适用于MATCH AGAINST操作，而不是普通的WHERE条件操作</strong>。</p>
+<h2 id="高性能的索引策略">高性能的索引策略</h2>
+<h3 id="前缀索引和索引的选择性">前缀索引和索引的选择性</h3>
+<p>有时候为了提升索引的性能，同时也节省索引空间，可以只对<strong>字段的前一部分字符进行索引</strong>，这样做的缺点是，会降低索引的选择性。<strong>索引的选择性</strong>是指，<strong>不重复的索引值（也称为基数，cardinality）和数据表的记录总数(T)的比值</strong>，范围从1/T到1之间。<strong>索引的选择性越高则查询效率越高，因为选择性高的索引可以让MySQL在查找时过滤掉更多的行。唯一索引的选择性是1，这是最好的索引选择性，性能也是最好的</strong>。</p>
+<p>一般情况下，列前缀的选择性也是足够高的，足以满足查询性能。<strong>对于BLOB、TEXT或者很长的VARCHAR类型的列，必须使用前缀索引，因为MySQL并不支持对这些列的完整内容进行索引</strong>。这里的关键点在于，<strong>既要选择足够长的前缀以保证较高的选择性，同时又不能太长（以便节约空间）</strong>。前缀应该足够长，以使得前缀索引的选择性接近于索引整列。换句话说，前缀的“基数”应该接近于完整列的“基数”。</p>
+<p><strong>前缀索引是一种能使索引更小、更快的有效办法</strong>，但它也有缺点：MySQL无法使用前缀索引做ORDER BY和GROUP BY操作，也无法使用前缀索引做覆盖扫描。</p>
+<h3 id="多列索引">多列索引</h3>
+<p>很多人对多列索引的理解都不够。一个常见的错误就是，为每列创建独立的索引，或者按照错误的顺序创建多列索引。</p>
+<p><strong>在多列上独立地创建多个单列索引，在大部分情况下并不能提高MySQL的查询性能</strong>。MySQL引入了一种叫**“索引合并”(index merge)的策略**，它在一定程度上可以使用表中的多个单列索引来定位指定的行。<strong>在这种情况下，查询能够同时使用两个单列索引进行扫描，并将结果进行合并</strong>。这种算法有三个变种：OR条件的联合(union)，AND条件的相交(intersection)，组合前两种情况的联合及相交。MySQL会使用这类技术来优化复杂查询，所以在某些语句的Extra列中还可以看到嵌套操作。<strong>索引合并策略有时候效果非常不错，但更多的时候，它说明了表中的索引建得很糟糕</strong>：</p>
+<ul>
+<li>当优化器需要对多个索引做相交（相交操作是使用“索引合并”的一种情况，另一种是做联合操作）操作时（通常有多个AND条件），<strong>通常意味着需要一个包含所有相关列的多列索引，而不是多个独立的单列索引</strong>。</li>
+<li>当优化器需要对多个索引做联合操作时（通常有多个OR条件），通常需要在算法的缓存、排序和合并操作上耗费大量CPU和内存资源，尤其是当其中有些索引的选择性不高，需要合并扫描返回的大量数据的时候。</li>
+<li>更重要的是，优化器不会把这些操作计算到“查询成本”(cost)中，优化器只关心随机页面读取。这会使得查询的成本被“低估”，导致该执行计划还不如直接进行全表扫描。这样做不但会消耗更多的CPU和内存资源，还可能会影响并发的查询，但如果单独运行这样的查询则往往会忽略对并发性的影响。通常来说，<strong>使用UNION改写查询</strong>，往往是最好的办法。</li>
+</ul>
+<p><strong>如果在EXPLAIN中看到有索引合并</strong>，那么就应该好好检查一下查询语句的写法和表的结构，看是不是已经是最优的。<strong>也可以通过参数optimizer_switch来关闭索引合并功能，还可以使用IGNORE INDEX语法让优化器强制忽略掉某些索引，从而避免优化器使用包含索引合并的执行计划</strong>。</p>
+<h3 id="选择合适的索引列顺序">选择合适的索引列顺序</h3>
+<p>最容易让人感到困惑的问题之一就是索引列的顺序。<strong>正确的顺序依赖于使用该索引的查询语句，同时还需要考虑如何更好地满足排序和分组操作的需要。</strong></p>
+<p>对于如何选择索引的列顺序有一个重要的经验法则：<strong>将选择性最高的列放到索引最前列</strong>。这个建议准确吗？<strong>在很多场景中可能有帮助，但是要全面地考虑各种场景的话，考虑如何避免大量随机I/O和排序可能更重要</strong>。（场景不同则选择不同，没有一个放之四海皆准的法则。这里只是说明，这个经验法则可能没有你想象中那么重要。）</p>
+<p><strong>当不需要考虑排序和分组时，将选择性最高的列放在前面通常是很好的</strong>。这时索引的作用只是优化查询语句中的WHERE条件。在这种情况下，按这个原则设计的索引确实能够最快地过滤出需要的行，对于在WHERE子句中只使用了索引部分前缀列的查询来说，选择性也更高。然而，性能不只依赖于所有索引列的选择性（整体基数），也和查询条件的具体值有关，也就是和值的分布有关。<strong>这和前面介绍的选择前缀的长度需要考虑的因素一样。可能需要根据那些运行频率最高的查询来调整索引列的顺序，让这种情况下索引的选择性最高</strong>。</p>
+<h3 id="聚簇索引">聚簇索引</h3>
+<p>聚簇索引并不是一种单独的索引类型，而是一种数据存储方式。具体的细节依赖于其实现方式，但InnoDB的聚簇索引实际上在同一个结构中保存了B-tree索引和数据行。当表有聚簇索引时，<strong>它的数据行实际上存放在索引的叶子页(leaf page)中</strong>。术语“聚簇”表示数据行和相邻的键值紧凑地存储在一起。<strong>因为无法同时把数据行存放在两个不同的地方，所以一个表只能有一个聚簇索引</strong>（不过，覆盖索引可以模拟多个聚簇索引的情况，本章后面将详细介绍）。因为是存储引擎负责实现索引，因此，不是所有的存储引擎都支持聚簇索引。本节我们主要关注InnoDB，但是这里讨论的原理对于任何支持聚簇索引的存储引擎都是适用的。</p>
+<p><strong>如果你没有定义主键，InnoDB会选择一个唯一的非空索引代替。如果没有这样的索引，InnoDB会隐式定义一个主键来作为聚簇索引</strong>。这样做的缺点在于，所有需要使用这种隐藏主键的表都依赖一个单点的“自增值”，这可能会导致非常高的锁竞争，从而出现性能问题。</p>
+<p>聚集的数据有一些重要的优点：</p>
+<ul>
+<li>你可以把相互关联的数据保存在一起。例如，在实现电子邮箱应用时，可以根据用户ID来聚集数据，这样只需要从磁盘读取少数的数据页就能获取某个用户的全部邮件。如果没有使用聚簇索引，则每封邮件都可能导致一次磁盘I/O。</li>
+<li>数据访问更快。聚簇索引将索引和数据保存在同一个B-tree中，因此从聚簇索引中获取数据通常比在非聚簇索引中查找要快。</li>
+<li><strong>使用覆盖索引扫描的查询可以直接使用页节点中的主键值</strong>。如果在设计表和查询时能充分利用上面的优点，那么就能极大地提升性能。</li>
+</ul>
+<p>同时，聚簇索引也有一些缺点：</p>
+<ul>
+<li>聚簇数据最大限度地提高了I/O密集型应用的性能，但如果数据全部都放在内存中，则访问的顺序就没那么重要了，聚簇索引也就没什么优势了。</li>
+<li><strong>插入速度严重依赖于插入顺序</strong>。按照主键的顺序插入行是将数据加载到InnoDB表中最快的方式。但如果不是按照主键的顺序加载数据，那么在加载完成后最好使用OPTIMIZE TABLE命令重新组织一下表。</li>
+<li><strong>更新聚簇索引列的代价很高</strong>，因为它会强制InnoDB将每个被更新的行移动到新的位置。</li>
+<li><strong>基于聚簇索引的表在插入新行，或者主键被更新导致需要移动行的时候，可能面临页分裂(page split)的问题</strong>。当行的主键值要求必须将这一行插入某个已满的页中时，存储引擎会将该页分裂成两个页面来容纳该行，这就是一次页分裂操作。页分裂会导致表占用更多的磁盘空间。</li>
+<li><strong>聚簇索引可能导致全表扫描变慢，尤其是行比较稀疏，或者由于页分裂导致数据存储不连续的时候</strong>。</li>
+<li><strong>二级索引（非聚簇索引）可能比想象中的要更大，因为二级索引的叶子节点包含了引用行的主键列</strong>。</li>
+<li>二级索引访问需要两次索引查找，而不是一次。为什么二级索引需要两次索引查找？答案是，二级索引中保存的是“行指针”。要记住，**二级索引叶子节点保存的不是指向行的物理位置的指针，而是行的主键值。这意味着通过二级索引查找行，存储引擎需要找到二级索引的叶子节点，以获得对应的主键值，然后根据这个值去聚簇索引中查找对应的行。**这里做了双倍工作：两次B-tree查找而不是一次。对于InnoDB，自适应哈希索引（参考本章前面的“B-tree索引”一节）能够减少这样的重复工作。</li>
+</ul>
+<h4 id="innodb的数据分布">InnoDB的数据分布</h4>
+<p><strong>聚簇索引的每一个叶子节点都包含了主键值、事务ID、用于事务和MVCC的回滚指针，以及所有的剩余列</strong>。</p>
+<p><strong>InnoDB的二级索引的叶子节点中存储的是主键值，并以此作为指向行的“指针”</strong>。这样的策略减少了当出现行移动或者数据页分裂时二级索引的维护工作。使用主键值作为指针会让二级索引占用更多的空间，换来的好处是，<strong>InnoDB在移动行时无须更新二级索引中的这个“指针”</strong>。</p>
+<h5 id="使用顺序递增的主键">使用顺序递增的主键</h5>
+<p><img src="image-20240919201943980.png" alt="image-20240919201943980"></p>
+<p><strong>因为主键的值是顺序的，所以InnoDB把每一条记录都存储在上一条记录的后面。当达到页的最大填充因子时（InnoDB默认的最大填充因子是页大小的15/16，留出部分空间用于以后修改），下一条记录就会被写入新的页中。一旦数据按照这种顺序写入，主键页就会近似于被顺序的记录填满，这也正是所期望的结果</strong>（然而，二级索引页可能有所不同）。</p>
+<h5 id="使用非顺序递增的主键">使用非顺序递增的主键</h5>
+<p>因为新写入的记录的主键值不一定比之前插入的大，所以InnoDB无法简单地总是把新记录插到索引的最后，而是需要为新记录寻找合适的位置——通常是已有数据的中间位置——并且分配空间。这会增加很多额外工作，并导致数据分布不够优化。下面是总结的一些缺点：</p>
+<ul>
+<li>写入的目标页可能已经刷到磁盘上并从缓存中移除，或者还没有被加载到缓存中，InnoDB在插入之前不得不先找到，并从磁盘将目标页读取到内存中。这将导致大量的随机I/O。</li>
+<li>因为写入是乱序的，所以InnoDB不得不频繁地做页分裂操作，以便为新记录分配空间。页分裂会导致移动大量数据，一次插入最少需要修改三个页而不是一个。</li>
+<li>由于频繁的页分裂，页会变得稀疏并被不规则地填充，所以最终数据会有碎片。在把这些随机值载入聚簇索引后，<strong>最好做一次OPTIMIZE TABLE来重建表并优化页的填充情况</strong>。</li>
+</ul>
+<p><strong>使用InnoDB时应该尽可能地按主键顺序插入数据，并且尽可能地按照单调增加的聚簇键的值顺序插入新记录</strong>。</p>
+<h5 id="什么时候按主键顺序插入反而会更糟">什么时候按主键顺序插入反而会更糟</h5>
+<p>对于高并发的工作负载，在InnoDB中按主键顺序插入可能会造成明显的写入竞争。主键的上界会成为“热点”。<strong>因为所有的插入都发生在这里，所以并发插入可能导致间隙锁竞争</strong>。如果使用自增主键，还会有AUTO_INCREMENT锁机制；</p>
+<h3 id="覆盖索引">覆盖索引</h3>
+<p>大家通常都会根据查询的WHERE条件来创建合适的索引，不过这只是索引优化的一个方面。<strong>设计优秀的索引应该考虑到整个查询，而不单是WHERE条件部分</strong>。索引的确是一种高效找到数据的方式，但是如果MySQL还可以使用索引直接获取列的数据，这样就不再需要读取数据行了。如果索引的叶子节点中已经包含要查询的数据，那么还有什么必要再回表查询呢？<strong>如果一个索引包含（或者说覆盖）所有需要查询的字段的值，我们就称之为覆盖索引。需要注意的是，只有B-tree索引可以用于覆盖索引</strong>。</p>
+<p>覆盖索引是非常有用的工具，能够极大地提高性能。试想一下，如果查询只需要扫描索引而无须回表，会带来多少好处：</p>
+<ul>
+<li>索引条目通常远小于数据行大小，所以如果只需要读取索引，那么MySQL就会极大地减少数据访问量。这对缓存型的应用负载非常重要，因为在这种情况下，响应时间大部分花费在数据拷贝上。覆盖索引对于I/O密集型的应用也有帮助，因为索引比数据更小，更容易全部放入内存中。</li>
+<li>因为索引是按照列值的顺序存储的（至少在单页内如此），所以对于I/O密集型的范围查询会比随机从磁盘读取每一行数据的I/O要少得多。可以通过OPTIMIZE命令使得索引完全实现顺序排列，这让简单的范围查询能使用完全顺序的索引访问。</li>
+<li>由于InnoDB的聚簇索引的特点，覆盖索引对InnoDB表特别有用。InnoDB的二级索引在叶子节点中保存了记录的主键值，所以如果二级索引能够覆盖查询，则可以避免对主键索引的二次查询。</li>
+</ul>
+<h3 id="使用索引扫描来做排序">使用索引扫描来做排序</h3>
+<p><strong>MySQL有两种方式可以生成有序的结果：通过排序操作，或者按索引顺序扫描</strong>。如果在EXPLAIN的输出结果中，type列的值为“index”，则说明MySQL使用了索引扫描来做排序。</p>
+<p><strong>扫描索引本身是很快的，因为只需要从一条索引记录移动到紧接着的下一条记录。但如果索引不能覆盖查询所需的全部列，那么就不得不每扫描一条索引记录都回表查询一次对应的记录。这基本上都是随机I/O</strong>，<strong>因此按索引顺序读取数据的速度通常要比顺序地全表扫描慢</strong>，尤其是在I/O密集型的应用负载上。</p>
+<p><strong>MySQL可以使用同一个索引既满足排序，又用于查找行</strong>。因此，如果可能，设计索引时应该尽可能地同时满足这两项任务，这样是最好的。<strong>只有当索引的顺序和ORDER BY子句的顺序完全一致，并且所有列的排序方向（倒序或正序）都一样时，MySQL才能使用索引来对结果做排序</strong>。<strong>如果查询需要联接多张表，则只有当ORDER BY子句引用的字段全部在第一个表中时，才能使用索引做排序</strong>。ORDER BY子句和查找型查询的限制是一样的：需要满足索引的最左前缀的要求，否则，MySQL需要执行排序操作，而无法利用索引排序。</p>
+<p>有一种特殊情况，<strong>如果前导列为常量的时候</strong>，ORDER BY子句中的列也可以不满足索引的最左前缀的要求。如果在WHERE子句或者JOIN子句中将这些列指定为了常量，就可以“填补”索引字段的间隙了。</p>
+<pre><code class="language-sql">-- 索引为idx_merch_id_shop_id(merch_id, shop_id)
+select *
+from t_material
+where merch_id = '123456'
+order by shop_id;
+</code></pre>
+<p>因为merch_id已经指定了，所以也会走索引。</p>
+<h4 id="下面是一些不能使用索引做排序的查询">下面是一些不能使用索引做排序的查询：</h4>
+<ul>
+<li>
+<p>查询使用了两种不同的排序方向，但是索引中的列都是按正序排序的。</p>
+</li>
+<li>
+<p>查询的ORDER BY子句中，引用了一个不在索引中的列</p>
+</li>
+<li>
+<p>查询的WHERE和ORDER BY中的列无法组合成索引的最左前缀</p>
+</li>
+<li>
+<p>查询在索引列的第一列上是范围条件，所以MySQL无法使用索引的其余列</p>
+<pre><code class="language-sql">-- 大于或者等于
+select *
+from t_material
+where merch_id &gt; '123456'
+order by shop_id;
+
+-- in
+select *
+from t_material
+where merch_id in ('123456', '1234567')
+order by shop_id;
+
+-- or
+select *
+from t_material
+where merch_id = '123456' or merch_id = '1234567'
+order by shop_id;
+</code></pre>
+</li>
+</ul>
+<h3 id="冗余和重复索引">冗余和重复索引</h3>
+<p>不幸的是，<strong>MySQL允许在相同列上创建多个相同的索引</strong>。虽然MySQL会抛出一个警告，但是并不会阻止你这么做。<strong>MySQL需要单独维护重复的索引，优化器在优化查询的时候也需要逐个地进行评估，这会影响性能，同时也浪费磁盘空间</strong>。重复索引是指在相同的列上按照相同顺序创建的相同类型的索引。<strong>应该避免创建这样的重复索引，发现以后应该立即移除</strong>。</p>
+<p><strong>冗余索引和重复索引有一些不同。如果创建了索引(A，B)，再创建索引(A)就是冗余索引</strong>，因为这只是前一个索引的前缀索引，因此，索引(A，B)也可以当作索引(A)来使用（这种冗余只是对B-tree索引来说的）。但是如果再创建索引(B，A)，则不是冗余索引，索引(B)也不是，因为B不是索引(A，B)的最左前缀列。另外，如果新建的是其他不同类型的索引（例如，哈希索引或者全文索引），那么无论覆盖了哪些索引列，也不会是B-tree索引的冗余索引。</p>
+<p><strong>表中的索引越多，插入的速度越慢。一般来说，增加新索引会导致INSERT、UPDATE、DELETE等操作的速度变慢，特别是当新增索引后达到了内存瓶颈的时候</strong>。</p>
+<p><strong>解决冗余索引和重复索引的方法很简单，删除这些索引就可以了，但在删除或扩展索引的时候要非常小心</strong>。回忆一下，在前面的InnoDB的示例表中，因为二级索引的叶子节点包含了主键值，所以在列(A)上的索引就相当于在(A，ID)上的索引。如果有像WHERE A=5 ORDER BY ID这样的查询，这个索引会很有用。但如果将索引扩展为(A，B)，则实际上就变成了(A，B，ID)，那么上面查询的ORDERBY子句就无法使用该索引做排序，而只能用文件排序了。所以，建议使用Percona工具箱中的pt-upgrade工具来仔细检查计划中的索引变更。对于上述的两种情况，都可以考虑使用MySQL 8.0的不可见索引特性，而不是直接删除索引。要使用这个特性，<strong>可以通过ALTER TABLE语句，改变索引的一个标志位，使得优化器在确定执行计划时，忽略该索引。如果你发现计划删除的索引依旧有非常重要的作用，可以直接把索引改成可见，而不需要重新构建该索引</strong>。</p>
+<h3 id="未使用的索引">未使用的索引</h3>
+<p>除了冗余索引和重复索引，可能还会有一些服务器永远不用的索引。这样的索引完全是累赘，建议删除。</p>
+<p>找到未使用索引的最好办法就是使用系统数据库 performance_schema和sys。在sys数据库中，在table_io_waits_summary_by_index_usage视图中可以非常简单地知道哪些索引从来没有被使用过</p>
+<h3 id="减少索引和数据的碎片">减少索引和数据的碎片</h3>
+<p>B-tree索引可能会产生碎片化，这会降低查询的效率。碎片化的索引可能会以很差或者无序的方式存储在磁盘上。根据设计，B-tree索引需要随机磁盘访问才能定位到叶子页，所以随机访问总是不可避免的。然而，<strong>如果叶子页在物理分布上是顺序且紧密的，那么查询的性能就会更好</strong>。否则，对于范围查询、索引覆盖扫描等操作来说，速度可能会降低很多；对于索引覆盖扫描，这一点会表现得更加明显。表的数据存储也可能发生碎片化。然而，数据存储的碎片化比索引更加复杂。有三种类型的数据碎片。</p>
+<ul>
+<li>行碎片(Row fragmentation)这种碎片指的是数据行被存储在多个地方的多个片段中。即使查询只从索引中访问一行记录，行碎片也会导致性能下降。</li>
+<li>行间碎片(Intra-row fragmentation)行间碎片是指逻辑上顺序的页或者行，在磁盘上不是顺序存储的。行间碎片对诸如全表扫描和聚簇索引扫描之类的操作有很大的影响，因为这些操作原本能够从磁盘上顺序存储的数据中获益。</li>
+<li>剩余空间碎片(Free space fragmentation)剩余空间碎片是指数据页中有大量的空余空间。这会导致服务器读取大量不需要的数据，从而造成浪费。</li>
+</ul>
+<p>可以通过执行OPTIMIZE TABLE或者导出再导入的方式来重新整理数据。这对多数存储引擎都是有效的。</p>
+<h3 id="小结-1">小结</h3>
+<p>在选择索引和编写利用这些索引的查询时，有如下三个原则始终需要记住：</p>
+<ul>
+<li>单行访问是很慢的，特别是在机械硬盘中存储（SSD的随机I/O要快很多，不过这一点仍然成立）。如果服务器从存储中读取一个数据块只是为了获取其中一行，那么就浪费了很多工作。最好读取的块中能包含尽可能多的所需要的行。</li>
+<li>按顺序访问范围数据是很快的，有两个原因。第一，顺序I/O不需要多次磁盘寻道，所以比随机I/O要快很多（特别是对于机械硬盘）。第二，如果服务器能够按需顺序读取数据，那么就不再需要额外的排序操作，并且GROUP BY查询也无须再做排序和将行按组进行聚合计算了。</li>
+<li>索引覆盖查询是很快的。如果一个索引包含了查询需要的所有列，那么存储引擎就不需要再回表查找行。这避免了大量的单行访问，而上面的第一点已经写明单行访问是很慢的。</li>
+</ul>
+<p>总的来说，<strong>编写查询语句时应该尽可能选择合适的索引以避免单行查找，尽可能地使用数据内部顺序从而避免额外的排序操作，并尽可能地使用索引覆盖查询</strong>。这与本章开头提到的Lahdenmaki和Leach的书中介绍的“三星”评价系统是一致的。</p>
+<p>那么如何判断一个系统创建的索引是合理的呢？一般来说，<strong>我们建议按响应时间来对查询进行分析</strong>。<strong>找出那些消耗最长时间的查询或者那些给服务器带来最大压力的查询</strong>，然后检查这些查询的schema、SQL语句和索引结构，<strong>判断是否有查询扫描了太多的行，是否做了很多额外的排序或者使用了临时表，是否使用随机I/O访问数据，或者是否有太多回表查询查询那些不在索引中的列的操作</strong>。<strong>如果一个查询无法从所有可能的索引中获益，则应该看看是否可以创建一个更合适的索引来提升性能</strong>。如果不行，<strong>还可以看看是否可以重写该查询，将其转化成一个能够高效利用现有索引或者新创建索引的查询</strong>。</p>
+
+    </div>
+    <div class="article-footer">
+<blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接: </strong>
+      <a href="https://wzgl998877.github.io/2024/09/%E9%AB%98%E6%80%A7%E8%83%BDmysql/" title="高性能Mysql" target="_blank" rel="external">https://wzgl998877.github.io/2024/09/%E9%AB%98%E6%80%A7%E8%83%BDmysql/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong>License: </strong>
+        <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN</a>
+    </li>
+  </ul>
+</blockquote>
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/wzgl998877/" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="https://wzgl998877.github.io/avatar.png" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/wzgl998877/" target="_blank"><span class="text-dark">microzheng</span><small class="ml-1x">努力会说谎，但努力不会白费</small></a></h3>
+        <div>不想搬砖的码农</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+    </div>
+  </article>
+</div><nav class="bar bar-footer clearfix" data-stick-bottom>
+    <div class="bar-inner">
+        <ul class="pager pull-left">
+            <li class="prev">
+                <a href="https://wzgl998877.github.io/2022/11/springcloud/" title="SpringCloud"><i
+                        class="icon icon-angle-left"
+                        aria-hidden="true"></i><span>&nbsp;&nbsp;下一篇</span></a>
+            </li>
+            
+            <li class="toggle-toc">
+                <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false"
+                    title="文章目录" role="button">
+                    <span>[&nbsp;</span><span>文章目录</span>
+                    <i class="text-collapsed icon icon-anchor"></i>
+                    <i class="text-in icon icon-close"></i>
+                    <span>]</span>
+                </a>
+            </li>
+        </ul>
+        <div class="bar-right">
+            <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter"
+                data-mobile-sites="weibo,qq,qzone"></div>
+        </div>
+    </div>
+</nav>
+
+
+</main><footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+<ul class="social-links">
+    <li><a href="https://github.com/wzgl998877/" target="_blank" title="github" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-github"></i></a></li>
+    <li><a href="https://wzgl998877.github.io/index.xml" target="_blank" title="rss" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-rss"></i></a></li>
+</ul>
+  <div class="copyright">
+    &copy;2022  -
+    2024
+    <div class="publishby">
+        Theme by <a href="https://github.com/wzgl998877/" target="_blank"> microzheng </a>base on<a href="https://github.com/xiaoheiAh/hugo-theme-pure" target="_blank"> pure</a>.
+    </div>
+    
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_SVG"></script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+            showMathMenu: false, //disables context menu
+            tex2jax: {
+            inlineMath: [ ['$','$'], ['\\(','\\)'] ]
+           }
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+<script>
+    window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/highlight.min.js"></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/python.min.js" defer></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/javascript.min.js" defer></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/java.min.js" defer></script><script>
+    hljs.configure({
+        tabReplace: '    ', 
+        classPrefix: ''     
+        
+    })
+    hljs.initHighlightingOnLoad();
+</script>
+<script src="https://wzgl998877.github.io/js/application.min.a94ab19cb63a95c8d7fbd7b85cab3ddeea8c369bdf75b9cab6708787ead123af.js"></script>
+<script src="https://wzgl998877.github.io/js/plugin.min.19c5bcb2fb0789ab4f2b7834e5ceb5e92635645605bab902c1024b25f1502364.js"></script>
+
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(未命名)',
+            },
+            ROOT_URL: 'https:\/\/wzgl998877.github.io\/',
+            CONTENT_URL: 'https:\/\/wzgl998877.github.io\/\/searchindex.json ',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script type="text/javascript" src="https://wzgl998877.github.io/js/insight.min.4a2d52de4bfff73e0c688404fe3d17c9a3ae12d9888e1e1ac9c690e4890de2ded50fe55f2b819c2ba55435a76f396f3ea6805765f0b0af5635cdf74ea459eab0.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+<script>
+    tocbot.init({
+        
+        tocSelector: '.js-toc',
+        
+        contentSelector: '.js-toc-content',
+        
+        headingSelector: 'h1, h2, h3',
+        
+        hasInnerContainers: true,
+    });
+</script>
+
+
+  </body>
+</html>

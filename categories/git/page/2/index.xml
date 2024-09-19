@@ -12,6 +12,15 @@
     
     
     <item>
+      <title>日常问题总结</title>
+      <link>https://wzgl998877.github.io/2022/01/%E6%97%A5%E5%B8%B8%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/</link>
+      <pubDate>Sun, 09 Jan 2022 11:24:40 +0800</pubDate>
+      
+      <guid>https://wzgl998877.github.io/2022/01/%E6%97%A5%E5%B8%B8%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/</guid>
+      <description>[TOC] 日常问题总结 工作中总是会遇到各种各样的问题，只有总结下来才是一笔财富。 fastjson的一些技巧 在工作中总是遇到给前端的字段需要是下划线的</description>
+    </item>
+    
+    <item>
       <title>消息队列介绍</title>
       <link>https://wzgl998877.github.io/2022/01/mq%E6%80%BB%E7%BB%93/</link>
       <pubDate>Sun, 09 Jan 2022 11:24:40 +0800</pubDate>
