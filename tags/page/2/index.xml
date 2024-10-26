@@ -6,10 +6,19 @@
     <description>Recent content in Tags on 码农的学习笔记</description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>CC BY 4.0 CN</copyright>
-    <lastBuildDate>Wed, 11 Sep 2024 20:03:12 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 21 Oct 2024 19:46:35 +0800</lastBuildDate>
     
         <atom:link href="https://wzgl998877.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>数据库知识</title>
+      <link>https://wzgl998877.github.io/2022/01/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9F%A5%E8%AF%86/</link>
+      <pubDate>Sun, 09 Jan 2022 11:24:40 +0800</pubDate>
+      
+      <guid>https://wzgl998877.github.io/2022/01/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9F%A5%E8%AF%86/</guid>
+      <description>数据库知识 一些函数 orcale中的decode() 函数 ​ decode(条件,值1，返回值1，值2，返回值2,&amp;hellip;.值n，返回值n</description>
+    </item>
     
     <item>
       <title>日常问题总结</title>

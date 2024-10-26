@@ -6,10 +6,19 @@
     <description>Recent content in Posts on 码农的学习笔记</description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>CC BY 4.0 CN</copyright>
-    <lastBuildDate>Wed, 11 Sep 2024 20:03:12 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 21 Oct 2024 19:46:35 +0800</lastBuildDate>
     
         <atom:link href="https://wzgl998877.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>ElasticSearch</title>
+      <link>https://wzgl998877.github.io/2024/10/elasticsearch/</link>
+      <pubDate>Mon, 21 Oct 2024 19:46:35 +0800</pubDate>
+      
+      <guid>https://wzgl998877.github.io/2024/10/elasticsearch/</guid>
+      <description>[TOC] ElasticSearch入门 今年已经是工作的第五个年头了，随着经验的增长，处理工作中的业务需求自然是轻车熟路，但每天埋头于业务，又不免觉</description>
+    </item>
     
     <item>
       <title>高性能Mysql</title>
@@ -180,15 +189,6 @@
       
       <guid>https://wzgl998877.github.io/2022/01/%E5%9B%BE%E8%A7%A3http/</guid>
       <description>[TOC] 图解http 网络模型 OSI 模型(具体每层的定义还需要看书确定这个只是网上看的，可以回去看计网) 应用层（application）：最接近终端用户</description>
-    </item>
-    
-    <item>
-      <title>数据库知识</title>
-      <link>https://wzgl998877.github.io/2022/01/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9F%A5%E8%AF%86/</link>
-      <pubDate>Sun, 09 Jan 2022 11:24:40 +0800</pubDate>
-      
-      <guid>https://wzgl998877.github.io/2022/01/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9F%A5%E8%AF%86/</guid>
-      <description>数据库知识 一些函数 orcale中的decode() 函数 ​ decode(条件,值1，返回值1，值2，返回值2,&amp;hellip;.值n，返回值n</description>
     </item>
     
   </channel>

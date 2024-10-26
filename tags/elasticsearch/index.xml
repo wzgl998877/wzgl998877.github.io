@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ElasticSearch on 码农的学习笔记</title>
+    <link>https://wzgl998877.github.io/tags/elasticsearch/</link>
+    <description>Recent content in ElasticSearch on 码农的学习笔记</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>CC BY 4.0 CN</copyright>
+    <lastBuildDate>Mon, 21 Oct 2024 19:46:35 +0800</lastBuildDate>
+    
+        <atom:link href="https://wzgl998877.github.io/tags/elasticsearch/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>ElasticSearch</title>
+      <link>https://wzgl998877.github.io/2024/10/elasticsearch/</link>
+      <pubDate>Mon, 21 Oct 2024 19:46:35 +0800</pubDate>
+      
+      <guid>https://wzgl998877.github.io/2024/10/elasticsearch/</guid>
+      <description>[TOC] ElasticSearch入门 今年已经是工作的第五个年头了，随着经验的增长，处理工作中的业务需求自然是轻车熟路，但每天埋头于业务，又不免觉</description>
+    </item>
+    
+    <item>
+      <title>高性能Mysql</title>
+      <link>https://wzgl998877.github.io/2024/09/%E9%AB%98%E6%80%A7%E8%83%BDmysql/</link>
+      <pubDate>Wed, 11 Sep 2024 20:03:12 +0800</pubDate>
+      
+      <guid>https://wzgl998877.github.io/2024/09/%E9%AB%98%E6%80%A7%E8%83%BDmysql/</guid>
+      <description>[TOC] 高性能Mysql 字段类型 整数类型 有两种类型的数字：整数(whole number)和实数（real number，带有小数部分的数字）。如果存</description>
+    </item>
+    
+    <item>
+      <title>SpringCloud</title>
+      <link>https://wzgl998877.github.io/2022/11/springcloud/</link>
+      <pubDate>Mon, 07 Nov 2022 19:15:43 +0800</pubDate>
+      
+      <guid>https://wzgl998877.github.io/2022/11/springcloud/</guid>
+      <description>[TOC] Spring Cloud 学习 springcloud 自己觉得就是利用了spring可插拔的特性，引入了很多框架，解决了服务治理（负载均衡、熔断降级、配置管理等）的一套模板（框架），</description>
+    </item>
+    
+    <item>
+      <title>Docker和k8s</title>
+      <link>https://wzgl998877.github.io/2022/09/docker%E5%92%8Ck8s/</link>
+      <pubDate>Fri, 09 Sep 2022 10:26:21 +0800</pubDate>
+      
+      <guid>https://wzgl998877.github.io/2022/09/docker%E5%92%8Ck8s/</guid>
+      <description>[TOC] 容器 容器- Container，容器其实是一种沙盒技术。沙盒就是能够像一个集装箱一样，把你的应用“装”起来的技术。这样，应用与应用之间，就因</description>
+    </item>
+    
+    <item>
+      <title>Redis学习</title>
+      <link>https://wzgl998877.github.io/2022/05/redis%E6%80%BB%E7%BB%93/</link>
+      <pubDate>Fri, 06 May 2022 15:21:49 +0800</pubDate>
+      
+      <guid>https://wzgl998877.github.io/2022/05/redis%E6%80%BB%E7%BB%93/</guid>
+      <description>[TOC] 这篇文章主要记录自己学习 Redis 的历程 Redis 的数据结构 redis中数据结构有 String（字符串）、List（列表）、Hash（哈希）、Set（集合</description>
+    </item>
+    
+    <item>
+      <title>git相关</title>
+      <link>https://wzgl998877.github.io/2022/03/git%E7%9B%B8%E5%85%B3/</link>
+      <pubDate>Wed, 02 Mar 2022 20:03:24 +0800</pubDate>
+      
+      <guid>https://wzgl998877.github.io/2022/03/git%E7%9B%B8%E5%85%B3/</guid>
+      <description>[TOC] git是工作中天天用到的东西，但好像也只会几个命令，现在稍微研究下 git简介 本地 Git 的三个分区分别是：working directory，st</description>
+    </item>
+    
+    <item>
+      <title>Mysql总结</title>
+      <link>https://wzgl998877.github.io/2022/02/mysql%E6%80%BB%E7%BB%93/</link>
+      <pubDate>Mon, 28 Feb 2022 23:43:20 +0800</pubDate>
+      
+      <guid>https://wzgl998877.github.io/2022/02/mysql%E6%80%BB%E7%BB%93/</guid>
+      <description>[TOC] 这篇文章主要对Mysql是怎样运行的进行提炼总结以及补充 MySQL 的存储引擎 常用的存储引擎有：ARCHIVE、BLACKHOLE、InnoDB、M</description>
+    </item>
+    
+    <item>
+      <title>面试题汇总</title>
+      <link>https://wzgl998877.github.io/2022/02/%E9%9D%A2%E8%AF%95%E9%A2%98%E6%B1%87%E6%80%BB/</link>
+      <pubDate>Thu, 17 Feb 2022 10:28:04 +0800</pubDate>
+      
+      <guid>https://wzgl998877.github.io/2022/02/%E9%9D%A2%E8%AF%95%E9%A2%98%E6%B1%87%E6%80%BB/</guid>
+      <description>这里记录遇到、听到、见到的面试题，可以说是总结复盘的好地方 [TOC] 阿里：三个线程交替打印abc。 手写单例模式双重校验锁 分布式事务 接口幂等性 Hash</description>
+    </item>
+    
+    <item>
+      <title>LeetCode刷题总结</title>
+      <link>https://wzgl998877.github.io/2022/02/leetcode%E5%88%B7%E9%A2%98%E6%80%BB%E7%BB%93/</link>
+      <pubDate>Sat, 12 Feb 2022 14:44:56 +0800</pubDate>
+      
+      <guid>https://wzgl998877.github.io/2022/02/leetcode%E5%88%B7%E9%A2%98%E6%80%BB%E7%BB%93/</guid>
+      <description>[TOC] 算法这东西，可以说玄之又玄，大学就被程序设计这门课统治，工作了，虽然说这东西在实践中用到的少，但是谁让大家都卷呢，你不会就是不行，所以本着</description>
+    </item>
+    
+    <item>
+      <title>Mysql是怎样运行的</title>
+      <link>https://wzgl998877.github.io/2022/01/mysql%E6%98%AF%E6%80%8E%E6%A0%B7%E8%BF%90%E8%A1%8C%E7%9A%84/</link>
+      <pubDate>Wed, 12 Jan 2022 11:24:40 +0800</pubDate>
+      
+      <guid>https://wzgl998877.github.io/2022/01/mysql%E6%98%AF%E6%80%8E%E6%A0%B7%E8%BF%90%E8%A1%8C%E7%9A%84/</guid>
+      <description>[TOC] 本篇文章是(Mysql是怎样运行的)阅读笔记，这本书网上很多人的评价都很高，看了下书也不是很厚，所以读读。 MySQL的架构 mysql 工作的整体流程</description>
+    </item>
+    
+    <item>
+      <title>Java 并发编程</title>
+      <link>https://wzgl998877.github.io/2022/01/java%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/</link>
+      <pubDate>Sun, 09 Jan 2022 11:24:40 +0800</pubDate>
+      
+      <guid>https://wzgl998877.github.io/2022/01/java%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/</guid>
+      <description>[TOC] Java 并发编程 ​ 并发编程之美的笔记 什么是线程 ​ 进程是操作系统资源分配的最小单位，而线程是CPU任务调度和执行的最小单位 具体参考 https://blog.csdn.net/ThinkWon/article/details/102021274 五状态进程的主</description>
+    </item>
+    
+    <item>
+      <title>Java 编程思想学习</title>
+      <link>https://wzgl998877.github.io/2022/01/java%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3/</link>
+      <pubDate>Sun, 09 Jan 2022 11:24:40 +0800</pubDate>
+      
+      <guid>https://wzgl998877.github.io/2022/01/java%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3/</guid>
+      <description>[TOC] Java 编程思想学习 第1章 对象导论 好像看不下去，。。。 第2章 一切都是对象 用引用操作对象：每种编程语言都有自己的操纵内存中元素的方式。java中操</description>
+    </item>
+    
+    <item>
+      <title>LeetCode</title>
+      <link>https://wzgl998877.github.io/2022/01/leetcode/</link>
+      <pubDate>Sun, 09 Jan 2022 11:24:40 +0800</pubDate>
+      
+      <guid>https://wzgl998877.github.io/2022/01/leetcode/</guid>
+      <description>LeetCode 链表 链表（Linked list）是一种常见的基础数据结构，是一种线性表，但是并不会按线性的顺序存储数据，而是在每一个节点里存到下一个节点的</description>
+    </item>
+    
+    <item>
+      <title>mybatis 技术内幕学习</title>
+      <link>https://wzgl998877.github.io/2022/01/mybatis-%E6%8A%80%E6%9C%AF%E5%86%85%E5%B9%95%E5%AD%A6%E4%B9%A0/</link>
+      <pubDate>Sun, 09 Jan 2022 11:24:40 +0800</pubDate>
+      
+      <guid>https://wzgl998877.github.io/2022/01/mybatis-%E6%8A%80%E6%9C%AF%E5%86%85%E5%B9%95%E5%AD%A6%E4%B9%A0/</guid>
+      <description>mybatis 技术内幕学习 Jdbc 复习 通过JDBC查询数据库数据，一般需要以下七个步骤： 加载JDBC驱动； 建立并获取数据库连接； 创建 JDBC Statements 对象； 设置SQL语句的</description>
+    </item>
+    
+    <item>
+      <title>mybatis 技术内幕学习</title>
+      <link>https://wzgl998877.github.io/2022/01/mybatis/</link>
+      <pubDate>Sun, 09 Jan 2022 11:24:40 +0800</pubDate>
+      
+      <guid>https://wzgl998877.github.io/2022/01/mybatis/</guid>
+      <description>[toc] Jdbc 复习 通过JDBC查询数据库数据，一般需要以下七个步骤： 加载JDBC驱动； 建立并获取数据库连接； 创建 JDBC Statements 对象； 设置SQL语句的传入参数； 执</description>
+    </item>
+    
+    <item>
+      <title>Netty 学习</title>
+      <link>https://wzgl998877.github.io/2022/01/netty/</link>
+      <pubDate>Sun, 09 Jan 2022 11:24:40 +0800</pubDate>
+      
+      <guid>https://wzgl998877.github.io/2022/01/netty/</guid>
+      <description>[TOC] Netty 学习 虽然说netty，用的少但是感觉比较流行，值得研究！！！ Netty 是一个 NIO 客户端-服务器框架，可以快速轻松地开发网络应用程序，它极大地简化了</description>
+    </item>
+    
+    <item>
+      <title>spring源码学习</title>
+      <link>https://wzgl998877.github.io/2022/01/spring%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0/</link>
+      <pubDate>Sun, 09 Jan 2022 11:24:40 +0800</pubDate>
+      
+      <guid>https://wzgl998877.github.io/2022/01/spring%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0/</guid>
+      <description>spring源码学习 ​ 对于学习spring源码肯定最重要的学习spring的一些理念，比如控制翻转ioc，依赖注入di，面向切面编程aop等</description>
+    </item>
+    
+    <item>
+      <title>thrift&#43;zk RPC调用框架</title>
+      <link>https://wzgl998877.github.io/2022/01/thrift-zk-rpc%E8%B0%83%E7%94%A8%E6%A1%86%E6%9E%B6/</link>
+      <pubDate>Sun, 09 Jan 2022 11:24:40 +0800</pubDate>
+      
+      <guid>https://wzgl998877.github.io/2022/01/thrift-zk-rpc%E8%B0%83%E7%94%A8%E6%A1%86%E6%9E%B6/</guid>
+      <description>thrift+zk RPC调用框架 zk 在这个框架中zk其实只是作为了注册中心来使用 (客户端只需要在zk上获得地址，服务端只需要将自己注册在zk上)，所以先了解一</description>
+    </item>
+    
+    <item>
+      <title>Websocket学习</title>
+      <link>https://wzgl998877.github.io/2022/01/websocket%E5%AD%A6%E4%B9%A0/</link>
+      <pubDate>Sun, 09 Jan 2022 11:24:40 +0800</pubDate>
+      
+      <guid>https://wzgl998877.github.io/2022/01/websocket%E5%AD%A6%E4%B9%A0/</guid>
+      <description>Websocket学习 WebSocket是一种网络传输协议，可在单个TCP连接上进行全双工通信，位于应用层。 全双工： 单工（simplex ） :</description>
+    </item>
+    
+    <item>
+      <title>图解http</title>
+      <link>https://wzgl998877.github.io/2022/01/%E5%9B%BE%E8%A7%A3http/</link>
+      <pubDate>Sun, 09 Jan 2022 11:24:40 +0800</pubDate>
+      
+      <guid>https://wzgl998877.github.io/2022/01/%E5%9B%BE%E8%A7%A3http/</guid>
+      <description>[TOC] 图解http 网络模型 OSI 模型(具体每层的定义还需要看书确定这个只是网上看的，可以回去看计网) 应用层（application）：最接近终端用户</description>
+    </item>
+    
+  </channel>
+</rss>

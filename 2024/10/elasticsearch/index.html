@@ -1,0 +1,3043 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <title>
+        ElasticSearch - 码农的学习笔记
+      </title>
+        <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    
+    <meta name="theme-color" content="#000000" />
+    
+    <meta http-equiv="window-target" content="_top" />
+    
+    
+    <meta name="description" content="[TOC] ElasticSearch入门 今年已经是工作的第五个年头了，随着经验的增长，处理工作中的业务需求自然是轻车熟路，但每天埋头于业务，又不免觉" />
+    <meta name="generator" content="Hugo 0.91.2 with theme pure" />
+    <title>ElasticSearch - 码农的学习笔记</title>
+    
+    
+    <link rel="stylesheet" href="https://wzgl998877.github.io/css/style.min.a85959a41e7abcc0db1f81f44bd264649303417f91b536e87dcde644340fea6d.css">
+    
+    <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/9.15.10/styles/github.min.css" async>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css" async>
+    <meta property="og:title" content="ElasticSearch" />
+<meta property="og:description" content="[TOC] ElasticSearch入门 今年已经是工作的第五个年头了，随着经验的增长，处理工作中的业务需求自然是轻车熟路，但每天埋头于业务，又不免觉" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wzgl998877.github.io/2024/10/elasticsearch/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2024-10-21T19:46:35+08:00" />
+<meta property="article:modified_time" content="2024-10-21T19:46:35+08:00" />
+
+<meta itemprop="name" content="ElasticSearch">
+<meta itemprop="description" content="[TOC] ElasticSearch入门 今年已经是工作的第五个年头了，随着经验的增长，处理工作中的业务需求自然是轻车熟路，但每天埋头于业务，又不免觉"><meta itemprop="datePublished" content="2024-10-21T19:46:35+08:00" />
+<meta itemprop="dateModified" content="2024-10-21T19:46:35+08:00" />
+<meta itemprop="wordCount" content="36420">
+<meta itemprop="keywords" content="ElasticSearch," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="ElasticSearch"/>
+<meta name="twitter:description" content="[TOC] ElasticSearch入门 今年已经是工作的第五个年头了，随着经验的增长，处理工作中的业务需求自然是轻车熟路，但每天埋头于业务，又不免觉"/>
+
+    <!--[if lte IE 9]>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+      <![endif]-->
+
+    <!--[if lt IE 9]>
+        <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+      <![endif]-->
+  </head>
+
+  
+  
+
+  <body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage"><header class="header" itemscope itemtype="http://schema.org/WPHeader">
+    <div class="slimContent">
+      <div class="navbar-header">
+        <div class="profile-block text-center">
+          <a id="avatar" href="https://github.com/wzgl998877/" target="_blank">
+            <img class="img-circle img-rotate" src="https://wzgl998877.github.io/avatar.png" width="200" height="200">
+          </a>
+          <h2 id="name" class="hidden-xs hidden-sm">microzheng</h2>
+          <h3 id="title" class="hidden-xs hidden-sm hidden-md">努力会说谎，但努力不会白费</h3>
+          <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i>Shenzhen China</small>
+        </div><div class="search" id="search-form-wrap">
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i
+                        class="icon icon-search"></i></button>
+            </span>
+        </div>
+        <div class="ins-search">
+            <div class="ins-search-mask"></div>
+            <div class="ins-search-container">
+                <div class="ins-input-wrapper">
+                    <input type="text" class="ins-search-input" placeholder="想要查找什么..."
+                        x-webkit-speech />
+                    <button type="button" class="close ins-close ins-selectable" data-dismiss="modal"
+                        aria-label="Close"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="ins-section-wrapper">
+                    <div class="ins-section-container"></div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+        <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+        <ul class="nav navbar-nav main-nav">
+            <li class="menu-item menu-item-home">
+                <a href="/">
+                    <i class="icon icon-home-fill"></i>
+                  <span class="menu-title">主页</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-archives">
+                <a href="/posts/">
+                    <i class="icon icon-archives-fill"></i>
+                  <span class="menu-title">归档</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-categories">
+                <a href="/categories/">
+                    <i class="icon icon-folder"></i>
+                  <span class="menu-title">分类</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-tags">
+                <a href="/tags/">
+                    <i class="icon icon-tags"></i>
+                  <span class="menu-title">标签</span>
+                </a>
+            </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+<aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content"><p>enjoy~</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+      <div class="widget">
+    <h3 class="widget-title"> 分类</h3>
+    <div class="widget-body">
+        <ul class="category-list">
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/git/" class="category-list-link">git</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/java/" class="category-list-link">java</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/spring/" class="category-list-link">spring</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/" class="category-list-link">中间件</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E4%BA%91%E5%8E%9F%E7%94%9F/" class="category-list-link">云原生</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/" class="category-list-link">大数据</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E5%B8%B8%E7%94%A8%E6%A1%86%E6%9E%B6/" class="category-list-link">常用框架</a><span class="category-list-count">4</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="category-list-link">数据库</a><span class="category-list-count">4</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E6%97%A5%E5%B8%B8%E6%80%BB%E7%BB%93/" class="category-list-link">日常总结</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E7%AE%97%E6%B3%95/" class="category-list-link">算法</a><span class="category-list-count">2</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/" class="category-list-link">系统设计</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/" class="category-list-link">网络编程</a><span class="category-list-count">3</span></li>
+        </ul>
+    </div>
+</div>
+      <div class="widget">
+    <h3 class="widget-title"> 标签</h3>
+    <div class="widget-body">
+        <ul class="tag-list">
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/elasticsearch/" class="tag-list-link">elasticsearch</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/http/" class="tag-list-link">http</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/java%E5%9F%BA%E7%A1%80/" class="tag-list-link">java基础</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/java%E5%B9%B6%E5%8F%91/" class="tag-list-link">java并发</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/jvm/" class="tag-list-link">jvm</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/leetcode/" class="tag-list-link">leetcode</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/mybatis/" class="tag-list-link">mybatis</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/mysql/" class="tag-list-link">mysql</a><span
+                    class="tag-list-count">3</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/netty/" class="tag-list-link">netty</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/redis/" class="tag-list-link">redis</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/rpc/" class="tag-list-link">rpc</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/spring/" class="tag-list-link">spring</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/websocket/" class="tag-list-link">websocket</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" class="tag-list-link">消息队列</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="tag-list-link">设计模式</a><span
+                    class="tag-list-count">1</span></li>
+            
+        </ul>
+
+    </div>
+</div>
+      
+<div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+        <ul class="recent-post-list list-unstyled no-thumbnail">
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://wzgl998877.github.io/2024/10/elasticsearch/" class="title">ElasticSearch</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2024-10-21 19:46:35 &#43;0800 CST" itemprop="datePublished">2024-10-21</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://wzgl998877.github.io/2024/09/%E9%AB%98%E6%80%A7%E8%83%BDmysql/" class="title">高性能Mysql</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2024-09-11 20:03:12 &#43;0800 CST" itemprop="datePublished">2024-09-11</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://wzgl998877.github.io/2022/11/springcloud/" class="title">SpringCloud</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2022-11-07 19:15:43 &#43;0800 CST" itemprop="datePublished">2022-11-07</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://wzgl998877.github.io/2022/09/docker%E5%92%8Ck8s/" class="title">Docker和k8s</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2022-09-09 10:26:21 &#43;0800 CST" itemprop="datePublished">2022-09-09</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://wzgl998877.github.io/2022/05/redis%E6%80%BB%E7%BB%93/" class="title">Redis学习</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2022-05-06 15:21:49 &#43;0800 CST" itemprop="datePublished">2022-05-06</time>
+                    </p>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+  </div>
+</aside>
+
+    
+    
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <h4 class="toc-title">文章目录</h4>
+    <nav id="toc" class="js-toc toc">
+
+    </nav>
+  </div>
+</aside>
+<main class="main" role="main"><div class="content">
+  <article id="-" class="article article-type-" itemscope
+    itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      <h1 itemprop="name">
+  <a
+    class="article-title"
+    href="/2024/10/elasticsearch/"
+    >ElasticSearch</a
+  >
+</h1>
+
+      <div class="article-meta">
+        
+<span class="article-date">
+  <i class="icon icon-calendar-check"></i>&nbsp;
+<a href="https://wzgl998877.github.io/2024/10/elasticsearch/" class="article-date">
+  <time datetime="2024-10-21 19:46:35 &#43;0800 CST" itemprop="datePublished">2024-10-21</time>
+</a>
+</span>
+<span class="article-category">
+  <i class="icon icon-folder"></i>&nbsp;
+  <a class="article-category-link" href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/"> 大数据 </a>
+</span>  
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>&nbsp;
+    <a class="article-tag-link" href="/tags/elasticsearch/"> ElasticSearch </a>
+  </span>
+
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 36420字</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 73分 </span>
+      </div>
+    </div>
+    <div class="article-entry marked-body js-toc-content" itemprop="articleBody">
+      <p>[TOC]</p>
+<h1 id="elasticsearch入门">ElasticSearch入门</h1>
+<p>今年已经是工作的第五个年头了，随着经验的增长，处理工作中的业务需求自然是轻车熟路，但每天埋头于业务，又不免觉得自己的技术竞争力不够，因此决定慢慢补齐技术上的短板。es是一个流行的但工作中又没有使用到的技术，因此决定从先es开始学习，本文主要依赖于<a href="https://www.elastic.co/guide/cn/elasticsearch/guide/current/getting-started.html">es官方文档</a>，再辅以其他资料，力求能做到能理解es的基本原理、特性并熟悉其使用，即<strong>入门</strong>。</p>
+<blockquote>
+<p>许多年前，一个刚结婚的名叫 Shay Banon 的失业开发者，跟着他的妻子去了伦敦，他的妻子在那里学习厨师。 在寻找一个赚钱的工作的时候，为了给他的妻子做一个食谱搜索引擎，他开始使用 Lucene 的一个早期版本。直接使用 Lucene 是很难的，因此 Shay 开始做一个抽象层，Java 开发者使用它可以很简单的给他们的程序添加搜索功能。 他发布了他的第一个开源项目 Compass。</p>
+<p>后来 Shay 获得了一份工作，主要是高性能，分布式环境下的内存数据网格。这个对于高性能，实时，分布式搜索引擎的需求尤为突出， 他决定重写 Compass，把它变为一个独立的服务并取名 Elasticsearch。</p>
+<p>第一个公开版本在2010年2月发布，从此以后，Elasticsearch 已经成为了 Github 上最活跃的项目之一，他拥有超过300名 contributors(目前736名 contributors )。 一家公司已经开始围绕 Elasticsearch 提供商业服务，并开发新的特性，但是，Elasticsearch 将永远开源并对所有人可用。</p>
+<p>据说，Shay 的妻子还在等着她的食谱搜索引擎…</p>
+</blockquote>
+<p><em>Elasticsearch</em> 是一个<strong>实时的分布式搜索分析引擎</strong>，它能让你以前所未有的速度和规模，去探索你的数据。 它被用作<strong>全文检索、结构化搜索、分析</strong>以及这三个功能的组合：</p>
+<ul>
+<li>Wikipedia 使用 Elasticsearch 提供带有高亮片段的全文搜索，还有 <em>search-as-you-type</em> 和 <em>did-you-mean</em> 的建议。</li>
+<li><em>卫报</em> 使用 Elasticsearch 将网络社交数据结合到访客日志中，为它的编辑们提供公众对于新文章的实时反馈。</li>
+<li>Stack Overflow 将地理位置查询融入全文检索中去，并且使用 <em>more-like-this</em> 接口去查找相关的问题和回答。</li>
+<li>GitHub 使用 Elasticsearch 对1300亿行代码进行查询。</li>
+</ul>
+<p><strong>Elasticsearch 是一个开源的搜索引擎</strong>，建立在一个<strong>全文搜索引擎库</strong> <a href="https://lucene.apache.org/core/">Apache Lucene™</a> 基础之上。 <strong>Lucene 可以说是当下最先进、高性能、全功能的搜索引擎库—无论是开源还是私有</strong>。</p>
+<p>但是 Lucene 仅仅只是一个库。为了充分发挥其功能，你需要使用 Java 并将 Lucene 直接集成到应用程序中。 更糟糕的是，您可能需要获得信息检索学位才能了解其工作原理。Lucene <em>非常</em> 复杂。</p>
+<p><strong>Elasticsearch 也是使用 Java 编写的，它的内部使用 Lucene 做索引与搜索，但是它的目的是使全文检索变得简单， 通过隐藏 Lucene 的复杂性，取而代之的提供一套简单一致的 RESTful API</strong>。</p>
+<p>然而，Elasticsearch 不仅仅是 Lucene，并且也不仅仅只是一个全文搜索引擎。 它可以被下面这样准确的形容：</p>
+<ul>
+<li>一个分布式的实时文档存储，<em>每个字段</em> 可以被索引与搜索</li>
+<li>一个分布式实时分析搜索引擎</li>
+<li>能胜任上百个服务节点的扩展，并支持 PB 级别的结构化或者非结构化数据</li>
+</ul>
+<p><strong>Elasticsearch 将所有的功能打包成一个单独的服务</strong>，这样你可以通过程序与它提供的简单的 RESTful API 进行通信， 可以使用自己喜欢的编程语言充当 web 客户端，甚至可以使用命令行（去充当这个客户端）。</p>
+<h2 id="安装">安装</h2>
+<ol>
+<li>
+<p><a href="https://www.elastic.co/downloads/elasticsearch">https://www.elastic.co/downloads/elasticsearch</a> 如果使用jdk1.8，高版本会有问题，我这边下载的是<strong>7.6.1</strong></p>
+</li>
+<li>
+<p>执行 bin\elasticsearch.bat</p>
+</li>
+<li>
+<p>curl &lsquo;http://localhost:9200/?pretty&rsquo; 看看是否有响应</p>
+</li>
+<li>
+<p>下载 Kibana <a href="https://www.elastic.co/cn/downloads/kibana">https://www.elastic.co/cn/downloads/kibana</a></p>
+</li>
+<li>
+<p>执行 bin\kibana.bat</p>
+</li>
+<li>
+<p>访问 http://localhost:5601/</p>
+</li>
+<li>
+<p>安装 Sense 插件，执行命令 bin\kibana.bat plugin &ndash;install elastic/sense，这个安装失败了</p>
+<p><img src="image-20241022161813724.png" alt="image-20241022161813724"></p>
+<p>但其实这个无关紧要，因为这个插件就是个调试的地方，新版本已经有调试入口了，http://localhost:5601/app/kibana#/dev_tools/console</p>
+</li>
+</ol>
+<h2 id="基础概念">基础概念</h2>
+<ul>
+<li><strong>Near Realtime（NRT）</strong> 近实时。数据提交索引后，立马就可以搜索到。</li>
+<li><strong>Cluster 集群</strong>，一个集群由一个唯一的名字标识，默认为“elasticsearch”。集群名称非常重要，具有相同集群名的节点才会组成一个集群。集群名称可以在配置文件中指定。</li>
+<li><strong>Node 节点</strong>：存储集群的数据，参与集群的索引和搜索功能。像集群有名字，节点也有自己的名称，默认在启动时会以一个随机的UUID的前七个字符作为节点的名字，你可以为其指定任意的名字。通过集群名在网络中发现同伴组成集群。一个节点也可是集群。</li>
+<li><strong>Index 索引</strong>: 一个索引是一个文档的集合。每个索引有唯一的名字，通过这个名字来操作它。一个集群中可以有任意多个索引。一个 索引 应该是因共同的特性被分组到一起的文档集合。 例如，你可能存储所有的产品在索引 products 中，而存储所有销售的交易到索引 sales 中。 虽然也允许存储不相关的数据到一个索引中，但这通常看作是一个反模式的做法。实际上，在 Elasticsearch 中，我们的数据是被存储和索引在 分片 中，而一个索引仅仅是逻辑上的命名空间， 这个命名空间由一个或者多个分片组合在一起。 然而，这是一个内部细节，我们的应用程序根本不应该关心分片，对于应用程序而言，只需知道<strong>文档位于一个 索引内</strong>。</li>
+<li><strong>Type 类型</strong>：指在一个索引中，可以索引不同类型的文档，如用户数据、博客数据。**从6.0.0 版本起已废弃，一个索引中只存放一类数据。**数据可能在索引中只是松散的组合在一起，但是通常明确定义一些数据中的子分区是很有用的。 例如，所有的产品都放在一个索引中，但是你有许多不同的产品类别，比如 &ldquo;electronics&rdquo; 、 &ldquo;kitchen&rdquo; 和 &ldquo;lawn-care&rdquo;。这些文档共享一种相同的（或非常相似）的模式：他们有一个标题、描述、产品代码和价格。他们只是正好属于“产品”下的一些子类。Elasticsearch 公开了一个称为 types （类型）的特性，它允许您在索引中对数据进行逻辑分区。不同 types 的文档可能有不同的字段，但最好能够非常相似。 我们将在 类型和映射 中更多的讨论关于 types 的一些应用和限制。一个 _type 命名可以是大写或者小写，但是不能以下划线或者句号开头，不应该包含逗号， 并且长度限制为256个字符. 我们使用 blog 作为类型名举例。</li>
+<li><strong>ID</strong> 是一个字符串，<strong>当它和 index 以及 type 组合就可以唯一确定 Elasticsearch 中的一个文档</strong>。 当你创建一个新的文档，要么提供自己的 _id ，要么让 Elasticsearch 帮你生成。</li>
+<li><strong>Document 文档</strong>：<strong>被索引的一条数据，索引的基本信息单元，以JSON格式来表示</strong>。</li>
+</ul>
+<blockquote>
+<p>一个文档不仅仅包含它的数据 ，也包含 元数据 — 有关文档的信息。 三个必须的元数据元素如下：</p>
+<ol>
+<li>_index 文档在哪存放</li>
+<li>_type 文档表示的对象类别</li>
+<li>_id 文档唯一标识</li>
+</ol>
+</blockquote>
+<ul>
+<li><strong>Shard 分片</strong>：在创建一个索引时可以指定分成多少个分片来存储。每个分片本身也是一个功能完善且独立的“索引”，可以被放置在集群的任意节点上。</li>
+<li><strong>Replication 备份</strong>: 一个分片可以有多个备份（副本）</li>
+</ul>
+<p>和关系型数据库进行比较</p>
+<p><img src="es-introduce-1-3.png" alt="img"></p>
+<h2 id="基本语法">基本语法</h2>
+<p><strong>熟悉基本语法，跟着官网的介绍进行就行。</strong></p>
+<p>第一个业务需求是存储员工数据。 这将会以 <em>员工文档</em> 的形式存储：<strong>一个文档代表一个员工</strong>。<strong>存储数据到 Elasticsearch 的行为叫做 <em>索引</em></strong> ，但在索引一个文档之前，需要确定将文档存储在哪里。</p>
+<p><strong>一个 Elasticsearch 集群可以 包含多个 <em>索引</em> ，相应的每个索引可以包含多个 <em>类型</em> 。 这些不同的类型存储着多个 <em>文档</em> ，每个文档又有 多个 <em>属性</em> 。</strong></p>
+<p>你也许已经注意到 <em>索引</em> 这个词在 Elasticsearch 语境中有多种含义， 这里有必要做一些说明：</p>
+<ul>
+<li>索引（名词）：如前所述，一个 <em>索引</em> 类似于传统关系数据库中的一个 <em>数据库</em> ，是一个存储关系型文档的地方。 <em>索引</em> (<em>index</em>) 的复数词为 <em>indices</em> 或 <em>indexes</em> 。</li>
+<li>索引（动词）：<em>索引一个文档</em> <strong>就是存储一个文档到一个 <em>索引</em> （名词）中以便被检索和查询</strong>。这非常类似于 SQL 语句中的 <code>INSERT</code> 关键词，除了文档已存在时，新文档会替换旧文档情况之外。</li>
+<li>倒排索引：关系型数据库通过增加一个 <em>索引</em> 比如一个 B树（B-tree）索引 到指定的列上，以便提升数据检索速度。Elasticsearch 和 Lucene 使用了一个叫做 <em><strong>倒排索引</strong></em> 的结构来达到相同的目的。默认的，一个文档中的每一个属性都是 <em>被索引</em> 的（有一个倒排索引）和可搜索的。一个没有倒排索引的属性是不能被搜索到的。</li>
+</ul>
+<h3 id="索引员工文档-存储员工文档到索引-新增修改">索引员工文档-存储员工文档到索引-新增/修改</h3>
+<p>对于员工目录，我们将做如下操作：</p>
+<ul>
+<li>每个员工索引一个文档，文档包含该员工的所有信息。</li>
+<li>每个文档都将是 <code>employee</code> <em>类型</em> 。</li>
+<li>该类型位于 <em>索引</em> <code>megacorp</code> 内。</li>
+<li>该索引保存在我们的 Elasticsearch 集群中。</li>
+</ul>
+<p>实践中这非常简单（尽管看起来有很多步骤），我们可以通过一条命令完成所有这些动作：</p>
+<pre><code class="language-json">PUT /megacorp/employee/1
+{
+    &quot;first_name&quot; : &quot;John&quot;,
+    &quot;last_name&quot; :  &quot;Smith&quot;,
+    &quot;age&quot; :        25,
+    &quot;about&quot; :      &quot;I love to go rock climbing&quot;,
+    &quot;interests&quot;: [ &quot;sports&quot;, &quot;music&quot; ]
+}
+</code></pre>
+<p>注意，路径 <code>/megacorp/employee/1</code> 包含了三部分的信息：</p>
+<ul>
+<li>
+<p><strong><code>megacorp</code></strong></p>
+<p>索引名称</p>
+</li>
+<li>
+<p><strong><code>employee</code></strong></p>
+<p>类型名称</p>
+</li>
+<li>
+<p><strong><code>1</code></strong></p>
+<p>特定雇员的ID</p>
+</li>
+</ul>
+<p>请求体 —— JSON 文档 —— 包含了这位员工的所有详细信息，他的名字叫 John Smith ，今年 25 岁，喜欢攀岩</p>
+<h3 id="新建文档-新增">新建文档-新增</h3>
+<pre><code>PUT /megacorp/employee/15/_create
+{
+    &quot;first_name&quot; : &quot;tao&quot;,
+    &quot;last_name&quot; :  &quot;zheng&quot;,
+    &quot;age&quot; :        25,
+    &quot;about&quot; :      &quot;I love play&quot;,
+    &quot;interests&quot;: [ &quot;sports&quot;, &quot;music&quot; ]
+}
+</code></pre>
+<h3 id="新增文档-无需指定id">新增文档-无需指定Id</h3>
+<p>使用POST即可</p>
+<pre><code>POST /megacorp/employee/
+{
+    &quot;first_name&quot; : &quot;wzgl&quot;,
+    &quot;last_name&quot; :  &quot;998877&quot;,
+    &quot;age&quot; :        25,
+    &quot;about&quot; :      &quot;I love play gaming&quot;,
+    &quot;interests&quot;: [ &quot;game&quot;, &quot;music&quot; ]
+}
+</code></pre>
+<h3 id="检索文档-搜索数据">检索文档-搜索数据</h3>
+<p>目前我们已经在 Elasticsearch 中存储了一些数据， 接下来就能专注于实现应用的业务需求了。第一个需求是可以检索到单个雇员的数据。</p>
+<p>这在 Elasticsearch 中很简单。简单地执行 一个 HTTP <code>GET</code> 请求并指定文档的地址——索引库、类型和ID。 使用这三个信息可以返回原始的 JSON 文档：</p>
+<pre><code>GET /megacorp/employee/1
+</code></pre>
+<p>返回信息为</p>
+<pre><code>{
+  &quot;_index&quot; :   &quot;megacorp&quot;,
+  &quot;_type&quot; :    &quot;employee&quot;,
+  &quot;_id&quot; :      &quot;1&quot;,
+  &quot;_version&quot; : 1,
+  &quot;found&quot; :    true,
+  &quot;_source&quot; :  {
+      &quot;first_name&quot; :  &quot;John&quot;,
+      &quot;last_name&quot; :   &quot;Smith&quot;,
+      &quot;age&quot; :         25,
+      &quot;about&quot; :       &quot;I love to go rock climbing&quot;,
+      &quot;interests&quot;:  [ &quot;sports&quot;, &quot;music&quot; ]
+  }
+}
+</code></pre>
+<p><strong>_source字段就是原始 JSON 文档</strong></p>
+<h3 id="删除文档-删除">删除文档-删除</h3>
+<p>和前面一致改为DELETE即可</p>
+<pre><code>DELETE /megacorp/employee/1
+</code></pre>
+<h3 id="文档的部分更新">文档的部分更新</h3>
+<p>更新一个文档的方法是检索并修改它，<strong>然后重新索引整个文档</strong>（重新存储整个文档）。文档是不可变的：他们不能被修改，只能被替换。 <code>update</code> API 必须遵循同样的规则。 从外部来看，我们在一个文档的某个位置进行部分更新。然而在内部， <code>update</code> API 简单使用与之前描述相同的 <em>检索-修改-重建索引</em> 的处理过程。 区别在于这个过程发生在分片内部，这样就避免了多次请求的网络开销。通过减少检索和重建索引步骤之间的时间，我们也减少了其他进程的变更带来冲突的可能性。</p>
+<p><code>update</code> 请求最简单的一种形式是接收文档的一部分作为 <code>doc</code> 的参数， 它只是与现有的文档进行合并。<strong>对象被合并到一起，覆盖现有的字段，增加新的字段</strong>。 例如，我们增加字段 <code>tags</code> 和 <code>views</code> 到我们的博客文章，如下所示：</p>
+<pre><code>POST /megacorp/employee/15/_update
+{
+    &quot;doc&quot; : {
+      &quot;age&quot; : 18
+   }
+}
+</code></pre>
+<h3 id="批量查询id查询-mget">批量查询（id查询）-mget</h3>
+<p>Elasticsearch 的速度已经很快了，但甚至能更快。 将多个请求合并成一个，避免单独处理每个请求花费的网络延时和开销。 如果你需要从 Elasticsearch 检索很多文档，那么使用 <em>multi-get</em> 或者 <code>mget</code> API 来将这些检索请求放在一个请求中，将比逐个文档请求更快地检索到全部文档。</p>
+<p><code>mget</code> API 要求有一个 <code>docs</code> 数组作为参数，每个元素包含需要检索文档的元数据， 包括 <code>_index</code> 、 <code>_type</code> 和 <code>_id</code> 。<strong>id必传所以是通过id批量查询</strong>，如果你想检索一个或者多个特定的字段，那么你可以通过 <code>_source</code> 参数来指定这些字段的名字：</p>
+<pre><code>GET /_mget
+{
+   &quot;docs&quot; : [
+      {
+         &quot;_index&quot; : &quot;website&quot;,
+         &quot;_type&quot; :  &quot;blog&quot;,
+         &quot;_id&quot; :    2
+      },
+      {
+         &quot;_index&quot; : &quot;website&quot;,
+         &quot;_type&quot; :  &quot;pageviews&quot;,
+         &quot;_id&quot; :    1,
+         &quot;_source&quot;: &quot;views&quot;
+      }
+   ]
+}
+</code></pre>
+<p>该响应体也包含一个 <code>docs</code> 数组， 对于每一个在请求中指定的文档，这个数组中都包含有一个对应的响应，且顺序与请求中的顺序相同。 其中的每一个响应都和使用单个 <code>get</code> 请求所得到的响应体相同：</p>
+<pre><code class="language-sense">{
+   &quot;docs&quot; : [
+      {
+         &quot;_index&quot; :   &quot;website&quot;,
+         &quot;_id&quot; :      &quot;2&quot;,
+         &quot;_type&quot; :    &quot;blog&quot;,
+         &quot;found&quot; :    true,
+         &quot;_source&quot; : {
+            &quot;text&quot; :  &quot;This is a piece of cake...&quot;,
+            &quot;title&quot; : &quot;My first external blog entry&quot;
+         },
+         &quot;_version&quot; : 10
+      },
+      {
+         &quot;_index&quot; :   &quot;website&quot;,
+         &quot;_id&quot; :      &quot;1&quot;,
+         &quot;_type&quot; :    &quot;pageviews&quot;,
+         &quot;found&quot; :    true,
+         &quot;_version&quot; : 2,
+         &quot;_source&quot; : {
+            &quot;views&quot; : 2
+         }
+      }
+   ]
+}
+</code></pre>
+<h3 id="批量新增删除修改-bulk">批量新增/删除/修改-bulk</h3>
+<p><code>bulk</code> API 允许在单个步骤中进行多次 <code>create</code> 、 <code>index</code> 、 <code>update</code> 或 <code>delete</code> 请求。 如果你需要索引一个数据流比如日志事件，它可以排队和索引数百或数千批次。<code>bulk</code> 与其他的请求体格式稍有不同，如下所示：</p>
+<pre><code class="language-js">{ action: { metadata }}\n
+{ request body        }\n
+{ action: { metadata }}\n
+{ request body        }\n
+...
+</code></pre>
+<p>这种格式类似一个有效的单行 JSON 文档 <em>流</em> ，它通过换行符(<code>\n</code>)连接到一起。注意两个要点：</p>
+<ul>
+<li>每行一定要以换行符(<code>\n</code>)结尾， <em>包括最后一行</em> 。这些换行符被用作一个标记，可以有效分隔行。</li>
+<li>这些行不能包含未转义的换行符，因为他们将会对解析造成干扰。这意味着这个 JSON <em>不</em> 能使用 pretty 参数打印。</li>
+</ul>
+<p>action/metadata 行指定 <em>哪一个文档</em> 做 <em>什么操作</em> 。</p>
+<p><code>action</code> 必须是以下选项之一:</p>
+<ul>
+<li><strong><code>create</code></strong> 如果文档不存在，那么就创建它。</li>
+<li><strong><code>index</code></strong>  创建一个新文档或者替换一个现有的文档。。</li>
+<li><strong><code>update</code></strong> 部分更新一个文档。</li>
+<li><strong><code>delete</code></strong> 删除一个文档。</li>
+</ul>
+<p><code>metadata</code> 应该指定被索引、创建、更新或者删除的文档的 <code>_index</code> 、 <code>_type</code> 和 <code>_id</code> 。</p>
+<p>例如，一个 <code>delete</code> 请求看起来是这样的：</p>
+<pre><code class="language-js">{ &quot;delete&quot;: { &quot;_index&quot;: &quot;website&quot;, &quot;_type&quot;: &quot;blog&quot;, &quot;_id&quot;: &quot;123&quot; }}
+</code></pre>
+<p><code>request body</code> 行由文档的 <code>_source</code> 本身组成—文档包含的字段和值。它是 <code>index</code> 和 <code>create</code> 操作所必需的，这是有道理的：你必须提供文档以索引。</p>
+<p>它也是 <code>update</code> 操作所必需的，并且应该包含你传递给 <code>update</code> API 的相同请求体： <code>doc</code> 、 <code>upsert</code> 、 <code>script</code> 等等。 删除操作不需要 <code>request body</code> 行。</p>
+<pre><code class="language-js">{ &quot;create&quot;:  { &quot;_index&quot;: &quot;website&quot;, &quot;_type&quot;: &quot;blog&quot;, &quot;_id&quot;: &quot;123&quot; }}
+{ &quot;title&quot;:    &quot;My first blog post&quot; }
+</code></pre>
+<p>如果不指定 <code>_id</code> ，将会自动生成一个 ID ：</p>
+<pre><code class="language-js">{ &quot;index&quot;: { &quot;_index&quot;: &quot;website&quot;, &quot;_type&quot;: &quot;blog&quot; }}
+{ &quot;title&quot;:    &quot;My second blog post&quot; }
+</code></pre>
+<p>为了把所有的操作组合在一起，一个完整的 <code>bulk</code> 请求 有以下形式:</p>
+<pre><code class="language-sense">POST /_bulk
+{ &quot;delete&quot;: { &quot;_index&quot;: &quot;website&quot;, &quot;_type&quot;: &quot;blog&quot;, &quot;_id&quot;: &quot;123&quot; }} 
+{ &quot;create&quot;: { &quot;_index&quot;: &quot;website&quot;, &quot;_type&quot;: &quot;blog&quot;, &quot;_id&quot;: &quot;123&quot; }}
+{ &quot;title&quot;:    &quot;My first blog post&quot; }
+{ &quot;index&quot;:  { &quot;_index&quot;: &quot;website&quot;, &quot;_type&quot;: &quot;blog&quot; }}
+{ &quot;title&quot;:    &quot;My second blog post&quot; }
+{ &quot;update&quot;: { &quot;_index&quot;: &quot;website&quot;, &quot;_type&quot;: &quot;blog&quot;, &quot;_id&quot;: &quot;123&quot;, &quot;_retry_on_conflict&quot; : 3} }
+{ &quot;doc&quot; : {&quot;title&quot; : &quot;My updated blog post&quot;} } 
+</code></pre>
+<p>这个 Elasticsearch 响应包含 <code>items</code> 数组，这个数组的内容是以请求的顺序列出来的每个请求的结果。</p>
+<pre><code class="language-sense">{
+   &quot;took&quot;: 4,
+   &quot;errors&quot;: false, 
+   &quot;items&quot;: [
+      {  &quot;delete&quot;: {
+            &quot;_index&quot;:   &quot;website&quot;,
+            &quot;_type&quot;:    &quot;blog&quot;,
+            &quot;_id&quot;:      &quot;123&quot;,
+            &quot;_version&quot;: 2,
+            &quot;status&quot;:   200,
+            &quot;found&quot;:    true
+      }},
+      {  &quot;create&quot;: {
+            &quot;_index&quot;:   &quot;website&quot;,
+            &quot;_type&quot;:    &quot;blog&quot;,
+            &quot;_id&quot;:      &quot;123&quot;,
+            &quot;_version&quot;: 3,
+            &quot;status&quot;:   201
+      }},
+      {  &quot;create&quot;: {
+            &quot;_index&quot;:   &quot;website&quot;,
+            &quot;_type&quot;:    &quot;blog&quot;,
+            &quot;_id&quot;:      &quot;EiwfApScQiiy7TIKFxRCTw&quot;,
+            &quot;_version&quot;: 1,
+            &quot;status&quot;:   201
+      }},
+      {  &quot;update&quot;: {
+            &quot;_index&quot;:   &quot;website&quot;,
+            &quot;_type&quot;:    &quot;blog&quot;,
+            &quot;_id&quot;:      &quot;123&quot;,
+            &quot;_version&quot;: 4,
+            &quot;status&quot;:   200
+      }}
+   ]
+}
+</code></pre>
+<p>每个子请求都是独立执行，因此某个子请求的失败不会对其他子请求的成功与否造成影响。 如果其中任何子请求失败，最顶层的 <code>error</code> 标志被设置为 <code>true</code> ，并且在相应的请求报告出错误明细：</p>
+<pre><code class="language-sense">POST /_bulk
+{ &quot;create&quot;: { &quot;_index&quot;: &quot;website&quot;, &quot;_type&quot;: &quot;blog&quot;, &quot;_id&quot;: &quot;123&quot; }}
+{ &quot;title&quot;:    &quot;Cannot create - it already exists&quot; }
+{ &quot;index&quot;:  { &quot;_index&quot;: &quot;website&quot;, &quot;_type&quot;: &quot;blog&quot;, &quot;_id&quot;: &quot;123&quot; }}
+{ &quot;title&quot;:    &quot;But we can update it&quot; }
+</code></pre>
+<p>在响应中，我们看到 <code>create</code> 文档 <code>123</code> 失败，因为它已经存在。但是随后的 <code>index</code> 请求，也是对文档 <code>123</code> 操作，就成功了：</p>
+<pre><code class="language-sense">{
+   &quot;took&quot;: 3,
+   &quot;errors&quot;: true, 
+   &quot;items&quot;: [
+      {  &quot;create&quot;: {
+            &quot;_index&quot;:   &quot;website&quot;,
+            &quot;_type&quot;:    &quot;blog&quot;,
+            &quot;_id&quot;:      &quot;123&quot;,
+            &quot;status&quot;:   409, 
+            &quot;error&quot;:    &quot;DocumentAlreadyExistsException 
+                        [[website][4] [blog][123]:
+                        document already exists]&quot;
+      }},
+      {  &quot;index&quot;: {
+            &quot;_index&quot;:   &quot;website&quot;,
+            &quot;_type&quot;:    &quot;blog&quot;,
+            &quot;_id&quot;:      &quot;123&quot;,
+            &quot;_version&quot;: 5,
+            &quot;status&quot;:   200 
+      }}
+   ]
+}
+</code></pre>
+<p><strong>这也意味着 <code>bulk</code> 请求不是原子的： 不能用它来实现事务控制。每个请求是单独处理的，因此一个请求的成功或失败不会影响其他的请求。</strong></p>
+<h3 id="query-dsl-dsl查询">Query DSL-DSL查询</h3>
+<p>查询表达式(Query DSL)是一种非常灵活又富有表现力的 查询语言。 Elasticsearch 使用它可以以简单的 JSON 接口来展现 Lucene 功能的绝大部分。在你的应用中，你应该用它来编写你的查询语句。它可以使你的查询语句更灵活、更精确、易读和易调试。</p>
+<p>要使用这种查询表达式，只需将查询语句传递给 <code>query</code> 参数：</p>
+<pre><code>GET /_search
+{
+    &quot;query&quot;: 查询语句
+}
+</code></pre>
+<p>一个查询语句的典型结构：</p>
+<pre><code>{
+    QUERY_NAME: {
+        ARGUMENT: VALUE,
+        ARGUMENT: VALUE,...
+    }
+}
+</code></pre>
+<p>如果是针对某个字段，那么它的结构如下：</p>
+<pre><code>{
+    QUERY_NAME: {
+        FIELD_NAME: {
+            ARGUMENT: VALUE,
+            ARGUMENT: VALUE,...
+        }
+    }
+}
+</code></pre>
+<p>例如：</p>
+<pre><code>GET /megacorp/employee/_search
+{
+    &quot;query&quot; : {
+        &quot;match&quot; : {
+            &quot;last_name&quot; : &quot;Smith&quot;
+        }
+    }
+}
+</code></pre>
+<p>返回为</p>
+<pre><code>#! Deprecation: [types removal] Specifying types in search requests is deprecated.
+{
+  &quot;took&quot; : 0,
+  &quot;timed_out&quot; : false,
+  &quot;_shards&quot; : {
+    &quot;total&quot; : 1,
+    &quot;successful&quot; : 1,
+    &quot;skipped&quot; : 0,
+    &quot;failed&quot; : 0
+  },
+  &quot;hits&quot; : {
+    &quot;total&quot; : {
+      &quot;value&quot; : 2,
+      &quot;relation&quot; : &quot;eq&quot;
+    },
+    &quot;max_score&quot; : 0.4700036,
+    &quot;hits&quot; : [
+      {
+        &quot;_index&quot; : &quot;megacorp&quot;,
+        &quot;_type&quot; : &quot;employee&quot;,
+        &quot;_id&quot; : &quot;2&quot;,
+        &quot;_score&quot; : 0.4700036,
+        &quot;_source&quot; : {
+          &quot;first_name&quot; : &quot;Jane&quot;,
+          &quot;last_name&quot; : &quot;Smith&quot;,
+          &quot;age&quot; : 32,
+          &quot;about&quot; : &quot;I like to collect rock albums&quot;,
+          &quot;interests&quot; : [
+            &quot;music&quot;
+          ]
+        }
+      },
+      {
+        &quot;_index&quot; : &quot;megacorp&quot;,
+        &quot;_type&quot; : &quot;employee&quot;,
+        &quot;_id&quot; : &quot;1&quot;,
+        &quot;_score&quot; : 0.4700036,
+        &quot;_source&quot; : {
+          &quot;first_name&quot; : &quot;John&quot;,
+          &quot;last_name&quot; : &quot;Smith&quot;,
+          &quot;age&quot; : 25,
+          &quot;about&quot; : &quot;I love to go rock climbing&quot;,
+          &quot;interests&quot; : [
+            &quot;sports&quot;,
+            &quot;music&quot;
+          ]
+        }
+      }
+    ]
+  }
+}
+</code></pre>
+<p>相关字段解释</p>
+<ul>
+<li><code>took</code> – Elasticsearch运行查询所花费的时间（以毫秒为单位）</li>
+<li><code>timed_out</code> –搜索请求是否超时</li>
+<li><code>_shards</code> - 搜索了多少个碎片，以及成功，失败或跳过了多少个碎片的细目分类。</li>
+<li><code>max_score</code> – 找到的最相关文档的分数</li>
+<li><code>hits.total.value</code> - 找到了多少个匹配的文档</li>
+<li><code>hits.sort</code> - 文档的排序位置（不按相关性得分排序时）</li>
+<li><code>hits._score</code> - 文档的相关性得分（使用match_all时不适用）</li>
+</ul>
+<p><strong>[types removal] Specifying types in search requests is deprecated.可以看到其实也告诉我们不需要指定类型了</strong>，因此改为</p>
+<pre><code>GET /megacorp/_search
+{
+    &quot;query&quot; : {
+        &quot;match&quot; : {
+            &quot;last_name&quot; : &quot;Smith&quot;
+        }
+    }
+}
+</code></pre>
+<h4 id="match_all-查询所有">match_all-查询所有</h4>
+<p><code>match_all</code>表示查询所有的数据，<code>sort</code>即按照什么字段排序</p>
+<pre><code class="language-bash">GET /bank/_search
+{
+  &quot;query&quot;: { &quot;match_all&quot;: {} },
+  &quot;sort&quot;: [
+    { &quot;account_number&quot;: &quot;asc&quot; }
+  ]
+}
+</code></pre>
+<h4 id="分页查询fromsize">分页查询(from+size)</h4>
+<p>本质上就是from和size两个字段</p>
+<pre><code>GET /bank/_search
+{
+  &quot;query&quot;: { &quot;match_all&quot;: {} },
+  &quot;sort&quot;: [
+    { &quot;account_number&quot;: &quot;asc&quot; }
+  ],
+  &quot;from&quot;: 10,
+  &quot;size&quot;: 10
+}
+</code></pre>
+<h4 id="match-指定字段查询">match-指定字段查询</h4>
+<p>如果要在字段中搜索特定字词，可以使用<code>match</code>; 如下语句将查询address 字段中<strong>包含 mill 或者 lane的数据</strong></p>
+<pre><code class="language-bash">GET /bank/_search
+{
+  &quot;query&quot;: { &quot;match&quot;: { &quot;address&quot;: &quot;mill lane&quot; } }
+}
+</code></pre>
+<h4 id="multi_match">multi_match</h4>
+<p><code>multi_match</code> 查询可以在多个字段上执行相同的 <code>match</code> 查询：</p>
+<pre><code>{
+    &quot;multi_match&quot;: {
+        &quot;query&quot;:    &quot;full text search&quot;,
+        &quot;fields&quot;:   [ &quot;title&quot;, &quot;body&quot; ]
+    }
+}
+</code></pre>
+<h4 id="range-查询">range 查询</h4>
+<p><code>range</code> 查询找出那些落在指定区间内的数字或者时间：</p>
+<pre><code class="language-sense">{
+    &quot;range&quot;: {
+        &quot;age&quot;: {
+            &quot;gte&quot;:  20,
+            &quot;lt&quot;:   30
+        }
+    }
+}
+</code></pre>
+<p>被允许的操作符如下：</p>
+<ul>
+<li>
+<p><strong><code>gt</code></strong> 大于</p>
+</li>
+<li>
+<p><strong><code>gte</code></strong> 大于等于</p>
+</li>
+<li>
+<p><strong><code>lt</code></strong> 小于</p>
+</li>
+<li>
+<p><strong><code>lte</code></strong> 小于等于</p>
+</li>
+</ul>
+<h4 id="match_phrase-匹配搜索词">match_phrase-匹配搜索词</h4>
+<p>如果我们希望查询的条件是 address字段中包含 &ldquo;mill lane&rdquo;，则可以使用<code>match_phrase</code>,<strong>不分词查询</strong></p>
+<pre><code class="language-bash">GET /bank/_search
+{
+  &quot;query&quot;: { &quot;match_phrase&quot;: { &quot;address&quot;: &quot;mill lane&quot; } }
+}
+</code></pre>
+<h4 id="term-查询match_phrase类似">term 查询（match_phrase类似）</h4>
+<p><code>term</code> 查询被用于精确值匹配，<code>term</code> 和 <code>terms</code> 是 <em>必须包含（must contain）</em> 操作，而不是 <em>必须精确相等（must equal exactly）</em> 。这些精确值可能是数字、时间、布尔或者那些 <code>not_analyzed</code> 的字符串：</p>
+<pre><code class="language-sense">{ &quot;term&quot;: { &quot;age&quot;:    26           }}
+{ &quot;term&quot;: { &quot;date&quot;:   &quot;2014-09-01&quot; }}
+{ &quot;term&quot;: { &quot;public&quot;: true         }}
+{ &quot;term&quot;: { &quot;tag&quot;:    &quot;full_text&quot;  }}
+</code></pre>
+<p><code>term</code> 查询对于输入的文本不<em>分析</em> ，所以它将给定的值进行精确查询，<strong>不分词查询</strong>。</p>
+<h4 id="terms-查询">terms 查询</h4>
+<p><code>terms</code> 查询和 <code>term</code> 查询一样，但它允许你指定多值进行匹配。如果这个字段包含了指定值中的任何一个值，那么这个文档满足条件：</p>
+<pre><code>{ &quot;terms&quot;: { &quot;tag&quot;: [ &quot;search&quot;, &quot;full_text&quot;, &quot;nosql&quot; ] }}
+</code></pre>
+<h4 id="exists-查询和-missing-查询">exists 查询和 missing 查询</h4>
+<p><code>exists</code> 查询和 <code>missing</code> 查询被用于查找那些指定字段中有值 (<code>exists</code>) 或无值 (<code>missing</code>) 的文档。这与SQL中的 <code>IS_NULL</code> (<code>missing</code>) 和 <code>NOT IS_NULL</code> (<code>exists</code>) 在本质上具有共性：</p>
+<pre><code>{
+    &quot;exists&quot;:   {
+        &quot;field&quot;:    &quot;title&quot;
+    }
+}
+</code></pre>
+<h4 id="bool-组合多查询">bool-组合多查询</h4>
+<p>现实的查询需求从来都没有那么简单；它们需要在多个字段上查询多种多样的文本，并且根据一系列的标准来过滤。为了构建类似的高级查询，你需要一种能够将多查询组合成单一查询的查询方法。</p>
+<p>你可以用 <code>bool</code> 查询来实现你的需求。这种查询将多查询组合在一起，成为用户自己想要的布尔查询。它接收以下参数：</p>
+<ul>
+<li><strong><code>must</code></strong> 文档 <strong>必须匹配</strong>这些条件才能被包含进来。</li>
+<li><strong><code>must_not</code></strong> 文档<strong>必须不匹配</strong>这些条件才能被包含进来。</li>
+<li><strong><code>should</code></strong> <strong>如果满足这些语句中的任意语句，将增加 <code>_score</code></strong> ，否则，无任何影响。它们主要用于修正每个文档的相关性得分。</li>
+<li><strong><code>filter</code></strong> <strong>必须匹配，但它以不评分、过滤模式来进行</strong>。这些语句对评分没有贡献，只是根据过滤标准来排除或包含文档</li>
+</ul>
+<p>下面的查询用于查找 <code>title</code> 字段匹配 <code>how to make millions</code> 并且不被标识为 <code>spam</code> 的文档。那些被标识为 <code>starred</code> 或在2014之后的文档，将比另外那些文档拥有更高的排名。如果 <em>两者</em> 都满足，那么它排名将更高：</p>
+<pre><code>{
+    &quot;bool&quot;: {
+        &quot;must&quot;:     { &quot;match&quot;: { &quot;title&quot;: &quot;how to make millions&quot; }},
+        &quot;must_not&quot;: { &quot;match&quot;: { &quot;tag&quot;:   &quot;spam&quot; }},
+        &quot;should&quot;: [
+            { &quot;match&quot;: { &quot;tag&quot;: &quot;starred&quot; }},
+            { &quot;range&quot;: { &quot;date&quot;: { &quot;gte&quot;: &quot;2014-01-01&quot; }}}
+        ]
+    }
+}
+</code></pre>
+<p>如果没有 <code>must</code> 语句，那么至少需要能够匹配其中的一条 <code>should</code> 语句。但，如果存在至少一条 <code>must</code> 语句，则对 <code>should</code> 语句的匹配没有要求。</p>
+<h4 id="constant_score">constant_score</h4>
+<p>尽管没有 <code>bool</code> 查询使用这么频繁，<code>constant_score</code> 查询也是你工具箱里有用的查询工具。它将一个不变的常量评分应用于所有匹配的文档。<strong>它被经常用于你只需要执行一个 filter 而没有其它查询（例如，评分查询）的情况下</strong>。可以使用它来取代只有 filter 语句的 <code>bool</code> 查询。在性能上是完全相同的，但对于提高查询简洁性和清晰度有很大帮助。</p>
+<pre><code class="language-json">{
+    &quot;constant_score&quot;:   {
+        &quot;filter&quot;: {
+            &quot;term&quot;: { &quot;category&quot;: &quot;ebooks&quot; } 
+        }
+    }
+}
+</code></pre>
+<h4 id="_validatequery-验证查询">_validate/query-验证查询</h4>
+<p>查询可以变得非常的复杂，尤其和不同的分析器与不同的字段映射结合时，理解起来就有点困难了。不过 <code>validate-query</code> API 可以用来验证查询是否合法。</p>
+<pre><code>GET /megacorp/_validate/query?explain
+{
+  &quot;query&quot;: {
+    &quot;bool&quot;: {
+        &quot;must&quot;:     { &quot;match&quot;: { &quot;interests&quot;: &quot;music&quot; }},
+        &quot;must_not&quot;: { &quot;match&quot;: { &quot;last_name&quot;:   &quot;Fir&quot; }},
+        &quot;should&quot;: [
+            { &quot;match&quot;: { &quot;last_name&quot;: &quot;Smith&quot; }}
+        ],
+        &quot;filter&quot;: { &quot;match&quot;: { &quot;about&quot;: &quot;climbing&quot;}}
+    }
+}
+}
+</code></pre>
+<p>对于合法查询，使用 <code>explain</code> 参数将返回可读的描述，这对准确理解 Elasticsearch 是如何解析你的 query 是非常有用的：</p>
+<pre><code>{
+  &quot;_shards&quot; : {
+    &quot;total&quot; : 1,
+    &quot;successful&quot; : 1,
+    &quot;failed&quot; : 0
+  },
+  &quot;valid&quot; : true,
+  &quot;explanations&quot; : [
+    {
+      &quot;index&quot; : &quot;megacorp&quot;,
+      &quot;valid&quot; : true,
+      &quot;explanation&quot; : &quot;+interests:music -last_name:fir last_name:smith #about:climbing&quot;
+    }
+  ]
+}
+</code></pre>
+<p><strong>explanation中就是匹配过程</strong></p>
+<h4 id="总结">总结</h4>
+<p>其实es的语法是比较简单的，DSL语句和sql语句基本都差不多，学习es的难点更多还是在原理上。</p>
+<h2 id="es中的乐观锁">es中的乐观锁</h2>
+<p>我们使用 <code>index</code> API 更新文档 ，可以一次性读取原始文档，做我们的修改，然后重新索引 <em>整个文档</em> 。 最近的索引请求将获胜：无论最后哪一个文档被索引，都将被唯一存储在 Elasticsearch 中。如果其他人同时更改这个文档，他们的更改将丢失。</p>
+<p>很多时候这是没有问题的。也许我们的主数据存储是一个关系型数据库，我们只是将数据复制到 Elasticsearch 中并使其可被搜索。 也许两个人同时更改相同的文档的几率很小。或者对于我们的业务来说偶尔丢失更改并不是很严重的问题。</p>
+<p>但有时丢失了一个变更就是 <em>非常严重的</em> 。试想我们使用 Elasticsearch 存储我们网上商城商品库存的数量， 每次我们卖一个商品的时候，我们在 Elasticsearch 中将库存数量减少。</p>
+<p>有一天，管理层决定做一次促销。突然地，我们一秒要卖好几个商品。 假设有两个 web 程序并行运行，每一个都同时处理所有商品的销售，如图所示。</p>
+<p><img src="elas_0301.png" alt="Consequence of no concurrency control"></p>
+<p><code>web_1</code> 对 <code>stock_count</code> 所做的更改已经丢失，因为 <code>web_2</code> 不知道它的 <code>stock_count</code> 的拷贝已经过期。 结果我们会认为有超过商品的实际数量的库存，因为卖给顾客的库存商品并不存在，我们将让他们非常失望。</p>
+<p>变更越频繁，读数据和更新数据的间隙越长，也就越可能丢失变更。<strong>es采用了乐观锁的方式来处理并发请求</strong>。</p>
+<p>Elasticsearch 是分布式的。当文档创建、更新或删除时， <strong>新版本的文档必须复制到集群中的其他节点</strong>。Elasticsearch 也是异步和并发的，这意味着这些复制请求被并行发送，并且到达目的地时也许 <em>顺序是乱的</em> 。 Elasticsearch 需要一种方法确保文档的旧版本不会覆盖新的版本。</p>
+<p>当我们之前讨论 <code>index</code> ， <code>GET</code> 和 <code>delete</code> 请求时，我们指出每个文档都有一个 <code>_version</code> （版本）号，当文档被修改时版本号递增。 Elasticsearch 使用这个 <code>_version</code> 号来确保变更以正确顺序得到执行。<strong>如果旧版本的文档在新版本之后到达，它可以被简单的忽略</strong>。</p>
+<p>我们可以利用 <code>_version</code> 号来确保 应用中相互冲突的变更不会导致数据丢失。我们通过指定想要修改文档的 <code>version</code> 号来达到这个目的。 如果该版本不是当前版本号，我们的请求将会失败。</p>
+<p>让我们创建一个新的博客文章：</p>
+<pre><code class="language-sense">PUT /website/blog/1/_create
+{
+  &quot;title&quot;: &quot;My first blog entry&quot;,
+  &quot;text&quot;:  &quot;Just trying this out...&quot;
+}
+</code></pre>
+<p>响应体告诉我们，这个新创建的文档 <code>_version</code> 版本号是 <code>1</code> 。现在假设我们想编辑这个文档：我们加载其数据到 web 表单中， 做一些修改，然后保存新的版本。</p>
+<p>首先我们检索文档:</p>
+<pre><code class="language-sense">GET /website/blog/1
+</code></pre>
+<p>响应体包含相同的 <code>_version</code> 版本号 <code>1</code> ：</p>
+<pre><code class="language-js">{
+  &quot;_index&quot; :   &quot;website&quot;,
+  &quot;_type&quot; :    &quot;blog&quot;,
+  &quot;_id&quot; :      &quot;1&quot;,
+  &quot;_version&quot; : 1,
+  &quot;found&quot; :    true,
+  &quot;_source&quot; :  {
+      &quot;title&quot;: &quot;My first blog entry&quot;,
+      &quot;text&quot;:  &quot;Just trying this out...&quot;
+  }
+}
+</code></pre>
+<p>现在，当我们尝试通过重建文档的索引来保存修改，我们指定 <code>version</code> 为我们的修改会被应用的版本：</p>
+<pre><code class="language-sense">PUT /website/blog/1?version=1 
+{
+  &quot;title&quot;: &quot;My first blog entry&quot;,
+  &quot;text&quot;:  &quot;Starting to get the hang of this...&quot;
+}
+</code></pre>
+<p>此请求成功，并且响应体告诉我们 <code>_version</code> 已经递增到 <code>2</code> ：</p>
+<pre><code class="language-sense">{
+  &quot;_index&quot;:   &quot;website&quot;,
+  &quot;_type&quot;:    &quot;blog&quot;,
+  &quot;_id&quot;:      &quot;1&quot;,
+  &quot;_version&quot;: 2
+  &quot;created&quot;:  false
+}
+</code></pre>
+<p>然而，如果我们重新运行相同的索引请求，仍然指定 <code>version=1</code> ， Elasticsearch 返回 <code>409 Conflict</code> HTTP 响应码，和一个如下所示的响应体：</p>
+<pre><code class="language-sense">{
+   &quot;error&quot;: {
+      &quot;root_cause&quot;: [
+         {
+            &quot;type&quot;: &quot;version_conflict_engine_exception&quot;,
+            &quot;reason&quot;: &quot;[blog][1]: version conflict, current [2], provided [1]&quot;,
+            &quot;index&quot;: &quot;website&quot;,
+            &quot;shard&quot;: &quot;3&quot;
+         }
+      ],
+      &quot;type&quot;: &quot;version_conflict_engine_exception&quot;,
+      &quot;reason&quot;: &quot;[blog][1]: version conflict, current [2], provided [1]&quot;,
+      &quot;index&quot;: &quot;website&quot;,
+      &quot;shard&quot;: &quot;3&quot;
+   },
+   &quot;status&quot;: 409
+}
+</code></pre>
+<p>这告诉我们在 Elasticsearch 中这个文档的当前 <code>_version</code> 号是 <code>2</code> ，但我们指定的更新版本号为 <code>1</code> 。</p>
+<p><strong>所有文档的更新或删除 API，都可以接受 <code>version</code> 参数，这允许你在代码中使用乐观的并发控制，这是一种明智的做法。</strong></p>
+<h3 id="通过外部系统使用版本控制">通过外部系统使用版本控制</h3>
+<p><strong>一个常见的设置是使用其它数据库作为主要的数据存储，使用 Elasticsearch 做数据检索， 这意味着主数据库的所有更改发生时都需要被复制到 Elasticsearch ，如果多个进程负责这一数据同步，你可能遇到类似于之前描述的并发问题。</strong></p>
+<p>如果你的主数据库已经有了版本号 — 或一个能作为版本号的字段值比如 <code>timestamp</code> — 那么你就可以在 Elasticsearch 中通过增加 <code>version_type=external</code> 到查询字符串的方式重用这些相同的版本号， 版本号必须是大于零的整数， 且小于 <code>9.2E+18</code> — 一个 Java 中 <code>long</code> 类型的正值。</p>
+<p>外部版本号的处理方式和我们之前讨论的内部版本号的处理方式有些不同， <strong>Elasticsearch 不是检查当前 <code>_version</code> 和请求中指定的版本号是否相同， 而是检查当前 <code>_version</code> 是否 <em>小于</em> 指定的版本号。 如果请求成功，外部的版本号作为文档的新 <code>_version</code> 进行存储</strong>。</p>
+<p>外部版本号不仅在索引和删除请求是可以指定，而且在 <em>创建</em> 新文档时也可以指定。</p>
+<p>例如，要创建一个新的具有外部版本号 <code>5</code> 的博客文章，我们可以按以下方法进行：</p>
+<pre><code class="language-sense">PUT /website/blog/2?version=5&amp;version_type=external
+{
+  &quot;title&quot;: &quot;My first external blog entry&quot;,
+  &quot;text&quot;:  &quot;Starting to get the hang of this...&quot;
+}
+</code></pre>
+<p>在响应中，我们能看到当前的 <code>_version</code> 版本号是 <code>5</code> ：</p>
+<pre><code class="language-js">{
+  &quot;_index&quot;:   &quot;website&quot;,
+  &quot;_type&quot;:    &quot;blog&quot;,
+  &quot;_id&quot;:      &quot;2&quot;,
+  &quot;_version&quot;: 5,
+  &quot;created&quot;:  true
+}
+</code></pre>
+<p>现在我们更新这个文档，指定一个新的 <code>version</code> 号是 <code>10</code> ：</p>
+<pre><code class="language-sense">PUT /website/blog/2?version=10&amp;version_type=external
+{
+  &quot;title&quot;: &quot;My first external blog entry&quot;,
+  &quot;text&quot;:  &quot;This is a piece of cake...&quot;
+}
+</code></pre>
+<p>请求成功并将当前 <code>_version</code> 设为 <code>10</code> ：</p>
+<pre><code class="language-js">{
+  &quot;_index&quot;:   &quot;website&quot;,
+  &quot;_type&quot;:    &quot;blog&quot;,
+  &quot;_id&quot;:      &quot;2&quot;,
+  &quot;_version&quot;: 10,
+  &quot;created&quot;:  false
+}
+</code></pre>
+<p>如果你要重新运行此请求时，它将会失败，并返回像我们之前看到的同样的冲突错误， <strong>因为指定的外部版本号不大于 Elasticsearch 的当前版本号。</strong></p>
+<h3 id="总结-1">总结</h3>
+<p>es中的乐观锁和我们自己实现的乐观锁是完全一样的，通过版本号字段来进行控制，不同的是，<strong>es支持两种模式，第一种就是当版本号相同允许更新操作，第二种就是只有当版本号大于当前版本号时允许更新操作</strong>。</p>
+<h2 id="文档存储的基本原理">文档存储的基本原理</h2>
+<h3 id="路由一个文档到一个分片中">路由一个文档到一个分片中</h3>
+<p>当索引一个文档（存储一个文档）的时候，文档会被存储到一个主分片中。 Elasticsearch 如何知道一个文档应该存放到哪个分片中呢？当我们创建文档时，它如何决定这个文档应当被存储在分片 <code>1</code> 还是分片 <code>2</code> 中呢？</p>
+<p>首先这肯定不会是随机的，否则将来要获取文档的时候我们就不知道从何处寻找了。实际上，这个过程是根据下面这个公式决定的：</p>
+<pre><code>shard = hash(routing) % number_of_primary_shards
+</code></pre>
+<p><code>routing</code> 是一个可变值，默认是文档的 <code>_id</code> ，也可以设置成一个自定义的值。 <code>routing</code> 通过 hash 函数生成一个数字，然后这个数字再除以 <code>number_of_primary_shards</code> （主分片的数量）后得到 <strong>余数</strong> 。这个分布在 <code>0</code> 到 <code>number_of_primary_shards-1</code> 之间的余数，就是我们所寻求的文档所在分片的位置。</p>
+<p><strong>这就解释了为什么我们要在创建索引的时候就确定好主分片的数量 并且永远不会改变这个数量：因为如果数量变化了，那么所有之前路由的值都会无效，文档也再也找不到了。</strong></p>
+<p>所有的文档 API（ <code>get</code> 、 <code>index</code> 、 <code>delete</code> 、 <code>bulk</code> 、 <code>update</code> 以及 <code>mget</code> ）都接受一个叫做 <code>routing</code> 的路由参数 ，<strong>通过这个参数我们可以自定义文档到分片的映射</strong>。一个自定义的路由参数可以用来确保所有相关的文档——例如所有属于同一个用户的文档——都被存储到同一个分片中。</p>
+<h3 id="主分片和副本分片如何交互">主分片和副本分片如何交互</h3>
+<p>了说明目的, 我们 假设有一个集群由三个节点组成。 它包含一个叫 <code>blogs</code> 的索引，有两个主分片，每个主分片有两个副本分片。相同分片的副本不会放在同一节点。</p>
+<p><img src="elas_0401.png" alt="有三个节点和一个索引的集群"></p>
+<p>我们可以发送请求到集群中的任一节点。 每个节点都有能力处理任意请求。 每个节点都知道集群中任一文档位置，所以可以直接将请求转发到需要的节点上。 在下面的例子中，将所有的请求发送到 <code>Node 1</code> ，我们将其称为 <em>协调节点</em></p>
+<h4 id="新建索引和删除文档">新建、索引和删除文档</h4>
+<p>新建、索引(新增或更新)和删除 请求都是 <em>写</em> 操作， 必须在主分片上面完成之后才能被复制到相关的副本分片，如下图所示</p>
+<p><img src="elas_0402.png" alt="新建、索引和删除单个文档"></p>
+<p>以下是在主副分片和任何副本分片上面 成功新建，索引和删除文档所需要的步骤顺序：</p>
+<ol>
+<li>客户端向 <code>Node 1</code> 发送新建、索引或者删除请求。</li>
+<li>节点使用文档的 <code>_id</code> 确定文档属于分片 0 。请求会被转发到 <code>Node 3</code>，因为分片 0 的主分片目前被分配在 <code>Node 3</code> 上。</li>
+<li><code>Node 3</code> 在主分片上面执行请求。如果成功了，它将请求并行转发到 <code>Node 1</code> 和 <code>Node 2</code> 的副本分片上。一旦所有的副本分片都报告成功, <code>Node 3</code> 将向协调节点报告成功，协调节点向客户端报告成功。</li>
+</ol>
+<p>在客户端收到成功响应时，文档变更已经在主分片和所有副本分片执行完成，变更是安全的。</p>
+<p>有一些可选的请求参数允许您影响这个过程，可能以数据安全为代价提升性能。这些选项很少使用，因为Elasticsearch已经很快，但是为了完整起见，在这里阐述如下：</p>
+<ul>
+<li>
+<p><strong><code>consistency</code></strong></p>
+<p>consistency，即一致性。在默认设置下，即使仅仅是在试图执行一个_写_操作之前，主分片都会要求 必须要有 <em>规定数量(quorum)</em>（或者换种说法，也即必须要有大多数）的分片副本处于活跃可用状态，才会去执行_写_操作(其中分片副本可以是主分片或者副本分片)。这是为了避免在发生网络分区故障（network partition）的时候进行_写_操作，进而导致数据不一致。_规定数量_即：<code>int( (primary + number_of_replicas) / 2 ) + 1``consistency</code> 参数的值可以设为 <code>one</code> （只要主分片状态 ok 就允许执行_写_操作）,<code>all</code>（必须要主分片和所有副本分片的状态没问题才允许执行_写_操作）, 或 <code>quorum</code> 。默认值为 <code>quorum</code> , 即大多数的分片副本状态没问题就允许执行_写_操作。注意，<em>规定数量</em> 的计算公式中 <code>number_of_replicas</code> 指的是在索引设置中的设定副本分片数，而不是指当前处理活动状态的副本分片数。如果你的索引设置中指定了当前索引拥有三个副本分片，那规定数量的计算结果即：<code>int( (primary + 3 replicas) / 2 ) + 1 = 3</code>如果此时你只启动两个节点，那么处于活跃状态的分片副本数量就达不到规定数量，也因此您将无法索引和删除任何文档。</p>
+</li>
+<li>
+<p><strong><code>timeout</code></strong></p>
+<p>如果没有足够的副本分片会发生什么？ Elasticsearch会等待，希望更多的分片出现。默认情况下，它最多等待1分钟。 如果你需要，你可以使用 <code>timeout</code> 参数 使它更早终止： <code>100</code> 100毫秒，<code>30s</code> 是30秒。</p>
+</li>
+</ul>
+<p>新索引默认有 <code>1</code> 个副本分片，这意味着为满足 <code>规定数量</code> <em>应该</em> 需要两个活动的分片副本。 但是，这些默认的设置会阻止我们在单一节点上做任何事情。为了避免这个问题，要求只有当 <code>number_of_replicas</code> 大于1的时候，规定数量才会执行。</p>
+<h4 id="查询一个文档">查询一个文档</h4>
+<p>可以从主分片或者从其它任意副本分片检索文档 ，如下图所示</p>
+<p><img src="elas_0403.png" alt="取回单个文档"></p>
+<p>以下是从主分片或者副本分片检索文档的步骤顺序：</p>
+<p>1、客户端向 <code>Node 1</code> 发送获取请求。</p>
+<p>2、节点使用文档的 <code>_id</code> 来确定文档属于分片 <code>0</code> 。分片 <code>0</code> 的副本分片存在于所有的三个节点上。 在这种情况下，它将请求转发到 <code>Node 2</code> 。</p>
+<p>3、<code>Node 2</code> 将文档返回给 <code>Node 1</code> ，然后将文档返回给客户端。</p>
+<p><strong>在处理读取请求时，协调结点在每次请求的时候都会通过轮询所有的副本分片来达到负载均衡</strong>。</p>
+<p>在文档被检索时，已经被索引的文档可能已经存在于主分片上但是还没有复制到副本分片。 在这种情况下，副本分片可能会报告文档不存在，但是主分片可能成功返回文档。 一旦索引请求成功返回给用户，文档在主分片和副本分片都是可用的。</p>
+<h4 id="部分更新文档-update">部分更新文档-update</h4>
+<p><code>update</code> API 结合了先前说明的读取和写入模式。</p>
+<p><img src="elas_0404.png" alt="局部更新文档"></p>
+<p>以下是部分更新一个文档的步骤：</p>
+<ol>
+<li>客户端向 <code>Node 1</code> 发送更新请求。</li>
+<li>它将请求转发到主分片所在的 <code>Node 3</code> 。</li>
+<li><code>Node 3</code> 从主分片检索文档，修改 <code>_source</code> 字段中的 JSON ，并且尝试重新索引主分片的文档。 如果文档已经被另一个进程修改，它会重试步骤 3 ，超过 <code>retry_on_conflict</code> 次后放弃。</li>
+<li>如果 <code>Node 3</code> 成功地更新文档，它将新版本的文档并行转发到 <code>Node 1</code> 和 <code>Node 2</code> 上的副本分片，重新建立索引。 一旦所有副本分片都返回成功， <code>Node 3</code> 向协调节点也返回成功，协调节点向客户端返回成功。</li>
+</ol>
+<p><code>update</code> API 还接受 <code>routing</code> 、 <code>replication</code> 、 <code>consistency</code> 和 <code>timeout</code> 参数。</p>
+<h5 id="基于文档的复制">基于文档的复制</h5>
+<p><strong>当主分片把更改转发到副本分片时， 它不会转发更新请求。 相反，它转发完整文档的新版本</strong>。请记住，<strong>这些更改将会异步转发到副本分片，并且不能保证它们以发送它们相同的顺序到达。 如果Elasticsearch仅转发更改请求，则可能以错误的顺序应用更改，导致得到损坏的文档。</strong></p>
+<h4 id="批量操作-mgetbulk">批量操作-mget、bulk</h4>
+<p><code>mget</code> 和 <code>bulk</code> API 的模式类似于单文档模式。<strong>区别在于协调节点知道每个文档存在于哪个分片中</strong>。 <strong>它将整个多文档请求分解成 <em>每个分片</em> 的多文档请求，并且将这些请求并行转发到每个参与节点</strong>。</p>
+<p>协调节点一旦收到来自每个节点的应答，就将每个节点的响应收集整理成单个响应，返回给客户端</p>
+<p><img src="elas_0405.png" alt="“使用 mget 取回多个文档”"></p>
+<p>以下是使用单个 <code>mget</code> 请求取回多个文档所需的步骤顺序：</p>
+<ol>
+<li>客户端向 <code>Node 1</code> 发送 <code>mget</code> 请求。</li>
+<li><code>Node 1</code> 为每个分片构建多文档获取请求，然后并行转发这些请求到托管在每个所需的主分片或者副本分片的节点上。一旦收到所有答复， <code>Node 1</code> 构建响应并将其返回给客户端。</li>
+</ol>
+<p>可以对 <code>docs</code> 数组中每个文档设置 <code>routing</code> 参数。</p>
+<p>bulk API，  允许在单个批量请求中执行多个创建、索引、删除和更新请求。</p>
+<p><img src="elas_0406.png" alt="“使用 bulk 修改多个文档”"></p>
+<p><code>bulk</code> API 按如下步骤顺序执行：</p>
+<ol>
+<li>客户端向 <code>Node 1</code> 发送 <code>bulk</code> 请求。</li>
+<li><code>Node 1</code> 为每个节点创建一个批量请求，并将这些请求并行转发到每个包含主分片的节点主机。</li>
+<li>主分片一个接一个按顺序执行每个操作。当每个操作成功时，主分片并行转发新文档（或删除）到副本分片，然后执行下一个操作。 一旦所有的副本分片报告所有操作成功，该节点将向协调节点报告成功，协调节点将这些响应收集整理并返回给客户端。</li>
+</ol>
+<p><code>bulk</code> API 还可以在整个批量请求的最顶层使用 <code>consistency</code> 参数，以及在每个请求中的元数据中使用 <code>routing</code> 参数。</p>
+<h3 id="总结-2">总结</h3>
+<p>这一章比较偏理论，主要是介绍了es在多节点的时候数据怎么同步的，目前还未能完全理解，需要时常阅读才能吸收。</p>
+<h2 id="映射mapping分析analysis">映射（Mapping）、分析（Analysis）</h2>
+<p>Elasticsearch 真正强大之处在于可以<strong>从无规律的数据中找出有意义的信息</strong>——从“大数据”到“大信息”。</p>
+<p>Elasticsearch 不只会_存储（stores）_ 文档，为了能被搜索到也会为文档添加_索引（indexes）_ ，这也是为什么我们使用结构化的 JSON 文档，而不是无结构的二进制数据。</p>
+<p><em>文档中的每个字段都将被索引并且可以被查询</em> 。不仅如此，在简单查询时，Elasticsearch 可以使用 <em>所有（all）</em> 这些索引字段，以惊人的速度返回结果。这是你永远不会考虑用传统数据库去做的一些事情。</p>
+<p>很多搜索都是开箱即用的，为了充分挖掘 Elasticsearch 的潜力，你需要理解以下三个概念：</p>
+<ul>
+<li><strong>映射（Mapping）描述数据在每个字段内如何存储</strong></li>
+<li><strong>分析（Analysis）全文是如何处理使之可以被搜索的</strong></li>
+<li><strong>领域特定查询语言（Query DSL） Elasticsearch 中强大灵活的查询语言</strong></li>
+</ul>
+<p>通过_mapping可以得到映射的类型</p>
+<pre><code>GET /megacorp/_mapping/
+</code></pre>
+<p>返回</p>
+<pre><code>{
+  &quot;megacorp&quot; : {
+    &quot;mappings&quot; : {
+      &quot;properties&quot; : {
+        &quot;about&quot; : {
+          &quot;type&quot; : &quot;text&quot;,
+          &quot;fields&quot; : {
+            &quot;keyword&quot; : {
+              &quot;type&quot; : &quot;keyword&quot;,
+              &quot;ignore_above&quot; : 256
+            }
+          }
+        },
+        &quot;age&quot; : {
+          &quot;type&quot; : &quot;long&quot;
+        },
+        &quot;first_name&quot; : {
+          &quot;type&quot; : &quot;text&quot;,
+          &quot;fields&quot; : {
+            &quot;keyword&quot; : {
+              &quot;type&quot; : &quot;keyword&quot;,
+              &quot;ignore_above&quot; : 256
+            }
+          }
+        },
+        &quot;interests&quot; : {
+          &quot;type&quot; : &quot;text&quot;,
+          &quot;fields&quot; : {
+            &quot;keyword&quot; : {
+              &quot;type&quot; : &quot;keyword&quot;,
+              &quot;ignore_above&quot; : 256
+            }
+          }
+        },
+        &quot;last_name&quot; : {
+          &quot;type&quot; : &quot;text&quot;,
+          &quot;fields&quot; : {
+            &quot;keyword&quot; : {
+              &quot;type&quot; : &quot;keyword&quot;,
+              &quot;ignore_above&quot; : 256
+            }
+          }
+        }
+      }
+    }
+  }
+}
+</code></pre>
+<p><strong>es会通过内部逻辑，将我们的数据映射为他内部的类型主要分为两类（精确值、全文），从而达到不同的搜索效果，精确搜索和全文搜索</strong></p>
+<ul>
+<li>
+<p><em>精确值</em> 如它们听起来那样精确。例如日期或者用户 ID，但字符串也可以表示精确值，例如用户名或邮箱地址。对于精确值来讲，<code>Foo</code> 和 <code>foo</code> 是不同的，<code>2014</code> 和 <code>2014-09-15</code> 也是不同的。</p>
+<p>精确值很容易查询。结果是二进制的：要么匹配查询，要么不匹配。这种查询很容易用 SQL 表示：</p>
+</li>
+</ul>
+<pre><code class="language-js">WHERE name    = &quot;John Smith&quot;
+  AND user_id = 2
+  AND date    &gt; &quot;2014-09-15&quot;
+</code></pre>
+<ul>
+<li><em>全文</em> 是指文本数据（通常以人类容易识别的语言书写），例如一个推文的内容或一封邮件的内容。全文通常是指非结构化的数据，查询全文数据要微妙的多。我们问的<strong>不只是“这个文档匹配查询吗”，而是“该文档匹配查询的程度有多大？</strong>”换句话说，该文档与给定查询的相关性如何？我们很少对全文类型的域做精确匹配。相反，我们希望在文本类型的域中搜索。不仅如此，我们还希望搜索能够理解我们的 <em>意图</em> ：
+<ul>
+<li>搜索 <code>UK</code> ，会返回包含 <code>United Kindom</code> 的文档。</li>
+<li>搜索 <code>jump</code> ，会匹配 <code>jumped</code> ， <code>jumps</code> ， <code>jumping</code> ，甚至是 <code>leap</code> 。</li>
+<li>搜索 <code>johnny walker</code> 会匹配 <code>Johnnie Walker</code> ， <code>johnnie depp</code> 应该匹配 <code>Johnny Depp</code> 。</li>
+<li><code>fox news hunting</code> 应该返回福克斯新闻（ Foxs News ）中关于狩猎的故事，同时， <code>fox hunting news</code> 应该返回关于猎狐的故事。</li>
+</ul>
+</li>
+</ul>
+<p>为了促进这类在全文域中的查询，<strong>Elasticsearch 首先 <em>分析</em> 文档，之后根据结果创建 <em>倒排索引</em></strong> 。</p>
+<h3 id="倒排索引">倒排索引</h3>
+<p><strong>Elasticsearch 使用一种称为 <em>倒排索引</em> 的结构，它适用于快速的全文搜索。一个倒排索引由文档中所有不重复词的列表构成，对于其中每个词，有一个包含它的文档列表</strong>。</p>
+<p>例如，假设我们有两个文档，每个文档的 <code>content</code> 域包含如下内容：</p>
+<ol>
+<li>The quick brown fox jumped over the lazy dog</li>
+<li>Quick brown foxes leap over lazy dogs in summer</li>
+</ol>
+<p>为了创建倒排索引，<strong>我们首先将每个文档的 <code>content</code> 域拆分成单独的 词（我们称它为 <code>词条</code> 或 <code>tokens</code> ），创建一个包含所有不重复词条的排序列表，然后列出每个词条出现在哪个文档</strong>。<strong>这一过程就叫分词</strong>。结果如下所示：</p>
+<pre><code>Term      Doc_1  Doc_2
+-------------------------
+Quick   |       |  X
+The     |   X   |
+brown   |   X   |  X
+dog     |   X   |
+dogs    |       |  X
+fox     |   X   |
+foxes   |       |  X
+in      |       |  X
+jumped  |   X   |
+lazy    |   X   |  X
+leap    |       |  X
+over    |   X   |  X
+quick   |   X   |
+summer  |       |  X
+the     |   X   |
+------------------------
+</code></pre>
+<p><strong>现在，如果我们想搜索 <code>quick brown</code> ，我们只需要查找包含每个词条的文档</strong>：</p>
+<pre><code>Term      Doc_1  Doc_2
+-------------------------
+brown   |   X   |  X
+quick   |   X   |
+------------------------
+Total   |   2   |  1
+</code></pre>
+<p>两个文档都匹配，但是第一个文档比第二个匹配度更高。如果我们使用仅计算匹配词条数量的简单 <em>相似性算法</em> ，那么，我们可以说，对于我们查询的相关性来讲，第一个文档比第二个文档更佳。</p>
+<p>但是，我们目前的倒排索引有一些问题：</p>
+<ul>
+<li><code>Quick</code> 和 <code>quick</code> 以独立的词条出现，然而用户可能认为它们是相同的词。</li>
+<li><code>fox</code> 和 <code>foxes</code> 非常相似, 就像 <code>dog</code> 和 <code>dogs</code> ；他们有相同的词根。</li>
+<li><code>jumped</code> 和 <code>leap</code>, 尽管没有相同的词根，但他们的意思很相近。他们是同义词。</li>
+</ul>
+<p>使用前面的索引搜索 <code>+Quick +fox</code> 不会得到任何匹配文档。（记住，<code>+</code> 前缀表明这个词必须存在。）只有同时出现 <code>Quick</code> 和 <code>fox</code> 的文档才满足这个查询条件，但是第一个文档包含 <code>quick fox</code> ，第二个文档包含 <code>Quick foxes</code> 。</p>
+<p>我们的用户可以合理的期望两个文档与查询匹配。我们可以做的更好。</p>
+<p><strong>如果我们将词条规范为标准模式，那么我们可以找到与用户搜索的词条不完全一致，但具有足够相关性的文档</strong>。例如：</p>
+<ul>
+<li><code>Quick</code> 可以小写化为 <code>quick</code> 。</li>
+<li><code>foxes</code> 可以 <em>词干提取</em> &ndash;变为词根的格式&ndash; 为 <code>fox</code> 。类似的， <code>dogs</code> 可以为提取为 <code>dog</code> 。</li>
+<li><code>jumped</code> 和 <code>leap</code> 是同义词，可以索引为相同的单词 <code>jump</code> 。</li>
+</ul>
+<p>现在索引看上去像这样：</p>
+<pre><code>Term      Doc_1  Doc_2
+-------------------------
+brown   |   X   |  X
+dog     |   X   |  X
+fox     |   X   |  X
+in      |       |  X
+jump    |   X   |  X
+lazy    |   X   |  X
+over    |   X   |  X
+quick   |   X   |  X
+summer  |       |  X
+the     |   X   |  X
+------------------------
+</code></pre>
+<p>这还远远不够。我们搜索 <code>+Quick +fox</code> <em>仍然</em> 会失败，因为在我们的索引中，已经没有 <code>Quick</code> 了。但是，如果我们对搜索的字符串使用与 <code>content</code> 域相同的标准化规则，会变成查询 <code>+quick +fox</code> ，这样两个文档都会匹配！</p>
+<p><strong>你只能搜索在索引中出现的词条，所以索引文本和查询字符串必须标准化为相同的格式。</strong></p>
+<p><strong>分词和标准化的过程称为<em>分析</em></strong></p>
+<h3 id="分析">分析</h3>
+<p><em>分析</em> 包含下面的过程：</p>
+<ul>
+<li>首先，<strong>将一块文本分成适合于倒排索引的独立的 <em>词条</em></strong> ，</li>
+<li>之后，<strong>将这些词条统一化为标准格式以提高它们的“可搜索性”，或者 <em>recall</em></strong></li>
+</ul>
+<p><strong>分析器执行上面的工作。 <em>分析器</em> 实际上是将三个功能封装到了一个包里</strong>：</p>
+<ul>
+<li>
+<p><strong>字符过滤器</strong></p>
+<p>首先，字符串按顺序通过每个 <em>字符过滤器</em> 。他们的任务是在分词前整理字符串。一个字符过滤器可以用来去掉HTML，或者将 <code>&amp;</code> 转化成 <code>and</code>。</p>
+</li>
+<li>
+<p><strong>分词器</strong></p>
+<p>其次，字符串被 <em>分词器</em> 分为单个的词条。一个简单的分词器遇到空格和标点的时候，可能会将文本拆分成词条。</p>
+</li>
+<li>
+<p><strong>Token 过滤器</strong></p>
+<p>最后，词条按顺序通过每个 <em>token 过滤器</em> 。这个过程可能会改变词条（例如，小写化 <code>Quick</code> ），删除词条（例如， 像 <code>a</code>， <code>and</code>， <code>the</code> 等无用词），或者增加词条（例如，像 <code>jump</code> 和 <code>leap</code> 这种同义词）。</p>
+</li>
+</ul>
+<p>Elasticsearch提供了开箱即用的字符过滤器、分词器和token 过滤器。 这些可以组合起来形成自定义的分析器以用于不同的目的。</p>
+<h4 id="内置分析器">内置分析器</h4>
+<p>但是， Elasticsearch还附带了可以直接使用的预包装的分析器。接下来我们会列出最重要的分析器。为了证明它们的差异，我们看看每个分析器会从下面的字符串得到哪些词条：</p>
+<pre><code>&quot;Set the shape to semi-transparent by calling set_trans(5)&quot;
+</code></pre>
+<ul>
+<li>
+<p><strong>标准分析器</strong></p>
+<p>标准分析器是Elasticsearch默认使用的分析器。它是分析各种语言文本最常用的选择。它根据 <a href="http://www.unicode.org/reports/tr29/">Unicode 联盟</a> 定义的 <em>单词边界</em> 划分文本。删除绝大部分标点。最后，将词条小写。它会产生<code>set, the, shape, to, semi, transparent, by, calling, set_trans, 5</code></p>
+</li>
+<li>
+<p><strong>简单分析器</strong></p>
+<p>简单分析器在任何不是字母的地方分隔文本，将词条小写。它会产生<code>set, the, shape, to, semi, transparent, by, calling, set, trans</code></p>
+</li>
+<li>
+<p><strong>空格分析器</strong></p>
+<p>空格分析器在空格的地方划分文本。它会产生<code>Set, the, shape, to, semi-transparent, by, calling, set_trans(5)</code></p>
+</li>
+<li>
+<p><strong>语言分析器</strong></p>
+<p>特定语言分析器可用于 很多语言。它们可以考虑指定语言的特点。例如， <code>英语</code> 分析器附带了一组英语无用词（常用单词，例如 <code>and</code> 或者 <code>the</code> ，它们对相关性没有多少影响），它们会被删除。 由于理解英语语法的规则，这个分词器可以提取英语单词的 <em>词干</em> 。<code>英语</code> 分词器会产生下面的词条：<code>set, shape, semi, transpar, call, set_tran, 5</code>注意看 <code>transparent</code>、 <code>calling</code> 和 <code>set_trans</code> 已经变为词根格式。</p>
+</li>
+</ul>
+<h4 id="什么时候使用分析器">什么时候使用分析器</h4>
+<p><strong>当我们 <em>索引</em> 一个文档，它的全文域被分析成词条以用来创建倒排索引</strong>。 但是，<strong>当我们在全文域 <em>搜索</em> 的时候，我们需要将查询字符串通过 <em>相同的分析过程</em> ，以保证我们搜索的词条格式与索引中的词条格式一致</strong>。</p>
+<p>全文查询，理解每个域是如何定义的，因此它们可以做正确的事：</p>
+<ul>
+<li><strong>当你查询一个 <em>全文</em> 域时， 会对查询字符串应用相同的分析器，以产生正确的搜索词条列表</strong>。</li>
+<li>当你查询一个 <em>精确值</em> 域时，不会分析查询字符串，而是搜索你指定的精确值。</li>
+</ul>
+<p>现在你可以理解下面的查询为什么返回那样的结果：</p>
+<ul>
+<li><code>date</code> 域包含一个精确值：单独的词条 <code>2014-09-15</code>。</li>
+<li><code>_all</code> 域是一个全文域，所以分词进程将日期转化为三个词条： <code>2014</code>， <code>09</code>， 和 <code>15</code>。</li>
+</ul>
+<p>当我们在 <code>_all</code> 域查询 <code>2014</code>，它匹配所有的12条推文，因为它们都含有 <code>2014</code> ：</p>
+<pre><code class="language-sense">GET /_search?q=2014              # 12 results
+</code></pre>
+<p>当我们在 <code>_all</code> 域查询 <code>2014-09-15</code>，它首先分析查询字符串，产生匹配 <code>2014</code>， <code>09</code>， 或 <code>15</code> 中 <em>任意</em> 词条的查询。这也会匹配所有12条推文，因为它们都含有 <code>2014</code> ：</p>
+<pre><code class="language-sense">GET /_search?q=2014-09-15        # 12 results !
+</code></pre>
+<p>当我们在 <code>date</code> 域查询 <code>2014-09-15</code>，它寻找 <em>精确</em> 日期，只找到一个推文：</p>
+<pre><code class="language-sense">GET /_search?q=date:2014-09-15   # 1  result
+</code></pre>
+<p>当我们在 <code>date</code> 域查询 <code>2014</code>，它找不到任何文档，因为没有文档含有这个精确日志：</p>
+<pre><code class="language-sense">GET /_search?q=date:2014         # 0  results !
+</code></pre>
+<h4 id="测试分析器">测试分析器</h4>
+<p>有些时候很难理解分词的过程和实际被存储到索引中的词条，特别是你刚接触Elasticsearch。为了理解发生了什么，你可以使用 <code>analyze</code> API 来看文本是如何被分析的。在消息体里，指定分析器和要分析的文本：</p>
+<pre><code class="language-sense">GET /_analyze
+{
+  &quot;analyzer&quot;: &quot;standard&quot;,
+  &quot;text&quot;: &quot;Text to analyze&quot;
+}
+</code></pre>
+<p>结果中每个元素代表一个单独的词条：</p>
+<pre><code class="language-js">{
+   &quot;tokens&quot;: [
+      {
+         &quot;token&quot;:        &quot;text&quot;,
+         &quot;start_offset&quot;: 0,
+         &quot;end_offset&quot;:   4,
+         &quot;type&quot;:         &quot;&lt;ALPHANUM&gt;&quot;,
+         &quot;position&quot;:     1
+      },
+      {
+         &quot;token&quot;:        &quot;to&quot;,
+         &quot;start_offset&quot;: 5,
+         &quot;end_offset&quot;:   7,
+         &quot;type&quot;:         &quot;&lt;ALPHANUM&gt;&quot;,
+         &quot;position&quot;:     2
+      },
+      {
+         &quot;token&quot;:        &quot;analyze&quot;,
+         &quot;start_offset&quot;: 8,
+         &quot;end_offset&quot;:   15,
+         &quot;type&quot;:         &quot;&lt;ALPHANUM&gt;&quot;,
+         &quot;position&quot;:     3
+      }
+   ]
+}
+</code></pre>
+<p><code>token</code> 是实际存储到索引中的词条。 <code>position</code> 指明词条在原始文本中出现的位置。 <code>start_offset</code> 和 <code>end_offset</code> 指明字符在原始字符串中的位置。</p>
+<p>每个分析器的 <code>type</code> 值都不一样，可以忽略它们。它们在Elasticsearch中的唯一作用在于<a href="https://www.elastic.co/guide/en/elasticsearch/reference/5.6/analysis-keep-types-tokenfilter.html"><code>keep_types</code> token 过滤器</a>。</p>
+<p><code>analyze</code> API 是一个有用的工具，它有助于我们理解Elasticsearch索引内部发生了什么，随着深入，我们会进一步讨论它。</p>
+<h4 id="指定分析器">指定分析器</h4>
+<p><strong>当Elasticsearch在你的文档中检测到一个新的字符串域，它会自动设置其为一个全文 <code>字符串</code> 域，使用 <code>标准</code> 分析器对它进行分析</strong>。</p>
+<p>你不希望总是这样。可能你想使用一个不同的分析器，适用于你的数据使用的语言。有时候你想要一个字符串域就是一个字符串域—不使用分析，直接索引你传入的精确值，例如用户ID或者一个内部的状态域或标签。</p>
+<p>要做到这一点，我们必须手动指定这些域的映射。</p>
+<h3 id="映射">映射</h3>
+<p>为了能够将时间域视为时间，数字域视为数字，字符串域视为全文或精确值字符串， Elasticsearch 需要知道每个域中数据的类型。这个信息包含在映射中。</p>
+<p>索引中每个文档都有 <em>类型</em> 。每种类型都有它自己的 <em>映射</em> ，或者 <em>模式定义</em> 。映射定义了类型中的域，每个域的数据类型，以及Elasticsearch如何处理这些域。映射也用于配置与类型有关的元数据。</p>
+<h4 id="核心简单域类型">核心简单域类型</h4>
+<p>Elasticsearch 支持如下简单域类型：</p>
+<ul>
+<li>字符串: <code>string</code></li>
+<li>整数 : <code>byte</code>, <code>short</code>, <code>integer</code>, <code>long</code></li>
+<li>浮点数: <code>float</code>, <code>double</code></li>
+<li>布尔型: <code>boolean</code></li>
+<li>日期: <code>date</code></li>
+</ul>
+<p>当你索引一个包含新域的文档—之前未曾出现&ndash; Elasticsearch 会使用 动态映射，通过JSON中基本数据类型，尝试猜测域类型，使用如下规则：</p>
+<table>
+<thead>
+<tr>
+<th><strong>JSON type</strong></th>
+<th><strong>域 type</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>布尔型: <code>true</code> 或者 <code>false</code></td>
+<td><code>boolean</code></td>
+</tr>
+<tr>
+<td>整数: <code>123</code></td>
+<td><code>long</code></td>
+</tr>
+<tr>
+<td>浮点数: <code>123.45</code></td>
+<td><code>double</code></td>
+</tr>
+<tr>
+<td>字符串，有效日期: <code>2014-09-15</code></td>
+<td><code>date</code></td>
+</tr>
+<tr>
+<td>字符串: <code>foo bar</code></td>
+<td><code>string</code></td>
+</tr>
+</tbody>
+</table>
+<p>这意味着如果你通过引号( <code>&quot;123&quot;</code> )索引一个数字，它会被映射为 <code>string</code> 类型，而不是 <code>long</code> 。但是，<strong>如果这个域已经映射为 <code>long</code> ，那么 Elasticsearch 会尝试将这个字符串转化为 long ，如果无法转化，则抛出一个异常</strong>。</p>
+<h4 id="自定义域">自定义域</h4>
+<p>尽管在很多情况下基本域数据类型已经够用，但你经常需要为单独域自定义映射，特别是字符串域。自定义映射允许你执行下面的操作：</p>
+<ul>
+<li>全文字符串域和精确值字符串域的区别</li>
+<li>使用特定语言分析器</li>
+<li>优化域以适应部分匹配</li>
+<li>指定自定义数据格式</li>
+</ul>
+<p>域最重要的属性是 <code>type</code> 。对于不是 <code>string</code> 的域，你一般只需要设置 <code>type</code> ：</p>
+<pre><code class="language-js">{
+    &quot;number_of_clicks&quot;: {
+        &quot;type&quot;: &quot;integer&quot;
+    }
+}
+</code></pre>
+<p>默认， <code>string</code> 类型域会被认为包含全文。就是说，它们的值在索引前，会通过一个分析器，针对于这个域的查询在搜索前也会经过一个分析器。</p>
+<p><code>string</code> 域映射的两个最重要属性是 <code>index</code> 和 <code>analyzer</code> 。</p>
+<h5 id="index">index</h5>
+<p><code>index</code> 属性控制怎样索引字符串。它可以是下面三个值：</p>
+<ul>
+<li>
+<p><strong><code>analyzed</code></strong></p>
+<p>首先分析字符串，然后索引它。换句话说，以全文索引这个域。</p>
+</li>
+<li>
+<p><strong><code>not_analyzed</code></strong></p>
+<p>索引这个域，所以它能够被搜索，但索引的是精确值。不会对它进行分析。</p>
+</li>
+<li>
+<p><strong><code>no</code></strong></p>
+<p>不索引这个域。这个域不会被搜索到。</p>
+</li>
+</ul>
+<p><code>string</code> 域 <code>index</code> 属性默认是 <code>analyzed</code> 。如果我们想映射这个字段为一个精确值，我们需要设置它为 <code>not_analyzed</code> ：</p>
+<pre><code class="language-js">{
+    &quot;tag&quot;: {
+        &quot;type&quot;:     &quot;string&quot;,
+        &quot;index&quot;:    &quot;not_analyzed&quot;
+    }
+}
+</code></pre>
+<p>其他简单类型（例如 <code>long</code> ， <code>double</code> ， <code>date</code> 等）也接受 <code>index</code> 参数，但有意义的值只有 <code>no</code> 和 <code>not_analyzed</code> ， 因为它们永远不会被分析。</p>
+<h5 id="analyzer">analyzer</h5>
+<p>对于 <code>analyzed</code> 字符串域，用 <code>analyzer</code> 属性指定在搜索和索引时使用的分析器。默认， Elasticsearch 使用 <code>standard</code> 分析器， 但你可以指定一个内置的分析器替代它，例如 <code>whitespace</code> 、 <code>simple</code> 和 <code>english</code>：</p>
+<pre><code class="language-js">{
+    &quot;tweet&quot;: {
+        &quot;type&quot;:     &quot;string&quot;,
+        &quot;analyzer&quot;: &quot;english&quot;
+    }
+}
+</code></pre>
+<h5 id="更新映射">更新映射</h5>
+<p>当你首次创建一个索引的时候，可以指定类型的映射。你也可以使用 <code>/_mapping</code> 为新类型（或者为存在的类型更新映射）增加映射。</p>
+<p>尽管你可以 <em>增加</em> 一个存在的映射，你不能 <em>修改</em> 存在的域映射。如果一个域的映射已经存在，那么该域的数据可能已经被索引。如果你意图修改这个域的映射，索引的数据可能会出错，不能被正常的搜索。</p>
+<p>我们可以更新一个映射来添加一个新域，但不能将一个存在的域从 <code>analyzed</code> 改为 <code>not_analyzed</code> 。</p>
+<p>为了描述指定映射的两种方式，我们先删除 <code>gd</code> 索引：</p>
+<pre><code class="language-sense">DELETE /gb
+</code></pre>
+<p>然后创建一个新索引，指定 <code>tweet</code> 域使用 <code>english</code> 分析器：</p>
+<pre><code class="language-sense">PUT /gb 
+{
+  &quot;mappings&quot;: {
+    &quot;tweet&quot; : {
+      &quot;properties&quot; : {
+        &quot;tweet&quot; : {
+          &quot;type&quot; :    &quot;string&quot;,
+          &quot;analyzer&quot;: &quot;english&quot;
+        },
+        &quot;date&quot; : {
+          &quot;type&quot; :   &quot;date&quot;
+        },
+        &quot;name&quot; : {
+          &quot;type&quot; :   &quot;string&quot;
+        },
+        &quot;user_id&quot; : {
+          &quot;type&quot; :   &quot;long&quot;
+        }
+      }
+    }
+  }
+}
+</code></pre>
+<p>稍后，我们决定在 <code>tweet</code> 映射增加一个新的名为 <code>tag</code> 的 <code>not_analyzed</code> 的文本域，使用 <code>_mapping</code> ：</p>
+<pre><code class="language-sense">PUT /gb/_mapping/tweet
+{
+  &quot;properties&quot; : {
+    &quot;tag&quot; : {
+      &quot;type&quot; :    &quot;string&quot;,
+      &quot;index&quot;:    &quot;not_analyzed&quot;
+    }
+  }
+}
+</code></pre>
+<p>注意，我们不需要再次列出所有已存在的域，因为无论如何我们都无法改变它们。新域已经被合并到存在的映射中。</p>
+<h5 id="测试映射">测试映射</h5>
+<p>你可以使用 <code>analyze</code> API 测试字符串域的映射。比较下面两个请求的输出：</p>
+<pre><code class="language-sense">GET /gb/_analyze
+{
+  &quot;field&quot;: &quot;tweet&quot;,
+  &quot;text&quot;: &quot;Black-cats&quot; 
+}
+
+GET /gb/_analyze
+{
+  &quot;field&quot;: &quot;tag&quot;,
+  &quot;text&quot;: &quot;Black-cats&quot; 
+}
+</code></pre>
+<p><code>tweet</code> 域产生两个词条 <code>black</code> 和 <code>cat</code> ， <code>tag</code> 域产生单独的词条 <code>Black-cats</code> 。换句话说，我们的映射正常工作。</p>
+<h4 id="复杂核心域类型">复杂核心域类型</h4>
+<p>除了我们提到的简单标量数据类型， JSON 还有 <code>null</code> 值，数组，和对象，这些 Elasticsearch 都是支持的。</p>
+<h5 id="多值域">多值域</h5>
+<p>很有可能，我们希望 <code>tag</code> 域包含多个标签。我们可以以数组的形式索引标签：</p>
+<pre><code class="language-js">{ &quot;tag&quot;: [ &quot;search&quot;, &quot;nosql&quot; ]}
+</code></pre>
+<p>对于数组，没有特殊的映射需求。任何域都可以包含0、1或者多个值，就像全文域分析得到多个词条。</p>
+<p>这暗示 <em>数组中所有的值必须是相同数据类型的</em> 。你不能将日期和字符串混在一起。如果你通过索引数组来创建新的域，Elasticsearch 会用数组中第一个值的数据类型作为这个域的 <code>类型</code> 。</p>
+<p>当你从 Elasticsearch 得到一个文档，每个数组的顺序和你当初索引文档时一样。你得到的 <code>_source</code> 域，包含与你索引的一模一样的 JSON 文档。</p>
+<p>但是，数组是以多值域 <em>索引的</em>—可以搜索，但是无序的。 在搜索的时候，你不能指定 “第一个” 或者 “最后一个”。 更确切的说，把数组想象成 <em>装在袋子里的值</em> 。</p>
+<h5 id="空域">空域</h5>
+<p>当然，数组可以为空。这相当于存在零值。 事实上，在 Lucene 中是不能存储 <code>null</code> 值的，所以我们认为存在 <code>null</code> 值的域为空域。</p>
+<p>下面三种域被认为是空的，它们将不会被索引：</p>
+<pre><code class="language-js">&quot;null_value&quot;:               null,
+&quot;empty_array&quot;:              [],
+&quot;array_with_null_value&quot;:    [ null ]
+</code></pre>
+<h5 id="多层级对象">多层级对象</h5>
+<p>我们讨论的最后一个 JSON 原生数据类是 <em>对象</em> &ndash; 在其他语言中称为哈希，哈希 map，字典或者关联数组。</p>
+<p><em>内部对象</em> 经常用于嵌入一个实体或对象到其它对象中。例如，与其在 <code>tweet</code> 文档中包含 <code>user_name</code> 和 <code>user_id</code> 域，我们也可以这样写：</p>
+<pre><code class="language-js">{
+    &quot;tweet&quot;:            &quot;Elasticsearch is very flexible&quot;,
+    &quot;user&quot;: {
+        &quot;id&quot;:           &quot;@johnsmith&quot;,
+        &quot;gender&quot;:       &quot;male&quot;,
+        &quot;age&quot;:          26,
+        &quot;name&quot;: {
+            &quot;full&quot;:     &quot;John Smith&quot;,
+            &quot;first&quot;:    &quot;John&quot;,
+            &quot;last&quot;:     &quot;Smith&quot;
+        }
+    }
+}
+</code></pre>
+<h5 id="内部对象的映射">内部对象的映射</h5>
+<p>Elasticsearch 会动态监测新的对象域并映射它们为 <code>对象</code> ，在 <code>properties</code> 属性下列出内部域：</p>
+<pre><code class="language-js">{
+  &quot;gb&quot;: {
+    &quot;tweet&quot;: { 
+      &quot;properties&quot;: {
+        &quot;tweet&quot;:            { &quot;type&quot;: &quot;string&quot; },
+        &quot;user&quot;: { 
+          &quot;type&quot;:             &quot;object&quot;,
+          &quot;properties&quot;: {
+            &quot;id&quot;:           { &quot;type&quot;: &quot;string&quot; },
+            &quot;gender&quot;:       { &quot;type&quot;: &quot;string&quot; },
+            &quot;age&quot;:          { &quot;type&quot;: &quot;long&quot;   },
+            &quot;name&quot;:   { 
+              &quot;type&quot;:         &quot;object&quot;,
+              &quot;properties&quot;: {
+                &quot;full&quot;:     { &quot;type&quot;: &quot;string&quot; },
+                &quot;first&quot;:    { &quot;type&quot;: &quot;string&quot; },
+                &quot;last&quot;:     { &quot;type&quot;: &quot;string&quot; }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+</code></pre>
+<p><code>user</code> 和 <code>name</code> 域的映射结构与 <code>tweet</code> 类型的相同。事实上， <code>type</code> 映射只是一种特殊的 <code>对象</code> 映射，我们称之为 <em>根对象</em> 。除了它有一些文档元数据的特殊顶级域，例如 <code>_source</code> 和 <code>_all</code> 域，它和其他对象一样。</p>
+<h5 id="内部对象是如何索引的">内部对象是如何索引的</h5>
+<p>Lucene 不理解内部对象。 Lucene 文档是由一组键值对列表组成的。为了能让 Elasticsearch 有效地索引内部类，它把我们的文档转化成这样：</p>
+<pre><code class="language-js">{
+    &quot;tweet&quot;:            [elasticsearch, flexible, very],
+    &quot;user.id&quot;:          [@johnsmith],
+    &quot;user.gender&quot;:      [male],
+    &quot;user.age&quot;:         [26],
+    &quot;user.name.full&quot;:   [john, smith],
+    &quot;user.name.first&quot;:  [john],
+    &quot;user.name.last&quot;:   [smith]
+}
+</code></pre>
+<p><em>内部域</em> 可以通过名称引用（例如， <code>first</code> ）。为了区分同名的两个域，我们可以使用全 <em>路径</em> （例如， <code>user.name.first</code> ） 或 <code>type</code> 名加路径（ <code>tweet.user.name.first</code> ）。</p>
+<p>在前面简单扁平的文档中，没有 <code>user</code> 和 <code>user.name</code> 域。Lucene 索引只有标量和简单值，没有复杂数据结构。</p>
+<h5 id="内部对象数组">内部对象数组</h5>
+<p>最后，考虑包含内部对象的数组是如何被索引的。 假设我们有个 <code>followers</code> 数组：</p>
+<pre><code class="language-js">{
+    &quot;followers&quot;: [
+        { &quot;age&quot;: 35, &quot;name&quot;: &quot;Mary White&quot;},
+        { &quot;age&quot;: 26, &quot;name&quot;: &quot;Alex Jones&quot;},
+        { &quot;age&quot;: 19, &quot;name&quot;: &quot;Lisa Smith&quot;}
+    ]
+}
+</code></pre>
+<p>这个文档会像我们之前描述的那样被扁平化处理，结果如下所示：</p>
+<pre><code class="language-js">{
+    &quot;followers.age&quot;:    [19, 26, 35],
+    &quot;followers.name&quot;:   [alex, jones, lisa, smith, mary, white]
+}
+</code></pre>
+<p><code>{age: 35}</code> 和 <code>{name: Mary White}</code> 之间的相关性已经丢失了，因为每个多值域只是一包无序的值，而不是有序数组。这足以让我们问，“有一个26岁的追随者？”</p>
+<p>但是我们不能得到一个准确的答案：“是否有一个26岁 <em>名字叫 Alex Jones</em> 的追随者？”</p>
+<h3 id="总结-3">总结</h3>
+<p>这章主要是解释了es如何将存入的数据变成可搜索的数据的，即通过映射和分析，<strong>映射-将每个属性对应为es的不同类型，分析-通过分词、把分词之后的此条标准化，最后生成倒排索引</strong>。生成了倒排索引后数据就变成了可搜索的数据，<!-- raw HTML omitted -->es会查询数据应用的分析器，以产生正确的搜索词条列表，如果自己指定分析器，创建和搜索时一定要保持一致。<!-- raw HTML omitted --></p>
+<h2 id="排序与相关性">排序与相关性</h2>
+<p>默认情况下，返回的结果是按照 <em>相关性</em> 进行排序的——最相关的文档排在最前。</p>
+<h3 id="排序">排序</h3>
+<p>为了按照相关性来排序，需要将相关性表示为一个数值。在 Elasticsearch 中， <strong><em>相关性得分</em> 由一个浮点数进行表示，并在搜索结果中通过 <code>_score</code> 参数返回， 默认排序是 <code>_score</code> 降序</strong>。</p>
+<h4 id="按照字段的值排序">按照字段的值排序</h4>
+<p>通过时间来对 tweets 进行排序是有意义的，最新的 tweets 排在最前。 我们可以使用 <code>sort</code> 参数进行实现：</p>
+<pre><code class="language-sense">GET /_search
+{
+    &quot;query&quot; : {
+        &quot;bool&quot; : {
+            &quot;filter&quot; : { &quot;term&quot; : { &quot;user_id&quot; : 1 }}
+        }
+    },
+    &quot;sort&quot;: { &quot;date&quot;: { &quot;order&quot;: &quot;desc&quot; }}
+}
+</code></pre>
+<p>你会注意到结果中的两个不同点：<code>_score</code> 不被计算, 因为它并没有用于排序。</p>
+<pre><code class="language-js">&quot;hits&quot; : {
+    &quot;total&quot; :           6,
+    &quot;max_score&quot; :       null, 
+    &quot;hits&quot; : [ {
+        &quot;_index&quot; :      &quot;us&quot;,
+        &quot;_type&quot; :       &quot;tweet&quot;,
+        &quot;_id&quot; :         &quot;14&quot;,
+        &quot;_score&quot; :      null, 
+        &quot;_source&quot; :     {
+             &quot;date&quot;:    &quot;2014-09-24&quot;,
+             ...
+        },
+        &quot;sort&quot; :        [ 1411516800000 ] 
+    },
+    ...
+}
+</code></pre>
+<p>首先我们在每个结果中有一个新的名为 <code>sort</code> 的元素，它包含了我们用于排序的值。 在这个案例中，我们按照 <code>date</code> 进行排序，在内部被索引为 <em>自 epoch 以来的毫秒数</em> 。 long 类型数 <code>1411516800000</code> 等价于日期字符串 <code>2014-09-24 00:00:00 UTC</code> 。其次 <code>_score</code> 和 <code>max_score</code> 字段都是 <code>null</code> 。</p>
+<h4 id="多级排序">多级排序</h4>
+<p>假定我们想要结合使用 <code>date</code> 和 <code>_score</code> 进行查询，并且匹配的结果首先按照日期排序，然后按照相关性排序：</p>
+<pre><code class="language-sense">GET /_search
+{
+    &quot;query&quot; : {
+        &quot;bool&quot; : {
+            &quot;must&quot;:   { &quot;match&quot;: { &quot;tweet&quot;: &quot;manage text search&quot; }},
+            &quot;filter&quot; : { &quot;term&quot; : { &quot;user_id&quot; : 2 }}
+        }
+    },
+    &quot;sort&quot;: [
+        { &quot;date&quot;:   { &quot;order&quot;: &quot;desc&quot; }},
+        { &quot;_score&quot;: { &quot;order&quot;: &quot;desc&quot; }}
+    ]
+}
+</code></pre>
+<p>排序条件的顺序是很重要的。结果首先按第一个条件排序，仅当结果集的第一个 <code>sort</code> 值完全相同时才会按照第二个条件进行排序，以此类推。</p>
+<p>多级排序并不一定包含 <code>_score</code> 。你可以根据一些不同的字段进行排序，如地理距离或是脚本计算的特定值。</p>
+<h3 id="相关性">相关性</h3>
+<p>我们曾经讲过，默认情况下，返回结果是按相关性倒序排列的。 但是什么是相关性？ 相关性如何计算？</p>
+<p><strong>每个文档都有相关性评分，用一个正浮点数字段 <code>_score</code> 来表示 。 <code>_score</code> 的评分越高，相关性越高</strong>。</p>
+<p>查询语句会为每个文档生成一个 <code>_score</code> 字段。<strong>评分的计算方式取决于查询类型 不同的查询语句用于不同的目的</strong>： <strong><code>fuzzy</code> 查询会计算与关键词的拼写相似程度，<code>terms</code> 查询会计算 找到的内容与关键词组成部分匹配的百分比，但是通常我们说的 <em>relevance</em> 是我们用来计算全文本字段的值相对于全文本检索词相似程度的算法</strong>。</p>
+<p>Elasticsearch 的相似度算法被定义为检索词频率/反向文档频率， <em>TF/IDF</em> ，包括以下内容：</p>
+<ul>
+<li>
+<p><strong>检索词频率</strong></p>
+<p>检索词在该字段出现的频率？出现频率越高，相关性也越高。 字段中出现过 5 次要比只出现过 1 次的相关性高。</p>
+</li>
+<li>
+<p><strong>反向文档频率</strong></p>
+<p>每个检索词在索引中出现的频率？频率越高，相关性越低。检索词出现在多数文档中会比出现在少数文档中的权重更低。</p>
+</li>
+<li>
+<p><strong>字段长度准则</strong></p>
+<p>字段的长度是多少？长度越长，相关性越低。 检索词出现在一个短的 title 要比同样的词出现在一个长的 content 字段权重更大。</p>
+</li>
+</ul>
+<p>单个查询可以联合使用 TF/IDF 和其他方式，比如短语查询中检索词的距离或模糊查询里的检索词相似度。</p>
+<p>相关性并不只是全文本检索的专利。也适用于 yes|no 的子句，匹配的子句越多，相关性评分越高。</p>
+<p>如果多条查询子句被合并为一条复合查询语句，比如 bool 查询，则每个查询子句计算得出的评分会被合并到总的相关性评分中。</p>
+<h4 id="理解评分标准">理解评分标准</h4>
+<p>当调试一条复杂的查询语句时，想要理解 <code>_score</code> 究竟是如何计算是比较困难的。Elasticsearch 在 每个查询语句中都有一个 explain 参数，将 <code>explain</code> 设为 <code>true</code> 就可以得到更详细的信息。</p>
+<pre><code class="language-sense">GET /_search?explain 
+{
+   &quot;query&quot;   : { &quot;match&quot; : { &quot;tweet&quot; : &quot;honeymoon&quot; }}
+}
+</code></pre>
+<p>增加一个 <code>explain</code> 参数会为每个匹配到的文档产生一大堆额外内容，但是花时间去理解它是很有意义的。 如果现在看不明白也没关系 — 等你需要的时候再来回顾这一节就行。下面我们来一点点的了解这块知识点。</p>
+<p>首先，我们看一下普通查询返回的元数据：</p>
+<pre><code class="language-js">{
+    &quot;_index&quot; :      &quot;us&quot;,
+    &quot;_type&quot; :       &quot;tweet&quot;,
+    &quot;_id&quot; :         &quot;12&quot;,
+    &quot;_score&quot; :      0.076713204,
+    &quot;_source&quot; :     { ... trimmed ... },
+</code></pre>
+<p>这里加入了该文档来自于哪个节点哪个分片上的信息，这对我们是比较有帮助的，因为词频率和 文档频率是在每个分片中计算出来的，而不是每个索引中：</p>
+<pre><code class="language-js">    &quot;_shard&quot; :      1,
+    &quot;_node&quot; :       &quot;mzIVYCsqSWCG_M_ZffSs9Q&quot;,
+</code></pre>
+<p>然后它提供了 <code>_explanation</code> 。每个入口都包含一个 <code>description</code> 、 <code>value</code> 、 <code>details</code> 字段，它分别告诉你计算的类型、计算结果和任何我们需要的计算细节。</p>
+<pre><code class="language-js">&quot;_explanation&quot;: { 
+   &quot;description&quot;: &quot;weight(tweet:honeymoon in 0)
+                  [PerFieldSimilarity], result of:&quot;,
+   &quot;value&quot;:       0.076713204,
+   &quot;details&quot;: [
+      {
+         &quot;description&quot;: &quot;fieldWeight in 0, product of:&quot;,
+         &quot;value&quot;:       0.076713204,
+         &quot;details&quot;: [
+            {  
+               &quot;description&quot;: &quot;tf(freq=1.0), with freq of:&quot;,
+               &quot;value&quot;:       1,
+               &quot;details&quot;: [
+                  {
+                     &quot;description&quot;: &quot;termFreq=1.0&quot;,
+                     &quot;value&quot;:       1
+                  }
+               ]
+            },
+            { 
+               &quot;description&quot;: &quot;idf(docFreq=1, maxDocs=1)&quot;,
+               &quot;value&quot;:       0.30685282
+            },
+            { 
+               &quot;description&quot;: &quot;fieldNorm(doc=0)&quot;,
+               &quot;value&quot;:        0.25,
+            }
+         ]
+      }
+   ]
+}
+</code></pre>
+<p>第一部分是关于计算的总结。告诉了我们 <code>honeymoon</code> 在 <code>tweet</code> 字段中的检索词频率/反向文档频率或TF/IDF， （这里的文档 <code>0</code> 是一个内部的 ID，跟我们没有关系，可以忽略。）</p>
+<p>然后它提供了权重是如何计算的细节：</p>
+<p>检索词频率:</p>
+<pre><code class="language-json">{  
+    &quot;description&quot;: &quot;tf(freq=1.0), with freq of:&quot;,
+    &quot;value&quot;:       1,
+    &quot;details&quot;: [
+        {
+            &quot;description&quot;: &quot;termFreq=1.0&quot;,
+            &quot;value&quot;:       1
+        }
+    ]
+}
+检索词 `honeymoon` 在这个文档的 `tweet` 字段中的出现次数。
+</code></pre>
+<p>反向文档频率:</p>
+<pre><code class="language-json">{ 
+    &quot;description&quot;: &quot;idf(docFreq=1, maxDocs=1)&quot;,
+    &quot;value&quot;:       0.30685282
+}
+检索词 `honeymoon` 在索引上所有文档的 `tweet` 字段中出现的次数。
+</code></pre>
+<p>字段长度准则:</p>
+<pre><code class="language-json">{ 
+    &quot;description&quot;: &quot;fieldNorm(doc=0)&quot;,
+    &quot;value&quot;:        0.25,
+}
+在这个文档中， `tweet` 字段内容的长度 -- 内容越长，值越小。
+</code></pre>
+<p>复杂的查询语句解释也非常复杂，但是包含的内容与上面例子大致相同。</p>
+<h4 id="理解文档是如何被匹配到的">理解文档是如何被匹配到的</h4>
+<p>当 <code>explain</code> 选项加到某一文档上时， <code>explain</code> api 会帮助你理解为何这个文档会被匹配，更重要的是，一个文档为何没有被匹配。</p>
+<p>请求路径为 <code>/index/type/id/_explain</code> ，如下所示：</p>
+<pre><code class="language-sense">GET /us/tweet/12/_explain
+{
+   &quot;query&quot; : {
+      &quot;bool&quot; : {
+         &quot;filter&quot; : { &quot;term&quot; :  { &quot;user_id&quot; : 2           }},
+         &quot;must&quot; :  { &quot;match&quot; : { &quot;tweet&quot; :   &quot;honeymoon&quot; }}
+      }
+   }
+}
+</code></pre>
+<p>不只是我们之前看到的充分解释 ，我们现在有了一个 <code>description</code> 元素，它将告诉我们：</p>
+<pre><code class="language-js">&quot;failure to match filter: cache(user_id:[2 TO 2])&quot;
+</code></pre>
+<p>也就是说我们的 <code>user_id</code> 过滤子句使该文档不能匹配到。</p>
+<h2 id="高级搜索">高级搜索</h2>
+<p>经过前面的学习，我们能够开始用 Elasticsearch 搜索数据。用不了多长时间，就会发现我们想要的更多：希望查询匹配更灵活，排名结果更精确，不同问题域下搜索更具体。</p>
+<p>搜索不仅仅是全文搜索：我们很大一部分数据都是结构化的，如日期和数字。我们会以说明结构化搜索与全文搜索最高效的结合方式开始本章的内容。</p>
+<h3 id="结构化搜索">结构化搜索</h3>
+<p><em>结构化搜索（Structured search）</em> 是指查询那些具有内在结构数据的过程。比如日期、时间和数字都是结构化的：它们有精确的格式，我们可以对这些格式进行逻辑操作。比较常见的操作<strong>包括比较数字或时间的范围，或判定两个值的大小</strong>。</p>
+<p>文本也可以是结构化的。如彩色笔可以有离散的颜色集合： <code>红（red）</code> 、 <code>绿（green）</code> 、 <code>蓝（blue）</code> 。一个博客可能被标记了关键词 <code>分布式（distributed）</code> 和 <code>搜索（search）</code> 。电商网站上的商品都有 UPCs（通用产品码 Universal Product Codes）或其他的唯一标识，它们都需要遵从严格规定的、结构化的格式。</p>
+<p>在结构化查询中，我们得到的结果为<strong>是或不是，要么存于集合之中，要么存在集合之外</strong>。<strong>结构化查询不关心文件的相关度或评分；它简单的对文档包括或排除处理。</strong></p>
+<p>这在逻辑上是能说通的，因为一个数字不能比其他数字 <em>更</em> 适合存于某个相同范围。结果只能是：存于范围之中或反之。同样，对于结构化文本来说，一个值要么相等，要么不等。</p>
+<h4 id="精确值查找">精确值查找</h4>
+<p>当进行精确值查找时， 我们会使用过滤器（filters）。<strong>因为它们执行速度非常快，不会计算相关度（直接跳过了整个评分阶段）而且很容易被缓存</strong>。</p>
+<h4 id="term-查询数字">term 查询数字</h4>
+<p>我们首先来看最为常用的 <code>term</code> 查询， 可以用它处理数字（numbers）、布尔值（Booleans）、日期（dates）以及文本（text）。</p>
+<p>我们想要做的是查找具有某个价格的所有产品，有关系数据库背景的人肯定熟悉 SQL，如果我们将其用 SQL 形式表达，会是下面这样：</p>
+<pre><code class="language-sql">SELECT document
+FROM   products
+WHERE  price = 20
+</code></pre>
+<p>在 Elasticsearch 的查询表达式（query DSL）中，我们可以使用 <code>term</code> 查询达到相同的目的。 <code>term</code> 查询会查找我们指定的精确值。作为其本身， <code>term</code> 查询是简单的。它接受一个字段名以及我们希望查找的数值：</p>
+<pre><code class="language-js">{
+    &quot;term&quot; : {
+        &quot;price&quot; : 20
+    }
+}
+</code></pre>
+<p><strong>通常当查找一个精确值的时候，我们不希望对查询进行评分计算。只希望对文档进行包括或排除的计算，所以我们会使用 <code>constant_score</code> 查询以非评分模式来执行 <code>term</code> 查询并以一作为统一评分</strong>。</p>
+<p>最终组合的结果是一个 <code>constant_score</code> 查询，它包含一个 <code>term</code> 查询：</p>
+<pre><code class="language-sense">GET /my_store/products/_search
+{
+    &quot;query&quot; : {
+        &quot;constant_score&quot; : { 
+            &quot;filter&quot; : {
+                &quot;term&quot; : { 
+                    &quot;price&quot; : 20
+                }
+            }
+        }
+    }
+}
+</code></pre>
+<p>执行后，这个查询所搜索到的结果与我们期望的一致：只有文档 2 命中并作为结果返回（因为只有 <code>2</code> 的价格是 <code>20</code> ）:</p>
+<pre><code class="language-json">&quot;hits&quot; : [
+    {
+        &quot;_index&quot; : &quot;my_store&quot;,
+        &quot;_type&quot; :  &quot;products&quot;,
+        &quot;_id&quot; :    &quot;2&quot;,
+        &quot;_score&quot; : 1.0, 
+        &quot;_source&quot; : {
+          &quot;price&quot; :     20,
+          &quot;productID&quot; : &quot;KDKE-B-9947-#kL5&quot;
+        }
+    }
+]
+</code></pre>
+<p>查询置于 <code>filter</code> 语句内不进行评分或相关度的计算，所以所有的结果都会返回一个默认评分 <code>1</code> 。</p>
+<h4 id="term-查询文本">term 查询文本</h4>
+<p>如本部分开始处提到过的一样 ，使用 <code>term</code> 查询匹配字符串和匹配数字一样容易。如果我们想要查询某个具体 UPC ID 的产品，使用 SQL 表达式会是如下这样：</p>
+<pre><code class="language-sql">SELECT product
+FROM   products
+WHERE  productID = &quot;XHDK-A-1293-#fJ3&quot;
+</code></pre>
+<p>转换成查询表达式（query DSL），同样使用 <code>term</code> 查询，形式如下：</p>
+<pre><code class="language-sense">GET /my_store/products/_search
+{
+    &quot;query&quot; : {
+        &quot;constant_score&quot; : {
+            &quot;filter&quot; : {
+                &quot;term&quot; : {
+                    &quot;productID&quot; : &quot;XHDK-A-1293-#fJ3&quot;
+                }
+            }
+        }
+    }
+}
+</code></pre>
+<p>但这里有个小问题：我们无法获得期望的结果。为什么呢？问题不在 <code>term</code> 查询，而在于索引数据的方式。 如果我们使用 <code>analyze</code> API，我们可以看到这里的 UPC 码被拆分成多个更小的 token -<strong>被分词了</strong>：</p>
+<pre><code class="language-sense">GET /my_store/_analyze
+{
+  &quot;field&quot;: &quot;productID&quot;,
+  &quot;text&quot;: &quot;XHDK-A-1293-#fJ3&quot;
+}
+</code></pre>
+<pre><code class="language-sense">{
+  &quot;tokens&quot; : [ {
+    &quot;token&quot; :        &quot;xhdk&quot;,
+    &quot;start_offset&quot; : 0,
+    &quot;end_offset&quot; :   4,
+    &quot;type&quot; :         &quot;&lt;ALPHANUM&gt;&quot;,
+    &quot;position&quot; :     1
+  }, {
+    &quot;token&quot; :        &quot;a&quot;,
+    &quot;start_offset&quot; : 5,
+    &quot;end_offset&quot; :   6,
+    &quot;type&quot; :         &quot;&lt;ALPHANUM&gt;&quot;,
+    &quot;position&quot; :     2
+  }, {
+    &quot;token&quot; :        &quot;1293&quot;,
+    &quot;start_offset&quot; : 7,
+    &quot;end_offset&quot; :   11,
+    &quot;type&quot; :         &quot;&lt;NUM&gt;&quot;,
+    &quot;position&quot; :     3
+  }, {
+    &quot;token&quot; :        &quot;fj3&quot;,
+    &quot;start_offset&quot; : 13,
+    &quot;end_offset&quot; :   16,
+    &quot;type&quot; :         &quot;&lt;ALPHANUM&gt;&quot;,
+    &quot;position&quot; :     4
+  } ]
+}
+</code></pre>
+<p>这里有几点需要注意：</p>
+<ul>
+<li>Elasticsearch 用 4 个不同的 token 而不是单个 token 来表示这个 UPC 。</li>
+<li>所有字母都是小写的。</li>
+<li>丢失了连字符和哈希符（ <code>#</code> ）。</li>
+</ul>
+<p><strong>所以当我们用 <code>term</code> 查询查找精确值 <code>XHDK-A-1293-#fJ3</code> 的时候，找不到任何文档，因为它并不在我们的倒排索引中</strong>，正如前面呈现出的分析结果，索引里有四个 token 。</p>
+<p>显然这种对 ID 码或其他任何精确值的处理方式并不是我们想要的。</p>
+<p>为了避免这种问题，我们需要告诉 Elasticsearch 该字段具有精确值，要将其设置成 <code>not_analyzed</code> 无需分析的。 为了修正搜索结果，我们需要首先删除旧索引（因为它的映射不再正确）然后创建一个能正确映射的新索引：</p>
+<pre><code class="language-sense">DELETE /my_store 
+
+PUT /my_store 
+{
+    &quot;mappings&quot; : {
+        &quot;products&quot; : {
+            &quot;properties&quot; : {
+                &quot;productID&quot; : {
+                    &quot;type&quot; : &quot;string&quot;,
+                    &quot;index&quot; : &quot;not_analyzed&quot; 
+                }
+            }
+        }
+    }
+
+}
+</code></pre>
+<p>现在我们可以为文档重建索引：</p>
+<pre><code class="language-sense">POST /my_store/products/_bulk
+{ &quot;index&quot;: { &quot;_id&quot;: 1 }}
+{ &quot;price&quot; : 10, &quot;productID&quot; : &quot;XHDK-A-1293-#fJ3&quot; }
+{ &quot;index&quot;: { &quot;_id&quot;: 2 }}
+{ &quot;price&quot; : 20, &quot;productID&quot; : &quot;KDKE-B-9947-#kL5&quot; }
+{ &quot;index&quot;: { &quot;_id&quot;: 3 }}
+{ &quot;price&quot; : 30, &quot;productID&quot; : &quot;JODL-X-1937-#pV7&quot; }
+{ &quot;index&quot;: { &quot;_id&quot;: 4 }}
+{ &quot;price&quot; : 30, &quot;productID&quot; : &quot;QQPX-R-3956-#aD8&quot; }
+</code></pre>
+<p>此时， <code>term</code> 查询就能搜索到我们想要的结果，让我们再次搜索新索引过的数据（注意，查询和过滤并没有发生任何改变，改变的是数据映射的方式）：</p>
+<pre><code class="language-sense">GET /my_store/products/_search
+{
+    &quot;query&quot; : {
+        &quot;constant_score&quot; : {
+            &quot;filter&quot; : {
+                &quot;term&quot; : {
+                    &quot;productID&quot; : &quot;XHDK-A-1293-#fJ3&quot;
+                }
+            }
+        }
+    }
+}
+</code></pre>
+<p>因为 <code>productID</code> 字段是未分析过的， <code>term</code> 查询不会对其做任何分析，查询会进行精确查找并返回文档 1 。成功！</p>
+<h4 id="内部过滤器的操作">内部过滤器的操作</h4>
+<p>在内部，Elasticsearch 会在运行非评分查询的时执行多个操作：</p>
+<ol>
+<li>
+<p><em>查找匹配文档</em>.</p>
+<p><code>term</code> 查询在倒排索引中查找 <code>XHDK-A-1293-#fJ3</code> 然后获取包含该 term 的所有文档。本例中，只有文档 1 满足我们要求。</p>
+</li>
+<li>
+<p><em>创建 bitset</em>.</p>
+<p>过滤器会创建一个 <em>bitset</em> （一个包含 0 和 1 的数组），它描述了哪个文档会包含该 term 。匹配文档的标志位是 1 。本例中，bitset 的值为 <code>[1,0,0,0]</code> 。在内部，它表示成一个 &ldquo;roaring bitmap&rdquo;，可以同时对稀疏或密集的集合进行高效编码。</p>
+</li>
+<li>
+<p><em>迭代 bitset(s)</em></p>
+<p>一旦为每个查询生成了 bitsets ，Elasticsearch 就会循环迭代 bitsets 从而找到满足所有过滤条件的匹配文档的集合。执行顺序是启发式的，但一般来说先迭代稀疏的 bitset （因为它可以排除掉大量的文档）。</p>
+</li>
+<li>
+<p><em>增量使用计数</em>.</p>
+<p><strong>Elasticsearch 能够缓存非评分查询从而获取更快的访问，但是它也会不太聪明地缓存一些使用极少的东西。非评分计算因为倒排索引已经足够快了，所以我们只想缓存那些我们 <em>知道</em> 在将来会被再次使用的查询，以避免资源的浪费</strong>。</p>
+<p>为了实现以上设想，Elasticsearch 会为每个索引跟踪保留查询使用的历史状态。如果查询在最近的 256 次查询中会被用到，那么它就会被缓存到内存中。当 bitset 被缓存后，缓存会在那些低于 10,000 个文档（或少于 3% 的总索引数）的段（segment）中被忽略。这些小的段即将会消失，所以为它们分配缓存是一种浪费。</p>
+</li>
+</ol>
+<p><strong>非评分计算是首先执行的，这将有助于写出高效又快速的搜索请求</strong>。</p>
+<h4 id="缓存">缓存</h4>
+<p>过滤器的核心实际是<strong>采用一个 bitset 记录与过滤器匹配的文档。Elasticsearch 积极地把这些 bitset 缓存起来以备随后使用。一旦缓存成功，bitset 可以复用 <em>任何</em> 已使用过的相同过滤器，而无需再次计算整个过滤器</strong>。</p>
+<p>这些 bitsets 缓存是“智能”的：它们以增量方式更新。当我们索引新文档时，只需将那些新文档加入已有 bitset，而不是对整个缓存一遍又一遍的重复计算。和系统其他部分一样，过滤器是实时的，我们无需担心缓存过期问题。</p>
+<h5 id="独立的过滤器缓存">独立的过滤器缓存</h5>
+<p>属于一个查询组件的 bitsets 是独立于它所属搜索请求其他部分的。这就意味着，一旦被缓存，一个查询可以被用作多个搜索请求。bitsets 并不依赖于它所存在的查询上下文。这样使得缓存可以加速查询中经常使用的部分，从而降低较少、易变的部分所带来的消耗。</p>
+<p>同样，如果单个请求重用相同的非评分查询，它缓存的 bitset 可以被单个搜索里的所有实例所重用。</p>
+<p>让我们看看下面例子中的查询，它查找满足以下任意一个条件的电子邮件：</p>
+<ul>
+<li>在收件箱中，且没有被读过的</li>
+<li><em>不在</em> 收件箱中，但被标注重要的</li>
+</ul>
+<pre><code class="language-js">GET /inbox/emails/_search
+{
+  &quot;query&quot;: {
+      &quot;constant_score&quot;: {
+          &quot;filter&quot;: {
+              &quot;bool&quot;: {
+                 &quot;should&quot;: [
+                    { &quot;bool&quot;: {
+                          &quot;must&quot;: [
+                             { &quot;term&quot;: { &quot;folder&quot;: &quot;inbox&quot; }}, 
+                             { &quot;term&quot;: { &quot;read&quot;: false }}
+                          ]
+                    }},
+                    { &quot;bool&quot;: {
+                          &quot;must_not&quot;: {
+                             &quot;term&quot;: { &quot;folder&quot;: &quot;inbox&quot; } 
+                          },
+                          &quot;must&quot;: {
+                             &quot;term&quot;: { &quot;important&quot;: true }
+                          }
+                    }}
+                 ]
+              }
+            }
+        }
+    }
+}
+</code></pre>
+<p>尽管其中一个收件箱的条件是 <code>must</code> 语句，另一个是 <code>must_not</code> 语句，但他们两者是完全相同的。这意味着在第一个语句执行后， bitset 就会被计算然后缓存起来供另一个使用。当再次执行这个查询时，<strong>收件箱的这个过滤器已经被缓存了，所以两个语句都会使用已缓存的 bitset</strong> 。</p>
+<p>这点与查询表达式（query DSL）的可组合性结合得很好。它易被移动到表达式的任何地方，或者在同一查询中的多个位置复用。这不仅能方便开发者，而且对提升性能有直接的益处。</p>
+<h5 id="自动缓存行为">自动缓存行为</h5>
+<p>在 Elasticsearch 的较早版本中，默认的行为是缓存一切可以缓存的对象。这也通常意味着系统缓存 bitsets 太富侵略性，从而因为清理缓存带来性能压力。不仅如此，尽管很多过滤器都很容易被评价，但本质上是慢于缓存的（以及从缓存中复用）。缓存这些过滤器的意义不大，因为可以简单地再次执行过滤器。</p>
+<p>检查一个倒排是非常快的，然而绝大多数查询组件却很少使用它。例如 <code>term</code> 过滤字段 <code>&quot;user_id&quot;</code> ：如果有上百万的用户，每个具体的用户 ID 出现的概率都很小。那么为这个过滤器缓存 bitsets 就不是很合算，因为缓存的结果很可能在重用之前就被剔除了。</p>
+<p>这种缓存的扰动对性能有着严重的影响。更严重的是，它让开发者难以区分有良好表现的缓存以及无用缓存。</p>
+<p>为了解决问题，Elasticsearch 会基于使用频次自动缓存查询。<strong>如果一个非评分查询在最近的 256 次查询中被使用过（次数取决于查询类型），那么这个查询就会作为缓存的候选</strong>。但是，并不是所有的片段都能保证缓存 bitset 。只有那些文档数量超过 10,000 （或超过总文档数量的 3% )才会缓存 bitset 。因为小的片段可以很快的进行搜索和合并，这里缓存的意义不大。一旦缓存了，<strong>非评分计算的 bitset 会一直驻留在缓存中直到它被剔除。剔除规则是基于 LRU 的：一旦缓存满了，最近最少使用的过滤器会被剔除。</strong></p>
+<h3 id="全文搜索">全文搜索</h3>
+<p><em>全文搜索（full-text search）</em> ：怎样在全文字段中搜索到最相关的文档。</p>
+<p>全文搜索两个最重要的方面是：</p>
+<ul>
+<li>
+<p><strong>相关性（Relevance）</strong></p>
+<p>它是评价查询与其结果间的相关程度，并根据这种相关程度对结果排名的一种能力，这种计算方式可以是 TF/IDF 方法、地理位置邻近、模糊相似，或其他的某些算法。</p>
+</li>
+<li>
+<p><strong>分析（Analysis）</strong></p>
+<p>它是将文本块转换为有区别的、规范化的 token 的一个过程 目的是为了创建倒排索引以及查询倒排索引。</p>
+</li>
+</ul>
+<p>一旦谈论相关性或分析这两个方面的问题时，我们所处的语境是关于查询的而不是过滤。</p>
+<h4 id="基于词项与基于全文">基于词项与基于全文</h4>
+<p>所有查询会或多或少的执行相关度计算，但不是所有查询都有分析阶段。和一些特殊的完全不会对文本进行操作的查询（如 <code>bool</code> 或 <code>function_score</code> ）不同，文本查询可以划分成两大家族：</p>
+<ul>
+<li>
+<p><strong>基于词项的查询</strong></p>
+<p>如 <code>term</code> 或 <code>fuzzy</code> 这样的<strong>低级查询</strong>不需要分析阶段-不需要分词，它们对单个词项进行操作。用 <code>term</code> 查询词项 <code>Foo</code> 只要在倒排索引中查找 <em>准确词项</em> ，并且用 TF/IDF 算法为每个包含该词项的文档计算相关度评分 <code>_score</code> 。记住 <code>term</code> 查询只对倒排索引的词项精确匹配，这点很重要，它不会对词的多样性进行处理（如， <code>foo</code> 或 <code>FOO</code> ）。这里，无须考虑词项是如何存入索引的。如果是将 <code>[&quot;Foo&quot;,&quot;Bar&quot;]</code> 索引存入一个不分析的（ <code>not_analyzed</code> ）包含精确值的字段，或者将 <code>Foo Bar</code> 索引到一个带有 <code>whitespace</code> 空格分析器的字段，两者的结果都会是在倒排索引中有 <code>Foo</code> 和 <code>Bar</code> 这两个词。</p>
+</li>
+<li>
+<p><strong>基于全文的查询</strong></p>
+<p>像 <code>match</code> 或 <code>query_string</code> 这样的查询是<strong>高级查询</strong>，它们了解字段映射的信息：如果查询 <code>日期（date）</code> 或 <code>整数（integer）</code> 字段，它们会将查询字符串分别作为日期或整数对待。如果查询一个（ <code>not_analyzed</code> ）未分析的精确值字符串字段，它们会将整个查询字符串作为单个词项对待。但如果要查询一个（ <code>analyzed</code> ）已分析的全文字段，它们会先将查询字符串传递到一个合适的分析器，然后生成一个供查询的词项列表。一旦组成了词项列表，这个查询会对每个词项逐一执行底层的查询，再将结果合并，然后为每个文档生成一个最终的相关度评分。</p>
+</li>
+</ul>
+<p>我们很少直接使用基于词项的搜索，通常情况下都是对全文进行查询，而非单个词项，<strong>这只需要简单的执行一个高级全文查询</strong>（高级查询内部会以基于词项的底层查询完成搜索）。</p>
+<h4 id="match-匹配查询">match-匹配查询</h4>
+<p>匹配查询 <code>match</code> 是个 <em>核心</em> 查询。无论需要查询什么字段， <code>match</code> 查询都应该会是首选的查询方式。它是一个高级 <em>全文查询</em> ，这表示它<strong>既能处理全文字段，又能处理精确字段</strong>。</p>
+<p>这就是说， <code>match</code> 查询主要的应用场景就是进行全文搜索，我们以下面一个简单例子来说明全文搜索是如何工作的：</p>
+<h5 id="单个词查询">单个词查询</h5>
+<p>我们用第一个示例来解释使用 <code>match</code> 查询搜索全文字段中的单个词：</p>
+<pre><code class="language-sense">GET /my_index/my_type/_search
+{
+    &quot;query&quot;: {
+        &quot;match&quot;: {
+            &quot;title&quot;: &quot;QUICK!&quot;
+        }
+    }
+}
+</code></pre>
+<p>Elasticsearch 执行上面这个 <code>match</code> 查询的步骤是：</p>
+<ol>
+<li>
+<p><em>检查字段类型</em> 。</p>
+<p>标题 <code>title</code> 字段是一个 <code>string</code> 类型（ <code>analyzed</code> ）已分析的全文字段，这意味着查询字符串本身也应该被分析。</p>
+</li>
+<li>
+<p><em>分析查询字符串</em> 。</p>
+<p>将查询的字符串 <code>QUICK!</code> 传入标准分析器中，输出的结果是单个项 <code>quick</code> 。因为只有一个单词项，所以 <code>match</code> 查询执行的是单个底层 <code>term</code> 查询。</p>
+</li>
+<li>
+<p><em>查找匹配文档</em> 。</p>
+<p>用 <code>term</code> 查询在倒排索引中查找 <code>quick</code> 然后获取一组包含该项的文档，本例的结果是文档：1、2 和 3 。</p>
+</li>
+<li>
+<p><em>为每个文档评分</em> 。</p>
+<p>用 <code>term</code> 查询计算每个文档相关度评分 <code>_score</code> ，这是种将词频（term frequency，即词 <code>quick</code> 在相关文档的 <code>title</code> 字段中出现的频率）和反向文档频率（inverse document frequency，即词 <code>quick</code> 在所有文档的 <code>title</code> 字段中出现的频率），以及字段的长度（即字段越短相关度越高）相结合的计算方式。</p>
+</li>
+</ol>
+<p>这个过程给我们以下结果：</p>
+<pre><code class="language-js">&quot;hits&quot;: [
+ {
+    &quot;_id&quot;:      &quot;1&quot;,
+    &quot;_score&quot;:   0.5, 
+    &quot;_source&quot;: {
+       &quot;title&quot;: &quot;The quick brown fox&quot;
+    }
+ },
+ {
+    &quot;_id&quot;:      &quot;3&quot;,
+    &quot;_score&quot;:   0.44194174, 
+    &quot;_source&quot;: {
+       &quot;title&quot;: &quot;The quick brown fox jumps over the quick dog&quot;
+    }
+ },
+ {
+    &quot;_id&quot;:      &quot;2&quot;,
+    &quot;_score&quot;:   0.3125, 
+    &quot;_source&quot;: {
+       &quot;title&quot;: &quot;The quick brown fox jumps over the lazy dog&quot;
+    }
+ }
+]
+</code></pre>
+<h5 id="多词查询">多词查询</h5>
+<p>如果我们一次只能搜索一个词，那么全文搜索就会不太灵活，幸运的是 <code>match</code> 查询让多词查询变得简单：</p>
+<pre><code class="language-sense">GET /my_index/my_type/_search
+{
+    &quot;query&quot;: {
+        &quot;match&quot;: {
+            &quot;title&quot;: &quot;BROWN DOG!&quot;
+        }
+    }
+}
+</code></pre>
+<p>上面这个查询返回所有四个文档：</p>
+<pre><code class="language-js">{
+  &quot;hits&quot;: [
+     {
+        &quot;_id&quot;:      &quot;4&quot;,
+        &quot;_score&quot;:   0.73185337, 
+        &quot;_source&quot;: {
+           &quot;title&quot;: &quot;Brown fox brown dog&quot;
+        }
+     },
+     {
+        &quot;_id&quot;:      &quot;2&quot;,
+        &quot;_score&quot;:   0.47486103, 
+        &quot;_source&quot;: {
+           &quot;title&quot;: &quot;The quick brown fox jumps over the lazy dog&quot;
+        }
+     },
+     {
+        &quot;_id&quot;:      &quot;3&quot;,
+        &quot;_score&quot;:   0.47486103, 
+        &quot;_source&quot;: {
+           &quot;title&quot;: &quot;The quick brown fox jumps over the quick dog&quot;
+        }
+     },
+     {
+        &quot;_id&quot;:      &quot;1&quot;,
+        &quot;_score&quot;:   0.11914785, 
+        &quot;_source&quot;: {
+           &quot;title&quot;: &quot;The quick brown fox&quot;
+        }
+     }
+  ]
+}
+</code></pre>
+<p>因为 <code>match</code> 查询必须查找两个词（ <code>[&quot;brown&quot;,&quot;dog&quot;]</code> ），<strong>它在内部实际上先执行两次 <code>term</code> 查询，然后将两次查询的结果合并作为最终结果输出。为了做到这点，它将两个 <code>term</code> 查询包入一个 <code>bool</code> 查询中</strong></p>
+<p>以上示例告诉我们一个重要信息：<strong>即任何文档只要 <code>title</code> 字段里包含 <em>指定词项中的至少一个词</em> 就能匹配，被匹配的词项越多，文档就越相关。</strong></p>
+<p>可能我们只想搜索包含 <em>所有</em> 词项的文档，也就是说，不去匹配 <code>brown OR dog</code> ，而通过匹配 <code>brown AND dog</code> 找到所有文档。</p>
+<p><code>match</code> 查询还可以接受 <code>operator</code> 操作符作为输入参数，默认情况下该操作符是 <code>or</code> 。我们可以将它修改成 <code>and</code> 让所有指定词项都必须匹配：</p>
+<pre><code class="language-sense">GET /my_index/my_type/_search
+{
+    &quot;query&quot;: {
+        &quot;match&quot;: {
+            &quot;title&quot;: {      
+                &quot;query&quot;:    &quot;BROWN DOG!&quot;,
+                &quot;operator&quot;: &quot;and&quot;
+            }
+        }
+    }
+}
+</code></pre>
+<p>在 <em>所有</em> 与 <em>任意</em> 间二选一有点过于非黑即白。如果用户给定 5 个查询词项，想查找只包含其中 4 个的文档，该如何处理？将 <code>operator</code> 操作符参数设置成 <code>and</code> 只会将此文档排除。</p>
+<p>有时候这正是我们期望的，但在全文搜索的大多数应用场景下，我们既想包含那些可能相关的文档，同时又排除那些不太相关的。换句话说，我们想要处于中间某种结果。</p>
+<p><code>match</code> 查询支持 <code>minimum_should_match</code> 最小匹配参数，这让我们可以指定必须匹配的词项数用来表示一个文档是否相关。我们可以将其设置为某个具体数字，更常用的做法是将其设置为一个百分数，因为我们无法控制用户搜索时输入的单词数量：</p>
+<pre><code class="language-sense">GET /my_index/my_type/_search
+{
+  &quot;query&quot;: {
+    &quot;match&quot;: {
+      &quot;title&quot;: {
+        &quot;query&quot;:                &quot;quick brown dog&quot;,
+        &quot;minimum_should_match&quot;: &quot;75%&quot;
+      }
+    }
+  }
+}
+</code></pre>
+<p>当给定百分比的时候， <code>minimum_should_match</code> 会做合适的事情：在之前三词项的示例中， <code>75%</code> 会自动被截断成 <code>66.6%</code> ，即三个里面两个词。无论这个值设置成什么，至少包含一个词项的文档才会被认为是匹配的。</p>
+<h4 id="查询语句提升权重">查询语句提升权重</h4>
+<p><code>bool</code> 查询不仅限于组合简单的单个词 <code>match</code> 查询，它可以组合任意其他的查询，以及其他 <code>bool</code> 查询。普遍的用法是通过汇总多个独立查询的分数，从而达到为每个文档微调其相关度评分 <code>_score</code> 的目的。</p>
+<p>假设想要查询关于 “full-text search（全文搜索）” 的文档，但我们希望为提及 “Elasticsearch” 或 “Lucene” 的文档给予更高的 <em>权重</em> ，这里 <em>更高权重</em> 是指如果文档中出现 “Elasticsearch” 或 “Lucene” ，它们会比没有的出现这些词的文档获得更高的相关度评分 <code>_score</code> ，也就是说，它们会出现在结果集的更上面。</p>
+<p>一个简单的 <code>bool</code> <em>查询</em> 允许我们写出如下这种非常复杂的逻辑：</p>
+<pre><code class="language-sense">GET /_search
+{
+    &quot;query&quot;: {
+        &quot;bool&quot;: {
+            &quot;must&quot;: {
+                &quot;match&quot;: {
+                    &quot;content&quot;: { 
+                        &quot;query&quot;:    &quot;full text search&quot;,
+                        &quot;operator&quot;: &quot;and&quot;
+                    }
+                }
+            },
+            &quot;should&quot;: [ 
+                { &quot;match&quot;: { &quot;content&quot;: &quot;Elasticsearch&quot; }},
+                { &quot;match&quot;: { &quot;content&quot;: &quot;Lucene&quot;        }}
+            ]
+        }
+    }
+}
+</code></pre>
+<p><code>should</code> 语句匹配得越多表示文档的相关度越高。</p>
+<p>但是如果我们想让<strong>包含 <code>Lucene</code> 的有更高的权重，并且包含 <code>Elasticsearch</code> 的语句比 <code>Lucene</code> 的权重更高</strong>，该如何处理?</p>
+<p>我们可以通过指定 <code>boost</code> 来控制任何查询语句的相对的权重， <code>boost</code> 的默认值为 <code>1</code> ，大于 <code>1</code> 会提升一个语句的相对权重。所以下面重写之前的查询：</p>
+<pre><code class="language-sense">GET /_search
+{
+    &quot;query&quot;: {
+        &quot;bool&quot;: {
+            &quot;must&quot;: {
+                &quot;match&quot;: {  
+                    &quot;content&quot;: {
+                        &quot;query&quot;:    &quot;full text search&quot;,
+                        &quot;operator&quot;: &quot;and&quot;
+                    }
+                }
+            },
+            &quot;should&quot;: [
+                { &quot;match&quot;: {
+                    &quot;content&quot;: {
+                        &quot;query&quot;: &quot;Elasticsearch&quot;,
+                        &quot;boost&quot;: 3 
+                    }
+                }},
+                { &quot;match&quot;: {
+                    &quot;content&quot;: {
+                        &quot;query&quot;: &quot;Lucene&quot;,
+                        &quot;boost&quot;: 2 
+                    }
+                }}
+            ]
+        }
+    }
+}
+</code></pre>
+<p><code>boost</code> 参数被用来提升一个语句的相对权重（ <code>boost</code> 值大于 <code>1</code> ）或降低相对权重（ <code>boost</code> 值处于 <code>0</code> 到 <code>1</code> 之间），但是这种提升或降低并不是线性的，换句话说，如果一个 <code>boost</code> 值为 <code>2</code> ，并不能获得两倍的评分 <code>_score</code> 。</p>
+<p>相反，新的评分 <code>_score</code> 会在应用权重提升之后被 <em>归一化</em> ，每种类型的查询都有自己的归一算法，简单的说，更高的 <code>boost</code> 值为我们带来更高的评分 <code>_score</code> 。</p>
+<h3 id="多字段搜索">多字段搜索</h3>
+<p>查询很少是简单一句话的 <code>match</code> 匹配查询。通常我们需要用相同或不同的字符串查询一个或多个字段，也就是说，<strong>需要对多个查询语句以及它们相关度评分进行合理的合并</strong>。</p>
+<p>有时候或许我们正查找作者 Leo Tolstoy 写的一本名为 <em>War and Peace</em>（战争与和平）的书。或许我们正用 “minimum should match” （最少应该匹配）的方式在文档中对标题或页面内容进行搜索，或许我们正在搜索所有名字为 John Smith 的用户。</p>
+<h4 id="最佳字段">最佳字段</h4>
+<p>假设有个网站允许用户搜索博客的内容，以下面两篇博客内容文档为例：</p>
+<pre><code class="language-sense">PUT /my_index/my_type/1
+{
+    &quot;title&quot;: &quot;Quick brown rabbits&quot;,
+    &quot;body&quot;:  &quot;Brown rabbits are commonly seen.&quot;
+}
+
+PUT /my_index/my_type/2
+{
+    &quot;title&quot;: &quot;Keeping pets healthy&quot;,
+    &quot;body&quot;:  &quot;My quick brown fox eats rabbits on a regular basis.&quot;
+}
+</code></pre>
+<p>用户输入词组 “Brown fox” 然后点击搜索按钮。事先，我们并不知道用户的搜索项是会在 <code>title</code> 还是在 <code>body</code> 字段中被找到，但是，用户很有可能是想搜索相关的词组。用肉眼判断，文档 2 的匹配度更高，因为它同时包括要查找的两个词：</p>
+<p>现在运行以下 <code>bool</code> 查询：</p>
+<pre><code class="language-sense">{
+    &quot;query&quot;: {
+        &quot;bool&quot;: {
+            &quot;should&quot;: [
+                { &quot;match&quot;: { &quot;title&quot;: &quot;Brown fox&quot; }},
+                { &quot;match&quot;: { &quot;body&quot;:  &quot;Brown fox&quot; }}
+            ]
+        }
+    }
+}
+</code></pre>
+<p>但是我们发现查询的结果是文档 1 的评分更高：</p>
+<pre><code class="language-js">{
+  &quot;hits&quot;: [
+     {
+        &quot;_id&quot;:      &quot;1&quot;,
+        &quot;_score&quot;:   0.14809652,
+        &quot;_source&quot;: {
+           &quot;title&quot;: &quot;Quick brown rabbits&quot;,
+           &quot;body&quot;:  &quot;Brown rabbits are commonly seen.&quot;
+        }
+     },
+     {
+        &quot;_id&quot;:      &quot;2&quot;,
+        &quot;_score&quot;:   0.09256032,
+        &quot;_source&quot;: {
+           &quot;title&quot;: &quot;Keeping pets healthy&quot;,
+           &quot;body&quot;:  &quot;My quick brown fox eats rabbits on a regular basis.&quot;
+        }
+     }
+  ]
+}
+</code></pre>
+<p>为了理解导致这样的原因，需要回想一下 <code>bool</code> 是如何计算评分的：</p>
+<ol>
+<li>它会执行 <code>should</code> 语句中的两个查询。</li>
+<li>加和两个查询的评分。</li>
+<li>乘以匹配语句的总数。</li>
+<li>除以所有语句总数（这里为：2）。</li>
+</ol>
+<p>文档 1 的两个字段都包含 <code>brown</code> 这个词，所以两个 <code>match</code> 语句都能成功匹配并且有一个评分。文档 2 的 <code>body</code> 字段同时包含 <code>brown</code> 和 <code>fox</code> 这两个词，但 <code>title</code> 字段没有包含任何词。这样， <code>body</code> 查询结果中的高分，加上 <code>title</code> 查询中的 0 分，然后乘以二分之一，就得到比文档 1 更低的整体评分。</p>
+<p>在本例中， <code>title</code> 和 <code>body</code> 字段是相互竞争的关系，所以就需要找到单个 <em>最佳匹配</em> 的字段。</p>
+<p>如果不是简单将每个字段的评分结果加在一起，而是将 <em>最佳匹配</em> 字段的评分作为查询的整体评分，结果会怎样？这样返回的结果可能是： <em>同时</em> 包含 <code>brown</code> 和 <code>fox</code> 的单个字段比反复出现相同词语的多个不同字段有更高的相关度。</p>
+<h5 id="dis_max-查询">dis_max 查询</h5>
+<p>不使用 <code>bool</code> 查询，可以使用 <code>dis_max</code> 即分离 <em>最大化查询（Disjunction Max Query）</em> 。分离（Disjunction）的意思是 <em>或（or）</em> ，这与可以把结合（conjunction）理解成 <em>与（and）</em> 相对应。分离最大化查询（Disjunction Max Query）指的是： <em>将任何与任一查询匹配的文档作为结果返回，但只将最佳匹配的评分作为查询的评分结果返回</em> ：</p>
+<pre><code class="language-sense">{
+    &quot;query&quot;: {
+        &quot;dis_max&quot;: {
+            &quot;queries&quot;: [
+                { &quot;match&quot;: { &quot;title&quot;: &quot;Brown fox&quot; }},
+                { &quot;match&quot;: { &quot;body&quot;:  &quot;Brown fox&quot; }}
+            ]
+        }
+    }
+}
+</code></pre>
+<p>得到我们想要的结果为：</p>
+<pre><code class="language-js">{
+  &quot;hits&quot;: [
+     {
+        &quot;_id&quot;:      &quot;2&quot;,
+        &quot;_score&quot;:   0.21509302,
+        &quot;_source&quot;: {
+           &quot;title&quot;: &quot;Keeping pets healthy&quot;,
+           &quot;body&quot;:  &quot;My quick brown fox eats rabbits on a regular basis.&quot;
+        }
+     },
+     {
+        &quot;_id&quot;:      &quot;1&quot;,
+        &quot;_score&quot;:   0.12713557,
+        &quot;_source&quot;: {
+           &quot;title&quot;: &quot;Quick brown rabbits&quot;,
+           &quot;body&quot;:  &quot;Brown rabbits are commonly seen.&quot;
+        }
+     }
+  ]
+}
+</code></pre>
+<p>意思就是，(title:brown title:fox) | (body:brown body:fox)</p>
+<h4 id="跨字段搜索">跨字段搜索</h4>
+<p>现在讨论一种普遍的搜索模式：跨字段实体搜索（cross-fields entity search）。在如 <code>person</code> 、 <code>product</code> 或 <code>address</code> （人、产品或地址）这样的实体中，需要使用多个字段来唯一标识它的信息。 <code>person</code> 实体可能是这样索引的：</p>
+<pre><code class="language-js">{
+    &quot;firstname&quot;:  &quot;Peter&quot;,
+    &quot;lastname&quot;:   &quot;Smith&quot;
+}
+</code></pre>
+<p>或地址：</p>
+<pre><code class="language-js">{
+    &quot;street&quot;:   &quot;5 Poland Street&quot;,
+    &quot;city&quot;:     &quot;London&quot;,
+    &quot;country&quot;:  &quot;United Kingdom&quot;,
+    &quot;postcode&quot;: &quot;W1V 3DG&quot;
+}
+</code></pre>
+<p>这与之前描述的 多字符串查询很像，但这存在着巨大的区别。在 多字符串查询中，我们为每个字段使用不同的字符串，在本例中，我们想使用 <strong><em>单个</em> 字符串在多个字段中进行搜索</strong>。</p>
+<p>我们的用户可能想搜索 “Peter Smith” 这个人，或 “Poland Street W1V” 这个地址，这些词出现在不同的字段中，所以如果使用 <code>dis_max</code> 或 <code>best_fields</code> 查询去查找 <em>单个</em> 最佳匹配字段显然是个错误的方式。</p>
+<h5 id="简单的方式">简单的方式</h5>
+<p>依次查询每个字段并将每个字段的匹配评分结果相加，听起来真像是 <code>bool</code> 查询：</p>
+<pre><code class="language-js">{
+  &quot;query&quot;: {
+    &quot;bool&quot;: {
+      &quot;should&quot;: [
+        { &quot;match&quot;: { &quot;street&quot;:    &quot;Poland Street W1V&quot; }},
+        { &quot;match&quot;: { &quot;city&quot;:      &quot;Poland Street W1V&quot; }},
+        { &quot;match&quot;: { &quot;country&quot;:   &quot;Poland Street W1V&quot; }},
+        { &quot;match&quot;: { &quot;postcode&quot;:  &quot;Poland Street W1V&quot; }}
+      ]
+    }
+  }
+}
+</code></pre>
+<p>为每个字段重复查询字符串会使查询瞬间变得冗长，可以采用 <code>multi_match</code> 查询，将 <code>type</code> 设置成 <code>most_fields</code> 然后告诉 Elasticsearch 合并所有匹配字段的评分：</p>
+<pre><code class="language-js">{
+  &quot;query&quot;: {
+    &quot;multi_match&quot;: {
+      &quot;query&quot;:       &quot;Poland Street W1V&quot;,
+      &quot;type&quot;:        &quot;most_fields&quot;,
+      &quot;fields&quot;:      [ &quot;street&quot;, &quot;city&quot;, &quot;country&quot;, &quot;postcode&quot; ]
+    }
+  }
+}
+</code></pre>
+<h5 id="most_fields-方式的问题">most_fields 方式的问题</h5>
+<p>用 <code>most_fields</code> 这种方式搜索也存在某些问题，这些问题并不会马上显现：</p>
+<ul>
+<li>它是为多数字段匹配 <em>任意</em> 词设计的，而不是在 <em>所有字段</em> 中找到最匹配的。</li>
+<li>它不能使用 <code>operator</code> 或 <code>minimum_should_match</code> 参数来降低次相关结果造成的长尾效应。</li>
+<li>词频对于每个字段是不一样的，而且它们之间的相互影响会导致不好的排序结果。</li>
+</ul>
+<p>以上三个源于 <code>most_fields</code> 的问题都因为它是 <em>字段中心式（field-centric）</em> 而不是 <em>词中心式（term-centric）</em> 的：当真正感兴趣的是匹配词的时候，它为我们查找的是最匹配的 <em>字段</em> 。</p>
+<p><code>best_fields</code> 类型也是字段中心式的，它也存在类似的问题。</p>
+<p>首先查看这些问题存在的原因，再想如何解决它们。</p>
+<h5 id="问题-1-在多个字段中匹配相同的词">问题 1 ：在多个字段中匹配相同的词</h5>
+<p>回想一下 <code>most_fields</code> 查询是如何执行的：Elasticsearch 为每个字段生成独立的 <code>match</code> 查询，再用 <code>bool</code> 查询将他们包起来。</p>
+<p>可以通过 <code>validate-query</code> API 查看：</p>
+<pre><code class="language-sense">GET /_validate/query?explain
+{
+  &quot;query&quot;: {
+    &quot;multi_match&quot;: {
+      &quot;query&quot;:   &quot;Poland Street W1V&quot;,
+      &quot;type&quot;:    &quot;most_fields&quot;,
+      &quot;fields&quot;:  [ &quot;street&quot;, &quot;city&quot;, &quot;country&quot;, &quot;postcode&quot; ]
+    }
+  }
+}
+</code></pre>
+<p>生成 <code>explanation</code> 解释：</p>
+<pre><code>(street:poland   street:street   street:w1v)
+(city:poland     city:street     city:w1v)
+(country:poland  country:street  country:w1v)
+(postcode:poland postcode:street postcode:w1v)
+</code></pre>
+<p>可以发现， <em>两个</em> 字段都与 <code>poland</code> 匹配的文档要比一个字段同时匹配 <code>poland</code> 与 <code>street</code> 文档的评分高。</p>
+<h5 id="问题-2-剪掉长尾">问题 2 ：剪掉长尾</h5>
+<p>使用 <code>and</code> 操作符或设置 <code>minimum_should_match</code> 参数来消除结果中几乎不相关的长尾，或许可以尝试以下方式：</p>
+<pre><code class="language-sense">{
+    &quot;query&quot;: {
+        &quot;multi_match&quot;: {
+            &quot;query&quot;:       &quot;Poland Street W1V&quot;,
+            &quot;type&quot;:        &quot;most_fields&quot;,
+            &quot;operator&quot;:    &quot;and&quot;, 
+            &quot;fields&quot;:      [ &quot;street&quot;, &quot;city&quot;, &quot;country&quot;, &quot;postcode&quot; ]
+        }
+    }
+}
+</code></pre>
+<p>但是对于 <code>best_fields</code> 或 <code>most_fields</code> 这些参数会在 <code>match</code> 查询生成时被传入，这个查询的 <code>explanation</code> 解释如下：</p>
+<pre><code>(+street:poland   +street:street   +street:w1v)
+(+city:poland     +city:street     +city:w1v)
+(+country:poland  +country:street  +country:w1v)
+(+postcode:poland +postcode:street +postcode:w1v)
+</code></pre>
+<p>换句话说，使用 <code>and</code> 操作符要求所有词都必须存在于 <em>相同字段</em> ，这显然是不对的！可能就不存在能与这个查询匹配的文档。</p>
+<h5 id="问题-3-词频">问题 3 ：词频</h5>
+<p>每个词默认使用 TF/IDF 相似度算法计算相关度评分：</p>
+<ul>
+<li>
+<p><strong>词频</strong></p>
+<p>一个词在单个文档的某个字段中出现的频率越高，这个文档的相关度就越高。</p>
+</li>
+<li>
+<p><strong>逆向文档频率</strong></p>
+<p>一个词在所有文档某个字段索引中出现的频率越高，这个词的相关度就越低。</p>
+</li>
+</ul>
+<p>当搜索多个字段时，TF/IDF 会带来某些令人意外的结果。</p>
+<p>想想用字段 <code>first_name</code> 和 <code>last_name</code> 查询 “Peter Smith” 的例子， Peter 是个平常的名 Smith 也是平常的姓，这两者都具有较低的 IDF 值。但当索引中有另外一个人的名字是 “Smith Williams” 时， Smith 作为名来说很不平常，以致它有一个较高的 IDF 值！</p>
+<p>下面这个简单的查询可能会在结果中将 “Smith Williams” 置于 “Peter Smith” 之上，尽管事实上是第二个人比第一个人更为匹配。</p>
+<pre><code class="language-sense">{
+    &quot;query&quot;: {
+        &quot;multi_match&quot;: {
+            &quot;query&quot;:       &quot;Peter Smith&quot;,
+            &quot;type&quot;:        &quot;most_fields&quot;,
+            &quot;fields&quot;:      [ &quot;*_name&quot; ]
+        }
+    }
+}
+</code></pre>
+<p>这里的问题是 <code>smith</code> 在名字段中具有高 IDF ，它会削弱 “Peter” 作为名和 “Smith” 作为姓时低 IDF 的所起作用。</p>
+<h5 id="cross-fields-跨字段查询">cross-fields 跨字段查询</h5>
+<p>使用 <code>cross_fields</code> 类型进行 <code>multi_match</code> 查询。 <code>cross_fields</code> 使用词中心式（term-centric）的查询方式，这与 <code>best_fields</code> 和 <code>most_fields</code> 使用字段中心式（field-centric）的查询方式非常不同，它将所有字段当成一个大字段，并在 <em>每个字段</em> 中查找 <em>每个词</em> 。</p>
+<p>为了说明字段中心式（field-centric）与词中心式（term-centric）这两种查询方式的不同，先看看以下字段中心式的 <code>most_fields</code> 查询的 <code>explanation</code> 解释：</p>
+<pre><code class="language-sense">GET /_validate/query?explain
+{
+    &quot;query&quot;: {
+        &quot;multi_match&quot;: {
+            &quot;query&quot;:       &quot;peter smith&quot;,
+            &quot;type&quot;:        &quot;most_fields&quot;,
+            &quot;operator&quot;:    &quot;and&quot;, 
+            &quot;fields&quot;:      [ &quot;first_name&quot;, &quot;last_name&quot; ]
+        }
+    }
+}
+</code></pre>
+<p>对于匹配的文档， <code>peter</code> 和 <code>smith</code> 都必须同时出现在相同字段中，要么是 <code>first_name</code> 字段，要么 <code>last_name</code> 字段：</p>
+<pre><code>(+first_name:peter +first_name:smith)
+(+last_name:peter  +last_name:smith)
+</code></pre>
+<p><em>词中心式</em> 会使用以下逻辑：</p>
+<pre><code>+(first_name:peter last_name:peter)
++(first_name:smith last_name:smith)
+</code></pre>
+<p>换句话说，词 <code>peter</code> 和 <code>smith</code> 都必须出现，但是可以出现在任意字段中。</p>
+<p><code>cross_fields</code> 类型首先分析查询字符串并生成一个词列表，然后它从所有字段中依次搜索每个词。这种不同的搜索方式很自然的解决了 字段中心式查询三个问题中的二个。剩下的问题是逆向文档频率不同。</p>
+<p>幸运的是 <code>cross_fields</code> 类型也能解决这个问题，通过 <code>validate-query</code> 可以看到：</p>
+<pre><code class="language-sense">GET /_validate/query?explain
+{
+    &quot;query&quot;: {
+        &quot;multi_match&quot;: {
+            &quot;query&quot;:       &quot;peter smith&quot;,
+            &quot;type&quot;:        &quot;cross_fields&quot;, 
+            &quot;operator&quot;:    &quot;and&quot;,
+            &quot;fields&quot;:      [ &quot;first_name&quot;, &quot;last_name&quot; ]
+        }
+    }
+}
+</code></pre>
+<p>它通过 <em>混合</em> 不同字段逆向索引文档频率的方式解决了词频的问题：</p>
+<pre><code>+blended(&quot;peter&quot;, fields: [first_name, last_name])
++blended(&quot;smith&quot;, fields: [first_name, last_name])
+</code></pre>
+<p>换句话说，它会同时在 <code>first_name</code> 和 <code>last_name</code> 两个字段中查找 <code>smith</code> 的 IDF ，然后用两者的最小值作为两个字段的 IDF 。结果实际上就是 <code>smith</code> 会被认为既是个平常的姓，也是平常的名。</p>
+<p>为了让 <code>cross_fields</code> 查询以最优方式工作，所有的字段都须使用相同的分析器，具有相同分析器的字段会被分组在一起作为混合字段使用。</p>
+<p>如果包括了不同分析链的字段，它们会以 <code>best_fields</code> 的相同方式被加入到查询结果中。例如：我们将 <code>title</code> 字段加到之前的查询中（假设它们使用的是不同的分析器）， explanation 的解释结果如下：</p>
+<pre><code>(+title:peter +title:smith)
+(
+  +blended(&quot;peter&quot;, fields: [first_name, last_name])
+  +blended(&quot;smith&quot;, fields: [first_name, last_name])
+)
+</code></pre>
+<p>当在使用 <code>minimum_should_match</code> 和 <code>operator</code> 参数时，这点尤为重要。</p>
+<h5 id="按字段提高权重">按字段提高权重</h5>
+<p>采用 <code>cross_fields</code> 查询它可以在搜索时为单个字段提升权重。</p>
+<p>这对像 <code>first_name</code> 和 <code>last_name</code> 具有相同值的字段并不是必须的，但如果要用 <code>title</code> 和 <code>description</code> 字段搜索图书，可能希望为 <code>title</code> 分配更多的权重，这同样可以使用前面介绍过的 <code>^</code> 符号语法来实现：</p>
+<pre><code class="language-js">GET /books/_search
+{
+    &quot;query&quot;: {
+        &quot;multi_match&quot;: {
+            &quot;query&quot;:       &quot;peter smith&quot;,
+            &quot;type&quot;:        &quot;cross_fields&quot;,
+            &quot;fields&quot;:      [ &quot;title^2&quot;, &quot;description&quot; ] 
+        }
+    }
+}
+</code></pre>
+<p><code>title</code> 字段的权重提升值为 <code>2</code> ， <code>description</code> 字段的权重提升值默认为 <code>1</code> 。</p>
+<p>自定义单字段查询是否能够优于多字段查询，取决于在多字段查询与单字段自定义 <code>_all</code> 之间代价的权衡，即哪种解决方案会带来更大的性能优化就选择哪一种。</p>
+<h3 id="近似匹配">近似匹配</h3>
+<p><code>match</code> 查询可以告知我们这大袋子中是否包含查询的词条，但却无法告知词语之间的关系。</p>
+<p>思考下面这几个句子的不同：</p>
+<ul>
+<li>Sue ate the alligator.</li>
+<li>The alligator ate Sue.</li>
+<li>Sue never goes anywhere without her alligator-skin purse.</li>
+</ul>
+<p>用 <code>match</code> 搜索 <code>sue alligator</code> 上面的三个文档都会得到匹配，但它却不能确定这两个词是否只来自于一种语境，甚至都不能确定是否来自于同一个段落。</p>
+<p>理解分词之间的关系是一个复杂的难题，我们也无法通过换一种查询方式去解决。但我们至少可以通过出现在彼此附近或者仅仅是彼此相邻的分词来判断一些似乎相关的分词。</p>
+<p>每个文档可能都比我们上面这个例子要长： <code>Sue</code> 和 <code>alligator</code> 这两个词可能会分散在其他的段落文字中，我们可能会希望得到尽可能包含这两个词的文档，但我们也同样需要这些文档与分词有很高的相关度。</p>
+<p>这就是短语匹配或者近似匹配的所属领域。</p>
+<h4 id="短语匹配">短语匹配</h4>
+<p>就像 <code>match</code> 查询对于标准全文检索是一种最常用的查询一样，当你想找到彼此邻近搜索词的查询方法时，就会想到 <code>match_phrase</code> 查询。</p>
+<pre><code class="language-sense">GET /my_index/my_type/_search
+{
+    &quot;query&quot;: {
+        &quot;match_phrase&quot;: {
+            &quot;title&quot;: &quot;quick brown fox&quot;
+        }
+    }
+}
+</code></pre>
+<p>类似 <code>match</code> 查询， <code>match_phrase</code> 查询首先将查询字符串解析成一个词项列表，然后对这些词项进行搜索，但只<strong>保留那些包含 <em>全部</em> 搜索词项，且 <em>位置</em> 与搜索词项相同的文档</strong>。 比如对于 <code>quick fox</code> 的短语搜索可能不会匹配到任何文档，因为没有文档包含的 <code>quick</code> 词之后紧跟着 <code>fox</code> 。</p>
+<p><code>match_phrase</code> 查询同样可写成一种类型为 <code>phrase</code> 的 <code>match</code> 查询:</p>
+<pre><code class="language-sense">&quot;match&quot;: {
+    &quot;title&quot;: {
+        &quot;query&quot;: &quot;quick brown fox&quot;,
+        &quot;type&quot;:  &quot;phrase&quot;
+    }
+}
+</code></pre>
+<p>当一个字符串被分词后，这个分析器不但会返回一个词项列表，而且还会返回各词项在原始字符串中的 <em>位置</em> 或者顺序关系：</p>
+<pre><code class="language-sense">GET /_analyze?analyzer=standard
+Quick brown fox
+</code></pre>
+<p>返回信息如下：</p>
+<pre><code class="language-js">{
+   &quot;tokens&quot;: [
+      {
+         &quot;token&quot;: &quot;quick&quot;,
+         &quot;start_offset&quot;: 0,
+         &quot;end_offset&quot;: 5,
+         &quot;type&quot;: &quot;&lt;ALPHANUM&gt;&quot;,
+         &quot;position&quot;: 1 
+      },
+      {
+         &quot;token&quot;: &quot;brown&quot;,
+         &quot;start_offset&quot;: 6,
+         &quot;end_offset&quot;: 11,
+         &quot;type&quot;: &quot;&lt;ALPHANUM&gt;&quot;,
+         &quot;position&quot;: 2 
+      },
+      {
+         &quot;token&quot;: &quot;fox&quot;,
+         &quot;start_offset&quot;: 12,
+         &quot;end_offset&quot;: 15,
+         &quot;type&quot;: &quot;&lt;ALPHANUM&gt;&quot;,
+         &quot;position&quot;: 3 
+      }
+   ]
+}
+</code></pre>
+<p><code>position</code> 代表各词项在原始字符串中的位置。</p>
+<p>位置信息可以被存储在倒排索引中，<strong>因此 <code>match_phrase</code> 查询这类对词语位置敏感的查询， 就可以利用位置信息去匹配包含所有查询词项，且各词项顺序也与我们搜索指定一致的文档，中间不夹杂其他词项</strong>。</p>
+<h5 id="什么是短语">什么是短语</h5>
+<p>一个被认定为和短语 <code>quick brown fox</code> 匹配的文档，必须满足以下这些要求：</p>
+<ul>
+<li><code>quick</code> 、 <code>brown</code> 和 <code>fox</code> 需要全部出现在域中。</li>
+<li><code>brown</code> 的位置应该比 <code>quick</code> 的位置大 <code>1</code> 。</li>
+<li><code>fox</code> 的位置应该比 <code>quick</code> 的位置大 <code>2</code> 。</li>
+</ul>
+<p>如果以上任何一个选项不成立，则该文档不能认定为匹配。</p>
+<h5 id="slop参数">slop参数</h5>
+<p>精确短语匹配 或许是过于严格了。也许我们想要包含 “quick brown fox” 的文档也能够匹配 “quick fox,” ， 尽管情形不完全相同。</p>
+<p>我们能够通过使用 <code>slop</code> 参数将灵活度引入短语匹配中：</p>
+<pre><code class="language-sense">GET /my_index/my_type/_search
+{
+    &quot;query&quot;: {
+        &quot;match_phrase&quot;: {
+            &quot;title&quot;: {
+            	&quot;query&quot;: &quot;quick fox&quot;,
+            	&quot;slop&quot;:  1
+            }
+        }
+    }
+}
+</code></pre>
+<p><code>slop</code> 参数告诉 <code>match_phrase</code> 查询词条相隔多远时仍然能将文档视为匹配 。 相隔多远的意思是为了让查询和文档匹配你需要移动词条多少次？</p>
+<p>我们以一个简单的例子开始吧。 为了让查询 <code>quick fox</code> 能匹配一个包含 <code>quick brown fox</code> 的文档， 我们需要 <code>slop</code> 的值为 <code>1</code>:</p>
+<pre><code>            Pos 1         Pos 2         Pos 3
+-----------------------------------------------
+Doc:        quick         brown         fox
+-----------------------------------------------
+Query:      quick         fox
+Slop 1:     quick                 ↳     fox
+</code></pre>
+<p>尽管在使用了 <code>slop</code> 短语匹配中所有的单词都需要出现， 但是这些单词也不必为了匹配而按相同的序列排列。 有了足够大的 <code>slop</code> 值， 单词就能按照任意顺序排列了。</p>
+<p>为了使查询 <code>fox quick</code> 匹配我们的文档， 我们需要 <code>slop</code> 的值为 <code>3</code>:</p>
+<pre><code>            Pos 1         Pos 2         Pos 3
+-----------------------------------------------
+Doc:        quick         brown         fox
+-----------------------------------------------
+Query:      fox           quick
+Slop 1:     fox|quick  ↵  
+Slop 2:     quick      ↳  fox
+Slop 3:     quick                 ↳     fox
+</code></pre>
+<h3 id="部分匹配">部分匹配</h3>
+<p>敏锐的读者会注意，目前为止本书介绍的所有查询都是针对整个词的操作。为了能匹配，只能查找倒排索引中存在的词，最小的单元为单个词。</p>
+<p>但如果想匹配部分而不是全部的词该怎么办？ <em>部分匹配</em> 允许用户指定查找词的一部分并找出所有包含这部分片段的词。</p>
+<p>与想象的不太一样，对词进行部分匹配的需求在全文搜索引擎领域并不常见，但是如果读者有 SQL 方面的背景，可能会在某个时候实现一个 <em>低效的全文搜索</em> 用下面的 SQL 语句对全文进行搜索：</p>
+<pre><code class="language-js">    WHERE text LIKE &quot;%quick%&quot;
+      AND text LIKE &quot;%brown%&quot;
+      AND text LIKE &quot;%fox%&quot; 
+</code></pre>
+<p>当然， Elasticsearch 提供分析过程，倒排索引让我们不需要使用这种粗笨的技术。为了能应对同时匹配 “fox” 和 “foxes” 的情况，只需简单的将它们的词干作为索引形式，没有必要做部分匹配。</p>
+<p>也就是说，在某些情况下部分匹配会比较有用，常见的应用如下：</p>
+<ul>
+<li>匹配邮编、产品序列号或其他 <code>not_analyzed</code> 未分析值，这些值可以是以某个特定前缀开始，也可以是与某种模式匹配的，甚至可以是与某个正则式相匹配的。</li>
+<li><em>输入即搜索（search-as-you-type）</em> ——在用户键入搜索词过程的同时就呈现最可能的结果。</li>
+<li>匹配如德语或荷兰语这样有长组合词的语言，如： <em>Weltgesundheitsorganisation</em> （世界卫生组织，英文 World Health Organization）。</li>
+</ul>
+<h4 id="前缀查询">前缀查询</h4>
+<p>为了找到所有以 <code>W1</code> 开始的邮编，可以使用简单的 <code>prefix</code> 查询：</p>
+<pre><code class="language-sense">GET /my_index/address/_search
+{
+    &quot;query&quot;: {
+        &quot;prefix&quot;: {
+            &quot;postcode&quot;: &quot;W1&quot;
+        }
+    }
+}
+</code></pre>
+<p><code>prefix</code> 查询是一个<strong>词级别的底层的查询</strong>，它不会在搜索之前分析查询字符串，它假定传入前缀就正是要查找的前缀。</p>
+<p>默认状态下， <code>prefix</code> 查询不做相关度评分计算，它只是将所有匹配的文档返回，并为每条结果赋予评分值 <code>1</code> 。它的行为更像是过滤器而不是查询。 <code>prefix</code> 查询和 <code>prefix</code> 过滤器这两者实际的区别就是过滤器是可以被缓存的，而查询不行。</p>
+<p>之前已经提过：“只能在倒排索引中找到存在的词”，但我们并没有对这些邮编的索引进行特殊处理，每个邮编还是以它们精确值的方式存在于每个文档的索引中，那么 <code>prefix</code> 查询是如何工作的呢？</p>
+<p>回想倒排索引包含了一个有序的唯一词列表（本例是邮编）。对于每个词，倒排索引都会将包含词的文档 ID 列入 <em>倒排表（postings list）</em> 。与示例对应的倒排索引是：</p>
+<pre><code>Term:          Doc IDs:
+-------------------------
+&quot;SW5 0BE&quot;    |  5
+&quot;W1F 7HW&quot;    |  3
+&quot;W1V 3DG&quot;    |  1
+&quot;W2F 8HW&quot;    |  2
+&quot;WC1N 1LZ&quot;   |  4
+-------------------------
+</code></pre>
+<p>为了支持前缀匹配，查询会做以下事情：</p>
+<ol>
+<li>扫描词列表并查找到第一个以 <code>W1</code> 开始的词。</li>
+<li>搜集关联的文档 ID 。</li>
+<li>移动到下一个词。</li>
+<li>如果这个词也是以 <code>W1</code> 开头，查询跳回到第二步再重复执行，直到下一个词不以 <code>W1</code> 为止。</li>
+</ol>
+<p>这对于小的例子当然可以正常工作，但是如果倒排索引中有数以百万的邮编都是以 <code>W1</code> 开头时，前缀查询则需要访问每个词然后计算结果！</p>
+<p>前缀越短所需访问的词越多。如果我们要以 <code>W</code> 作为前缀而不是 <code>W1</code> ，那么就可能需要做千万次的匹配。</p>
+<p><code>prefix</code> 查询或过滤对于一些特定的匹配是有效的，但使用方式还是应当注意。当字段中词的集合很小时，可以放心使用，但是它的伸缩性并不好，会对我们的集群带来很多压力。可以使用较长的前缀来限制这种影响，减少需要访问的量。</p>
+<h4 id="通配符与正则表达式查询">通配符与正则表达式查询</h4>
+<p>与 <code>prefix</code> 前缀查询的特性类似， <code>wildcard</code> 通配符查询也是一种底层基于词的查询，与前缀查询不同的是它允许指定匹配的正则式。它使用标准的 shell 通配符查询： <code>?</code> 匹配任意字符， <code>*</code> 匹配 0 或多个字符。</p>
+<p>这个查询会匹配包含 <code>W1F 7HW</code> 和 <code>W2F 8HW</code> 的文档：</p>
+<pre><code class="language-sense">GET /my_index/address/_search
+{
+    &quot;query&quot;: {
+        &quot;wildcard&quot;: {
+            &quot;postcode&quot;: &quot;W?F*HW&quot; 
+        }
+    }
+}
+</code></pre>
+<p>设想如果现在只想匹配 <code>W</code> 区域的所有邮编，前缀匹配也会包括以 <code>WC</code> 开头的所有邮编，与通配符匹配碰到的问题类似，如果想匹配只以 <code>W</code> 开始并跟随一个数字的所有邮编， <code>regexp</code> 正则式查询允许写出这样更复杂的模式：</p>
+<pre><code class="language-sense">GET /my_index/address/_search
+{
+    &quot;query&quot;: {
+        &quot;regexp&quot;: {
+            &quot;postcode&quot;: &quot;W[0-9].+&quot; 
+        }
+    }
+}
+</code></pre>
+<p><code>wildcard</code> 和 <code>regexp</code> 查询的工作方式与 <code>prefix</code> 查询完全一样，它们也需要扫描倒排索引中的词列表才能找到所有匹配的词，然后依次获取每个词相关的文档 ID ，与 <code>prefix</code> 查询的唯一不同是：<strong>它们能支持更为复杂的匹配模式</strong>。</p>
+<p>这也意味着需要同样注意前缀查询存在性能问题，对有很多唯一词的字段执行这些查询可能会消耗非常多的资源，所以要避免使用左通配这样的模式匹配（如： <code>*foo</code> 或 <code>.*foo</code> 这样的正则式）。</p>
+<p>数据在索引时的预处理有助于提高前缀匹配的效率，而通配符和正则表达式查询只能在查询时完成，尽管这些查询有其应用场景，但使用仍需谨慎。</p>
+<p><code>prefix</code> 、 <code>wildcard</code> 和 <code>regexp</code> 查询是基于词操作的，<strong>如果用它们来查询 <code>analyzed</code> 字段</strong>，它们会检查字段里面的每个词，而不是将字段作为整体来处理。</p>
+<p>比方说包含 “Quick brown fox” （快速的棕色狐狸）的 <code>title</code> 字段会生成词： <code>quick</code> 、 <code>brown</code> 和 <code>fox</code> 。</p>
+<p>会匹配以下这个查询：</p>
+<pre><code class="language-json">{ &quot;regexp&quot;: { &quot;title&quot;: &quot;br.*&quot; }}
+</code></pre>
+<p>但是不会匹配以下两个查询：</p>
+<pre><code class="language-json">{ &quot;regexp&quot;: { &quot;title&quot;: &quot;Qu.*&quot; }} 
+{ &quot;regexp&quot;: { &quot;title&quot;: &quot;quick br*&quot; }} 
+</code></pre>
+<h4 id="查询时输入即搜索">查询时输入即搜索</h4>
+<p>我们先看看前缀查询是如何在全文查询中起作用的。用户已经渐渐习惯在输完查询内容之前，就能为他们展现搜索结果，这就是所谓的 <strong><em>即时搜索（instant search）</em> 或 <em>输入即搜索（search-as-you-type）</em></strong> 。不仅用户能在更短的时间内得到搜索结果，我们也能引导用户搜索索引中真实存在的结果。</p>
+<p>例如，如果用户输入 <code>johnnie walker bl</code> ，我们希望在它们完成输入搜索条件前就能得到：Johnnie Walker Black Label 和 Johnnie Walker Blue Label 。</p>
+<p>生活总是这样，就像猫的花色远不只一种！我们希望能找到一种最简单的实现方式。并不需要对数据做任何准备，在查询时就能对任意的全文字段实现 <em>输入即搜索（search-as-you-type）</em> 的查询。</p>
+<p><code>match_phrase</code> 短语匹配查询，它匹配相对顺序一致的所有指定词语，对于查询时的输入即搜索，可以使用 <code>match_phrase</code> 的一种特殊形式， <code>match_phrase_prefix</code> 查询：</p>
+<pre><code class="language-sense">{
+    &quot;match_phrase_prefix&quot; : {
+        &quot;brand&quot; : &quot;johnnie walker bl&quot;
+    }
+}
+</code></pre>
+<p>这种查询的行为与 <code>match_phrase</code> 查询一致，不同的是它将查询字符串的最后一个词作为前缀使用，换句话说，可以将之前的例子看成如下这样：</p>
+<ul>
+<li><code>johnnie</code></li>
+<li>跟着 <code>walker</code></li>
+<li>跟着以 <code>bl</code> 开始的词</li>
+</ul>
+<p>如果通过 <code>validate-query</code> API 运行这个查询查询，explanation 的解释结果为：</p>
+<pre><code>&quot;johnnie walker bl*&quot;
+</code></pre>
+<p>与 <code>match_phrase</code> 一样，它也可以接受 <code>slop</code> 参数让相对词序位置不那么严格：</p>
+<pre><code class="language-sense">{
+    &quot;match_phrase_prefix&quot; : {
+        &quot;brand&quot; : {
+            &quot;query&quot;: &quot;walker johnnie bl&quot;, 
+            &quot;slop&quot;:  10
+        }
+    }
+}
+</code></pre>
+<p>但是只有查询字符串的最后一个词才能当作前缀使用。</p>
+<p>我们警告过使用前缀的风险，即 <code>prefix</code> 查询存在严重的资源消耗问题，短语查询的这种方式也同样如此。前缀 <code>a</code> 可能会匹配成千上万的词，这不仅会消耗很多系统资源，而且结果的用处也不大。</p>
+<p>可以通过设置 <code>max_expansions</code> 参数来限制前缀扩展的影响，一个合理的值是可能是 50 ：</p>
+<pre><code class="language-sense">{
+    &quot;match_phrase_prefix&quot; : {
+        &quot;brand&quot; : {
+            &quot;query&quot;:          &quot;johnnie walker bl&quot;,
+            &quot;max_expansions&quot;: 50
+        }
+    }
+}
+</code></pre>
+<p>参数 <code>max_expansions</code> 控制着可以与前缀匹配的词的数量，它会先查找第一个与前缀 <code>bl</code> 匹配的词，然后依次查找搜集与之匹配的词（按字母顺序），直到没有更多可匹配的词或当数量超过 <code>max_expansions</code> 时结束。</p>
+<p>不要忘记，当用户每多输入一个字符时，这个查询又会执行一遍，所以查询需要快，如果第一个结果集不是用户想要的，他们会继续输入直到能搜出满意的结果为止。</p>
+<h3 id="控制相关度">控制相关度</h3>
+<p>Lucene（或 Elasticsearch）使用 布尔模型（Boolean model）查找匹配文档，并用一个名为 实用评分函数的公式来计算相关度。这个公式借鉴了 词频/逆向文档频率（term frequency/inverse document frequency） 和 向量空间模型（vector space model），同时也加入了一些现代的新特性，如协调因子（coordination factor），字段长度归一化（field length normalization），以及词或查询语句权重提升。</p>
+<h4 id="布尔模型">布尔模型</h4>
+<p><em>布尔模型（Boolean Model）</em> 只是在查询中使用 <code>AND</code> 、 <code>OR</code> 和 <code>NOT</code> （与、或和非）这样的条件来查找匹配的文档，以下查询：</p>
+<pre><code>full AND text AND search AND (elasticsearch OR lucene)
+</code></pre>
+<p>会将所有包括词 <code>full</code> 、 <code>text</code> 和 <code>search</code> ，以及 <code>elasticsearch</code> 或 <code>lucene</code> 的文档作为结果集。</p>
+<p>这个过程简单且快速，它将所有可能不匹配的文档排除在外。</p>
+<h4 id="词频逆向文档频率tfidf">词频/逆向文档频率（TF/IDF）</h4>
+<p>当匹配到一组文档后，需要根据相关度排序这些文档，不是所有的文档都包含所有词，有些词比其他的词更重要。一个文档的相关度评分部分取决于每个查询词在文档中的 <em>权重</em> 。</p>
+<p>词的权重由三个因素决定。</p>
+<h5 id="词频">词频</h5>
+<p>词在文档中出现的频度是多少？频度越高，权重 <em>越高</em> 。 5 次提到同一词的字段比只提到 1 次的更相关。词频的计算方式如下：</p>
+<pre><code>tf(t in d) = √frequency 
+</code></pre>
+<p>词 <code>t</code> 在文档 <code>d</code> 的词频（ <code>tf</code> ）是该词在文档中出现次数的平方根。</p>
+<p>如果不在意词在某个字段中出现的频次，而只在意是否出现过，则可以在字段映射中禁用词频统计：</p>
+<pre><code class="language-json">PUT /my_index
+{
+  &quot;mappings&quot;: {
+    &quot;doc&quot;: {
+      &quot;properties&quot;: {
+        &quot;text&quot;: {
+          &quot;type&quot;:          &quot;string&quot;,
+          &quot;index_options&quot;: &quot;docs&quot; 
+        }
+      }
+    }
+  }
+}
+</code></pre>
+<h5 id="逆向文档频率">逆向文档频率</h5>
+<p>词在集合所有文档里出现的频率是多少？频次越高，权重 <em>越低</em> 。常用词如 <code>and</code> 或 <code>the</code> 对相关度贡献很少，因为它们在多数文档中都会出现，一些不常见词如 <code>elastic</code> 或 <code>hippopotamus</code> 可以帮助我们快速缩小范围找到感兴趣的文档。逆向文档频率的计算公式如下：</p>
+<pre><code>idf(t) = 1 + log ( numDocs / (docFreq + 1)) 
+</code></pre>
+<p>词 <code>t</code> 的逆向文档频率（ <code>idf</code> ）是：索引中文档数量除以所有包含该词的文档数，然后求其对数。</p>
+<h5 id="字段长度归一值">字段长度归一值</h5>
+<p>字段的长度是多少？字段越短，字段的权重 <em>越高</em> 。如果词出现在类似标题 <code>title</code> 这样的字段，要比它出现在内容 <code>body</code> 这样的字段中的相关度更高。字段长度的归一值公式如下：</p>
+<pre><code>norm(d) = 1 / √numTerms 
+</code></pre>
+<p>字段长度归一值（ <code>norm</code> ）是字段中词数平方根的倒数</p>
+<p>字段长度的归一值对全文搜索非常重要，许多其他字段不需要有归一值。无论文档是否包括这个字段，索引中每个文档的每个 <code>string</code> 字段都大约占用 1 个 byte 的空间。对于 <code>not_analyzed</code> 字符串字段的归一值默认是禁用的，而对于 <code>analyzed</code> 字段也可以通过修改字段映射禁用归一值：</p>
+<pre><code class="language-json">PUT /my_index
+{
+  &quot;mappings&quot;: {
+    &quot;doc&quot;: {
+      &quot;properties&quot;: {
+        &quot;text&quot;: {
+          &quot;type&quot;: &quot;string&quot;,
+          &quot;norms&quot;: { &quot;enabled&quot;: false } 
+        }
+      }
+    }
+  }
+}
+</code></pre>
+<p>这个字段不会将字段长度归一值考虑在内，长字段和短字段会以相同长度计算评分。</p>
+<p>对于有些应用场景如日志，归一值不是很有用，要关心的只是字段是否包含特殊的错误码或者特定的浏览器唯一标识符。字段的长度对结果没有影响，禁用归一值可以节省大量内存空间。</p>
+<h5 id="结合使用">结合使用</h5>
+<p>以下三个因素——词频（term frequency）、逆向文档频率（inverse document frequency）和字段长度归一值（field-length norm）——是在索引时计算并存储的。最后将它们结合在一起计算单个词在特定文档中的 <em>权重</em> 。</p>
+<p>前面公式中提到的 <em>文档</em> 实际上是指文档里的某个字段，每个字段都有它自己的倒排索引，因此字段的 TF/IDF 值就是文档的 TF/IDF 值。</p>
+<p>当用 <code>explain</code> 查看一个简单的 <code>term</code> 查询时，可以发现与计算相关度评分的因子就是前面章节介绍的这些：</p>
+<pre><code class="language-json">PUT /my_index/doc/1
+{ &quot;text&quot; : &quot;quick brown fox&quot; }
+
+GET /my_index/doc/_search?explain
+{
+  &quot;query&quot;: {
+    &quot;term&quot;: {
+      &quot;text&quot;: &quot;fox&quot;
+    }
+  }
+}
+</code></pre>
+<p>以上请求（简化）的 <code>explanation</code> 解释如下：</p>
+<pre><code>weight(text:fox in 0) [PerFieldSimilarity]:  0.15342641 
+result of:
+    fieldWeight in 0                         0.15342641
+    product of:
+        tf(freq=1.0), with freq of 1:        1.0 
+        idf(docFreq=1, maxDocs=1):           0.30685282 
+        fieldNorm(doc=0):                    0.5 
+</code></pre>
+<p>当然，查询通常不止一个词，所以需要一种合并多词权重的方式——向量空间模型（vector space model）。</p>
+<h5 id="向量空间模型">向量空间模型</h5>
+<p><em>向量空间模型（vector space model）</em> 提供一种比较多词查询的方式，单个评分代表文档与查询的匹配程度，为了做到这点，这个模型将文档和查询都以 <em>向量（vectors）</em> 的形式表示：</p>
+<p>向量实际上就是包含多个数的一维数组，例如：</p>
+<pre><code>[1,2,5,22,3,8]
+</code></pre>
+<p>在向量空间模型里，向量空间模型里的每个数字都代表一个词的 <em>权重</em> ，与 词频/逆向文档频率（term frequency/inverse document frequency）计算方式类似。</p>
+<p>尽管 TF/IDF 是向量空间模型计算词权重的默认方式，但不是唯一方式。Elasticsearch 还有其他模型如 Okapi-BM25 。TF/IDF 是默认的因为它是个经检验过的简单又高效的算法，可以提供高质量的搜索结果。</p>
+<p>设想如果查询 “happy hippopotamus” ，常见词 <code>happy</code> 的权重较低，不常见词 <code>hippopotamus</code> 权重较高，假设 <code>happy</code> 的权重是 2 ， <code>hippopotamus</code> 的权重是 5 ，可以将这个二维向量—— <code>[2,5]</code> ——在坐标系下作条直线，线的起点是 (0,0) 终点是 (2,5)</p>
+<p><img src="elas_17in01.png" alt="查询向量绘点图"></p>
+<p>现在，设想我们有三个文档：</p>
+<ol>
+<li>I am <em>happy</em> in summer 。</li>
+<li>After Christmas I’m a <em>hippopotamus</em> 。</li>
+<li>The <em>happy hippopotamus</em> helped Harry 。</li>
+</ol>
+<p>可以为每个文档都创建包括每个查询词—— <code>happy</code> 和 <code>hippopotamus</code> ——权重的向量，然后将这些向量置入同一个坐标系中：</p>
+<ul>
+<li>文档 1： <code>(happy,____________)</code> —— <code>[2,0]</code></li>
+<li>文档 2： <code>( ___ ,hippopotamus)</code> —— <code>[0,5]</code></li>
+<li>文档 3： <code>(happy,hippopotamus)</code> —— <code>[2,5]</code></li>
+</ul>
+<p><img src="elas_17in02.png" alt="查询及文档向量绘点图"></p>
+<p>向量之间是可以比较的，只要测量查询向量和文档向量之间的角度就可以得到每个文档的相关度，文档 1 与查询之间的角度最大，所以相关度低；文档 2 与查询间的角度较小，所以更相关；文档 3 与查询的角度正好吻合，完全匹配。</p>
+<p>在实际中，只有二维向量（两个词的查询）可以在平面上表示，幸运的是， <em>线性代数</em> ——作为数学中处理向量的一个分支——为我们提供了计算两个多维向量间角度工具，这意味着可以使用如上同样的方式来解释多个词的查询。</p>
+<h3 id="总结-4">总结</h3>
+<p>这个章节，介绍了很多es的高级用法，用好这些可以帮助我们搜索到我们需要的数据，但由于es也在发展，因此有些东西其实es内部已经优化了，无需我们再去优化，这章节的东西，更多的是一个进阶篇，当我们在使用es时自然而然就会想着怎么去使用这些东西了，因此在学习的过程中，只需要知道es的查询也是需要优化的即可！！！</p>
+
+    </div>
+    <div class="article-footer">
+<blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接: </strong>
+      <a href="https://wzgl998877.github.io/2024/10/elasticsearch/" title="ElasticSearch" target="_blank" rel="external">https://wzgl998877.github.io/2024/10/elasticsearch/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong>License: </strong>
+        <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN</a>
+    </li>
+  </ul>
+</blockquote>
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/wzgl998877/" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="https://wzgl998877.github.io/avatar.png" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/wzgl998877/" target="_blank"><span class="text-dark">microzheng</span><small class="ml-1x">努力会说谎，但努力不会白费</small></a></h3>
+        <div>不想搬砖的码农</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+    </div>
+  </article>
+</div><nav class="bar bar-footer clearfix" data-stick-bottom>
+    <div class="bar-inner">
+        <ul class="pager pull-left">
+            <li class="prev">
+                <a href="https://wzgl998877.github.io/2024/09/%E9%AB%98%E6%80%A7%E8%83%BDmysql/" title="高性能Mysql"><i
+                        class="icon icon-angle-left"
+                        aria-hidden="true"></i><span>&nbsp;&nbsp;下一篇</span></a>
+            </li>
+            
+            <li class="toggle-toc">
+                <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false"
+                    title="文章目录" role="button">
+                    <span>[&nbsp;</span><span>文章目录</span>
+                    <i class="text-collapsed icon icon-anchor"></i>
+                    <i class="text-in icon icon-close"></i>
+                    <span>]</span>
+                </a>
+            </li>
+        </ul>
+        <div class="bar-right">
+            <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter"
+                data-mobile-sites="weibo,qq,qzone"></div>
+        </div>
+    </div>
+</nav>
+
+
+</main><footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+<ul class="social-links">
+    <li><a href="https://github.com/wzgl998877/" target="_blank" title="github" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-github"></i></a></li>
+    <li><a href="https://wzgl998877.github.io/index.xml" target="_blank" title="rss" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-rss"></i></a></li>
+</ul>
+  <div class="copyright">
+    &copy;2022  -
+    2024
+    <div class="publishby">
+        Theme by <a href="https://github.com/wzgl998877/" target="_blank"> microzheng </a>base on<a href="https://github.com/xiaoheiAh/hugo-theme-pure" target="_blank"> pure</a>.
+    </div>
+    
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_SVG"></script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+            showMathMenu: false, //disables context menu
+            tex2jax: {
+            inlineMath: [ ['$','$'], ['\\(','\\)'] ]
+           }
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+<script>
+    window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/highlight.min.js"></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/python.min.js" defer></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/javascript.min.js" defer></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/java.min.js" defer></script><script>
+    hljs.configure({
+        tabReplace: '    ', 
+        classPrefix: ''     
+        
+    })
+    hljs.initHighlightingOnLoad();
+</script>
+<script src="https://wzgl998877.github.io/js/application.min.a94ab19cb63a95c8d7fbd7b85cab3ddeea8c369bdf75b9cab6708787ead123af.js"></script>
+<script src="https://wzgl998877.github.io/js/plugin.min.19c5bcb2fb0789ab4f2b7834e5ceb5e92635645605bab902c1024b25f1502364.js"></script>
+
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(未命名)',
+            },
+            ROOT_URL: 'https:\/\/wzgl998877.github.io\/',
+            CONTENT_URL: 'https:\/\/wzgl998877.github.io\/\/searchindex.json ',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script type="text/javascript" src="https://wzgl998877.github.io/js/insight.min.4a2d52de4bfff73e0c688404fe3d17c9a3ae12d9888e1e1ac9c690e4890de2ded50fe55f2b819c2ba55435a76f396f3ea6805765f0b0af5635cdf74ea459eab0.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+<script>
+    tocbot.init({
+        
+        tocSelector: '.js-toc',
+        
+        contentSelector: '.js-toc-content',
+        
+        headingSelector: 'h1, h2, h3',
+        
+        hasInnerContainers: true,
+    });
+</script>
+
+
+  </body>
+</html>
