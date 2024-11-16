@@ -39,7 +39,7 @@
 <meta itemprop="name" content="ElasticSearch">
 <meta itemprop="description" content="[TOC] ElasticSearch入门 今年已经是工作的第五个年头了，随着经验的增长，处理工作中的业务需求自然是轻车熟路，但每天埋头于业务，又不免觉"><meta itemprop="datePublished" content="2024-10-21T19:46:35+08:00" />
 <meta itemprop="dateModified" content="2024-10-21T19:46:35+08:00" />
-<meta itemprop="wordCount" content="36420">
+<meta itemprop="wordCount" content="37827">
 <meta itemprop="keywords" content="ElasticSearch," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="ElasticSearch"/>
 <meta name="twitter:description" content="[TOC] ElasticSearch入门 今年已经是工作的第五个年头了，随着经验的增长，处理工作中的业务需求自然是轻车熟路，但每天埋头于业务，又不免觉"/>
@@ -332,8 +332,8 @@
     <a class="article-tag-link" href="/tags/elasticsearch/"> ElasticSearch </a>
   </span>
 
-		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 36420字</span>
-		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 73分 </span>
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 37827字</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 76分 </span>
       </div>
     </div>
     <div class="article-entry marked-body js-toc-content" itemprop="articleBody">
@@ -2900,6 +2900,312 @@ result of:
 <p>在实际中，只有二维向量（两个词的查询）可以在平面上表示，幸运的是， <em>线性代数</em> ——作为数学中处理向量的一个分支——为我们提供了计算两个多维向量间角度工具，这意味着可以使用如上同样的方式来解释多个词的查询。</p>
 <h3 id="总结-4">总结</h3>
 <p>这个章节，介绍了很多es的高级用法，用好这些可以帮助我们搜索到我们需要的数据，但由于es也在发展，因此有些东西其实es内部已经优化了，无需我们再去优化，这章节的东西，更多的是一个进阶篇，当我们在使用es时自然而然就会想着怎么去使用这些东西了，因此在学习的过程中，只需要知道es的查询也是需要优化的即可！！！</p>
+<h2 id="java中的使用">Java中的使用</h2>
+<p>要在Java中使用es，有很多种方式，因为es的特性，想使用他无非就是发起http请求嘛，但作为一个流行的技术，我们万能的Javaer，肯定就已经造好了轮子，常见的有es官方提供的sdk，Spring Data Elasticsearch等。</p>
+<h3 id="es官方sdk">es官方SDK</h3>
+<ol>
+<li>
+<p>Low Level REST Client 用于 Es 的官方的低级客户端。这种方式允许通过 <code>HTTP 与 Es 集群</code>进行通信，但是请求时候的 JSON 参数和响应的 JSON 参数交给用户去处理。这种方式好处就是兼容所有的 Es 版本。但是就是数据处理比较麻烦。</p>
+</li>
+<li>
+<p>High Level REST Client 从字面上来理解，这个叫做高级客户端，也是目前使用最多的一种客户端。它其实有点像之前的 TransportClient。</p>
+<p>这个所谓的高级客户端它的<strong>内部其实还是基于低级客户端</strong>，只不过针对 ElasticSearch 它提供了更多的 API，将请求参数和响应参数都封装成了相应的 API，开发者只需要调用相关的方法就可以拼接参数或者解析响应结果。相对于低级客户端，高级客户端的兼容性就要差很多（因为 JSON 的拼接和解析它已经帮我们做好了）。高级客户端需要 JDK1.8 及以上版本并且依赖版本需要与 ElasticSearch 版本相同（主版本号需要一致，次版本号不必相同）。</p>
+</li>
+<li>
+<p>Java API Client(官方推荐) 从<code>ElasticSearch 7.17</code>开始，ES作废<code>Java REST Client </code>也就是1和2</p>
+</li>
+</ol>
+<p>因此下面使用Java API Client 演示最基础的功能，内容主要源于官网<a href="https://www.elastic.co/guide/en/elasticsearch/client/java-api-client/current/getting-started-java.html">示例</a></p>
+<h4 id="引入依赖">引入依赖</h4>
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+         xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;
+    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+    &lt;parent&gt;
+        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+        &lt;artifactId&gt;spring-boot-starter-parent&lt;/artifactId&gt;
+        &lt;version&gt;2.3.12.RELEASE&lt;/version&gt;
+        &lt;relativePath/&gt; &lt;!-- lookup parent from repository --&gt;
+    &lt;/parent&gt;
+    &lt;groupId&gt;com.zt.study&lt;/groupId&gt;
+    &lt;artifactId&gt;es-study&lt;/artifactId&gt;
+    &lt;version&gt;0.0.1-SNAPSHOT&lt;/version&gt;
+    &lt;name&gt;es-study&lt;/name&gt;
+    &lt;dependencies&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;co.elastic.clients&lt;/groupId&gt;
+            &lt;artifactId&gt;elasticsearch-java&lt;/artifactId&gt;
+            &lt;version&gt;7.17.0&lt;/version&gt;
+        &lt;/dependency&gt;
+
+        &lt;dependency&gt;
+            &lt;groupId&gt;com.fasterxml.jackson.core&lt;/groupId&gt;
+            &lt;artifactId&gt;jackson-databind&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;com.fasterxml.jackson.core&lt;/groupId&gt;
+            &lt;artifactId&gt;jackson-core&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;com.fasterxml.jackson.core&lt;/groupId&gt;
+            &lt;artifactId&gt;jackson-annotations&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;jakarta.json&lt;/groupId&gt;
+            &lt;artifactId&gt;jakarta.json-api&lt;/artifactId&gt;
+            &lt;version&gt;2.1.1&lt;/version&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.projectlombok&lt;/groupId&gt;
+            &lt;artifactId&gt;lombok&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+    &lt;/dependencies&gt;
+
+    &lt;build&gt;
+        &lt;plugins&gt;
+            &lt;plugin&gt;
+                &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+                &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;
+                &lt;configuration&gt;
+                    &lt;source&gt;1.8&lt;/source&gt;
+                    &lt;target&gt;1.8&lt;/target&gt;
+                &lt;/configuration&gt;
+            &lt;/plugin&gt;
+            &lt;plugin&gt;
+                &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+                &lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;
+            &lt;/plugin&gt;
+        &lt;/plugins&gt;
+    &lt;/build&gt;
+&lt;/project&gt;
+</code></pre>
+<h4 id="连接es">连接es</h4>
+<pre><code class="language-java">@Component
+public class EsConfig {
+
+    @Bean
+    public ElasticsearchClient elasticsearchClient() {
+        CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
+        credentialsProvider.setCredentials(AuthScope.ANY, new UsernamePasswordCredentials(&quot;&quot;, &quot;&quot;));
+        RestClient restClient = RestClient.builder(new HttpHost(&quot;localhost&quot;, 9200))
+                .setHttpClientConfigCallback(httpClientBuilder -&gt; {
+                    httpClientBuilder.disableAuthCaching();
+                    httpClientBuilder.setDefaultHeaders(Collections.singletonList(
+                            new BasicHeader(
+                                    HttpHeaders.CONTENT_TYPE, ContentType.APPLICATION_JSON.toString())));
+                    httpClientBuilder.addInterceptorLast((HttpResponseInterceptor)
+                            (response, context) -&gt;
+                                    response.addHeader(&quot;X-Elastic-Product&quot;, &quot;Elasticsearch&quot;));
+                    return httpClientBuilder.setDefaultCredentialsProvider(credentialsProvider);
+                }).build();
+        ElasticsearchTransport transport = new RestClientTransport(
+                restClient, new JacksonJsonpMapper());
+
+        return new ElasticsearchClient(transport);
+    }
+}
+</code></pre>
+<h4 id="crud">crud</h4>
+<pre><code class="language-java">package com.zt.study.es.study.controller;
+
+import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import co.elastic.clients.elasticsearch._types.FieldValue;
+import co.elastic.clients.elasticsearch.core.GetResponse;
+import co.elastic.clients.elasticsearch.core.IndexResponse;
+import co.elastic.clients.elasticsearch.core.SearchResponse;
+import co.elastic.clients.elasticsearch.core.search.Hit;
+import com.zt.study.es.study.vo.Goods;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * @author zhengtao on 2023/12/2
+ */
+@RestController
+@Slf4j
+public class TestController {
+    @Autowired
+    ElasticsearchClient esClient;
+
+    @PostMapping(&quot;/createIndex&quot;)
+    public IndexResponse createIndex() throws IOException {
+        Goods goods = Goods.builder().skuId(&quot;1&quot;).skuName(&quot;苹果手机&quot;).price(&quot;100000&quot;).num(&quot;100&quot;).build();
+        return esClient.index(i -&gt; i
+                .index(&quot;java-es&quot;)
+                .id(goods.getSkuId())
+                .document(goods)
+        );
+    }
+
+    @PostMapping(&quot;/queryIndex&quot;)
+    public Goods queryIndex() throws IOException {
+        GetResponse&lt;Goods&gt; response = esClient.get(g -&gt; g
+                        .index(&quot;java-es&quot;)
+                        .id(&quot;1&quot;),
+                Goods.class
+        );
+        return response.source();
+    }
+
+    @PostMapping(&quot;/searchIndex&quot;)
+    public List&lt;Goods&gt; searchIndex() throws IOException {
+        SearchResponse&lt;Goods&gt; response = esClient.search(g -&gt; g
+                        .index(&quot;java-es&quot;)
+                        .query(q -&gt; q
+                                .match(t -&gt; t
+                                        .field(&quot;skuName&quot;)
+                                        .query(FieldValue.of(&quot;苹果&quot;))
+                                )
+                        ),
+                Goods.class
+        );
+        List&lt;Hit&lt;Goods&gt;&gt; hits = response.hits().hits();
+        List&lt;Goods&gt; goods = new ArrayList&lt;&gt;();
+        hits.forEach(hit -&gt; goods.add(hit.source()));
+        return goods;
+    }
+
+    @PostMapping(&quot;/updateIndex&quot;)
+    public Goods updateIndex() throws IOException {
+        Goods goods = Goods.builder().skuId(&quot;2&quot;).skuName(&quot;苹果16&quot;).price(&quot;100000&quot;).num(&quot;100&quot;).build();
+        esClient.update(u -&gt; u
+                        .index(&quot;java-es&quot;)
+                        .id(&quot;1&quot;)
+                        .doc(goods)
+                        .upsert(goods),
+                Goods.class
+        );
+        return goods;
+    }
+
+    @PostMapping(&quot;/deleteIndex&quot;)
+    public void deleteIndex() throws IOException {
+        esClient.delete(d -&gt; d.index(&quot;java-es&quot;).id(&quot;1&quot;));
+    }
+}
+</code></pre>
+<h3 id="spring-data-elasticsearch">Spring Data Elasticsearch</h3>
+<p>万能的spring，只有你想不到，没有他做不到的。直接看<a href="https://docs.spring.io/spring-data/elasticsearch/reference/index.html">官网</a>即可</p>
+<h4 id="引入依赖-1">引入依赖</h4>
+<pre><code class="language-xml">&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-starter-data-elasticsearch&lt;/artifactId&gt;
+&lt;/dependency&gt;
+</code></pre>
+<h4 id="配置">配置</h4>
+<pre><code class="language-json">spring.elasticsearch.rest.uris=http://localhost:9200
+</code></pre>
+<h4 id="建一个实体">建一个实体</h4>
+<pre><code class="language-java">package com.zt.study.es.study.entity;
+
+import lombok.Data;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldType;
+
+@Data
+//indexName 创建文档名 book
+//shards 分片数 2
+//replicas 副本数 2
+//createIndex 若没有索引会自动创建
+@Document(indexName = &quot;books&quot;, shards = 3, replicas = 2, createIndex = true)
+public class Book {
+    //文档唯一id
+    @Id
+    private String id;
+
+    //type 指定字段类型
+    @Field(type = FieldType.Keyword)
+    private String[] author;
+
+    @Field(type = FieldType.Double)
+    private String price;
+
+    @Field(type = FieldType.Keyword)
+    private String publish;
+
+    @Field(type = FieldType.Text,analyzer = &quot;ik_max_word&quot;)
+    private String name;
+
+    @Field(type = FieldType.Text,analyzer = &quot;ik_max_word&quot;)
+    private String type;
+
+    @Field(type = FieldType.Text,analyzer = &quot;ik_max_word&quot;)
+    private String info;
+}
+</code></pre>
+<h4 id="crud-1">crud</h4>
+<pre><code class="language-java">package com.zt.study.es.study.controller;
+
+import com.zt.study.es.study.entity.Book;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
+import org.springframework.data.elasticsearch.core.document.Document;
+import org.springframework.data.elasticsearch.core.mapping.IndexCoordinates;
+import org.springframework.data.elasticsearch.core.query.UpdateQuery;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+/**
+ * spring data 使用
+ *
+ * @author zhengtao on 2024/11/16
+ */
+@RestController
+@Slf4j
+public class SpringDataController {
+    @Autowired
+    ElasticsearchOperations elasticsearchOperations;
+
+    @PostMapping(&quot;/create&quot;)
+    public Book create(@RequestBody Book book) {
+        elasticsearchOperations.save(book);
+        return book;
+    }
+
+    @PostMapping(&quot;/query&quot;)
+    public Book query(@RequestBody Book book) {
+        return elasticsearchOperations.get(book.getId(), Book.class);
+    }
+
+    @PostMapping(&quot;/delete&quot;)
+    public Book delete(@RequestBody Book book) {
+        elasticsearchOperations.delete(book.getId(), Book.class);
+        return book;
+    }
+
+    @PostMapping(&quot;/update&quot;)
+    public Book update(@RequestBody Book book) {
+        Document document = Document.create();
+        document.put(&quot;author&quot;, book.getAuthor());
+        document.put(&quot;price&quot;, book.getPrice());
+        document.put(&quot;publish&quot;, book.getPublish());
+        document.put(&quot;name&quot;, book.getName());
+        document.put(&quot;info&quot;, book.getInfo());
+        UpdateQuery updateQuery = UpdateQuery
+                .builder(&quot;1&quot;)
+                .withDocument(document)
+                .withDocAsUpsert(true)
+                .build();
+        elasticsearchOperations.update(updateQuery, IndexCoordinates.of(&quot;books&quot;));
+        return book;
+    }
+}
+</code></pre>
 
     </div>
     <div class="article-footer">
