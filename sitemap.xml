@@ -4,7 +4,35 @@
   
   <url>
     <loc>https://wzgl998877.github.io/categories/</loc>
-    <lastmod>2024-10-21T19:46:35+08:00</lastmod>
+    <lastmod>2024-12-30T20:23:24+08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://wzgl998877.github.io/posts/</loc>
+    <lastmod>2024-12-30T20:23:24+08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://wzgl998877.github.io/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/</loc>
+    <lastmod>2024-12-30T20:23:24+08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://wzgl998877.github.io/2024/12/%E5%A4%A7%E6%95%B0%E6%8D%AE/</loc>
+    <lastmod>2024-12-30T20:23:24+08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://wzgl998877.github.io/</loc>
+    <lastmod>2024-12-30T20:23:24+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
@@ -24,28 +52,7 @@
   </url>
   
   <url>
-    <loc>https://wzgl998877.github.io/posts/</loc>
-    <lastmod>2024-10-21T19:46:35+08:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
     <loc>https://wzgl998877.github.io/tags/</loc>
-    <lastmod>2024-10-21T19:46:35+08:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://wzgl998877.github.io/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/</loc>
-    <lastmod>2024-10-21T19:46:35+08:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://wzgl998877.github.io/</loc>
     <lastmod>2024-10-21T19:46:35+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>

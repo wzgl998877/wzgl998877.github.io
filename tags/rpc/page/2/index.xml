@@ -12,6 +12,15 @@
     
     
     <item>
+      <title>图解http</title>
+      <link>https://wzgl998877.github.io/2022/01/%E5%9B%BE%E8%A7%A3http/</link>
+      <pubDate>Sun, 09 Jan 2022 11:24:40 +0800</pubDate>
+      
+      <guid>https://wzgl998877.github.io/2022/01/%E5%9B%BE%E8%A7%A3http/</guid>
+      <description>[TOC] 图解http 网络模型 OSI 模型(具体每层的定义还需要看书确定这个只是网上看的，可以回去看计网) 应用层（application）：最接近终端用户</description>
+    </item>
+    
+    <item>
       <title>数据库知识</title>
       <link>https://wzgl998877.github.io/2022/01/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9F%A5%E8%AF%86/</link>
       <pubDate>Sun, 09 Jan 2022 11:24:40 +0800</pubDate>

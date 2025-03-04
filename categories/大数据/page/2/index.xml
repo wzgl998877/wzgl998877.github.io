@@ -6,10 +6,19 @@
     <description>Recent content in 大数据 on 码农的学习笔记</description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>CC BY 4.0 CN</copyright>
-    <lastBuildDate>Mon, 21 Oct 2024 19:46:35 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 30 Dec 2024 20:23:24 +0800</lastBuildDate>
     
         <atom:link href="https://wzgl998877.github.io/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>图解http</title>
+      <link>https://wzgl998877.github.io/2022/01/%E5%9B%BE%E8%A7%A3http/</link>
+      <pubDate>Sun, 09 Jan 2022 11:24:40 +0800</pubDate>
+      
+      <guid>https://wzgl998877.github.io/2022/01/%E5%9B%BE%E8%A7%A3http/</guid>
+      <description>[TOC] 图解http 网络模型 OSI 模型(具体每层的定义还需要看书确定这个只是网上看的，可以回去看计网) 应用层（application）：最接近终端用户</description>
+    </item>
     
     <item>
       <title>数据库知识</title>

@@ -1,0 +1,2369 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <title>
+        大数据入门 - 码农的学习笔记
+      </title>
+        <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    
+    <meta name="theme-color" content="#000000" />
+    
+    <meta http-equiv="window-target" content="_top" />
+    
+    
+    <meta name="description" content="[TOC] 大数据入门 维基百科对于大数据的定义是，大数据（big data）指的是传统数据处理应用软件不足以处理的大或复杂的数据集。 而对于我们开发人员来" />
+    <meta name="generator" content="Hugo 0.91.2 with theme pure" />
+    <title>大数据入门 - 码农的学习笔记</title>
+    
+    
+    <link rel="stylesheet" href="https://wzgl998877.github.io/css/style.min.a85959a41e7abcc0db1f81f44bd264649303417f91b536e87dcde644340fea6d.css">
+    
+    <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/9.15.10/styles/github.min.css" async>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css" async>
+    <meta property="og:title" content="大数据入门" />
+<meta property="og:description" content="[TOC] 大数据入门 维基百科对于大数据的定义是，大数据（big data）指的是传统数据处理应用软件不足以处理的大或复杂的数据集。 而对于我们开发人员来" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wzgl998877.github.io/2024/12/%E5%A4%A7%E6%95%B0%E6%8D%AE/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2024-12-30T20:23:24+08:00" />
+<meta property="article:modified_time" content="2024-12-30T20:23:24+08:00" />
+
+<meta itemprop="name" content="大数据入门">
+<meta itemprop="description" content="[TOC] 大数据入门 维基百科对于大数据的定义是，大数据（big data）指的是传统数据处理应用软件不足以处理的大或复杂的数据集。 而对于我们开发人员来"><meta itemprop="datePublished" content="2024-12-30T20:23:24+08:00" />
+<meta itemprop="dateModified" content="2024-12-30T20:23:24+08:00" />
+<meta itemprop="wordCount" content="37716">
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="大数据入门"/>
+<meta name="twitter:description" content="[TOC] 大数据入门 维基百科对于大数据的定义是，大数据（big data）指的是传统数据处理应用软件不足以处理的大或复杂的数据集。 而对于我们开发人员来"/>
+
+    <!--[if lte IE 9]>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+      <![endif]-->
+
+    <!--[if lt IE 9]>
+        <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+      <![endif]-->
+  </head>
+
+  
+  
+
+  <body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage"><header class="header" itemscope itemtype="http://schema.org/WPHeader">
+    <div class="slimContent">
+      <div class="navbar-header">
+        <div class="profile-block text-center">
+          <a id="avatar" href="https://github.com/wzgl998877/" target="_blank">
+            <img class="img-circle img-rotate" src="https://wzgl998877.github.io/avatar.png" width="200" height="200">
+          </a>
+          <h2 id="name" class="hidden-xs hidden-sm">microzheng</h2>
+          <h3 id="title" class="hidden-xs hidden-sm hidden-md">努力会说谎，但努力不会白费</h3>
+          <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i>Shenzhen China</small>
+        </div><div class="search" id="search-form-wrap">
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i
+                        class="icon icon-search"></i></button>
+            </span>
+        </div>
+        <div class="ins-search">
+            <div class="ins-search-mask"></div>
+            <div class="ins-search-container">
+                <div class="ins-input-wrapper">
+                    <input type="text" class="ins-search-input" placeholder="想要查找什么..."
+                        x-webkit-speech />
+                    <button type="button" class="close ins-close ins-selectable" data-dismiss="modal"
+                        aria-label="Close"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="ins-section-wrapper">
+                    <div class="ins-section-container"></div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+        <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+        <ul class="nav navbar-nav main-nav">
+            <li class="menu-item menu-item-home">
+                <a href="/">
+                    <i class="icon icon-home-fill"></i>
+                  <span class="menu-title">主页</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-archives">
+                <a href="/posts/">
+                    <i class="icon icon-archives-fill"></i>
+                  <span class="menu-title">归档</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-categories">
+                <a href="/categories/">
+                    <i class="icon icon-folder"></i>
+                  <span class="menu-title">分类</span>
+                </a>
+            </li>
+            <li class="menu-item menu-item-tags">
+                <a href="/tags/">
+                    <i class="icon icon-tags"></i>
+                  <span class="menu-title">标签</span>
+                </a>
+            </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+<aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content"><p>enjoy~</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+      <div class="widget">
+    <h3 class="widget-title"> 分类</h3>
+    <div class="widget-body">
+        <ul class="category-list">
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/git/" class="category-list-link">git</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/java/" class="category-list-link">java</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/spring/" class="category-list-link">spring</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/" class="category-list-link">中间件</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E4%BA%91%E5%8E%9F%E7%94%9F/" class="category-list-link">云原生</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/" class="category-list-link">大数据</a><span class="category-list-count">2</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E5%B8%B8%E7%94%A8%E6%A1%86%E6%9E%B6/" class="category-list-link">常用框架</a><span class="category-list-count">4</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="category-list-link">数据库</a><span class="category-list-count">4</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E6%97%A5%E5%B8%B8%E6%80%BB%E7%BB%93/" class="category-list-link">日常总结</a><span class="category-list-count">3</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E7%AE%97%E6%B3%95/" class="category-list-link">算法</a><span class="category-list-count">2</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/" class="category-list-link">系统设计</a><span class="category-list-count">1</span></li>
+            <li class="category-list-item"><a href="https://wzgl998877.github.io/categories/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/" class="category-list-link">网络编程</a><span class="category-list-count">3</span></li>
+        </ul>
+    </div>
+</div>
+      <div class="widget">
+    <h3 class="widget-title"> 标签</h3>
+    <div class="widget-body">
+        <ul class="tag-list">
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/elasticsearch/" class="tag-list-link">elasticsearch</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/http/" class="tag-list-link">http</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/java%E5%9F%BA%E7%A1%80/" class="tag-list-link">java基础</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/java%E5%B9%B6%E5%8F%91/" class="tag-list-link">java并发</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/jvm/" class="tag-list-link">jvm</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/leetcode/" class="tag-list-link">leetcode</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/mybatis/" class="tag-list-link">mybatis</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/mysql/" class="tag-list-link">mysql</a><span
+                    class="tag-list-count">3</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/netty/" class="tag-list-link">netty</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/redis/" class="tag-list-link">redis</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/rpc/" class="tag-list-link">rpc</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/spring/" class="tag-list-link">spring</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/websocket/" class="tag-list-link">websocket</a><span
+                    class="tag-list-count">1</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" class="tag-list-link">消息队列</a><span
+                    class="tag-list-count">2</span></li>
+            
+            
+            <li class="tag-list-item"><a href="https://wzgl998877.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="tag-list-link">设计模式</a><span
+                    class="tag-list-count">1</span></li>
+            
+        </ul>
+
+    </div>
+</div>
+      
+<div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+        <ul class="recent-post-list list-unstyled no-thumbnail">
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://wzgl998877.github.io/2024/12/%E5%A4%A7%E6%95%B0%E6%8D%AE/" class="title">大数据入门</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2024-12-30 20:23:24 &#43;0800 CST" itemprop="datePublished">2024-12-30</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://wzgl998877.github.io/2024/10/elasticsearch/" class="title">ElasticSearch</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2024-10-21 19:46:35 &#43;0800 CST" itemprop="datePublished">2024-10-21</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://wzgl998877.github.io/2024/09/%E9%AB%98%E6%80%A7%E8%83%BDmysql/" class="title">高性能Mysql</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2024-09-11 20:03:12 &#43;0800 CST" itemprop="datePublished">2024-09-11</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://wzgl998877.github.io/2022/11/springcloud/" class="title">SpringCloud</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2022-11-07 19:15:43 &#43;0800 CST" itemprop="datePublished">2022-11-07</time>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="item-inner">
+                    <p class="item-title">
+                        <a href="https://wzgl998877.github.io/2022/09/docker%E5%92%8Ck8s/" class="title">Docker和k8s</a>
+                    </p>
+                    <p class="item-date">
+                        <time datetime="2022-09-09 10:26:21 &#43;0800 CST" itemprop="datePublished">2022-09-09</time>
+                    </p>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+  </div>
+</aside>
+
+    
+    
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <h4 class="toc-title">文章目录</h4>
+    <nav id="toc" class="js-toc toc">
+
+    </nav>
+  </div>
+</aside>
+<main class="main" role="main"><div class="content">
+  <article id="-" class="article article-type-" itemscope
+    itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      <h1 itemprop="name">
+  <a
+    class="article-title"
+    href="/2024/12/%E5%A4%A7%E6%95%B0%E6%8D%AE/"
+    >大数据入门</a
+  >
+</h1>
+
+      <div class="article-meta">
+        
+<span class="article-date">
+  <i class="icon icon-calendar-check"></i>&nbsp;
+<a href="https://wzgl998877.github.io/2024/12/%E5%A4%A7%E6%95%B0%E6%8D%AE/" class="article-date">
+  <time datetime="2024-12-30 20:23:24 &#43;0800 CST" itemprop="datePublished">2024-12-30</time>
+</a>
+</span>
+<span class="article-category">
+  <i class="icon icon-folder"></i>&nbsp;
+  <a class="article-category-link" href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/"> 大数据 </a>
+</span>
+
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 37716字</span>
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 76分 </span>
+      </div>
+    </div>
+    <div class="article-entry marked-body js-toc-content" itemprop="articleBody">
+      <p>[TOC]</p>
+<h1 id="大数据入门">大数据入门</h1>
+<p>维基百科对于大数据的定义是，大数据（big data）指的是<strong>传统数据处理应用软件不足以处理的大或复杂的数据集</strong>。 而对于我们开发人员来说，学习大数据更多的是学习大数据相关的技术。我们可以将大数据处理的流程简单的分为，数据收集、数据存储、数据处理、数据应用等。</p>
+<p><img src="image-20241230204455945.png" alt="image-20241230204455945"></p>
+<p>以上每个环节都有其技术栈，简单分类如下，<strong>这篇文章就带领大家入门这些技术</strong></p>
+<ul>
+<li>日志收集框架：Flume 、Logstash、Kibana</li>
+<li>分布式文件存储系统：Hadoop HDFS</li>
+<li>数据库系统：Mongodb、HBase</li>
+<li>分布式计算框架：
+<ul>
+<li>批处理框架：Hadoop MapReduce</li>
+<li>流处理框架：Storm</li>
+<li>混合处理框架：Spark、Flink</li>
+</ul>
+</li>
+<li>查询分析框架：Hive 、Spark SQL 、Flink SQL、 Pig、Phoenix</li>
+<li>集群资源管理器：Hadoop YARN</li>
+<li>分布式协调服务：Zookeeper</li>
+<li>数据迁移工具：Sqoop</li>
+<li>任务调度框架：Azkaban、Oozie</li>
+<li>集群部署和监控：Ambari、Cloudera Manager</li>
+</ul>
+<p><img src="%7B96ECE70D-BA95-4B19-9AF2-71ABB016CA84%7D" alt="img"></p>
+<h2 id="安装">安装</h2>
+<p>公欲利其事必先利其器，先把常用的全安装上！！！</p>
+<h3 id="安装hadoop">安装Hadoop</h3>
+<ol>
+<li>
+<p>下载hadoop <a href="https://archive.apache.org/dist/hadoop/common/hadoop-3.2.4/">https://archive.apache.org/dist/hadoop/common/hadoop-3.2.4/</a></p>
+<p><img src="image-20250106200913175.png" alt="image-20250106200913175"></p>
+</li>
+</ol>
+<p>下载完后，解压然后配置环境变量即可</p>
+<ol start="2">
+<li>
+<p>下载 winutils <a href="https://github.com/cdarlint/winutils">https://github.com/cdarlint/winutils</a></p>
+<p>下载完，解压后，找到对应的版本，拷贝其中的winutils.exe文件到hadoop的bin目录下</p>
+</li>
+</ol>
+<p><img src="image-20250106201046478.png" alt="image-20250106201046478"></p>
+<ol start="3">
+<li>执行hadoop version 验证hadoop 安装是否成功</li>
+</ol>
+<p><img src="image-20250210195115800.png" alt="image-20250210195115800"></p>
+<ol start="4">
+<li>
+<p>将安装目录\bin(我的是D:\tool\hadoop\hadoop-3.2.1)下的hadoop.dll复制到安装目录\sbin,以及<code>C:\Windows\System32</code>这两个目录下</p>
+</li>
+<li>
+<p>hadoop目录下创建以下目录\data\dfs\datanode、\data\dfs\namenode</p>
+</li>
+<li>
+<p>修改etc\hadoop下的core-site.xml文件</p>
+<pre><code>&lt;configuration&gt;
+	&lt;property&gt;
+		&lt;name&gt;fs.defaultFS&lt;/name&gt;
+		&lt;value&gt;hdfs://localhost:9000&lt;/value&gt;
+	&lt;/property&gt;
+&lt;/configuration&gt;
+</code></pre>
+</li>
+<li>
+<p>修改etc\hadoop下的hdfs-site.xml文件,具体路径为第5步中创建的文件夹路径</p>
+<pre><code>&lt;configuration&gt;
+	&lt;property&gt;
+		&lt;name&gt;dfs.replication&lt;/name&gt;
+		&lt;value&gt;1&lt;/value&gt;
+	&lt;/property&gt;
+	&lt;property&gt;
+		&lt;name&gt;dfs.namenode.http-address&lt;/name&gt;
+		&lt;value&gt;localhost:50070&lt;/value&gt;
+	&lt;/property&gt;
+	&lt;property&gt;
+		&lt;name&gt;dfs.namenode.dir&lt;/name&gt;
+		&lt;value&gt;/D:/tool/hadoop/hadoop-3.2.1/data/dfs/namenode&lt;/value&gt;
+	&lt;/property&gt;
+	&lt;property&gt;
+		&lt;name&gt;dfs.datanode.name.dir&lt;/name&gt;
+		&lt;value&gt;/D:/tool/hadoop/hadoop-3.2.1/data/dfs/datanode&lt;/value&gt;
+	&lt;/property&gt;
+&lt;/configuration&gt;
+</code></pre>
+</li>
+<li>
+<p>修改etc\hadoop下的mapred-site.xml文件</p>
+<pre><code>&lt;configuration&gt;
+	&lt;property&gt;
+		&lt;name&gt;mapreduce.framework.name&lt;/name&gt;
+		&lt;value&gt;yarn&lt;/value&gt;
+	&lt;/property&gt;
+	&lt;property&gt;
+		&lt;name&gt;mapred.job.tracker&lt;/name&gt;
+		&lt;value&gt;hdfs://localhost:9001&lt;/value&gt;
+	&lt;/property&gt;
+&lt;/configuration&gt;
+</code></pre>
+</li>
+<li>
+<p>修改etc\hadoop下的yarn-site.xml文件</p>
+<pre><code>&lt;configuration&gt;
+	&lt;property&gt;
+		&lt;name&gt;yarn.nodemanager.aux-services&lt;/name&gt;
+		&lt;value&gt;mapreduce_shuffle&lt;/value&gt;
+	&lt;/property&gt;
+	&lt;property&gt;
+		&lt;name&gt;yarn.nodemanager.aux-services.mapreduce.shuffle.class&lt;/name&gt;
+		&lt;value&gt;org.apache.hadoop.mapred.ShuffleHandler&lt;/value&gt;
+	&lt;/property&gt;
+&lt;/configuration&gt;
+</code></pre>
+</li>
+<li>
+<p>修改etc\hadoop下的hadoop-env.cmd文件。在文件的最后添加如下语句。</p>
+<pre><code>@rem set JAVA_HOME=%JAVA_HOME%
+set JAVA_HOME=自己的jdk路径
+</code></pre>
+</li>
+<li>
+<p>格式化HDFS 打开CMD，输入hdfs namenode -format</p>
+<p>如果是3.2.1版本,会报如下的错</p>
+<p><img src="image-20250210203445435.png" alt="image-20250210203445435"></p>
+<p>这是hadoop的bug，从这里下载https://github.com/tang2087/big-data/blob/master/hadoop-hdfs-3.2.1.jar，hadoop-hdfs-3.2.1.jar文件替换Hadoop-3.2.1\share\hadoop\hdfs下的hadoop-hdfs-3.2.1.jar文件</p>
+</li>
+<li>
+<p>切换到\hadoop\hadoop-3.2.1\sbin目录，cmd，执行start-all.cmd，要关闭则执行stop-all.cmd</p>
+</li>
+<li>
+<p>http://localhost:8088 能打开代表已经成功了</p>
+</li>
+</ol>
+<h3 id="安装spark">安装spark</h3>
+<ol>
+<li>
+<p>安装spark <a href="https://archive.apache.org/dist/spark/spark-3.2.4/">https://archive.apache.org/dist/spark/spark-3.2.4/</a></p>
+<p><img src="image-20250106200651884.png" alt="image-20250106200651884"></p>
+<p>下载完后，解压然后配置环境变量即可</p>
+</li>
+<li>
+<p>下载Scala，https://github.com/scala/scala3/releases/tag/3.2.0</p>
+</li>
+</ol>
+<p><img src="image-20250206102005590.png" alt="image-20250206102005590"></p>
+<p>下载完后，解压然后配置环境变量即可</p>
+<ol start="3">
+<li>执行 scala 验证scala安装是否成功</li>
+</ol>
+<p><img src="image-20250206102251499.png" alt="image-20250206102251499"></p>
+<ol start="3">
+<li>执行 spark-shell 验证 spark 安装是否成功</li>
+</ol>
+<p><img src="image-20250205171740991.png" alt="image-20250205171740991"></p>
+<h3 id="安装hive">安装Hive</h3>
+<ol>
+<li>
+<p>下载https://archive.apache.org/dist/hive/hive-3.1.3/</p>
+<p><img src="image-20250210204955715.png" alt="image-20250210204955715"></p>
+<p>解压后，并配置环境变量</p>
+</li>
+<li>
+<p>将conf下的以下四个文件进行改名</p>
+<pre><code>hive-default.xml.template -&gt; hive-site.xml
+hive-env.sh.template -&gt; hive-env.sh
+hive-exec-log4j2.properties.template -&gt; hive-exec-log4j2.properties
+hive-log4j2.properties.template -&gt; hive-log4j2.properties
+</code></pre>
+</li>
+<li>
+<p>在D:\tool\hive\apache-hive-3.1.3-bin（第1步解压后的目录），新增以下文件夹</p>
+<pre><code>\my_hive
+\my_hive\operation_logs_dir
+\my_hive\querylog_dir
+\my_hive\resources_dir
+\my_hive\scratch_dir
+</code></pre>
+</li>
+<li>
+<p>修改conf下的hive-env.sh文件,<strong>注意改为自己的路径</strong></p>
+<pre><code class="language-xml"># Set HADOOP_HOME to point to a specific hadoop install directory
+HADOOP_HOME=D:\tool\hive\apache-hive-3.1.3-bin
+
+# Hive Configuration Directory can be controlled by:
+export HIVE_CONF_DIR=D:\tool\hive\apache-hive-3.1.3-bin\conf
+
+# Folder containing extra ibraries required for hive compilation/execution can be controlled by:
+export HIVE_AUX_JARS_PATH=D:\tool\hive\apache-hive-3.1.3-bin\lib
+</code></pre>
+</li>
+<li>
+<p>修改conf下的hive-site.xml文件，<strong>注意改为自己的路径</strong></p>
+<pre><code class="language-xml">&lt;property&gt;
+    &lt;name&gt;hive.exec.local.scratchdir&lt;/name&gt;
+    &lt;value&gt;D:/tool/hive/apache-hive-3.1.3-bin/my_hive/scratch_dir&lt;/value&gt;
+    &lt;description&gt;Local scratch space for Hive jobs&lt;/description&gt;
+&lt;/property&gt;
+&lt;property&gt;
+    &lt;name&gt;hive.downloaded.resources.dir&lt;/name&gt;
+    &lt;value&gt;D:/tool/hive/apache-hive-3.1.3-bin/my_hive/resources_dir/${hive.session.id}_resources&lt;/value&gt;
+    &lt;description&gt;Temporary local directory for added resources in the remote file system.&lt;/description&gt;
+&lt;/property&gt;
+&lt;property&gt;
+    &lt;name&gt;hive.querylog.location&lt;/name&gt;
+    &lt;value&gt;D:/tool/hive/apache-hive-3.1.3-bin/my_hive/querylog_dir&lt;/value&gt;
+    &lt;description&gt;Location of Hive run time structured log file&lt;/description&gt;
+&lt;/property&gt;
+&lt;property&gt;
+    &lt;property&gt;
+        &lt;name&gt;hive.server2.logging.operation.log.location&lt;/name&gt;
+        &lt;value&gt;D:/tool/hive/apache-hive-3.1.3-bin/my_hive/operation_logs_dir&lt;/value&gt;
+        &lt;description&gt;Top level directory where operation logs are stored if logging functionality is enabled&lt;/description&gt;
+    &lt;/property&gt;
+</code></pre>
+</li>
+<li>
+<p>启动Hadoop后，执行以下命令</p>
+<pre><code class="language-shell">hadoop fs -mkdir /tmp
+hadoop fs -mkdir /user/
+hadoop fs -mkdir /user/hive/
+hadoop fs -mkdir /user/hive/warehouse
+hadoop fs -chmod g+w /tmp
+hadoop fs -chmod g+w /user/hive/warehouse
+</code></pre>
+</li>
+</ol>
+<h3 id="安装flink">安装Flink</h3>
+<ol>
+<li>
+<p>下载 <a href="https://archive.apache.org/dist/flink/flink-1.18.0/">https://archive.apache.org/dist/flink/flink-1.18.0/</a></p>
+<p><img src="image-20250217210120280.png" alt="image-20250217210120280"></p>
+<p>解压并配置环境变量</p>
+</li>
+<li>
+<p>在bin文件夹下新增flink.bat 文件</p>
+<pre><code class="language-bat">::###############################################################################
+::  Licensed to the Apache Software Foundation (ASF) under one
+::  or more contributor license agreements.  See the NOTICE file
+::  distributed with this work for additional information
+::  regarding copyright ownership.  The ASF licenses this file
+::  to you under the Apache License, Version 2.0 (the
+::  &quot;License&quot;); you may not use this file except in compliance
+::  with the License.  You may obtain a copy of the License at
+::
+::      http://www.apache.org/licenses/LICENSE-2.0
+::
+::  Unless required by applicable law or agreed to in writing, software
+::  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+::  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+::  See the License for the specific language governing permissions and
+:: limitations under the License.
+::###############################################################################
+
+@echo off
+setlocal
+
+SET bin=%~dp0
+SET FLINK_HOME=%bin%..
+SET FLINK_LIB_DIR=%FLINK_HOME%\lib
+SET FLINK_PLUGINS_DIR=%FLINK_HOME%\plugins
+
+SET JVM_ARGS=-Xmx512m
+
+SET FLINK_JM_CLASSPATH=%FLINK_LIB_DIR%\*
+
+java %JVM_ARGS% -cp &quot;%FLINK_JM_CLASSPATH%&quot;; org.apache.flink.client.cli.CliFrontend %*
+
+endlocal
+</code></pre>
+</li>
+<li>
+<p>在bin文件夹下新增flink.bat 文件</p>
+<pre><code class="language-BAT">::###############################################################################
+::  Licensed to the Apache Software Foundation (ASF) under one
+::  or more contributor license agreements.  See the NOTICE file
+::  distributed with this work for additional information
+::  regarding copyright ownership.  The ASF licenses this file
+::  to you under the Apache License, Version 2.0 (the
+::  &quot;License&quot;); you may not use this file except in compliance
+::  with the License.  You may obtain a copy of the License at
+::
+::      http://www.apache.org/licenses/LICENSE-2.0
+::
+::  Unless required by applicable law or agreed to in writing, software
+::  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+::  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+::  See the License for the specific language governing permissions and
+:: limitations under the License.
+::###############################################################################
+
+@echo off
+setlocal EnableDelayedExpansion
+
+SET bin=%~dp0
+SET FLINK_HOME=%bin%..
+SET FLINK_LIB_DIR=%FLINK_HOME%\lib
+SET FLINK_PLUGINS_DIR=%FLINK_HOME%\plugins
+SET FLINK_CONF_DIR=%FLINK_HOME%\conf
+SET FLINK_LOG_DIR=%FLINK_HOME%\log
+
+SET JVM_ARGS=-Xms1024m -Xmx1024m
+
+SET FLINK_CLASSPATH=%FLINK_LIB_DIR%\*
+
+SET logname_jm=flink-%username%-jobmanager.log
+SET logname_tm=flink-%username%-taskmanager.log
+SET log_jm=%FLINK_LOG_DIR%\%logname_jm%
+SET log_tm=%FLINK_LOG_DIR%\%logname_tm%
+SET outname_jm=flink-%username%-jobmanager.out
+SET outname_tm=flink-%username%-taskmanager.out
+SET out_jm=%FLINK_LOG_DIR%\%outname_jm%
+SET out_tm=%FLINK_LOG_DIR%\%outname_tm%
+
+SET log_setting_jm=-Dlog.file=&quot;%log_jm%&quot; -Dlogback.configurationFile=file:&quot;%FLINK_CONF_DIR%/logback.xml&quot; -Dlog4j.configuration=file:&quot;%FLINK_CONF_DIR%/log4j.properties&quot;
+SET log_setting_tm=-Dlog.file=&quot;%log_tm%&quot; -Dlogback.configurationFile=file:&quot;%FLINK_CONF_DIR%/logback.xml&quot; -Dlog4j.configuration=file:&quot;%FLINK_CONF_DIR%/log4j.properties&quot;
+
+:: Log rotation (quick and dirty)
+CD &quot;%FLINK_LOG_DIR%&quot;
+for /l %%x in (5, -1, 1) do (
+SET /A y = %%x+1
+RENAME &quot;%logname_jm%.%%x&quot; &quot;%logname_jm%.!y!&quot; 2&gt; nul
+RENAME &quot;%logname_tm%.%%x&quot; &quot;%logname_tm%.!y!&quot; 2&gt; nul
+RENAME &quot;%outname_jm%.%%x&quot; &quot;%outname_jm%.!y!&quot;  2&gt; nul
+RENAME &quot;%outname_tm%.%%x&quot; &quot;%outname_tm%.!y!&quot;  2&gt; nul
+)
+RENAME &quot;%logname_jm%&quot; &quot;%logname_jm%.0&quot;  2&gt; nul
+RENAME &quot;%logname_tm%&quot; &quot;%logname_tm%.0&quot;  2&gt; nul
+RENAME &quot;%outname_jm%&quot; &quot;%outname_jm%.0&quot;  2&gt; nul
+RENAME &quot;%outname_tm%&quot; &quot;%outname_tm%.0&quot;  2&gt; nul
+DEL &quot;%logname_jm%.6&quot;  2&gt; nul
+DEL &quot;%logname_tm%.6&quot;  2&gt; nul
+DEL &quot;%outname_jm%.6&quot;  2&gt; nul
+DEL &quot;%outname_tm%.6&quot;  2&gt; nul
+
+for %%X in (java.exe) do (set FOUND=%%~$PATH:X)
+if not defined FOUND (
+    echo java.exe was not found in PATH variable
+    goto :eof
+)
+
+echo Starting a local cluster with one JobManager process and one TaskManager process.
+
+echo You can terminate the processes via CTRL-C in the spawned shell windows.
+
+echo Web interface by default on http://localhost:8081/.
+
+start java %JVM_ARGS% %log_setting_jm% -cp &quot;%FLINK_CLASSPATH%&quot;; org.apache.flink.runtime.entrypoint.StandaloneSessionClusterEntrypoint --configDir &quot;%FLINK_CONF_DIR%&quot; &gt; &quot;%out_jm%&quot; 2&gt;&amp;1
+start java %JVM_ARGS% %log_setting_tm% -cp &quot;%FLINK_CLASSPATH%&quot;; org.apache.flink.runtime.taskexecutor.TaskManagerRunner --configDir &quot;%FLINK_CONF_DIR%&quot; &gt; &quot;%out_tm%&quot; 2&gt;&amp;1
+
+endlocal
+</code></pre>
+</li>
+<li>
+<p>执行bin\start-cluster.bat，访问http://localhost:8081/，能访问代表成功</p>
+<p><img src="image-20250217210300303.png" alt="image-20250217210300303"></p>
+</li>
+</ol>
+<h2 id="hadoop">Hadoop</h2>
+<p>作为大数据技术的老大哥，学习大数据自然要从Hadoop开始。</p>
+<p>The Apache Hadoop software library is a framework that allows for the distributed processing of large data sets across clusters of computers using simple programming models. It is designed to scale up from single servers to thousands of machines, each offering local computation and storage. Rather than rely on hardware to deliver high-availability, the library itself is designed to detect and handle failures at the application layer, so delivering a highly-available service on top of a cluster of computers, each of which may be prone to failures.</p>
+<p>Apache Hadoop 软件库是一个框架，允许使用简单的编程模型<strong>跨计算机集群分布式处理大型数据集</strong>。它旨在从<strong>单个服务器扩展到数千台机器</strong>，<strong>每台机器都提供本地计算和存储</strong>。该库本身不是依靠硬件来提供高可用性，而是旨在检测和处理应用程序层的故障，以便<strong>在计算机集群之上提供高可用性服务</strong>，而每台计算机都可能容易出现故障。</p>
+<p>Hadoop 主要包含以下三个核心组件</p>
+<ul>
+<li><strong>HDFS</strong> ：分布式文件系统，提供对应用程序数据的高吞吐量访问。</li>
+</ul>
+<ul>
+<li><strong>MapReduce</strong>：分布式计算框架。</li>
+<li><strong>YARN</strong> ：作业调度和集群资源管理框架。</li>
+</ul>
+<h3 id="hdfs">HDFS</h3>
+<p>Hadoop分布式文件系统HDFS的设计目标是管理数以千计的服务器、数以万计的磁盘，将这么大规模的服务器计算资源当作一个单一的存储系统进行管理，对应用程序提供数以PB计的存储容量，让应用程序像使用普通文件系统一样存储大规模的文件数据。</p>
+<p>HDFS是在一个大规模分布式服务器集群上，对数据分片后进行并行读写及冗余存储。因为HDFS可以部署在一个比较大的服务器集群上，集群中所有服务器的磁盘都可供HDFS使用，所以整个HDFS的存储空间可以达到PB级容量。</p>
+<p><img src="17f9233cc4cd4a7ab9e8bdacce0c18e7.jpg" alt="img"></p>
+<p>上图是HDFS的架构图，从图中你可以看到HDFS的关键组件有两个，一个是DataNode，一个是NameNode。</p>
+<p><strong>DataNode负责文件数据的存储和读写操作，HDFS将文件数据分割成若干数据块（Block），每个DataNode存储一部分数据块，这样文件就分布存储在整个HDFS服务器集群中</strong>。应用程序客户端（Client）可以并行对这些数据块进行访问，从而使得HDFS可以在服务器集群规模上实现数据并行访问，极大地提高了访问速度。</p>
+<p>在实践中，HDFS集群的DataNode服务器会有很多台，一般在几百台到几千台这样的规模，每台服务器配有数块磁盘，整个集群的存储容量大概在几PB到数百PB。</p>
+<p><strong>NameNode负责整个分布式文件系统的元数据（MetaData）管理，也就是文件路径名、数据块的ID以及存储位置等信息，相当于操作系统中文件分配表（FAT）的角色</strong>。HDFS为了保证数据的高可用，会将一个数据块复制为多份（缺省情况为3份），并将多份相同的数据块存储在不同的服务器上，甚至不同的机架上。这样当有磁盘损坏，或者某个DataNode服务器宕机，甚至某个交换机宕机，导致其存储的数据块不能访问的时候，客户端会查找其备份的数据块进行访问。</p>
+<p>下面这张图是数据块多份复制存储的示意，图中对于文件/users/sameerp/data/part-0，其复制备份数设置为2，存储的BlockID分别为1、3。Block1的两个备份存储在DataNode0和DataNode2两个服务器上，Block3的两个备份存储DataNode4和DataNode6两个服务器上，上述任何一台服务器宕机后，每个数据块都至少还有一个备份存在，不会影响对文件/users/sameerp/data/part-0的访问。</p>
+<p><img src="1d9b989eda674c92a8e34970bf81a893.jpg" alt="img"></p>
+<p><strong>数据分成若干数据块后存储到不同服务器上，可以实现数据大容量存储，并且不同分片的数据可以并行进行读/写操作，进而实现数据的高速访问</strong>。</p>
+<p>HDFS的高可用设计。</p>
+<p>1.存储故障容错</p>
+<p>磁盘介质在存储过程中受环境或者老化影响，其存储的数据可能会出现错乱。HDFS的应对措施是，对于存储在DataNode上的数据块，计算并存储校验和（CheckSum）。在读取数据的时候，重新计算读取出来的数据的校验和，如果校验不正确就抛出异常，应用程序捕获异常后就到其他DataNode上读取备份数据。</p>
+<p>2.磁盘故障容错</p>
+<p>如果DataNode监测到本机的某块磁盘损坏，就将该块磁盘上存储的所有BlockID报告给NameNode，NameNode检查这些数据块还在哪些DataNode上有备份，通知相应的DataNode服务器将对应的数据块复制到其他服务器上，以保证数据块的备份数满足要求。</p>
+<p>3.DataNode故障容错</p>
+<p>DataNode会通过心跳和NameNode保持通信，如果DataNode超时未发送心跳，NameNode就会认为这个DataNode已经宕机失效，立即查找这个DataNode上存储的数据块有哪些，以及这些数据块还存储在哪些服务器上，随后通知这些服务器再复制一份数据块到其他服务器上，保证HDFS存储的数据块备份数符合用户设置的数目，即使再出现服务器宕机，也不会丢失数据。</p>
+<p>4.NameNode故障容错</p>
+<p>NameNode是整个HDFS的核心，记录着HDFS文件分配表信息，所有的文件路径和数据块存储信息都保存在NameNode，如果NameNode故障，整个HDFS系统集群都无法使用；如果NameNode上记录的数据丢失，整个集群所有DataNode存储的数据也就没用了。</p>
+<p>所以，NameNode高可用容错能力非常重要。NameNode采用主从热备的方式提供高可用服务，请看下图。</p>
+<p><img src="cd0a3be11bea4661a71489f6aa40c362.jpg" alt="img"></p>
+<p>集群部署两台NameNode服务器，一台作为主服务器提供服务，一台作为从服务器进行热备，两台服务器通过ZooKeeper选举，主要是通过争夺znode锁资源，决定谁是主服务器。而DataNode则会向两个NameNode同时发送心跳数据，但是只有主NameNode才能向DataNode返回控制信息。</p>
+<p>正常运行期间，主从NameNode之间通过一个共享存储系统shared edits来同步文件系统的元数据信息。当主NameNode服务器宕机，从NameNode会通过ZooKeeper升级成为主服务器，并保证HDFS集群的元数据信息，也就是文件分配表信息完整一致。</p>
+<h4 id="图解">图解</h4>
+<h5 id="hdfs写数据原理">HDFS写数据原理</h5>
+<p><img src="68747470733a2f2f67697465652e636f6d2f68656962616979696e672f426967446174612d4e6f7465732f7261772f6d61737465722f70696374757265732f686466732d77726974652d312e6a7067" alt="img"></p>
+<p><img src="68747470733a2f2f67697465652e636f6d2f68656962616979696e672f426967446174612d4e6f7465732f7261772f6d61737465722f70696374757265732f686466732d77726974652d322e6a7067" alt="img"></p>
+<p><img src="68747470733a2f2f67697465652e636f6d2f68656962616979696e672f426967446174612d4e6f7465732f7261772f6d61737465722f70696374757265732f686466732d77726974652d332e6a7067" alt="img"></p>
+<h5 id="hdfs读数据原理">HDFS读数据原理</h5>
+<p><img src="68747470733a2f2f67697465652e636f6d2f68656962616979696e672f426967446174612d4e6f7465732f7261772f6d61737465722f70696374757265732f686466732d726561642d312e6a7067" alt="img"></p>
+<h5 id="hdfs故障类型和其检测方法">HDFS故障类型和其检测方法</h5>
+<p><img src="68747470733a2f2f67697465652e636f6d2f68656962616979696e672f426967446174612d4e6f7465732f7261772f6d61737465722f70696374757265732f686466732d746f6c6572616e63652d312e6a7067" alt="img"></p>
+<p><img src="68747470733a2f2f67697465652e636f6d2f68656962616979696e672f426967446174612d4e6f7465732f7261772f6d61737465722f70696374757265732f686466732d746f6c6572616e63652d322e6a7067" alt="img"></p>
+<h5 id="读写故障的处理">读写故障的处理</h5>
+<p><a href="https://camo.githubusercontent.com/df39b78a5d02c0e1cab6ac19a3a0df5d2f8ba4fd58937850c1733973f3dfec3d/68747470733a2f2f67697465652e636f6d2f68656962616979696e672f426967446174612d4e6f7465732f7261772f6d61737465722f70696374757265732f686466732d746f6c6572616e63652d332e6a7067"><img src="68747470733a2f2f67697465652e636f6d2f68656962616979696e672f426967446174612d4e6f7465732f7261772f6d61737465722f70696374757265732f686466732d746f6c6572616e63652d332e6a7067" alt="img"></a></p>
+<h5 id="datanode-故障处理">DataNode 故障处理</h5>
+<p><a href="https://camo.githubusercontent.com/3f542054a1696a110d785c152ee8feaea3318c00601b7e87679ad0c9946d2daa/68747470733a2f2f67697465652e636f6d2f68656962616979696e672f426967446174612d4e6f7465732f7261772f6d61737465722f70696374757265732f686466732d746f6c6572616e63652d342e6a7067"><img src="68747470733a2f2f67697465652e636f6d2f68656962616979696e672f426967446174612d4e6f7465732f7261772f6d61737465722f70696374757265732f686466732d746f6c6572616e63652d342e6a7067" alt="img"></a></p>
+<h5 id="副本布局策略">副本布局策略</h5>
+<p><a href="https://camo.githubusercontent.com/27692dbbe0422f46e29373916ac5091ffc888b2941d315fff040b2d1fc1cc4b1/68747470733a2f2f67697465652e636f6d2f68656962616979696e672f426967446174612d4e6f7465732f7261772f6d61737465722f70696374757265732f686466732d746f6c6572616e63652d352e6a7067"><img src="68747470733a2f2f67697465652e636f6d2f68656962616979696e672f426967446174612d4e6f7465732f7261772f6d61737465722f70696374757265732f686466732d746f6c6572616e63652d352e6a7067" alt="img"></a></p>
+<h4 id="小结">小结</h4>
+<p>HDFS有以下特点</p>
+<ol>
+<li>高容错： 由于 HDFS 采用数据的多副本方案，所以部分硬件的损坏不会导致全部数据的丢失。</li>
+<li>高吞吐量 ：HDFS 设计的重点是支持高吞吐量的数据访问，而不是低延迟的数据访问。</li>
+<li>大文件支持： HDFS 适合于大文件的存储，文档的大小应该是是 GB 到 TB 级别的。</li>
+<li>简单一致性模型： HDFS 更适合于一次写入多次读取 (write-once-read-many) 的访问模型。支持将内容追加到文件末尾， 但不支持数据的随机访问，不能从文件任意位置新增数据。</li>
+<li>跨平台移植性： HDFS 具有良好的跨平台移植性，这使得其他大数据计算框架都将其作为数据持久化存储的首选方案。</li>
+</ol>
+<h3 id="mapreduce">MapReduce</h3>
+<p>在Hadoop问世之前，其实已经有了分布式计算，只是那个时候的分布式计算都是专用的系统，只能专门处理某一类计算，比如进行大规模数据的排序。很显然，这样的系统无法复用到其他的大数据计算场景，每一种应用都需要开发与维护专门的系统**。而Hadoop MapReduce的出现，使得大数据计算通用编程成为可能**。<strong>我们只要遵循MapReduce编程模型编写业务处理逻辑代码，就可以运行在Hadoop分布式集群上，无需关心分布式计算是如何完成的</strong>。也就是说，我们只需要关心业务逻辑，不用关心系统调用与运行环境，这和我们目前的主流开发方式是一致的。</p>
+<p>其实MapReduce编程模型并不是Hadoop原创，甚至也不是Google原创，但是Google和Hadoop创造性地将MapReduce编程模型用到大数据计算上，立刻产生了神奇的效果，看似复杂的各种各样的机器学习、数据挖掘、SQL处理等大数据计算变得简单清晰起来。</p>
+<p><strong>MapReduce既是一个编程模型，又是一个计算框架</strong>。也就是说，开发人员必须基于MapReduce编程模型进行编程开发，然后将程序通过MapReduce计算框架分发到Hadoop集群中运行。我们先看一下作为编程模型的MapReduce。</p>
+<p>为什么说MapReduce是一种非常简单又非常强大的编程模型？</p>
+<p>简单在于其编程模型只包含<strong>Map和Reduce两个过程</strong>，<strong>map的主要输入是一对值，经过map计算后输出一对值</strong>；<strong>然后将相同Key合并，形成；再将这个输入reduce，经过计算输出零个或多个对</strong>。</p>
+<p>同时，MapReduce又是非常强大的，不管是关系代数运算（SQL计算），还是矩阵运算（图计算），大数据领域几乎所有的计算需求都可以通过MapReduce编程来实现。</p>
+<p>下面，以WordCount程序为例，一起来看下MapReduce的计算过程。</p>
+<p>WordCount主要解决的是文本处理中词频统计的问题，就是统计文本中每一个单词出现的次数。如果只是统计一篇文章的词频，几十KB到几MB的数据，只需要写一个程序，将数据读入内存，建一个Hash表记录每个词出现的次数就可以了。这个统计过程你可以看下面这张图。</p>
+<p><img src="3a500b11821447db8b70961485ad792a.jpg" alt="img"></p>
+<p>如果用Python语言，单机处理WordCount的代码是这样的。</p>
+<pre><code class="language-python"># 文本前期处理
+strl_ist = str.replace('\n', '').lower().split(' ')
+count_dict = {}
+# 如果字典里有该单词则加1，否则添加入字典
+for str in strl_ist:
+if str in count_dict.keys():
+    count_dict[str] = count_dict[str] + 1
+    else:
+        count_dict[str] = 1
+</code></pre>
+<p>简单说来，就是建一个Hash表，然后将字符串里的每个词放到这个Hash表里。如果这个词第一次放到Hash表，就新建一个Key、Value对，Key是这个词，Value是1。如果Hash表里已经有这个词了，那么就给这个词的Value + 1。</p>
+<p>小数据量用单机统计词频很简单，但是如果想统计全世界互联网所有网页（数万亿计）的词频数（而这正是Google这样的搜索引擎的典型需求），不可能写一个程序把全世界的网页都读入内存，这时候就需要用MapReduce编程来解决。</p>
+<p>WordCount的MapReduce程序如下。</p>
+<pre><code class="language-java">public class WordCount {
+
+  public static class TokenizerMapper
+       extends Mapper&lt;Object, Text, Text, IntWritable&gt;{
+
+    private final static IntWritable one = new IntWritable(1);
+    private Text word = new Text();
+
+    public void map(Object key, Text value, Context context
+                    ) throws IOException, InterruptedException {
+      StringTokenizer itr = new StringTokenizer(value.toString());
+      while (itr.hasMoreTokens()) {
+        word.set(itr.nextToken());
+        context.write(word, one);
+      }
+    }
+  }
+
+  public static class IntSumReducer
+       extends Reducer&lt;Text,IntWritable,Text,IntWritable&gt; {
+    private IntWritable result = new IntWritable();
+
+    public void reduce(Text key, Iterable&lt;IntWritable&gt; values,
+                       Context context
+                       ) throws IOException, InterruptedException {
+      int sum = 0;
+      for (IntWritable val : values) {
+        sum += val.get();
+      }
+      result.set(sum);
+      context.write(key, result);
+    }
+  }
+}
+</code></pre>
+<p>你可以从这段代码中看到，MapReduce版本WordCount程序的核心是一个map函数和一个reduce函数。</p>
+<p>map函数的输入主要是一个对，在这个例子里，Value是要统计的所有文本中的一行数据，Key在一般计算中都不会用到。</p>
+<pre><code class="language-java">public void map(Object key, Text value, Context context)
+</code></pre>
+<p>map函数的计算过程是，将这行文本中的单词提取出来，针对每个单词输出一个这样的对。</p>
+<p>MapReduce计算框架会将这些收集起来，将相同的word放在一起，形成&gt;这样的数据，然后将其输入给reduce函数。</p>
+<pre><code class="language-java">public void reduce(Text key, Iterable&lt;IntWritable&gt; values, Context context) 
+</code></pre>
+<p>这里reduce的输入参数Values就是由很多个1组成的集合，而Key就是具体的单词word。</p>
+<p>reduce函数的计算过程是，将这个集合里的1求和，再将单词（word）和这个和（sum）组成一个，也就是输出。每一个输出就是一个单词和它的词频统计总和。</p>
+<p>一个map函数可以针对一部分数据进行运算，这样就可以将一个大数据切分成很多块（这也正是HDFS所做的），MapReduce计算框架为每个数据块分配一个map函数去计算，从而实现大数据的分布式计算。</p>
+<p>假设有两个数据块的文本数据需要进行词频统计，MapReduce计算过程如下图所示。</p>
+<p><img src="1fd6214462f84949ad6322c7148241eb.jpg" alt="img"></p>
+<p>以上就是MapReduce编程模型的主要计算过程和原理，但是这样一个MapReduce程序要想在分布式环境中执行，并处理海量的大规模数据，还需要一个计算框架，能够调度执行这个MapReduce程序，使它在分布式的集群中并行运行，而这个计算框架也叫MapReduce。</p>
+<p>所以，当我们说MapReduce的时候，可能指编程模型，也就是一个MapReduce程序；也可能是指计算框架，调度执行大数据的分布式计算。</p>
+<p>那么这个程序是如何在分布式集群中运行起来的呢？MapReduce程序又是如何找到相应的数据并进行计算的呢？答案就是需要MapReduce计算框架来完成。</p>
+<p>首先我想告诉你，在实践中，这个过程有两个关键问题需要处理。</p>
+<ul>
+<li>如何为每个数据块分配一个Map计算任务，也就是<strong>代码是如何发送到数据块所在服务器的，发送后是如何启动的，启动以后如何知道自己需要计算的数据在文件什么位置</strong>（BlockID是什么）。</li>
+<li>处于不同服务器的map输出的 ，如<strong>何把相同的Key聚合在一起发送给Reduce任务进行处理</strong>。</li>
+</ul>
+<p>那么这两个关键问题对应在MapReduce计算过程的哪些步骤呢？你可以看到图中标红的两处，这两个关键问题对应的就是图中的两处“MapReduce框架处理”，具体来说，它们分别是MapReduce作业启动和运行，以及MapReduce数据合并与连接。</p>
+<p><img src="525e46c8d6e04117a1526b4aa6586947.jpg" alt="img"></p>
+<h4 id="mapreduce作业启动和运行机制">MapReduce作业启动和运行机制</h4>
+<p>我们以Hadoop 1为例，MapReduce运行过程涉及三类关键进程。</p>
+<p>1.大数据应用进程。这类进程是启动MapReduce程序的主入口，主要是指定Map和Reduce类、输入输出文件路径等，并提交作业给Hadoop集群，也就是下面提到的JobTracker进程。这是由用户启动的MapReduce程序进程，比如我们上期提到的WordCount程序。</p>
+<p>2.JobTracker进程。这类进程根据要处理的输入数据量，命令下面提到的TaskTracker进程启动相应数量的Map和Reduce进程任务，并管理整个作业生命周期的任务调度和监控。这是Hadoop集群的常驻进程，需要注意的是，JobTracker进程在整个Hadoop集群全局唯一。</p>
+<p>3.TaskTracker进程。这个进程负责启动和管理Map进程以及Reduce进程。因为需要每个数据块都有对应的map函数，TaskTracker进程通常和HDFS的DataNode进程启动在同一个服务器。也就是说，Hadoop集群中绝大多数服务器同时运行DataNode进程和TaskTracker进程。</p>
+<p>JobTracker进程和TaskTracker进程是主从关系，主服务器通常只有一台（或者另有一台备机提供高可用服务，但运行时只有一台服务器对外提供服务，真正起作用的只有一台），从服务器可能有几百上千台，所有的从服务器听从主服务器的控制和调度安排。主服务器负责为应用程序分配服务器资源以及作业执行的调度，而具体的计算操作则在从服务器上完成。</p>
+<p>具体来看，MapReduce的主服务器就是JobTracker，从服务器就是TaskTracker。还记得我们讲HDFS也是主从架构吗，HDFS的主服务器是NameNode，从服务器是DataNode。后面会讲到的Yarn、Spark等也都是这样的架构，这种一主多从的服务器架构也是绝大多数大数据系统的架构方案。</p>
+<p>可重复使用的架构方案叫作架构模式，一主多从可谓是大数据领域的最主要的架构模式。主服务器只有一台，掌控全局；从服务器有很多台，负责具体的事情。这样很多台服务器可以有效组织起来，对外表现出一个统一又强大的计算能力。</p>
+<p>讲到这里，我们对MapReduce的启动和运行机制有了一个直观的了解。那具体的作业启动和计算过程到底是怎样的呢？我根据上面所讲的绘制成一张图，你可以从图中一步一步来看，感受一下整个流程。</p>
+<p><img src="2196c972a8dc40d9960be70d5c56f1ee.jpg" alt="img"></p>
+<p>如果我们把这个计算过程看作一次小小的旅行，这个旅程可以概括如下：</p>
+<p>1.应用进程JobClient将用户作业JAR包存储在HDFS中，将来这些JAR包会分发给Hadoop集群中的服务器执行MapReduce计算。</p>
+<p>2.应用程序提交job作业给JobTracker。</p>
+<p>3.JobTracker根据作业调度策略创建JobInProcess树，每个作业都会有一个自己的JobInProcess树。</p>
+<p>4.JobInProcess根据输入数据分片数目（通常情况就是数据块的数目）和设置的Reduce数目创建相应数量的TaskInProcess。</p>
+<p>5.TaskTracker进程和JobTracker进程进行定时通信。</p>
+<p>6.如果TaskTracker有空闲的计算资源（有空闲CPU核心），JobTracker就会给它分配任务。分配任务的时候会根据TaskTracker的服务器名字匹配在同一台机器上的数据块计算任务给它，使启动的计算任务正好处理本机上的数据，以实现我们一开始就提到的“移动计算比移动数据更划算”。</p>
+<p>7.TaskTracker收到任务后根据任务类型（是Map还是Reduce）和任务参数（作业JAR包路径、输入数据文件路径、要处理的数据在文件中的起始位置和偏移量、数据块多个备份的DataNode主机名等），启动相应的Map或者Reduce进程。</p>
+<p>8.Map或者Reduce进程启动后，检查本地是否有要执行任务的JAR包文件，如果没有，就去HDFS上下载，然后加载Map或者Reduce代码开始执行。</p>
+<p>9.如果是Map进程，从HDFS读取数据（通常要读取的数据块正好存储在本机）；如果是Reduce进程，将结果数据写出到HDFS。</p>
+<p>通过这样一个计算旅程，MapReduce可以将大数据作业计算任务分布在整个Hadoop集群中运行，每个Map计算任务要处理的数据通常都能从本地磁盘上读取到。现在你对这个过程的理解是不是更清楚了呢？你也许会觉得，这个过程好像也不算太简单啊！</p>
+<p>其实，你要做的仅仅是编写一个map函数和一个reduce函数就可以了，根本不用关心<strong>这两个函数是如何被分布启动到集群上的，也不用关心数据块又是如何分配给计算任务的</strong>。<strong>这一切都由MapReduce计算框架完成</strong>！是不是很激动，这也是我们反复讲到的MapReduce的强大之处。</p>
+<h4 id="mapreduce数据合并与连接机制">MapReduce数据合并与连接机制</h4>
+<p><strong>MapReduce计算真正产生奇迹的地方是数据的合并与连接</strong>。</p>
+<p>让我先回到上一期MapReduce编程模型的WordCount例子中，我们想要统计相同单词在所有输入数据中出现的次数，而一个Map只能处理一部分数据，一个热门单词几乎会出现在所有的Map中，这意味着同一个单词必须要合并到一起进行统计才能得到正确的结果。</p>
+<p>事实上，几乎所有的大数据计算场景都需要处理数据关联的问题，像WordCount这种比较简单的只要对Key进行合并就可以了，对于像数据库的join操作这种比较复杂的，需要对两种类型（或者更多类型）的数据根据Key进行连接。</p>
+<p>在map输出与reduce输入之间，MapReduce计算框架处理数据合并与连接操作，这个操作有个专门的词汇叫<strong>shuffle</strong>。那到底什么是shuffle？shuffle的具体过程又是怎样的呢？请看下图。</p>
+<p><img src="e7877d09ef1847ce86cfb83326875f0c.jpg" alt="img"></p>
+<p>每个Map任务的计算结果都会写入到本地文件系统，等Map任务快要计算完成的时候，MapReduce计算框架会启动shuffle过程，在Map任务进程调用一个Partitioner接口，对Map产生的每个进行Reduce分区选择，然后通过HTTP通信发送给对应的Reduce进程。这样不管Map位于哪个服务器节点，相同的Key一定会被发送给相同的Reduce进程。Reduce任务进程对收到的进行排序和合并，相同的Key放在一起，组成一个传递给Reduce执行。</p>
+<p>map输出的shuffle到哪个Reduce进程是这里的关键，它是由Partitioner来实现，MapReduce框架默认的Partitioner用Key的哈希值对Reduce任务数量取模，相同的Key一定会落在相同的Reduce任务ID上。从实现上来看的话，这样的Partitioner代码只需要一行。</p>
+<pre><code class="language-cpp"> /** Use {@link Object#hashCode()} to partition. */ 
+public int getPartition(K2 key, V2 value, int numReduceTasks) { 
+    return (key.hashCode() &amp; Integer.MAX_VALUE) % numReduceTasks; 
+ }
+</code></pre>
+<p>讲了这么多，对shuffle的理解，你只需要记住这一点：<strong>分布式计算需要将不同服务器上的相关数据合并到一起进行下一步计算，这就是shuffle</strong>。</p>
+<p>shuffle是大数据计算过程中最神奇的地方，不管是MapReduce还是Spark，只要是大数据批处理计算，一定都会有shuffle过程，只有<strong>让数据关联起来</strong>，数据的内在关系和价值才会呈现出来。如果你不理解shuffle，肯定会在map和reduce编程中产生困惑，不知道该如何正确设计map的输出和reduce的输入。</p>
+<h3 id="yarn">YARN</h3>
+<p>Yarn并不是随Hadoop的推出一开始就有的，Yarn作为分布式集群的资源调度框架，它的出现伴随着Hadoop的发展，使Hadoop从一个单一的大数据计算引擎，成为一个集存储、计算、资源管理为一体的完整大数据平台，进而发展出自己的生态体系，成为大数据的代名词。</p>
+<p>先回忆一下我们学习的MapReduce的架构，在MapReduce应用程序的启动过程中，最重要的就是要把<strong>MapReduce程序分发到大数据集群的服务器上</strong>，在Hadoop 1中，这个过程主要是通过TaskTracker和JobTracker通信来完成。</p>
+<p>这个方案有什么缺点吗？</p>
+<p>这种架构方案的主要缺点是，<strong>服务器集群资源调度管理和MapReduce执行过程耦合在一起，如果想在当前集群中运行其他计算任务，比如Spark或者Storm，就无法统一使用集群中的资源了</strong>。</p>
+<p>在Hadoop早期的时候，大数据技术就只有Hadoop一家，这个缺点并不明显。但随着大数据技术的发展，各种新的计算框架不断出现，我们不可能为每一种计算框架部署一个服务器集群，而且就算能部署新集群，数据还是在原来集群的HDFS上。所以我们需要把MapReduce的资源管理和计算框架分开，这也是Hadoop 2最主要的变化，<strong>就是将Yarn从MapReduce中分离出来，成为一个独立的资源调度框架。</strong></p>
+<p>Yarn是“Yet Another Resource Negotiator”的缩写，字面意思就是“另一种资源调度器”。事实上，在Hadoop社区决定将资源管理从Hadoop 1中分离出来，独立开发Yarn的时候，业界已经有一些大数据资源管理产品了，比如Mesos等，所以Yarn的开发者索性管自己的产品叫“另一种资源调度器”。这种命名方法并不鲜见，曾经名噪一时的Java项目编译工具Ant就是“Another Neat Tool”的缩写，意思是“另一种整理工具”。</p>
+<p>下图是Yarn的架构。</p>
+<p><img src="f2b6c0aec07449f8a1f7d8494e39a18d.jpg" alt="img"></p>
+<p>从图上看，Yarn包括两个部分：一个是资源管理器（Resource Manager），一个是节点管理器（Node Manager）。这也是Yarn的两种主要进程：ResourceManager进程负责整个集群的资源调度管理，通常部署在独立的服务器上；NodeManager进程负责具体服务器上的资源和任务管理，在集群的每一台计算服务器上都会启动，基本上跟HDFS的DataNode进程一起出现。</p>
+<p>具体说来，资源管理器又包括两个主要组件：调度器和应用程序管理器。</p>
+<p>调度器其实就是一个资源分配算法，根据应用程序（Client）提交的资源申请和当前服务器集群的资源状况进行资源分配。Yarn内置了几种资源调度算法，包括Fair Scheduler、Capacity Scheduler等，你也可以开发自己的资源调度算法供Yarn调用。</p>
+<p>Yarn进行资源分配的单位是容器（Container），每个容器包含了一定量的内存、CPU等计算资源，默认配置下，每个容器包含一个CPU核心。容器由NodeManager进程启动和管理，NodeManger进程会监控本节点上容器的运行状况并向ResourceManger进程汇报。</p>
+<p>应用程序管理器负责应用程序的提交、监控应用程序运行状态等。应用程序启动后需要在集群中运行一个ApplicationMaster，ApplicationMaster也需要运行在容器里面。每个应用程序启动后都会先启动自己的ApplicationMaster，由ApplicationMaster根据应用程序的资源需求进一步向ResourceManager进程申请容器资源，得到容器以后就会分发自己的应用程序代码到容器上启动，进而开始分布式计算。</p>
+<p>我们以一个MapReduce程序为例，来看一下Yarn的整个工作流程。</p>
+<ol>
+<li>我们向Yarn提交应用程序，包括MapReduce ApplicationMaster、我们的MapReduce程序，以及MapReduce Application启动命令。</li>
+<li>ResourceManager进程和NodeManager进程通信，根据集群资源，为用户程序分配第一个容器，并将MapReduce ApplicationMaster分发到这个容器上面，并在容器里面启动MapReduce ApplicationMaster。</li>
+<li>MapReduce ApplicationMaster启动后立即向ResourceManager进程注册，并为自己的应用程序申请容器资源。</li>
+<li>MapReduce ApplicationMaster申请到需要的容器后，立即和相应的NodeManager进程通信，将用户MapReduce程序分发到NodeManager进程所在服务器，并在容器中运行，运行的就是Map或者Reduce任务。</li>
+<li>Map或者Reduce任务在运行期和MapReduce ApplicationMaster通信，汇报自己的运行状态，如果运行结束，MapReduce ApplicationMaster向ResourceManager进程注销并释放所有的容器资源。</li>
+</ol>
+<p>MapReduce如果想在Yarn上运行，就需要开发遵循Yarn规范的MapReduce ApplicationMaster，相应地，其他大数据计算框架也可以开发遵循Yarn规范的ApplicationMaster，这样在一个Yarn集群中就可以同时并发执行各种不同的大数据计算框架，实现资源的统一调度管理。</p>
+<h4 id="小结-1">小结</h4>
+<p>Yarn作为一个大数据资源调度框架，调度的是大数据计算引擎本身。它不像MapReduce或Spark编程，每个大数据应用开发者都需要根据需求开发自己的MapReduce程序或者Spark程序。而现在主流的大数据计算引擎所使用的Yarn模块，也早已被这些计算引擎的开发者做出来供我们使用了。作为普通的大数据开发者，我们几乎没有机会编写Yarn的相关程序。但是，这是否意味着只有大数据计算引擎的开发者需要基于Yarn开发，才需要理解Yarn的实现原理呢？</p>
+<p>恰恰相反，我认为理解Yarn的工作原理和架构，对于正确使用大数据技术，理解大数据的工作原理，是非常重要的。在云计算的时代，一切资源都是动态管理的，理解这种动态管理的原理对于理解云计算也非常重要。Yarn作为一个大数据平台的资源管理框架，简化了应用场景，对于帮助我们理解云计算的资源管理很有帮助。</p>
+<h2 id="hive">Hive</h2>
+<p>前面我们讲过，MapReduce的出现大大简化了大数据编程的难度，使得大数据计算不再是高不可攀的技术圣殿，普通工程师也能使用MapReduce开发大数据程序。但是对于经常需要进行大数据计算的人，比如从事研究商业智能（BI）的数据分析师来说，他们通常使用SQL进行大数据分析和统计，MapReduce编程还是有一定的门槛。而且如果每次统计和分析都开发相应的MapReduce程序，成本也确实太高了。那么有没有更简单的办法，可以直接将SQL运行在大数据平台上呢？</p>
+<p>在给出答案前，我们先看看如何用MapReduce实现SQL数据分析。</p>
+<h3 id="mapreduce实现sql的原理">MapReduce实现SQL的原理</h3>
+<p>对于常见的一条SQL分析语句，MapReduce如何编程实现？</p>
+<pre><code class="language-sql">SELECT pageid, age, count(1) FROM pv_users GROUP BY pageid, age;
+</code></pre>
+<p>这是一条非常常见的SQL统计分析语句，统计不同年龄的用户访问不同网页的兴趣偏好，对于产品运营和设计很有价值。具体数据输入和执行结果请看下面的图示。</p>
+<p><img src="9ae71e44e0874f83909222484b58b8ca.jpg" alt="img"></p>
+<p>左边是要分析的数据表，右边是分析结果。实际上把左边表相同的行进行累计求和，就得到右边的表了，看起来跟WordCount的计算很相似。确实也是这样，我们看下这条SQL语句的MapReduce的计算过程，按照MapReduce编程模型，map和reduce函数的输入输出以及函数处理过程分别是什么。</p>
+<p>首先，看下map函数的输入Key和Value，我们主要看Value。Value就是左边表中每一行的数据，比如&lt;1, 25&gt;这样。map函数的输出就是以输入的Value作为Key，Value统一设为1，比如&laquo;1, 25&gt;, 1&gt;这样。</p>
+<p>map函数的输出经过shuffle以后，相同的Key及其对应的Value被放在一起组成一个，作为输入交给reduce函数处理。比如&laquo;2, 25&gt;, 1&gt;被map函数输出两次，那么到了reduce这里，就变成输入&laquo;2, 25&gt;, &lt;1, 1&raquo;，这里的Key是&lt;2, 25&gt;，Value集合是&lt;1, 1&gt;。</p>
+<p>在reduce函数内部，Value集合里所有的数字被相加，然后输出。所以reduce的输出就是&laquo;2, 25&gt;, 2&gt;。</p>
+<p>讲起来有点拗口，我把这个过程画成了一张图，看起来就清楚多了。</p>
+<p><img src="ad61005b03fa406cbc2a08ebfb324886.jpg" alt="img"></p>
+<p>这样一条很有实用价值的SQL就被很简单的MapReduce计算过程处理好了。</p>
+<p>在数据仓库中，<strong>SQL是最常用的分析工具，既然一条SQL可以通过MapReduce程序实现，那么有没有工具能够自动将SQL生成MapReduce代码呢？这样数据分析师只要输入SQL，就可以自动生成MapReduce可执行的代码，然后提交Hadoop执行</strong>，也就完美解决了我们最开始提出的问题。问题的答案，也就是这个神奇的工具就是Hadoop大数据仓库Hive。</p>
+<h3 id="hive-简介">Hive 简介</h3>
+<p><strong>Hive 是一个构建在 Hadoop 之上的数据仓库，它可以将结构化的数据文件映射成表，并提供类 SQL 查询功能，用于查询的 SQL 语句会被转化为 MapReduce 作业，然后提交到 Hadoop 上运行</strong>。 特点：</p>
+<ol>
+<li>
+<p>简单、容易上手 (提供了类似 sql 的查询语言 hql)，使得精通 sql 但是不了解 Java 编程的人也能很好地进行大数据分析；</p>
+</li>
+<li>
+<p>灵活性高，可以自定义用户函数 (UDF) 和存储格式；</p>
+</li>
+<li>
+<p>为超大的数据集设计的计算和存储能力，集群扩展容易;</p>
+</li>
+<li>
+<p>统一的元数据管理，可与 presto／impala／sparksql 等共享数据；</p>
+</li>
+<li>
+<p>执行延迟高，<strong>不适合做数据的实时处理，但适合做海量数据的离线处理</strong>。</p>
+</li>
+</ol>
+<h3 id="hive的架构">Hive的架构</h3>
+<p>Hive能够直接处理我们输入的SQL语句，调用MapReduce计算框架完成数据分析操作。下面是它的架构图，我们结合架构图来看看Hive是如何实现将SQL生成MapReduce可执行代码的。</p>
+<p><img src="b9b22f8f46ee4d47b4b28b65d3348f9b.jpg" alt="img"></p>
+<p>我们通过Hive的Client（Hive的命令行工具，JDBC等）向Hive提交SQL命令。如果是创建数据表的DDL（数据定义语言），Hive就会通过执行引擎Driver将数据表的信息记录在Metastore元数据组件中，这个组件通常用一个关系数据库实现，记录表名、字段名、字段类型、关联HDFS文件路径等这些数据库的Meta信息（元信息）。</p>
+<p>如果我们提交的是查询分析数据的DQL（数据查询语句），<strong>Driver就会将该语句提交给自己的编译器Compiler进行语法分析、语法解析、语法优化等一系列操作，最后生成一个MapReduce执行计划。然后根据执行计划生成一个MapReduce的作业，提交给Hadoop MapReduce计算框架处理</strong>。</p>
+<p>对于一个较简单的SQL命令，比如：</p>
+<pre><code class="language-sql">SELECT * FROM status_updates WHERE status LIKE ‘michael jackson’;
+</code></pre>
+<p>它对应的Hive执行计划如下图。</p>
+<p><img src="5d6b216590b44297bc5aa8bbe6a194ee.jpg" alt="img"></p>
+<p>Hive内部预置了很多函数，<strong>Hive的执行计划就是根据SQL语句生成这些函数的DAG（有向无环图），然后封装进MapReduce的map和reduce函数中</strong>。这个例子中，map函数调用了三个Hive内置函数TableScanOperator、FilterOperator、FileOutputOperator，就完成了map计算，而且无需reduce函数。</p>
+<h3 id="小结-2">小结</h3>
+<p>在实践中，<strong>工程师其实并不需要经常编写MapReduce程序，因为网站最主要的大数据处理就是SQL分析，也因此Hive在大数据应用中的作用非常重要</strong>。</p>
+<p>后面随着Hive的普及，我们对于在Hadoop上执行SQL的需求越加强烈，对大数据SQL的应用场景也多样化起来，于是又开发了各种<strong>大数据SQL引擎</strong>。</p>
+<p>Cloudera开发了Impala，这是一种运行在HDFS上的MPP架构的SQL引擎。和MapReduce启动Map和Reduce两种执行进程，将计算过程分成两个阶段进行计算不同，Impala在所有DataNode服务器上部署相同的Impalad进程，多个Impalad进程相互协作，共同完成SQL计算。在一些统计场景中，Impala可以做到毫秒级的计算速度。</p>
+<p>后来Spark出道以后，也迅速推出了自己的SQL引擎Shark，也就是后来的<strong>Spark SQL，将SQL语句解析成Spark的执行计划，在Spark上执行。由于Spark比MapReduce快很多，Spark SQL也相应比Hive快很多，并且随着Spark的普及，Spark SQL也逐渐被人们接受。后来Hive推出了Hive on Spark，将Hive的执行计划转换成Spark的计算模型</strong>。</p>
+<p>Hive本身的技术架构其实并没有什么创新，数据库相关的技术和架构已经非常成熟，只要将这些技术架构应用到MapReduce上就得到了Hadoop大数据仓库Hive。<strong>但是想到将两种技术嫁接到一起，却是极具创新性的</strong>，通过嫁接产生出的Hive可以极大降低大数据的应用门槛，也使Hadoop大数据技术得到大规模普及。</p>
+<h2 id="spark">Spark</h2>
+<p>Apache Spark is a unified analytics engine for large-scale data processing. It provides high-level APIs in Java, Scala, Python and R, and an optimized engine that supports general execution graphs. It also supports a rich set of higher-level tools including Spark SQL for SQL and structured data processing, pandas API on Spark for pandas workloads, MLlib for machine learning, GraphX for graph processing, and Structured Streaming for incremental computation and stream processing.
+Apache Spark 是用于大规模数据处理的统一分析引擎。 它提供 Java、Scala、Python 和 R 的高级 API， 以及支持通用执行图的优化引擎。 它还支持一组丰富的高级工具，包括 Spark SQL用于 SQL 和结构化数据处理， Spark 上用于 pandas 工作负载的 pandas API ， 用于机器学习的MLlib ， 用于图形处理的GraphX和结构化流 用于增量计算和流处理。</p>
+<p>Spark 于 2009 年诞生于加州大学伯克利分校 AMPLab，2013 年被捐赠给 Apache 软件基金会，2014 年 2 月成为 Apache 的顶级项目。<strong>相对于 MapReduce 的批处理计算，Spark 可以带来上百倍的性能提升，因此它成为继 MapReduce 之后，最为广泛使用的分布式计算框架</strong>。</p>
+<h3 id="特点">特点</h3>
+<p>Apache Spark 具有以下特点：</p>
+<ul>
+<li>使用先进的 DAG 调度程序，查询优化器和物理执行引擎，以实现性能上的保证；</li>
+<li>多语言支持，目前支持的有 Java，Scala，Python 和 R；</li>
+<li>提供了 80 多个高级 API，可以轻松地构建应用程序；</li>
+<li>支持批处理，流处理和复杂的业务分析；</li>
+<li>丰富的类库支持：包括 SQL，MLlib，GraphX 和 Spark Streaming 等库，并且可以将它们无缝地进行组合；</li>
+<li>丰富的部署模式：支持本地模式和自带的集群模式，也支持在 Hadoop，Mesos，Kubernetes 上运行；</li>
+<li>多数据源支持：支持访问 HDFS，Alluxio，Cassandra，HBase，Hive 以及数百个其他数据源中的数据。</li>
+</ul>
+<p><a href="https://camo.githubusercontent.com/0843af4eeaa7c3105da4c94f4c2f6db60dc67f2b02eba84f4652b2d409719da1/68747470733a2f2f67697465652e636f6d2f68656962616979696e672f426967446174612d4e6f7465732f7261772f6d61737465722f70696374757265732f6675747572652d6f662d737061726b2e706e67"><img src="68747470733a2f2f67697465652e636f6d2f68656962616979696e672f426967446174612d4e6f7465732f7261772f6d61737465722f70696374757265732f6675747572652d6f662d737061726b2e706e67" alt="img"></a></p>
+<h3 id="架构">架构</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Term（术语）</th>
+<th style="text-align:center">Meaning（含义）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Application</td>
+<td style="text-align:center">Spark 应用程序，由集群上的一个 Driver 节点和多个 Executor 节点组成。</td>
+</tr>
+<tr>
+<td style="text-align:center">Driver program</td>
+<td style="text-align:center">主运用程序，该进程运行应用的 main() 方法并且创建 SparkContext</td>
+</tr>
+<tr>
+<td style="text-align:center">Cluster manager</td>
+<td style="text-align:center">集群资源管理器（例如，Standlone Manager，Mesos，YARN）</td>
+</tr>
+<tr>
+<td style="text-align:center">Worker node</td>
+<td style="text-align:center">执行计算任务的工作节点</td>
+</tr>
+<tr>
+<td style="text-align:center">Executor</td>
+<td style="text-align:center">位于工作节点上的应用进程，负责执行计算任务并且将输出数据保存到内存或者磁盘中</td>
+</tr>
+<tr>
+<td style="text-align:center">Task</td>
+<td style="text-align:center">被发送到 Executor 中的工作单元</td>
+</tr>
+</tbody>
+</table>
+<p><a href="https://camo.githubusercontent.com/43906ed67807bb1a3592a11365712a649305e9d72fe9a0fb01a6e3ac6da8bcd3/68747470733a2f2f67697465652e636f6d2f68656962616979696e672f426967446174612d4e6f7465732f7261772f6d61737465722f70696374757265732f737061726b2de99b86e7bea4e6a8a1e5bc8f2e706e67"><img src="68747470733a2f2f67697465652e636f6d2f68656962616979696e672f426967446174612d4e6f7465732f7261772f6d61737465722f70696374757265732f737061726b2de99b86e7bea4e6a8a1e5bc8f2e706e67" alt="img"></a></p>
+<p>Spark的执行过程：Driver进程解析用户代码，构建计算流图，并将其拆解为多个阶段（Stage），并将每个阶段拆解为多个任务（Task），Driver将任务分配给Executor ，Executor 启动线程并发的执行任务，任务执行完成后，Executor 将结果返回给 Driver。Driver 收集所有任务的结果，进行后续处理，如保存到外部存储系统或返回给用户。</p>
+<p><strong>1. 应用程序提交</strong></p>
+<ul>
+<li>用户通过 <code>spark-submit</code> 提交 Spark 应用，指定应用主类、资源配置等参数。</li>
+<li><code>spark-submit</code> 触发集群管理器（如 YARN）启动 <strong>Driver</strong> 进程。</li>
+</ul>
+<p><strong>2. Driver 初始化</strong></p>
+<ul>
+<li>Driver 运行用户程序的 <strong>main()</strong> 方法，创建 <code>SparkContext</code> 或 <code>SparkSession</code>。</li>
+<li>解析用户代码，构建 <strong>DAG（有向无环图）</strong>，其中包含多个 Job（Action 算子触发，有一个Action算子就代表有一个Job）。</li>
+<li>DAG Scheduler 将 <strong>Job 拆分为多个 Stage</strong>，确定计算依赖关系。</li>
+</ul>
+<p><strong>3. 资源申请与 Executor 启动</strong></p>
+<ul>
+<li>Driver 向集群管理器（如 YARN、Mesos、K8s）申请 Executor 资源。</li>
+<li>集群管理器分配 Worker 节点并在上面启动 <strong>Executor</strong> 进程。</li>
+<li>Executor 启动后，向 <strong>Driver 注册</strong>，报告自己的资源情况。</li>
+</ul>
+<p><strong>4. 任务调度与执行</strong></p>
+<ul>
+<li>DAG Scheduler 按 <strong>宽依赖（Shuffle）</strong> 划分多个 <strong>Stage</strong>，形成调度顺序。</li>
+<li><strong>Task Scheduler</strong> 进一步将每个 Stage 拆分为多个 <strong>Task</strong>（每个 Task 处理一个 Partition）。</li>
+<li><strong>Driver 通过 Task Scheduler 将 Task 分发到可用的 Executor</strong>。</li>
+<li>Executor 接收 Task 并执行：
+<ul>
+<li>读取数据（HDFS、Kafka 等）。</li>
+<li>计算 Transformation 操作。</li>
+<li>可能会触发 Shuffle（数据交换）。</li>
+<li>计算完成后，返回数据或存储到外部系统。</li>
+</ul>
+</li>
+</ul>
+<p><strong>5. 结果收集与应用完成</strong></p>
+<ul>
+<li>
+<p><strong>最终 Stage 计算完成后，Executor 将结果返回给 Driver</strong>（或存储到 HDFS/数据库）。</p>
+</li>
+<li>
+<p>Driver 处理最终数据，并返回给用户或存入存储系统。</p>
+</li>
+<li>
+<p>若是交互式应用，Driver 继续运行等待用户查询；否则，<strong>任务结束后，Driver 释放资源，Application 终止</strong>。</p>
+</li>
+</ul>
+<h3 id="核心组件">核心组件</h3>
+<p>Spark 基于 Spark Core 扩展了四个核心组件，分别用于满足不同领域的计算需求。</p>
+<p><a href="https://camo.githubusercontent.com/177b34a2eb1544d20d63dde27cb9af26d52f92745e053c4e4c9b6ed1d4f25c2e/68747470733a2f2f67697465652e636f6d2f68656962616979696e672f426967446174612d4e6f7465732f7261772f6d61737465722f70696374757265732f737061726b2d737461636b2e706e67"><img src="68747470733a2f2f67697465652e636f6d2f68656962616979696e672f426967446174612d4e6f7465732f7261772f6d61737465722f70696374757265732f737061726b2d737461636b2e706e67" alt="img"></a></p>
+<h4 id="spark-sql">Spark SQL</h4>
+<p>Spark SQL 主要用于结构化数据的处理。其具有以下特点：</p>
+<ul>
+<li>能够将 SQL 查询与 Spark 程序无缝混合，允许您使用 SQL 或 DataFrame API 对结构化数据进行查询；</li>
+<li>支持多种数据源，包括 Hive，Avro，Parquet，ORC，JSON 和 JDBC；</li>
+<li>支持 HiveQL 语法以及用户自定义函数 (UDF)，允许你访问现有的 Hive 仓库；</li>
+<li>支持标准的 JDBC 和 ODBC 连接；</li>
+<li>支持优化器，列式存储和代码生成等特性，以提高查询效率。</li>
+</ul>
+<h4 id="spark-streaming">Spark Streaming</h4>
+<p>Spark Streaming 主要用于快速构建可扩展，高吞吐量，高容错的流处理程序。支持从 HDFS，Flume，Kafka，Twitter 和 ZeroMQ 读取数据，并进行处理。</p>
+<p><a href="https://camo.githubusercontent.com/115b305d79ba60d3e8c253014a68e6ffb1d89bb73d1195a878e36d8e1fd5d3c4/68747470733a2f2f67697465652e636f6d2f68656962616979696e672f426967446174612d4e6f7465732f7261772f6d61737465722f70696374757265732f737061726b2d73747265616d696e672d617263682e706e67"><img src="68747470733a2f2f67697465652e636f6d2f68656962616979696e672f426967446174612d4e6f7465732f7261772f6d61737465722f70696374757265732f737061726b2d73747265616d696e672d617263682e706e67" alt="img"></a></p>
+<p>Spark Streaming 的本质是微批处理，它将数据流进行极小粒度的拆分，拆分为多个批处理，从而达到接近于流处理的效果。</p>
+<p><a href="https://camo.githubusercontent.com/70aeb369c18031c7de7697fb5cec91170c652799b7ebb5218819652807fdeae2/68747470733a2f2f67697465652e636f6d2f68656962616979696e672f426967446174612d4e6f7465732f7261772f6d61737465722f70696374757265732f737061726b2d73747265616d696e672d666c6f772e706e67"><img src="68747470733a2f2f67697465652e636f6d2f68656962616979696e672f426967446174612d4e6f7465732f7261772f6d61737465722f70696374757265732f737061726b2d73747265616d696e672d666c6f772e706e67" alt="img"></a></p>
+<h4 id="mllib">MLlib</h4>
+<p>MLlib 是 Spark 的机器学习库。其设计目标是使得机器学习变得简单且可扩展。它提供了以下工具：</p>
+<ul>
+<li><strong>常见的机器学习算法</strong>：如分类，回归，聚类和协同过滤；</li>
+<li><strong>特征化</strong>：特征提取，转换，降维和选择；</li>
+<li><strong>管道</strong>：用于构建，评估和调整 ML 管道的工具；</li>
+<li><strong>持久性</strong>：保存和加载算法，模型，管道数据；</li>
+<li><strong>实用工具</strong>：线性代数，统计，数据处理等。</li>
+</ul>
+<h4 id="graphx">Graphx</h4>
+<p>GraphX 是 Spark 中用于图形计算和图形并行计算的新组件。在高层次上，GraphX 通过引入一个新的图形抽象来扩展 RDD(一种具有附加到每个顶点和边缘的属性的定向多重图形)。为了支持图计算，GraphX 提供了一组基本运算符（如： subgraph，joinVertices 和 aggregateMessages）以及优化后的 Pregel API。此外，GraphX 还包括越来越多的图形算法和构建器，以简化图形分析任务。</p>
+<h3 id="spark-core">Spark Core</h3>
+<h4 id="word-count">Word Count</h4>
+<p>学任何编程语言，当然是从Hello World开始，而对于“大数据的Hello World”，并不是把字符串打印到屏幕上这么简单，而是要先对文件中的单词做统计计数，江湖人称“Word Count”。下面看怎么使用Spark实现Word Count</p>
+<ol>
+<li>
+<p>引入依赖</p>
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+         xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;
+    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+    &lt;groupId&gt;com.zt.study&lt;/groupId&gt;
+    &lt;artifactId&gt;xdata-study&lt;/artifactId&gt;
+    &lt;version&gt;0.0.1-SNAPSHOT&lt;/version&gt;
+    &lt;name&gt;xdata-study&lt;/name&gt;
+
+    &lt;properties&gt;
+        &lt;maven.compiler.source&gt;1.8&lt;/maven.compiler.source&gt;
+        &lt;maven.compiler.target&gt;1.8&lt;/maven.compiler.target&gt;
+        &lt;jdk.version&gt;1.8&lt;/jdk.version&gt;
+        &lt;dom4j.version&gt;1.6.1&lt;/dom4j.version&gt;
+        &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt;
+        &lt;spark.version&gt;3.1.1&lt;/spark.version&gt;
+        &lt;cupid.sdk.version&gt;3.3.8-public&lt;/cupid.sdk.version&gt;
+        &lt;scala.version&gt;2.12.10&lt;/scala.version&gt;
+        &lt;scala.binary.version&gt;2.12&lt;/scala.binary.version&gt;
+    &lt;/properties&gt;
+    &lt;dependencies&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.projectlombok&lt;/groupId&gt;
+            &lt;artifactId&gt;lombok&lt;/artifactId&gt;
+            &lt;version&gt;1.16.10&lt;/version&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;com.alibaba&lt;/groupId&gt;
+            &lt;artifactId&gt;fastjson&lt;/artifactId&gt;
+            &lt;version&gt;1.2.70&lt;/version&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-beans&lt;/artifactId&gt;
+            &lt;version&gt;5.0.8.RELEASE&lt;/version&gt;
+        &lt;/dependency&gt;
+
+        &lt;!--   spark开始     --&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.apache.spark&lt;/groupId&gt;
+            &lt;artifactId&gt;spark-core_${scala.binary.version}&lt;/artifactId&gt;
+            &lt;version&gt;${spark.version}&lt;/version&gt;
+            &lt;scope&gt;provided&lt;/scope&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.apache.spark&lt;/groupId&gt;
+            &lt;artifactId&gt;spark-sql_${scala.binary.version}&lt;/artifactId&gt;
+            &lt;version&gt;${spark.version}&lt;/version&gt;
+            &lt;scope&gt;provided&lt;/scope&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.apache.spark&lt;/groupId&gt;
+            &lt;artifactId&gt;spark-mllib_${scala.binary.version}&lt;/artifactId&gt;
+            &lt;version&gt;${spark.version}&lt;/version&gt;
+            &lt;scope&gt;provided&lt;/scope&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.apache.spark&lt;/groupId&gt;
+            &lt;artifactId&gt;spark-streaming_${scala.binary.version}&lt;/artifactId&gt;
+            &lt;version&gt;${spark.version}&lt;/version&gt;
+            &lt;scope&gt;provided&lt;/scope&gt;
+        &lt;/dependency&gt;
+        &lt;!--   spark结束    --&gt;
+    &lt;/dependencies&gt;
+
+    &lt;build&gt;
+        &lt;plugins&gt;
+            &lt;plugin&gt;
+                &lt;groupId&gt;org.projectlombok&lt;/groupId&gt;
+                &lt;artifactId&gt;lombok-maven-plugin&lt;/artifactId&gt;
+                &lt;version&gt;1.16.10.0&lt;/version&gt;
+                &lt;executions&gt;
+                    &lt;execution&gt;
+                        &lt;phase&gt;generate-sources&lt;/phase&gt;
+                        &lt;goals&gt;
+                            &lt;goal&gt;delombok&lt;/goal&gt;
+                        &lt;/goals&gt;
+                    &lt;/execution&gt;
+                &lt;/executions&gt;
+            &lt;/plugin&gt;
+
+            &lt;plugin&gt;
+                &lt;artifactId&gt;maven-surefire-plugin&lt;/artifactId&gt;
+                &lt;version&gt;2.20.1&lt;/version&gt;
+                &lt;configuration&gt;
+                    &lt;skipTests&gt;true&lt;/skipTests&gt;
+                &lt;/configuration&gt;
+            &lt;/plugin&gt;
+        &lt;/plugins&gt;
+    &lt;/build&gt;
+
+&lt;/project&gt;
+</code></pre>
+</li>
+<li>
+<p>实现WordCount，这里面的代码逻辑都非常简单一看就懂</p>
+<pre><code class="language-java">package com.zt.study.xdata.study.spark;
+
+import scala.Tuple2;
+
+import org.apache.spark.api.java.JavaPairRDD;
+import org.apache.spark.api.java.JavaRDD;
+import org.apache.spark.sql.SparkSession;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.regex.Pattern;
+
+public final class JavaWordCount {
+  private static final Pattern SPACE = Pattern.compile(&quot; &quot;);
+
+  public static void main(String[] args) throws Exception {
+
+    if (args.length &lt; 1) {
+      System.err.println(&quot;Usage: JavaWordCount &lt;file&gt;&quot;);
+      System.exit(1);
+    }
+    System.out.println(&quot;开始Spark任务&quot;);
+    SparkSession spark = SparkSession
+      .builder()
+      .appName(&quot;JavaWordCount&quot;)
+      .getOrCreate();
+
+    JavaRDD&lt;String&gt; lines = spark.read().textFile(args[0]).javaRDD();
+
+    JavaRDD&lt;String&gt; words = lines.flatMap(s -&gt; Arrays.asList(SPACE.split(s)).iterator());
+
+    JavaPairRDD&lt;String, Integer&gt; ones = words.mapToPair(s -&gt; new Tuple2&lt;&gt;(s, 1));
+
+    JavaPairRDD&lt;String, Integer&gt; counts = ones.reduceByKey(Integer::sum);
+
+    List&lt;Tuple2&lt;String, Integer&gt;&gt; output = counts.collect();
+    for (Tuple2&lt;?,?&gt; tuple : output) {
+      System.out.println(tuple._1() + &quot;: &quot; + tuple._2());
+    }
+    spark.stop();
+  }
+}
+</code></pre>
+</li>
+<li>
+<p>运行spark 任务,使用spark-submit 命令提交spark任务</p>
+<pre><code class="language-bash">spark-submit 
+  --class &lt;main-class&gt;         # 应用程序主入口类
+  --master &lt;master-url&gt;        # 集群的 Master Url
+  --deploy-mode &lt;deploy-mode&gt;  # 部署模式
+  --conf &lt;key&gt;=&lt;value&gt;        # 可选配置       
+ ... # other options    
+ &lt;application-jar&gt;           # Jar 包路径
+ [application-arguments]       #传递给主入口类的参数  
+</code></pre>
+<p>我们运行这个任务的命令就是</p>
+<pre><code class="language-bash">spark-submit --class com.zt.study.xdata.study.spark.JavaWordCount --master local[2] D:\javaxuexi\xdata-study\target\xdata-study-0.0.1-SNAPSHOT.jar D:\javaxuexi\xdata-study\src\main\resources\word.txt
+</code></pre>
+</li>
+</ol>
+<p>这样就把Word Count实现了，我们后面就进入Spark的基础概念和原理的详细学习！</p>
+<h4 id="rdd">RDD</h4>
+<p>RDD （Resilient Distributed Dataset，弹性分布式数据集）是 <strong>Spark 中最基本的数据抽象</strong>，它是<strong>只读的、分区存储的分布式数据集合</strong>，支持并行计算。RDD 可以<strong>从外部数据源（如 HDFS、S3、数据库）或现有 RDD 通过转换（Transformation）创建</strong>，并具备以下核心特性：</p>
+<ol>
+<li><strong>分区（Partition）</strong>
+<ul>
+<li>RDD 由 <strong>一个或多个分区</strong> 组成，每个分区会被一个计算任务（Task）处理。</li>
+<li><strong>并行计算</strong>：用户可以在创建 RDD 时<strong>手动指定分区数</strong>，如果未指定，则默认使用<strong>CPU 核心数</strong>。</li>
+</ul>
+</li>
+<li><strong>计算函数（Compute）</strong>
+<ul>
+<li>每个 RDD <strong>都包含一个计算分区的函数 compute()</strong>，用于定义如何处理分区数据。</li>
+</ul>
+</li>
+<li><strong>血缘（Lineage）与容错性</strong>
+<ul>
+<li><strong>RDD 是不可变的</strong>，每次转换都会生成一个新的 RDD，并记录转换关系，即<strong>血缘（Lineage）</strong>。</li>
+<li><strong>容错机制</strong>：当某个分区数据丢失时，Spark <strong>不会重算所有分区</strong>，而是根据<strong>血缘关系</strong>只重新计算丢失的分区，提高计算效率。</li>
+</ul>
+</li>
+<li><strong>分区器（Partitioner）</strong>
+<ul>
+<li>对于 Key-Value 型 RDD，Spark 允许指定 分区策略，决定数据存储在哪个分区中：
+<ul>
+<li><strong>HashPartitioner（哈希分区）</strong>：按照 Key 的哈希值分区，适用于 Key 数量较多且均匀分布的情况。</li>
+<li><strong>RangePartitioner（范围分区）</strong>：按照 Key 的范围进行分区，适用于 Key 具有<strong>顺序特性</strong>的情况，如排序操作。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>数据本地性（Data Locality）</strong>
+<ul>
+<li>RDD 维护 <strong>优先位置列表（Preferred Locations）</strong>，用于存储<strong>每个分区的最佳存储位置</strong>。</li>
+<li><strong>数据本地性优化</strong>：Spark 调度任务时，会优先选择<strong>存储该数据块的计算节点</strong>执行任务，以减少数据传输开销，实现“<strong>移动计算比移动数据更高效</strong>”的理念。</li>
+</ul>
+</li>
+</ol>
+<h5 id="创建rdd">创建RDD</h5>
+<ol>
+<li>
+<p>通过SparkContext.parallelize在<strong>内部数据</strong>之上创建RDD</p>
+<pre><code class="language-java">SparkConf conf = new SparkConf().setAppName(&quot;RDDStudy&quot;).setMaster(&quot;local[2]&quot;);
+JavaSparkContext sc = new JavaSparkContext(conf);
+List&lt;String&gt; data = Arrays.asList(&quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;5&quot;);
+JavaRDD&lt;String&gt; rdd = sc.parallelize(data, 2);
+</code></pre>
+</li>
+<li>
+<p>通过SparkContext.textFile等API从<strong>外部数据</strong>创建RDD</p>
+<pre><code class="language-java">SparkConf conf = new SparkConf().setAppName(&quot;RDDStudy&quot;).setMaster(&quot;local[2]&quot;);
+JavaSparkContext sc = new JavaSparkContext(conf);
+List&lt;String&gt; data = Arrays.asList(&quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;5&quot;);
+JavaRDD&lt;String&gt; rdd = sc.textFile(&quot;test.txt&quot;, 2);
+</code></pre>
+</li>
+</ol>
+<h5 id="rdd的操作">RDD的操作</h5>
+<p>RDD 支持两种类型的操作：transformations（转换，从现有数据集创建新数据集）和 actions（在数据 集上运行计算后将值返回到驱动程序）。<strong>RDD 中的所有转换操作都是惰性的</strong>，它们只是记住这些转换 操作，但不会立即执行，<strong>只有遇到 action 操作后才会真正的进行计算</strong>，这种特性也被称作<strong>惰性计算</strong>。</p>
+<p>Spark在运行时的计算被划分为两个环节。</p>
+<ol>
+<li>使用Transformations类算子进行不同数据形态之间的转换，构建<strong>计算流图</strong>（DAG，Directed Acyclic Graph）；</li>
+<li>通过Actions类算子，以<strong>回溯的方式去触发执行</strong>这个计算流图。</li>
+</ol>
+<p>官网列举了所有算子https://spark.apache.org/docs/latest/rdd-programming-guide.html#transformations，下面进行一些简单的翻译</p>
+<h6 id="transformation-算子">Transformation 算子</h6>
+<p><img src="image-20250206175114392.png" alt="image-20250206175114392"></p>
+<p><img src="image-20250206175133244.png" alt="image-20250206175133244"></p>
+<p>练习几个常见的算子</p>
+<pre><code class="language-java">package com.zt.study.xdata.study.spark;
+
+import org.apache.spark.SparkConf;
+import org.apache.spark.api.java.JavaPairRDD;
+import org.apache.spark.api.java.JavaRDD;
+import org.apache.spark.api.java.JavaSparkContext;
+import org.apache.spark.api.java.function.FlatMapFunction;
+import org.apache.spark.api.java.function.Function2;
+import scala.Tuple2;
+
+import java.util.*;
+
+/**
+ * Transformation 算子学习
+ *
+ * @author zhengtao on 2025/2/6
+ */
+public class TransformationStudy {
+    public static void main(String[] args) {
+        SparkConf conf = new SparkConf().setAppName(&quot;TransformationStudy&quot;).setMaster(&quot;local[2]&quot;);
+        JavaSparkContext sc = new JavaSparkContext(conf);
+        List&lt;String&gt; data = Arrays.asList(&quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;5&quot;, &quot;6&quot;);
+        JavaRDD&lt;String&gt; rdd = sc.parallelize(data, 2);
+        // map 算子
+        JavaRDD&lt;Integer&gt; map = rdd.map(r -&gt; 10 * Integer.parseInt(r));
+        System.out.println(&quot;结果为:&quot; + map.collect());
+
+        // mapPartitions 算子
+        JavaRDD&lt;Integer&gt; mapPartitions = rdd.mapPartitions((FlatMapFunction&lt;Iterator&lt;String&gt;, Integer&gt;) stringIterator -&gt; {
+            List&lt;Integer&gt; result = new ArrayList&lt;&gt;();
+            while (stringIterator.hasNext()) {
+                int num = Integer.parseInt(stringIterator.next());
+                result.add(10 * num);
+            }
+            return result.iterator();
+        });
+        System.out.println(&quot;结果为:&quot; + mapPartitions.collect());
+
+        // flatMap 算子
+        JavaRDD&lt;Integer&gt; flatMap = rdd.flatMap(r -&gt; Collections.singletonList(10 * Integer.parseInt(r)).iterator());
+        System.out.println(&quot;结果为:&quot; + flatMap.collect());
+
+        //  mapPartitionsWithIndex 算子
+        JavaRDD&lt;Integer&gt; mapPartitionsWithIndex = rdd.mapPartitionsWithIndex((Function2&lt;Integer, Iterator&lt;String&gt;, Iterator&lt;Integer&gt;&gt;) (v1, v2) -&gt; {
+            List&lt;Integer&gt; result = new ArrayList&lt;&gt;();
+            while (v2.hasNext()) {
+                String strValue = v2.next();
+                int value = Integer.parseInt(strValue);
+                result.add(value * 10);
+            }
+            return result.iterator();
+        }, true);
+        System.out.println(&quot;结果为:&quot; + mapPartitionsWithIndex.collect());
+
+        // 以下算子会触发shuffle
+        JavaPairRDD&lt;String, Integer&gt; pair = rdd.mapToPair(s -&gt; new Tuple2&lt;&gt;(String.valueOf(Integer.parseInt(s) % 2), Integer.parseInt(s)));
+
+        // groupByKey 算子
+        JavaPairRDD&lt;String, Iterable&lt;Integer&gt;&gt; groupByKey = pair.groupByKey();
+        List&lt;Tuple2&lt;String, Iterable&lt;Integer&gt;&gt;&gt; output = groupByKey.collect();
+        System.out.println(&quot;结果为:&quot;);
+        for (Tuple2&lt;String, Iterable&lt;Integer&gt;&gt; tuple : output) {
+            System.out.println(tuple._1() + &quot; -&gt; &quot; + tuple._2());
+        }
+
+        // reduceByKey 算子
+        JavaPairRDD&lt;String, Integer&gt; reduceByKey = pair.reduceByKey(Integer::sum);
+        List&lt;Tuple2&lt;String, Integer&gt;&gt; collect = reduceByKey.collect();
+        System.out.println(&quot;结果为:&quot;);
+        for (Tuple2&lt;?,?&gt; tuple : collect) {
+            System.out.println(tuple._1() + &quot;: &quot; + tuple._2());
+        }
+
+        // aggregateByKey 算子
+        JavaPairRDD&lt;String, Integer&gt; aggregateByKey = pair.aggregateByKey(
+                0,
+                // 局部聚合：累加当前分区内的值
+                (Function2&lt;Integer, Integer, Integer&gt;) Integer::sum,
+                // 全局聚合：合并各个分区内的累加结果
+                (Function2&lt;Integer, Integer, Integer&gt;) Integer::sum
+        );
+        collect = aggregateByKey.collect();
+        System.out.println(&quot;结果为:&quot;);
+        for (Tuple2&lt;?,?&gt; tuple : collect) {
+            System.out.println(tuple._1() + &quot;: &quot; + tuple._2());
+        }
+
+        // sortByKey 算子
+        JavaPairRDD&lt;String, Integer&gt; sortByKey = pair.sortByKey(false);
+        collect = sortByKey.collect();
+        System.out.println(&quot;结果为:&quot;);
+        for (Tuple2&lt;?,?&gt; tuple : collect) {
+            System.out.println(tuple._1() + &quot;: &quot; + tuple._2());
+        }
+        sc.stop();
+    }
+}
+</code></pre>
+<h6 id="action-算子">Action 算子</h6>
+<p><img src="image-20250206175801050.png" alt="image-20250206175801050"></p>
+<p>进行一些常见算子的练习</p>
+<pre><code class="language-java">package com.zt.study.xdata.study.spark;
+
+import org.apache.spark.SparkConf;
+import org.apache.spark.api.java.JavaRDD;
+import org.apache.spark.api.java.JavaSparkContext;
+
+import java.io.File;
+import java.util.Arrays;
+import java.util.List;
+
+/**
+ * Action 算子学习
+ *
+ * @author zhengtao on 2025/2/7
+ */
+public class ActionStudy {
+    public static void main(String[] args) {
+        SparkConf conf = new SparkConf().setAppName(&quot;ActionStudy&quot;).setMaster(&quot;local[2]&quot;);
+        JavaSparkContext sc = new JavaSparkContext(conf);
+        List&lt;String&gt; data = Arrays.asList(&quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;5&quot;, &quot;6&quot;);
+        JavaRDD&lt;String&gt; rdd = sc.parallelize(data, 2);
+
+        // collect 算子
+        List&lt;String&gt; collect = rdd.collect();
+        System.out.println(&quot;结果为:&quot; + collect);
+
+        // take 算子
+        collect = rdd.take(3);
+        System.out.println(&quot;结果为:&quot; + collect);
+
+        // first 算子
+        String first = rdd.first();
+        System.out.println(&quot;结果为:&quot; + first);
+
+        // saveAsTextFile 算子
+        String path = &quot;D:\\javaxuexi\\xdata-study\\src\\main\\resources\\action.txt&quot;;
+        rdd.saveAsTextFile(path);
+        JavaRDD&lt;String&gt; text = sc.textFile(path);
+        collect = text.collect();
+        System.out.println(&quot;结果为:&quot; + collect);
+        deleteDirectory(new File(path));
+        sc.stop();
+    }
+
+    /**
+     * 删除文件
+     *
+     * @param file
+     */
+    public static void deleteDirectory(File file) {
+        if (file.isDirectory()) {
+            File[] children = file.listFiles();
+            if (children != null) {
+                for (File child : children) {
+                    deleteDirectory(child);
+                }
+            }
+        }
+        file.delete();
+    }
+}
+</code></pre>
+<h5 id="rdd之间的依赖">RDD之间的依赖</h5>
+<p>在 Spark 中，每次对 RDD 进行转换操作时都会产生一个新的 RDD，新 RDD 通过一定的“依赖”关系与它的父 RDD 相关联。Spark 将这种依赖关系分为两大类：</p>
+<ul>
+<li><strong>窄依赖 (Narrow Dependency)</strong></li>
+<li><strong>宽依赖 (Wide Dependency / Shuffle Dependency)</strong></li>
+</ul>
+<p>这种区分不仅决定了数据的流动方式，还直接影响了任务调度、Stage 划分以及容错恢复的粒度。</p>
+<h6 id="窄依赖-narrow-dependency">窄依赖 (Narrow Dependency)</h6>
+<ul>
+<li><strong>定义</strong>：
+在窄依赖中，一个父 RDD 的每个分区至多只会被子 RDD 中的一个分区使用，也就是说数据的流向是“一对一”或“多对一”。
+例如，<code>map</code>、<code>filter</code>、<code>union</code> 等操作都是典型的窄依赖。</li>
+<li><strong>特性</strong>：
+<ul>
+<li><strong>局部计算</strong>：因为每个子分区只依赖于父 RDD 的单个或少量分区，所以转换可以在本地节点内进行，不需要跨节点的数据传输。</li>
+<li><strong>流水线执行</strong>：窄依赖允许将多个连续的转换操作组成流水线（pipeline），在同一 task 内依次处理数据，降低了中间数据写入磁盘或网络传输的开销。</li>
+<li><strong>高效容错</strong>：当某个分区计算失败时，只需重算该分区对应的父 RDD 分区即可，不会波及其他分区。</li>
+</ul>
+</li>
+</ul>
+<p><strong>实现细节</strong></p>
+<ul>
+<li><strong>OneToOneDependency</strong>：
+这是最常见的一种窄依赖。比如 <code>map</code>、<code>filter</code> 操作中，子 RDD 的每个分区与父 RDD 的同一编号分区之间是一对一的关系。
+在 Spark 源码中，<code>OneToOneDependency</code> 直接返回当前分区的编号作为依赖的父分区编号。</li>
+<li><strong>RangeDependency</strong>：
+用于 <code>union</code> 操作，将多个 RDD 合并时，记录各个父 RDD 的分区范围，确保数据的拼接顺序不变。
+这种依赖也是窄依赖，因为每个父 RDD 的分区只会映射到合并后 RDD 的某个特定区间。</li>
+</ul>
+<h6 id="宽依赖-wide-dependency--shuffle-dependency">宽依赖 (Wide Dependency / Shuffle Dependency)</h6>
+<ul>
+<li><strong>定义</strong>：
+当父 RDD 的某个分区可能被子 RDD 中的多个分区使用时，就形成了宽依赖。换句话说，一个父分区的数据会被“拆分”后分别传输到多个子分区中，通常伴随 shuffle 操作。
+例如，<code>groupByKey</code>、<code>reduceByKey</code>、<code>join</code>（当两个 RDD 没有采用相同的分区器时）等操作都属于宽依赖。</li>
+<li><strong>特性</strong>：
+<ul>
+<li><strong>数据重分布 (Shuffle)</strong>：宽依赖必然伴随 shuffle，需要将数据重新分区，将相同 key 或符合分区条件的数据聚合到一起。这会引起网络传输、磁盘 I/O 和数据序列化/反序列化等额外开销。</li>
+<li><strong>Stage 划分边界</strong>：由于 shuffle 需要等待所有数据都准备就绪，Spark 会将出现宽依赖的地方作为 stage 的分界线，前一个 stage 的所有任务必须完成后，下一个 stage 才能开始执行。</li>
+<li><strong>容错恢复代价较高</strong>：在宽依赖中，子 RDD 的一个分区可能依赖于多个父分区的数据；如果某个分区丢失，可能需要重新计算多个父分区，导致冗余计算和较高的恢复代价。</li>
+</ul>
+</li>
+</ul>
+<p><strong>实现细节</strong></p>
+<ul>
+<li><strong>ShuffleDependency</strong>：
+Spark 中将宽依赖统一归类为 ShuffleDependency，它封装了 shuffle 所需的信息，如分区器（Partitioner）、序列化器、聚合器（Aggregator）等参数。
+ShuffleDependency 会在 shuffle 写入阶段将数据写入磁盘，并在下游的任务中通过网络拉取数据，从而实现跨节点的数据传输。</li>
+<li><strong>两种 Shuffle 管理器</strong>：
+Spark 提供了两种主要的 ShuffleManager：
+<ol>
+<li><strong>SortShuffleManager</strong>：默认的基于排序的 Shuffle 机制，能对数据进行排序以便更高效地合并。</li>
+<li><strong>HashShuffleManager</strong>：基于哈希的实现，但通常内存消耗较高，在新版 Spark 中不再推荐使用。</li>
+</ol>
+</li>
+</ul>
+<h6 id="宽依赖与窄依赖对执行调度和容错的影响">宽依赖与窄依赖对执行调度和容错的影响</h6>
+<p><strong>Stage 划分</strong></p>
+<ul>
+<li><strong>窄依赖场景</strong>：
+多个连续的窄依赖操作可以在同一 stage 内流水线执行，因为数据直接从一个操作传递到下一个操作，无需进行数据交换。</li>
+<li><strong>宽依赖场景</strong>：
+一旦遇到宽依赖操作，<strong>必须先执行 shuffle 将数据重分区，然后形成新的 stage。这也就意味着，作业的整体执行流程会被划分为多个 stage，每个 stage 之间通过 shuffle 数据传递</strong>。</li>
+</ul>
+<p><strong>容错恢复</strong></p>
+<ul>
+<li><strong>窄依赖容错</strong>：
+如果一个任务失败，Spark 只需要重新计算丢失分区对应的父 RDD 分区，重计算代价较低且局部性高。</li>
+<li><strong>宽依赖容错</strong>：
+由于一个子分区可能依赖于多个父分区的数据，某个节点故障时可能会导致多个父分区的数据丢失，从而需要重算更多的数据，这就增加了恢复时的计算负担。</li>
+</ul>
+<h6 id="总结">总结</h6>
+<ul>
+<li>窄依赖
+<ul>
+<li>每个父分区最多只传递给子 RDD 的一个分区</li>
+<li>支持流水线执行和局部容错</li>
+<li>常见算子：map、filter、union</li>
+</ul>
+</li>
+<li>宽依赖
+<ul>
+<li>一个父分区可能会被多个子分区使用</li>
+<li>必须进行 shuffle，作为 stage 划分的边界</li>
+<li>容错时可能需要重算更多数据</li>
+<li>常见算子：groupByKey、reduceByKey、join（无相同分区器时）</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h5 id="shuffle">Shuffle</h5>
+<p>Shuffle的本意是扑克的“洗牌”，在分布式计算场景中，它被引申为<strong>集群范围内跨节点、跨进程的数据分发</strong>。分布式数据集在集群内的分发，会引入大量的<strong>磁盘I/O</strong>与<strong>网络I/O</strong>。在DAG的计算链条中，Shuffle环节的执行性能是最差的。你可能会问：“既然Shuffle的性能这么差，为什么在计算的过程中非要引入Shuffle操作呢？免去Shuffle环节不行吗？”</p>
+<p>其实，计算过程之所以需要Shuffle，往往是由计算逻辑、或者说业务逻辑决定的。</p>
+<p>在Word Count的例子中，我们的“业务逻辑”是对单词做统计计数，那么对单词“Spark”来说，在做“加和”之前，我们就是得把原本分散在不同Executors中的“Spark”，拉取到某一个Executor，才能完成统计计数的操作。</p>
+<p>结合过往的工作经验，我们发现在绝大多数的业务场景中，Shuffle操作都是必需的、无法避免的。既然我们躲不掉Shuffle，那么接下来，我们就一起去探索，看看Shuffle到底是怎样的一个计算过程。</p>
+<h6 id="shuffle工作原理">Shuffle工作原理</h6>
+<p>为了方便你理解，我们还是用Word Count的例子来做说明。在这个示例中，引入Shuffle操作的是reduceByKey算子，也就是下面这行代码</p>
+<pre><code class="language-javascript">// 按照单词做分组计数
+val wordCounts: RDD[(String, Int)] = kvRDD.reduceByKey((x, y) =&gt; x + y) 
+</code></pre>
+<p>我们先来直观地回顾一下这一步的计算过程，然后再去分析其中涉及的Shuffle操作：</p>
+<p><img src="3199582354a56f9e64bdf7b8a516b04d.jpg" alt="图片"></p>
+<p>如上图所示，以Shuffle为边界，reduceByKey的计算被切割为两个执行阶段。约定俗成地，我们把Shuffle之前的Stage叫作<strong>Map阶段</strong>，而把Shuffle之后的Stage称作<strong>Reduce阶段</strong>。在<strong>Map阶段</strong>，每个Executors先把自己负责的数据分区做初步聚合（又叫Map端聚合、局部聚合）；在<strong>Shuffle环节</strong>，不同的单词被分发到不同节点的Executors中；最后的<strong>Reduce阶段</strong>，Executors以单词为Key做第二次聚合（又叫全局聚合），从而完成统计计数的任务。</p>
+<p>不难发现，Map阶段与Reduce阶段的计算过程相对清晰明了，二者都是利用reduce运算完成局部聚合与全局聚合。在reduceByKey的计算过程中，Shuffle才是关键。</p>
+<p>仔细观察上图你就会发现，与其说Shuffle是跨节点、跨进程的数据分发，不如说Shuffle是Map阶段与Reduce阶段之间的数据交换。那么问题来了，两个执行阶段之间，是如何实现数据交换的呢？</p>
+<h6 id="shuffle中间文件">Shuffle中间文件</h6>
+<p>如果用一句来概括的话，那就是，<strong>Map阶段与Reduce阶段，通过生产与消费Shuffle中间文件的方式，来完成集群范围内的数据交换</strong>。换句话说，Map阶段生产Shuffle中间文件，Reduce阶段消费Shuffle中间文件，二者以中间文件为媒介，完成数据交换。</p>
+<p>那么接下来的问题是，什么是<strong>Shuffle中间文件</strong>，它是怎么产生的，又是如何被消费的？</p>
+<p>我把它的产生和消费过程总结在下图中了：</p>
+<p><img src="95479766b8acebdedd5c8a0f8bda0680.jpg" alt="图片"></p>
+<p>DAGScheduler会为每一个Stage创建任务集合TaskSet，而每一个TaskSet都包含多个分布式任务（Task）。在Map执行阶段，每个Task（以下简称Map Task）都会<strong>生成包含data文件与index文件的Shuffle中间文件</strong>，如上图所示。也就是说，Shuffle文件的生成，<strong>是以Map Task为粒度的</strong>，Map阶段有多少个Map Task，就会生成多少份Shuffle中间文件。</p>
+<p>再者，Shuffle中间文件是统称、泛指，它包含两类实体文件，一个是记录（Key，Value）键值对的data文件，另一个是记录键值对所属Reduce Task的index文件。换句话说，index文件标记了data文件中的哪些记录，应该由下游Reduce阶段中的哪些Task（简称Reduce Task）消费。在上图中，为了方便示意，我们把首字母是S、i、c的单词分别交给下游的3个Reduce Task去消费，显然，这里的数据交换规则是单词首字母。</p>
+<p>在Spark中，Shuffle环节实际的数据交换规则要比这复杂得多。<strong>数据交换规则又叫分区规则</strong>，因为它定义了<strong>分布式数据集在Reduce阶段如何划分数据分区</strong>。假设Reduce阶段有N个Task，这N个Task对应着N个数据分区，那么在Map阶段，每条记录应该分发到哪个Reduce Task，是由下面的公式来决定的。</p>
+<pre><code class="language-ini">P = Hash(Record Key) % N
+</code></pre>
+<p>对于任意一条数据记录，Spark先按照既定的哈希算法，计算记录主键的哈希值，然后把哈希值对N取模，计算得到的结果数字，就是这条记录在Reduce阶段的数据分区编号P。换句话说，这条记录在Shuffle的过程中，应该被分发到Reduce阶段的P号分区。</p>
+<p>熟悉了分区规则与中间文件之后，接下来，我们再来说一说中间文件是怎么产生的。</p>
+<h6 id="shuffle-write">Shuffle Write</h6>
+<p>我们刚刚说过，Shuffle中间文件，是以Map Task为粒度生成的，我们不妨使用下图中的Map Task以及与之对应的数据分区为例，来讲解中间文件的生成过程。数据分区的数据内容如图中绿色方框所示：</p>
+<p><img src="92781f6ff67224812d7aee1b7d6a63ab.jpg" alt="图片"></p>
+<p>在生成中间文件的过程中，Spark会借助一种类似于Map的数据结构，来计算、缓存并排序数据分区中的数据记录。这种Map结构的Key是（Reduce Task Partition ID，Record Key），而Value是原数据记录中的数据值，如图中的“内存数据结构”所示。</p>
+<p>对于数据分区中的数据记录，Spark会根据我们前面提到的公式1逐条计算记录所属的目标分区ID，然后把主键（Reduce Task Partition ID，Record Key）和记录的数据值插入到Map数据结构中。当Map结构被灌满之后，Spark根据主键对Map中的数据记录做排序，然后把所有内容溢出到磁盘中的临时文件，如图中的步骤1所示。</p>
+<p>随着Map结构被清空，Spark可以继续读取分区内容并继续向Map结构中插入数据，直到Map结构再次被灌满而再次溢出，如图中的步骤2所示。就这样，如此往复，直到数据分区中所有的数据记录都被处理完毕。</p>
+<p>到此为止，磁盘上存有若干个溢出的临时文件，而内存的Map结构中留有部分数据，Spark使用归并排序算法对所有临时文件和Map结构剩余数据做合并，分别生成data文件、和与之对应的index文件，如图中步骤4所示。Shuffle阶段生成中间文件的过程，又叫Shuffle Write。</p>
+<p>总结下来，Shuffle中间文件的生成过程，分为如下几个步骤：</p>
+<ol>
+<li>对于数据分区中的数据记录，逐一计算其目标分区，然后填充内存数据结构；-</li>
+<li>当数据结构填满后，如果分区中还有未处理的数据记录，就对结构中的数据记录按（目标分区 ID，Key）排序，将所有数据溢出到临时文件，同时清空数据结构；-</li>
+<li>重复前 2 个步骤，直到分区中所有的数据记录都被处理为止；-</li>
+<li>对所有临时文件和内存数据结构中剩余的数据记录做归并排序，生成数据文件和索引文件。</li>
+</ol>
+<p>到目前为止，我们熟悉了Spark在Map阶段生产Shuffle中间文件的过程，那么，在Reduce阶段，不同的Tasks又是如何基于这些中间文件，来定位属于自己的那部分数据，从而完成数据拉取呢？</p>
+<h6 id="shuffle-read">Shuffle Read</h6>
+<p>首先，我们需要注意的是，对于每一个Map Task生成的中间文件，其中的目标分区数量是由Reduce阶段的<strong>任务数量</strong>（又叫<strong>并行度</strong>）决定的。在下面的示意图中，Reduce阶段的并行度是3，因此，Map Task的中间文件会包含3个目标分区的数据，而<strong>index文件，恰恰是用来标记目标分区所属数据记录的起始索引。</strong></p>
+<p><img src="2283d917c3ab2262bbd91f35e0ce0dd9.jpg" alt="图片"></p>
+<p>对于所有Map Task生成的中间文件，Reduce Task需要通过网络从不同节点的硬盘中下载并拉取属于自己的数据内容。不同的Reduce Task正是根据index文件中的起始索引来确定哪些数据内容是“属于自己的”。Reduce阶段不同于Reduce Task拉取数据的过程，往往也被叫做<strong>Shuffle Read</strong>。</p>
+<h6 id="总结-1">总结</h6>
+<p><strong>Shuffle指的是集群范围内跨节点、跨进程的数据分发</strong>。</p>
+<p>Shuffle的计算会消耗所有类型的硬件资源。具体来说，Shuffle中的哈希与排序操作会大量消耗CPU，而Shuffle Write生成中间文件的过程，会消耗宝贵的内存资源与磁盘I/O，最后，Shuffle Read阶段的数据拉取会引入大量的网络I/O。不难发现，<strong>Shuffle是资源密集型计算</strong>，因此理解Shuffle对开发者来说至关重要。</p>
+<p><strong>会触发 shuffle 的操作</strong> 主要包括：</p>
+<ol>
+<li><strong>分区变更</strong>：<code>repartition()</code>、<code>coalesce()</code>（<code>shuffle = true</code>）</li>
+<li><strong>基于 Key 的操作</strong>：<code>groupByKey()</code>、<code>reduceByKey()</code>、<code>aggregateByKey()</code>、<code>join()</code>、<code>cogroup()</code></li>
+<li><strong>排序</strong>：<code>sortByKey()</code>、<code>sort()</code></li>
+<li><strong>去重和统计</strong>：<code>distinct()</code>、<code>count()</code></li>
+</ol>
+<p><strong>如何减少 shuffle？</strong></p>
+<ul>
+<li><strong>用 <code>reduceByKey()</code> 代替 <code>groupByKey()</code></strong></li>
+<li><strong>使用 <code>broadcast()</code> 变量优化 <code>join()</code></strong></li>
+<li><strong>避免 <code>distinct()</code>，改用 <code>reduceByKey()</code></strong></li>
+<li><strong>调整分区数，减少不必要的 <code>repartition()</code></strong></li>
+<li><strong>优化排序逻辑，避免不必要的 <code>sortByKey()</code></strong></li>
+</ul>
+<h5 id="缓存rdd">缓存RDD</h5>
+<p>Spark 速度非常快的一个原因是 RDD 支持缓存。成功缓存后，如果之后的操作使用到了该数据集，则 直接从缓存中获取。虽然缓存也有丢失的风险，但是由于 RDD 之间的依赖关系，如果某个分区的缓存 数据丢失，只需要重新计算该分区即可。 Spark支持丰富的存储级别，每一种存储级别都包含3个最基本的要素。</p>
+<ul>
+<li>存储介质：数据缓存到内存还是磁盘，或是两者都有</li>
+<li>存储形式：数据内容是对象值还是字节数组，带 SER 字样的表示以序列化方式存储，不带 SER 则表示采用对象值</li>
+<li>副本数量：存储级别名字最后的数字代表拷贝数量，没有数字默认为 1 份副本。</li>
+</ul>
+<p><img src="d7f15c0f7679777ec237c6a02f11c7b7.jpg" alt="图片"></p>
+<p>在一个Spark作业中，计算图DAG中往往包含多个RDD，<strong>当同一个RDD被引用多次时，就可以考虑对其进行Cache，从而提升作业的执行效率</strong>。</p>
+<p><strong>缓存数据的方法有两个： persist 和 cache</strong> 。 cache 内部调用的也是 persist ，它是 persist 的 特殊化形式，等价于 persist(StorageLevel.MEMORY_ONLY) 。</p>
+<p>移除缓存:  <strong>Spark 会自动监视每个节点上的缓存使用情况，并按照最近最少使用（LRU）的规则删除旧数据分区。也可以使用 unpersist() 方法进行手动删除</strong>。</p>
+<h5 id="广播变量--累加器">广播变量 &amp; 累加器</h5>
+<p>RDD的计算以数据分区为粒度，依照算子的逻辑，Executors以相互独立的方式，完成不同数据分区的计算与转换。</p>
+<p>不难发现，对于Executors来说，分区中的数据都是局部数据。换句话说，在同一时刻，隶属于某个Executor的数据分区，对于其他Executors来说是不可见的。</p>
+<p>不过，在做应用开发的时候，总会有一些计算逻辑需要访问“全局变量”，比如说全局计数器，而这些全局变量在任意时刻对所有的Executors都是可见的、共享的。那么问题来了，像这样的全局变量，或者说共享变量，Spark又是如何支持的呢？按照创建与使用方式的不同，Spark提供了两类共享变量，分别是广播变量（Broadcast variables）和累加器（Accumulators）。</p>
+<h6 id="广播变量broadcast-variables">广播变量（Broadcast variables）</h6>
+<p>我们先来说说广播变量。广播变量的用法很简单，给定普通变量x，通过调用SparkContext下的broadcast API即可完成广播变量的创建，我们结合代码例子看一下。</p>
+<pre><code class="language-kotlin">val list: List[String] = List(&quot;Apache&quot;, &quot;Spark&quot;)
+
+// sc为SparkContext实例
+val bc = sc.broadcast(list)
+</code></pre>
+<p>在上面的代码示例中，我们先是定义了一个字符串列表list，它包含“Apache”和“Spark”这两个单词。然后，我们使用broadcast函数来创建广播变量bc，bc封装的内容就是list列表。</p>
+<pre><code class="language-cpp">// 读取广播变量内容
+bc.value
+// List[String] = List(Apache, Spark)
+
+// 直接读取列表内容
+list
+// List[String] = List(Apache, Spark)
+</code></pre>
+<p>广播变量创建好之后，通过调用它的value函数，我们就可以访问它所封装的数据内容。可以看到调用bc.value的效果，这与直接访问字符串列表list的效果是完全一致的。</p>
+<p>看到这里，你可能会问：“明明通过访问list变量就可以直接获取字符串列表，为什么还要绕个大弯儿，先去封装广播变量，然后又通过它的value函数来获取同样的数据内容呢？”实际上，这是个非常好的问题，要回答这个问题，咱们需要做个推演，看看直接访问list变量会产生哪些弊端。</p>
+<h6 id="普通变量的痛点">普通变量的痛点</h6>
+<p>这一次，为了对比使用广播变量前后的差异，我们把Word Count变更为“定向计数”。</p>
+<p>所谓定向计数，它指的是只对某些单词进行计数，例如，给定单词列表list，我们只对文件wikiOfSpark.txt当中的“Apache”和“Spark”这两个单词做计数，其他单词我们可以忽略。</p>
+<pre><code class="language-javascript">import org.apache.spark.rdd.RDD
+val rootPath: String = _
+val file: String = s&quot;${rootPath}/wikiOfSpark.txt&quot;
+// 读取文件内容
+val lineRDD: RDD[String] = spark.sparkContext.textFile(file)
+// 以行为单位做分词
+val wordRDD: RDD[String] = lineRDD.flatMap(line =&gt; line.split(&quot; &quot;))
+
+// 创建单词列表list
+val list: List[String] = List(&quot;Apache&quot;, &quot;Spark&quot;)
+// 使用list列表对RDD进行过滤
+val cleanWordRDD: RDD[String] = wordRDD.filter(word =&gt; list.contains(word))
+// 把RDD元素转换为（Key，Value）的形式
+val kvRDD: RDD[(String, Int)] = cleanWordRDD.map(word =&gt; (word, 1))
+// 按照单词做分组计数
+val wordCounts: RDD[(String, Int)] = kvRDD.reduceByKey((x, y) =&gt; x + y)
+// 获取计算结果
+wordCounts.collect
+// Array[(String, Int)] = Array((Apache,34), (Spark,63))
+</code></pre>
+<p>将上述代码丢进spark-shell，我们很快就能算出，在wikiOfSpark.txt文件中，“Apache”这个单词出现了34次，而“Spark”则出现了63次。虽说得出计算结果挺容易的，不过知其然，还要知其所以然，接下来，咱们一起来分析一下，这段代码在运行时是如何工作的。</p>
+<p><img src="8dd52d329d74d212cfa6b188cfea2b49.jpg" alt="图片"></p>
+<p>如上图所示，list变量本身是在Driver端创建的，它并不是分布式数据集（如lineRDD、wordRDD）的一部分。因此，在分布式计算的过程中，Spark需要把list变量分发给每一个分布式任务（Task），从而对不同数据分区的内容进行过滤。</p>
+<p>在这种工作机制下，如果RDD并行度较高、或是变量的尺寸较大，那么重复的内容分发就会引入大量的网络开销与存储开销，而这些开销会大幅削弱作业的执行性能。为什么这么说呢？</p>
+<p>要知道，<strong>Driver端变量的分发是以Task为粒度的，系统中有多少个Task，变量就需要在网络中分发多少次</strong>。更要命的是，每个Task接收到变量之后，都需要把它暂存到内存，以备后续过滤之用。换句话说，<strong>在同一个Executor内部，多个不同的Task多次重复地缓存了同样的内容拷贝</strong>，毫无疑问，这对宝贵的内存资源是一种巨大的浪费。</p>
+<p>RDD并行度较高，意味着RDD的数据分区数量较多，而Task数量与分区数相一致，这就代表系统中有大量的分布式任务需要执行。如果变量本身尺寸较大，大量分布式任务引入的网络开销与内存开销会进一步升级。<strong>在工业级应用中，RDD的并行度往往在千、万这个量级，在这种情况下，诸如list这样的变量会在网络中分发成千上万次，作业整体的执行效率自然会很差</strong> 。</p>
+<p>面对这样的窘境，我们有没有什么办法，能够避免同一个变量的重复分发与存储呢？答案当然是肯定的，这个时候，我们就可以祭出广播变量这个“杀手锏”。</p>
+<h6 id="广播变量的优势">广播变量的优势</h6>
+<p>想要知道广播变量到底有啥优势，我们可以先用广播变量重写一下前面的代码实现，然后再做个对比，很容易就能发现广播变量为什么能解决普通变量的痛点。</p>
+<pre><code class="language-javascript">import org.apache.spark.rdd.RDD
+val rootPath: String = _
+val file: String = s&quot;${rootPath}/wikiOfSpark.txt&quot;
+// 读取文件内容
+val lineRDD: RDD[String] = spark.sparkContext.textFile(file)
+// 以行为单位做分词
+val wordRDD: RDD[String] = lineRDD.flatMap(line =&gt; line.split(&quot; &quot;))
+
+// 创建单词列表list
+val list: List[String] = List(&quot;Apache&quot;, &quot;Spark&quot;)
+// 创建广播变量bc
+val bc = sc.broadcast(list)
+// 使用bc.value对RDD进行过滤
+val cleanWordRDD: RDD[String] = wordRDD.filter(word =&gt; bc.value.contains(word))
+// 把RDD元素转换为（Key，Value）的形式
+val kvRDD: RDD[(String, Int)] = cleanWordRDD.map(word =&gt; (word, 1))
+// 按照单词做分组计数
+val wordCounts: RDD[(String, Int)] = kvRDD.reduceByKey((x, y) =&gt; x + y)
+// 获取计算结果
+wordCounts.collect
+// Array[(String, Int)] = Array((Apache,34), (Spark,63))
+</code></pre>
+<p>可以看到，代码的修改非常简单，我们先是使用broadcast函数来封装list变量，然后在RDD过滤的时候调用bc.value来访问list变量内容。<strong>你可不要小看这个改写，尽管代码的改动微乎其微，几乎可以忽略不计，但在运行时，整个计算过程却发生了翻天覆地的变化</strong>。</p>
+<p><img src="9050f159749465d0c9d3394f3335ee12.jpg" alt="图片"></p>
+<p>在使用广播变量之前，list变量的分发是以Task为粒度的，而在使用广播变量之后，变量分发的粒度变成了以Executors为单位，同一个Executor内多个不同的Tasks只需访问同一份数据拷贝即可。换句话说，变量在网络中分发与存储的次数，从RDD的分区数量，锐减到了集群中Executors的个数。</p>
+<p>要知道，在工业级系统中，Executors个数与RDD并行度相比，二者之间通常会相差至少两个数量级。在这样的量级下，广播变量节省的网络与内存开销会变得非常可观，省去了这些开销，对作业的执行性能自然大有裨益。</p>
+<p>在日常的开发工作中，<strong>当你遇到需要多个Task共享同一个大型变量（如列表、数组、映射等数据结构）的时候，就可以考虑使用广播变量来优化你的Spark作业</strong>。</p>
+<h6 id="累加器accumulators">累加器（Accumulators）</h6>
+<p>累加器，顾名思义，它的主要作用是全局计数（Global counter）。与单机系统不同，在分布式系统中，我们不能依赖简单的普通变量来完成全局计数，而是必须依赖像累加器这种特殊的数据结构才能达到目的。</p>
+<p>与广播变量类似，累加器也是在Driver端定义的，但它的更新是通过在RDD算子中调用add函数完成的。在应用执行完毕之后，开发者在Driver端调用累加器的value函数，就能获取全局计数结果。按照惯例，咱们还是通过代码来熟悉累加器的用法。</p>
+<p>Word Count中，我们过滤掉了空字符串，然后对文件wikiOfSpark.txt中所有的单词做统计计数。</p>
+<p>不过这一次，我们在过滤掉空字符的同时，还想知道文件中到底有多少个空字符串，这样我们对文件中的“脏数据”就能做到心中有数了。</p>
+<p>注意，<strong>这里对于空字符串的计数，不是主代码逻辑，它的计算结果不会写入到Word Count最终的统计结果</strong>。所以，只是简单地去掉filter环节，是无法实现空字符计数的。</p>
+<p>那么，你自然会问：“不把filter环节去掉，怎么对空字符串做统计呢？”别着急，这样的计算需求，正是累加器可以施展拳脚的地方。你可以先扫一眼下表的代码实现，然后我们再一起来熟悉累加器的用法。</p>
+<pre><code class="language-kotlin">import org.apache.spark.rdd.RDD
+val rootPath: String = _
+val file: String = s&quot;${rootPath}/wikiOfSpark.txt&quot;
+// 读取文件内容
+val lineRDD: RDD[String] = spark.sparkContext.textFile(file)
+// 以行为单位做分词
+val wordRDD: RDD[String] = lineRDD.flatMap(line =&gt; line.split(&quot; &quot;))
+
+// 定义Long类型的累加器
+val ac = sc.longAccumulator(&quot;Empty string&quot;)
+
+// 定义filter算子的判定函数f，注意，f的返回类型必须是Boolean
+def f(x: String): Boolean = {
+if(x.equals(&quot;&quot;)) {
+// 当遇到空字符串时，累加器加1
+ac.add(1)
+return false
+} else {
+return true
+}
+}
+
+// 使用f对RDD进行过滤
+val cleanWordRDD: RDD[String] = wordRDD.filter(f)
+// 把RDD元素转换为（Key，Value）的形式
+val kvRDD: RDD[(String, Int)] = cleanWordRDD.map(word =&gt; (word, 1))
+// 按照单词做分组计数
+val wordCounts: RDD[(String, Int)] = kvRDD.reduceByKey((x, y) =&gt; x + y)
+// 收集计数结果
+wordCounts.collect
+
+// 作业执行完毕，通过调用value获取累加器结果
+ac.value
+// Long = 79
+</code></pre>
+<p>与第1讲的Word Count相比，这里的代码主要有4处改动：</p>
+<ul>
+<li>使用SparkContext下的longAccumulator来定义Long类型的累加器；</li>
+<li>定义filter算子的判定函数f，当遇到空字符串时，调用add函数为累加器计数；</li>
+<li>以函数f为参数，调用filter算子对RDD进行过滤；</li>
+<li>作业完成后，调用累加器的value函数，获取全局计数结果。</li>
+</ul>
+<p>你不妨把上面的代码敲入到spark-shell里，直观体验下累加器的用法与效果，ac.value给出的结果是79，这说明以空格作为分隔符切割源文件wikiOfSpark.txt之后，就会留下79个空字符串。</p>
+<p>另外，你还可以验证wordCounts这个RDD，它包含所有单词的计数结果，不过，你会发现它的元素并不包含空字符串，这与我们预期的计算逻辑是一致的。</p>
+<p>除了上面代码中用到的longAccumulator，SparkContext还提供了doubleAccumulator和collectionAccumulator这两种不同类型的累加器，用于满足不同场景下的计算需要，感兴趣的话你不妨自己动手亲自尝试一下。</p>
+<p>其中，doubleAccumulator用于对Double类型的数值做全局计数；而collectionAccumulator允许开发者定义集合类型的累加器，相比数值类型，集合类型可以为业务逻辑的实现，提供更多的灵活性和更大的自由度。</p>
+<p>不过，就这3种累加器来说，尽管类型不同，但它们的用法是完全一致的。都是<strong>先定义累加器变量，然后在RDD算子中调用add函数，从而更新累加器状态，最后通过调用value函数来获取累加器的最终结果</strong>。</p>
+<p><strong>在日常的开发中，当你遇到需要做全局计数的场景时，别忘了用上累加器这个实用工具。</strong></p>
+<h3 id="spark-sql-1">Spark SQL</h3>
+<p>Spark SQL 是 Spark 中的一个子模块，主要用于操作结构化数据。它具有以下特点：</p>
+<ul>
+<li>
+<p>能够将 SQL 查询与 Spark 程序无缝混合允许您使用 SQL 或 DataFrame API对结构化数据进行查询；</p>
+</li>
+<li>
+<p>支持多种开发语言；</p>
+</li>
+<li>
+<p>支持多达上百种的外部数据源，包括 Hive，Avro，Parquet，ORC，JSON 和 JDBC 等；</p>
+</li>
+<li>
+<p>支持 HiveQL 语法以及 Hive SerDes 和 UDF，允许你访问现有的 Hive 仓库；</p>
+</li>
+<li>
+<p>支持标准的 JDBC 和 ODBC 连接；</p>
+</li>
+<li>
+<p>支持优化器，列式存储和代码生成等特性；</p>
+</li>
+<li>
+<p>支持扩展并能保证容错。</p>
+</li>
+</ul>
+<h4 id="spark-sql与spark-core的关系">Spark SQL与Spark Core的关系</h4>
+<p>首先，Spark Core特指Spark底层执行引擎（Execution Engine），它包括了调度系统、存储系统、内存管理、Shuffle管理等核心功能模块。而Spark SQL则凌驾于Spark Core之上，是一层独立的优化引擎（Optimization Engine）。换句话说，Spark Core负责执行，而Spark SQL负责优化，Spark SQL优化过后的代码，依然要交付Spark Core来做执行。</p>
+<p><img src="3e410fb54d3b69358ca72ffc321dcd1d.jpg" alt="图片"></p>
+<p>再者，从开发入口来说，在RDD框架下开发的应用程序，会直接交付Spark Core运行。而使用DataFrame API开发的应用，则会先过一遍Spark SQL，由Spark SQL优化过后再交由Spark Core去做执行。</p>
+<p>弄清二者的关系与定位之后，接下来的问题是：“基于DataFrame，Spark SQL是如何进行优化的呢？”要回答这个问题，我们必须要从Spark SQL的两个核心组件说起：Catalyst优化器和Tungsten。</p>
+<p>先说<strong>Catalyst优化器，它的职责在于创建并优化执行计划</strong>，它包含3个功能模块，分别是创建语法树并生成执行计划、逻辑阶段优化和物理阶段优化。<strong>Tungsten用于衔接Catalyst执行计划与底层的Spark Core执行引擎，它主要负责优化数据结果与可执行代码</strong>。</p>
+<p><img src="cbfdebe214a4d0f89ff1f4704e5913fa.jpg" alt="图片"></p>
+<p>以“倍率分析”完整的代码来分析是如何进行优化的</p>
+<pre><code class="language-css">import org.apache.spark.sql.DataFrame
+
+val rootPath: String = _
+// 申请者数据
+val hdfs_path_apply: String = s&quot;${rootPath}/apply&quot;
+// spark是spark-shell中默认的SparkSession实例
+// 通过read API读取源文件
+val applyNumbersDF: DataFrame = spark.read.parquet(hdfs_path_apply)
+
+// 中签者数据
+val hdfs_path_lucky: String = s&quot;${rootPath}/lucky&quot;
+// 通过read API读取源文件
+val luckyDogsDF: DataFrame = spark.read.parquet(hdfs_path_lucky)
+
+// 过滤2016年以后的中签数据，且仅抽取中签号码carNum字段
+val filteredLuckyDogs: DataFrame = luckyDogsDF.filter(col(&quot;batchNum&quot;) &gt;= &quot;201601&quot;).select(&quot;carNum&quot;)
+
+// 摇号数据与中签数据做内关联，Join Key为中签号码carNum
+val jointDF: DataFrame = applyNumbersDF.join(filteredLuckyDogs, Seq(&quot;carNum&quot;), &quot;inner&quot;)
+
+// 以batchNum、carNum做分组，统计倍率系数
+val multipliers: DataFrame = jointDF.groupBy(col(&quot;batchNum&quot;),col(&quot;carNum&quot;))
+.agg(count(lit(1)).alias(&quot;multiplier&quot;))
+
+// 以carNum做分组，保留最大的倍率系数
+val uniqueMultipliers: DataFrame = multipliers.groupBy(&quot;carNum&quot;)
+.agg(max(&quot;multiplier&quot;).alias(&quot;multiplier&quot;))
+
+// 以multiplier倍率做分组，统计人数
+val result: DataFrame = uniqueMultipliers.groupBy(&quot;multiplier&quot;)
+.agg(count(lit(1)).alias(&quot;cnt&quot;))
+.orderBy(&quot;multiplier&quot;)
+
+result.collect
+</code></pre>
+<h4 id="catalyst优化器">Catalyst优化器</h4>
+<p>首先，我们先来说说Catalyst的优化过程。基于代码中DataFrame之间确切的转换逻辑，Catalyst会先使用第三方的SQL解析器ANTLR生成抽象语法树（AST，Abstract Syntax Tree）。AST由节点和边这两个基本元素构成，其中节点就是各式各样的操作算子，如select、filter、agg等，而边则记录了数据表的Schema信息，如字段名、字段类型，等等。</p>
+<p>以下图“倍率分析”的语法树为例，它实际上描述了从源数据到最终计算结果之间的转换过程。因此，在Spark SQL的范畴内，AST语法树又叫作“执行计划”（Execution Plan）。</p>
+<p><img src="73b8688bbd3564f30e856d9df46a8ccb.jpg" alt="图片"></p>
+<p>可以看到，由算子构成的语法树、或者说执行计划，给出了明确的执行步骤。即使不经过任何优化，Spark Core也能把这个“原始的”执行计划按部就班地运行起来。</p>
+<p>不过，从执行效率的角度出发，这么做并不是最优的选择。为什么这么说呢？我们以图中绿色的节点为例，<strong>Scan用于全量扫描并读取中签者数据，Filter则用来过滤出摇号批次大于等于“201601”的数据，Select节点的作用则是抽取数据中的“carNum”字段</strong>。</p>
+<p>还记得吗？我们的源文件是以Parquet格式进行存储的，而Parquet格式在文件层面<strong>支持“谓词下推”（Predicates Pushdown）和“列剪枝”（Columns Pruning）这两项特性</strong>。</p>
+<p>谓词下推指的是，利用像“batchNum &gt;= 201601”这样的过滤条件，在扫描文件的过程中，只读取那些满足条件的数据文件。又因为Parquet格式属于列存（Columns Store）数据结构，因此Spark只需读取字段名为“carNum”的数据文件，而“剪掉”读取其他数据文件的过程。</p>
+<p><img src="72781191ddf37608602cdb0690c0e9e4.jpg" alt="图片"></p>
+<p>以中签数据为例，在谓词下推和列剪枝的帮助下，Spark Core只需要扫描图中绿色的文件部分。显然，这两项优化，都可以有效帮助Spark Core大幅削减数据扫描量、降低磁盘I/O消耗，从而显著提升数据的读取效率。</p>
+<p>因此，如果能把3个绿色节点的执行顺序，从“Scan &gt; Filter &gt; Select”调整为“Filter &gt; Select &gt; Scan”，那么，相比原始的执行计划，调整后的执行计划能给Spark Core带来更好的执行性能。</p>
+<p>像谓词下推、列剪枝这样的特性，都被称为启发式的规则或策略。而Catalyst优化器的核心职责之一，就是在逻辑优化阶段，基于启发式的规则和策略调整、优化执行计划，为物理优化阶段提升性能奠定基础。经过逻辑阶段的优化之后，原始的执行计划调整为下图所示的样子，请注意绿色节点的顺序变化。</p>
+<p><img src="57029cabc2155c72ddbffb6c8ab440dd.jpg" alt="图片"></p>
+<p>经过逻辑阶段优化的执行计划，依然可以直接交付Spark Core去运行，不过在性能优化方面，Catalyst并未止步于此。</p>
+<p>除了逻辑阶段的优化，Catalyst在物理优化阶段还会进一步优化执行计划。与逻辑阶段主要依赖先验的启发式经验不同，物理阶段的优化，主要依赖各式各样的统计信息，如数据表尺寸、是否启用数据缓存、Shuffle中间文件，等等。换句话说，<strong>逻辑优化更多的是一种“经验主义”，而物理优化则是“用数据说话”</strong>。</p>
+<p>以图中蓝色的Join节点为例，执行计划仅交代了applyNumbersDF与filteredLuckyDogs这两张数据表需要做内关联，但是，它并没有交代清楚这两张表具体采用哪种机制来做关联。按照实现机制来分类，数据关联有3种实现方式，分别是嵌套循环连接（NLJ，Nested Loop Join）、排序归并连接（Sort Merge Join）和哈希连接（Hash Join）。</p>
+<p>而按照数据分发方式来分类，数据关联又可以分为Shuffle Join和Broadcast Join这两大类。因此，在分布式计算环境中，至少有6种Join策略供Spark SQL来选择。对于这6种Join策略，我们以后再详细展开，这里你只需要了解不同策略在执行效率上有着天壤之别即可。</p>
+<p>回到蓝色Join节点的例子，在物理优化阶段，Catalyst优化器需要结合applyNumbersDF与filteredLuckyDogs这两张表的存储大小，来决定是采用运行稳定但性能略差的Shuffle Sort Merge Join，还是采用执行性能更佳的Broadcast Hash Join。</p>
+<p>不论Catalyst决定采用哪种Join策略，优化过后的执行计划，都可以丢给Spark Core去做执行。不过，Spark SQL优化引擎并没有就此打住，当Catalyst优化器完成它的“历史使命”之后，Tungsten会接过接力棒，在Catalyst输出的执行计划之上，继续打磨、精益求精，力求把最优的执行代码交付给底层的SparkCore执行引擎。</p>
+<p><img src="cbfdebe214a4d0f89ff1f4704e5913fa.jpg" alt="图片"></p>
+<h4 id="tungsten">Tungsten</h4>
+<p>站在Catalyst这个巨人的肩膀上，Tungsten主要是在数据结构和执行代码这两个方面，做进一步的优化。数据结构优化指的是Unsafe Row的设计与实现，执行代码优化则指的是全阶段代码生成（WSCG，Whole Stage Code Generation）。</p>
+<p>我们先来看看为什么要有Unsafe Row。对于DataFrame中的每一条数据记录，Spark SQL默认采用org.apache.spark.sql.Row对象来进行封装和存储。我们知道，使用Java Object来存储数据会引入大量额外的存储开销。</p>
+<p>为此，Tungsten设计并实现了一种叫做Unsafe Row的二进制数据结构。<strong>Unsafe Row本质上是字节数组，它以极其紧凑的格式来存储DataFrame的每一条数据记录，大幅削减存储开销，从而提升数据的存储与访问效率</strong>。</p>
+<p>以下表的Data Schema为例，对于包含如下4个字段的每一条数据记录来说，如果采用默认的Row对象进行存储的话，那么每条记录需要消耗至少60个字节。</p>
+<p><img src="24675c8d5e31c51e7yyd6336acf3f525.jpg" alt="图片"></p>
+<p>但如果用Tungsten Unsafe Row数据结构进行存储的话，每条数据记录仅需消耗十几个字节，如下图所示。</p>
+<p><img src="6eb33b3yy4b4cd658e9739b8a75321c7.jpg" alt="图片"></p>
+<p>说完了Unsafe Row的数据结构优化，接下来，我们再来说说WSCG：全阶段代码生成。所谓全阶段，其实就是我们在调度系统中学过的Stage。以图中的执行计划为例，标记为绿色的3个节点，在任务调度的时候，会被划分到同一个Stage。</p>
+<p><img src="57029cabc2155c72ddbffb6c8ab440dd.jpg" alt="图片"></p>
+<p>而代码生成，指的是Tungsten在运行时把算子之间的“链式调用”捏合为一份代码。以上图3个绿色的节点为例，在默认情况下，Spark Core会对每一条数据记录都依次执行Filter、Select和Scan这3个操作。</p>
+<p>经过了Tungsten的WSCG优化之后，Filter、Select和Scan这3个算子，会被“捏合”为一个函数f。这样一来，Spark Core只需要使用函数f来一次性地处理每一条数据，就能消除不同算子之间数据通信的开销，一气呵成地完成计算。</p>
+<p>分别完成Catalyst和Tungsten这两个优化环节之后，<strong>Spark SQL终于“心满意足”地把优化过的执行计划、以及生成的执行代码，交付给老大哥Spark Core。Spark Core拿到计划和代码，在运行时利用Tungsten Unsafe Row的数据结构，完成分布式任务计算</strong>。</p>
+<h4 id="dataframe--dataset">DataFrame &amp; DataSet</h4>
+<h5 id="dataframe">DataFrame</h5>
+<p>为了支持结构化数据的处理，Spark SQL 提供了新的数据结构 DataFrame。DataFrame 带有 Schema 元信息，即每一列都有名称和类型。它在概念上等同于关系数据库中的表，这使得 Spark 能够对数据进行更高效的查询和优化。</p>
+<p><img src="image-20250207195935472.png" alt="image-20250207195935472"></p>
+<h5 id="dataset">Dataset</h5>
+<p>Dataset 也是分布式的数据集合，在 Spark 1.6 版本被引入，它集成了 RDD 和 DataFrame 的优点，具 备强类型的特点，同时支持 Lambda 函数，但只能在 Scala 和 Java 语言中使用。在 Spark 2.0 后，为了方便开发者，<strong>Spark 将 DataFrame 和 Dataset 的 API 融合到一起，提供了结构化的 API(Structured  API)，即用户可以通过一套标准的 API 就能完成对两者的操作</strong>。</p>
+<h5 id="dataframe--dataset--rdds-对比">DataFrame &amp; DataSet &amp; RDDs 对比</h5>
+<ul>
+<li><strong>数据结构：</strong>
+<ul>
+<li><strong>RDD（Resilient Distributed Dataset）：</strong> RDD 是一个不可变的分布式数据集，适用于处理非结构化数据。它是 Spark 的基础数据结构，提供了对数据的低级别控制。</li>
+<li><strong>DataFrame：</strong> DataFrame 是一种分布式数据集，类似于关系型数据库中的表格，每行数据被表示为 Row 对象。它适用于处理结构化和半结构化数据，提供了更高级别的 API。</li>
+<li><strong>Dataset：</strong> Dataset 是对 DataFrame 的扩展，提供了类型安全的、面向对象的编程接口。每个 Dataset 都有一个非类型化的视图，称为 DataFrame，即 Dataset[Row]。</li>
+</ul>
+</li>
+<li><strong>类型安全性：</strong>
+<ul>
+<li><strong>RDD：</strong> RDD 是强类型的，编译器可以在编译时检查类型错误。</li>
+<li><strong>DataFrame：</strong> DataFrame 是弱类型的，编译器无法在编译时检查字段名称或数据类型的正确性，只有在运行时才能发现错误。</li>
+<li><strong>Dataset：</strong> Dataset 是强类型的，编译器可以在编译时检查类型错误，提高了代码的安全性和可靠性。</li>
+</ul>
+</li>
+<li><strong>API 接口：</strong>
+<ul>
+<li><strong>RDD：</strong> RDD 提供了丰富的函数式编程接口，适用于需要对数据进行精细控制的场景。</li>
+<li><strong>DataFrame 和 Dataset：</strong> DataFrame 和 Dataset 提供了统一的 Structured API，支持函数式和关系型操作，适用于处理结构化数据。</li>
+</ul>
+</li>
+<li><strong>性能优化：</strong>
+<ul>
+<li><strong>DataFrame 和 Dataset：</strong> 由于 DataFrame 和 Dataset 提供了数据的结构信息，Spark 可以进行更多的优化，从而提高性能。</li>
+<li><strong>RDD：</strong> RDD 缺乏结构信息，因此在性能优化方面不如 DataFrame 和 Dataset。</li>
+</ul>
+</li>
+<li><strong>底层实现：</strong>
+<ul>
+<li><strong>DataFrame 和 Dataset：</strong> DataFrame 和 Dataset 的底层都依赖于 RDD API，并对外提供结构化的访问接口。</li>
+</ul>
+</li>
+</ul>
+<p>总的来说，RDD、DataFrame 和 Dataset 在 Spark 中扮演着不同的角色。RDD 适合处理非结构化数据，提供了对数据的精细控制。DataFrame 适用于处理结构化和半结构化数据，提供了更高级别的 API。Dataset 则在 DataFrame 的基础上增加了类型安全性，适用于需要在编译时进行类型检查的场景。</p>
+<h5 id="创建dataframedataset">创建DataFrame、Dataset</h5>
+<h6 id="内部数据创建">内部数据创建</h6>
+<ol>
+<li>对象映射创建DataFrame</li>
+</ol>
+<pre><code class="language-java">SparkSession spark = SparkSession
+    .builder()
+    .appName(&quot;DataframeStudy&quot;)
+    .getOrCreate();
+List&lt;Person&gt; list = new ArrayList&lt;&gt;();
+Person person1 = new Person();
+person1.setName(&quot;zhengtao&quot;);
+person1.setAge(18);
+list.add(person1);
+Person person2 = new Person();
+person2.setName(&quot;gongliqun&quot;);
+person2.setAge(18);
+list.add(person2);
+// 内部数据创建DataFrame,对象映射
+Dataset&lt;Row&gt; dataFrame = spark.createDataFrame(list, Person.class);
+dataFrame.show();
+</code></pre>
+<ol start="2">
+<li>
+<p>自定义类型映射创建DataFrame</p>
+<pre><code class="language-java">// 内部数据创建DataFrame,自定义类型
+List&lt;Row&gt; rows = Arrays.asList(
+    RowFactory.create(&quot;Alice&quot;, 30),
+    RowFactory.create(&quot;Bob&quot;, 25)
+);
+StructType schema = new StructType(new StructField[]{
+    new StructField(&quot;name&quot;, DataTypes.StringType, false, Metadata.empty()),
+    new StructField(&quot;age&quot;, DataTypes.IntegerType, false, Metadata.empty())
+});
+Dataset&lt;Row&gt; schemaData = spark.createDataFrame(rows, schema);
+schemaData.show();
+</code></pre>
+</li>
+<li>
+<p>创建DataSet</p>
+<pre><code class="language-java">// 内部数据创建DataSet,对象映射
+Dataset&lt;Person&gt; ds = spark.createDataset(list, Encoders.bean(Person.class));
+ds.show();
+</code></pre>
+</li>
+</ol>
+<h6 id="由rdd创建">由RDD创建</h6>
+<ol>
+<li>
+<p>创建DataFrame</p>
+<pre><code class="language-java">// 由RDD创建
+JavaSparkContext jsc = new JavaSparkContext(spark.sparkContext());
+JavaRDD&lt;Person&gt; peopleRDD = jsc.parallelize(list);
+Dataset&lt;Row&gt; df = spark.createDataFrame(peopleRDD, Person.class);
+df.show();
+</code></pre>
+</li>
+<li>
+<p>创建 DataSet</p>
+<pre><code class="language-java">// 由RDD创建
+JavaSparkContext jsc = new JavaSparkContext(spark.sparkContext());
+JavaRDD&lt;Person&gt; peopleRDD = jsc.parallelize(list);
+Dataset&lt;Person&gt; df = spark.createDataset(peopleRDD.rdd(), Encoders.bean(Person.class));
+df.show();
+</code></pre>
+</li>
+</ol>
+<h6 id="由外部数据源创建">由外部数据源创建</h6>
+<p>Spark 支持以下六个核心数据源，同时 Spark 社区还提供了多达上百种数据源的读取方式，能够满足绝大部分使用场景。</p>
+<ul>
+<li>
+<p>CSV</p>
+<pre><code class="language-java">// 由csv创建
+Dataset&lt;Row&gt; csv = spark.read()
+    // 指定文件首行是否为表头
+    .option(&quot;header&quot;, &quot;false&quot;)
+    // 指定列分隔符
+    .option(&quot;delimiter&quot;, &quot;;&quot;)
+    .csv(&quot;D:\\javaxuexi\\xdata-study\\src\\main\\resources\\people.csv&quot;);
+csv.show();
+</code></pre>
+</li>
+<li>
+<p>JSON</p>
+<pre><code class="language-java">// 由json创建
+Dataset&lt;Row&gt; json = spark.read().json(&quot;D:\\javaxuexi\\xdata-study\\src\\main\\resources\\people.json&quot;);
+json.show();
+</code></pre>
+</li>
+<li>
+<p>Parquet</p>
+<pre><code class="language-java">// 由parquet创建
+String path = &quot;D:\\javaxuexi\\xdata-study\\src\\main\\resources\\people.parquet&quot;;
+json.write().parquet(path);
+Dataset&lt;Row&gt; parquet = spark.read().parquet(path);
+parquet.show();
+deleteDirectory(new File(path));
+</code></pre>
+</li>
+<li>
+<p>ORC</p>
+<pre><code class="language-java">// 由orc创建
+Dataset&lt;Row&gt; orc = spark.read().orc(&quot;D:\\javaxuexi\\xdata-study\\src\\main\\resources\\users.orc&quot;);
+orc.show();
+</code></pre>
+</li>
+<li>
+<p>数据库</p>
+<pre><code class="language-java">// 由数据库创建
+Dataset&lt;Row&gt; jdbc = spark.read()
+.format(&quot;jdbc&quot;)
+.option(&quot;driver&quot;, &quot;com.mysql.cj.jdbc.Driver&quot;)
+.option(&quot;url&quot;, DB_URL)
+.option(&quot;dbtable&quot;, TABLE)
+.option(&quot;user&quot;, USER)
+.option(&quot;password&quot;, PASSWORD)
+.load();
+jdbc.show();
+</code></pre>
+</li>
+<li>
+<p>Plain-text files</p>
+<pre><code class="language-java">// 由text文本创建
+Dataset&lt;String&gt; text = spark.read().textFile(&quot;D:\\javaxuexi\\xdata-study\\src\\main\\resources\\people.txt&quot;);
+text.show();
+</code></pre>
+</li>
+</ul>
+<h6 id="dataframe--dataset相互转换">DataFrame &amp; DataSet相互转换</h6>
+<ol>
+<li>
+<p>DataFrame 转为 DataSet</p>
+<pre><code class="language-java">// 转为DateSet
+Encoder&lt;Person&gt; personEncoder = Encoders.bean(Person.class);
+Dataset&lt;Person&gt; ds = df.as(personEncoder);
+ds.show();
+</code></pre>
+</li>
+<li>
+<p>DataSet 转为 DataFrame</p>
+<pre><code class="language-java">// 转为 DataFrame
+Dataset&lt;Row&gt; df = ds.toDF();
+df.show();
+
+// 复杂的转换，读取文件为String，然后按照分隔符转为DataSet&lt;Row&gt;
+// 读取文本文件，创建 Dataset&lt;String&gt;
+Dataset&lt;String&gt; text = spark.read().textFile(&quot;D:\\javaxuexi\\xdata-study\\src\\main\\resources\\people.txt&quot;);
+
+// 提取首行用于推断列数
+List&lt;String&gt; header = text.limit(1).collectAsList();
+if (header.isEmpty() || header.get(0).trim().isEmpty()) {
+    throw new IllegalArgumentException(&quot;文件内容为空或首行无效&quot;);
+}
+String firstLine = header.get(0);
+
+// 计算首行列数
+int columnCount = firstLine.split(&quot;,&quot;).length;
+
+// 构建Schema
+List&lt;StructField&gt; fields = new ArrayList&lt;&gt;();
+for (int i = 0; i &lt; columnCount; i++) {
+    fields.add(DataTypes.createStructField(&quot;col&quot; + i, DataTypes.StringType, true));
+}
+StructType schema = DataTypes.createStructType(fields);
+
+// 转换文本为 Dataset&lt;Row&gt;
+Dataset&lt;Row&gt; convertResult = text
+    // 过滤空行
+    .filter((String line) -&gt; line != null &amp;&amp; !line.trim().isEmpty())
+    .map((MapFunction&lt;String, Row&gt;) (String line) -&gt; {
+        String[] values = line.split(&quot;,&quot;);
+        return RowFactory.create((Object[]) values);
+    }, RowEncoder.apply(schema));
+
+// 显示结果
+convertResult.show();
+</code></pre>
+<h4 id="常用函数">常用函数</h4>
+<p><strong>行动（Action）操作：</strong></p>
+<ol>
+<li>
+<p><strong>collect()</strong>：将 DataFrame 的所有行作为数组返回到驱动程序。</p>
+<pre><code class="language-java">Row[] rows = df.collect();
+</code></pre>
+</li>
+<li>
+<p><strong>collectAsList()</strong>：将 DataFrame 的所有行作为 <code>List</code> 返回到驱动程序。</p>
+<pre><code class="language-java"></code></pre>
+</li>
+</ol>
+<p>List<!-- raw HTML omitted --> rowList = df.collectAsList();</p>
+<pre><code>
+3. **count()**：返回 DataFrame 的行数。
+
+```java
+long rowCount = df.count();
+</code></pre>
+<ol start="4">
+<li>
+<p><strong>first()</strong>：返回 DataFrame 的第一行。</p>
+<pre><code class="language-java"></code></pre>
+</li>
+</ol>
+<p>Row firstRow = df.first();</p>
+<pre><code>
+5. **show()**：以表格形式显示 DataFrame 的前 20 行。
+
+```java
+df.show();
+</code></pre>
+<ol start="6">
+<li>
+<p><strong>take(int n)</strong>：返回 DataFrame 的前 <code>n</code> 行。</p>
+<pre><code class="language-java">Row[] firstNRows = df.take(n);
+</code></pre>
+</li>
+</ol>
+<p><strong>转换（Transformation）操作：</strong></p>
+<ol>
+<li>
+<p><strong>select()</strong>：选择指定的列。</p>
+<pre><code class="language-java"></code></pre>
+</li>
+</ol>
+<p>Dataset<!-- raw HTML omitted --> selectedColumns = df.select(&ldquo;column1&rdquo;, &ldquo;column2&rdquo;);</p>
+<pre><code>
+2. **filter()**：根据条件过滤行。
+
+```java
+Dataset&lt;Row&gt; filteredDF = df.filter(&quot;age &gt; 30&quot;);
+</code></pre>
+<ol start="3">
+<li>
+<p><strong>groupBy()</strong>：根据指定列分组。</p>
+<pre><code class="language-java">Dataset&lt;Row&gt; groupedDF = df.groupBy(&quot;department&quot;).count();
+</code></pre>
+</li>
+<li>
+<p><strong>orderBy()</strong>：对 DataFrame 进行排序。</p>
+<pre><code class="language-java"></code></pre>
+</li>
+</ol>
+<p>Dataset<!-- raw HTML omitted --> sortedDF = df.orderBy(df.col(&ldquo;age&rdquo;).desc());</p>
+<pre><code>
+5. **withColumn()**：添加或替换列。
+
+```java
+Dataset&lt;Row&gt; newDF = df.withColumn(&quot;newColumn&quot;, df.col(&quot;existingColumn&quot;).plus(1));
+</code></pre>
+<ol start="6">
+<li>
+<p><strong>drop()</strong>：删除指定的列。</p>
+<pre><code class="language-java"></code></pre>
+</li>
+</ol>
+<p>Dataset<!-- raw HTML omitted --> dfWithoutColumn = df.drop(&ldquo;unnecessaryColumn&rdquo;);</p>
+<pre><code>
+7. **join()**：与另一个 DataFrame 进行连接操作。
+
+```java
+Dataset&lt;Row&gt; joinedDF = df.join(otherDF, &quot;commonColumn&quot;);
+</code></pre>
+<ol start="8">
+<li>
+<p><strong>distinct()</strong>：去除重复的行。</p>
+<pre><code class="language-java"></code></pre>
+</li>
+</ol>
+<p>Dataset<!-- raw HTML omitted --> distinctDF = df.distinct();</p>
+<pre><code>
+9. **union()**：合并两个 DataFrame。
+
+```java
+Dataset&lt;Row&gt; unionDF = df.union(otherDF);
+</code></pre>
+<ol start="10">
+<li>
+<p><strong>repartition()</strong>：重新分区。</p>
+<pre><code class="language-java">Dataset&lt;Row&gt; repartitionedDF = df.repartition(5);
+</code></pre>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="flink">Flink</h2>
+<p>Apache Flink is a framework and distributed processing engine for stateful computations over unbounded and bounded data streams. Flink has been designed to run in all common cluster environments, perform computations at in-memory speed and at any scale.</p>
+<p>Apache Flink 是一个框架和分布式处理引擎，用于在无边界和有边界数据流上进行有状态的计算。Flink 能在所有常见集群环境中运行，并能以内存速度和任意规模进行计算。</p>
+<h3 id="架构-1">架构</h3>
+<p>Flink 采用分层的架构设计，从而保证各层在功能和职责上的清晰。如下图所示，由上而下分别是 API &amp;  Libraries 层、Runtime 核心层以及物理部署层：</p>
+<p><img src="image-20250217203428259.png" alt="image-20250217203428259"></p>
+<ul>
+<li><strong>API &amp; Libraries 层</strong> 这一层主要提供了编程 API 和 顶层类库：
+<ul>
+<li>编程 API : 用于进行流处理的 DataStream API 和用于进行批处理的 DataSet API；</li>
+<li>顶层类库：包括用于复杂事件处理的 CEP 库；用于结构化数据查询的 SQL &amp; Table 库，以及基于 批处理的机器学习库 FlinkML 和 图形处理库 Gelly。</li>
+</ul>
+</li>
+<li><strong>Runtime 核心层</strong> 这一层是 Flink 分布式计算框架的核心实现层，包括作业转换，任务调度，资源分配，任务执行等功 能，基于这一层的实现，可以在流式引擎下同时运行流处理程序和批处理程序。</li>
+<li><strong>物理部署层</strong> Flink 的物理部署层，用于支持在不同平台上部署运行 Flink 应用。</li>
+</ul>
+<h3 id="flink-中的-api">Flink 中的 API</h3>
+<p>link 为流式/批式处理应用程序的开发提供了不同级别的抽象。</p>
+<p><img src="levels_of_abstraction.svg" alt="Programming levels of abstraction"></p>
+<ul>
+<li>
+<p>Flink API 最底层的抽象为<strong>有状态实时流处理</strong>。其抽象实现是 Process Function，并且 <strong>Process Function</strong> 被 Flink 框架集成到了 DataStream API中来为我们使用。它允许用户在应用程序中自由地处理来自单流或多流的事件（数据），并提供具有全局一致性和容错保障的<em>状态</em>。此外，用户可以在此层抽象中注册事件时间（event time）和处理时间（processing time）回调方法，从而允许程序可以实现复杂计算。</p>
+</li>
+<li>
+<p>Flink API 第二层抽象是 <strong>Core APIs</strong>。实际上，许多应用程序不需要使用到上述最底层抽象的 API，而是可以使用 <strong>Core APIs</strong> 进行编程：其中包含 DataStream API（应用于有界/无界数据流场景）。Core APIs 提供的流式 API（Fluent API）为数据处理提供了通用的模块组件，例如各种形式的用户自定义转换（transformations）、联接（joins）、聚合（aggregations）、窗口（windows）和状态（state）操作等。此层 API 中处理的数据类型在每种编程语言中都有其对应的类。</p>
+<p><em>Process Function</em> 这类底层抽象和 <em>DataStream API</em> 的相互集成使得用户可以选择使用更底层的抽象 API 来实现自己的需求。<em>DataSet API</em> 还额外提供了一些原语，比如循环/迭代（loop/iteration）操作。</p>
+</li>
+<li>
+<p>Flink API 第三层抽象是 <strong>Table API</strong>。<strong>Table API</strong> 是以表（Table）为中心的声明式编程（DSL）API，例如在流式数据场景下，它可以表示一张正在动态改变的表。Table API遵循（扩展）关系模型：即表拥有 schema（类似于关系型数据库中的 schema），并且 Table API 也提供了类似于关系模型中的操作，比如 select、project、join、group-by 和 aggregate 等。Table API 程序是以声明的方式定义<em>应执行的逻辑操作</em>，而不是确切地指定程序<em>应该执行的代码</em>。尽管 Table API 使用起来很简洁并且可以由各种类型的用户自定义函数扩展功能，但还是比 Core API 的表达能力差。此外，Table API 程序在执行之前还会使用优化器中的优化规则对用户编写的表达式进行优化。</p>
+<p>表和 <em>DataStream</em>/<em>DataSet</em> 可以进行无缝切换，Flink 允许用户在编写应用程序时将 <em>Table API</em> 与 <em>DataStream</em>/<em>DataSet</em> API 混合使用。</p>
+</li>
+<li>
+<p>Flink API 最顶层抽象是 <strong>SQL</strong>。这层抽象在语义和程序表达式上都类似于 <em>Table API</em>，但是其程序实现都是 SQL 查询表达式。SQL抽象与 Table API 抽象之间的关联是非常紧密的，并且 SQL 查询语句可以在 <em>Table API</em> 中定义的表上执行。</p>
+</li>
+</ul>
+
+    </div>
+    <div class="article-footer">
+<blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接: </strong>
+      <a href="https://wzgl998877.github.io/2024/12/%E5%A4%A7%E6%95%B0%E6%8D%AE/" title="大数据入门" target="_blank" rel="external">https://wzgl998877.github.io/2024/12/%E5%A4%A7%E6%95%B0%E6%8D%AE/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong>License: </strong>
+        <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN</a>
+    </li>
+  </ul>
+</blockquote>
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/wzgl998877/" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="https://wzgl998877.github.io/avatar.png" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/wzgl998877/" target="_blank"><span class="text-dark">microzheng</span><small class="ml-1x">努力会说谎，但努力不会白费</small></a></h3>
+        <div>不想搬砖的码农</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+    </div>
+  </article>
+</div><nav class="bar bar-footer clearfix" data-stick-bottom>
+    <div class="bar-inner">
+        <ul class="pager pull-left">
+            <li class="prev">
+                <a href="https://wzgl998877.github.io/2024/10/elasticsearch/" title="ElasticSearch"><i
+                        class="icon icon-angle-left"
+                        aria-hidden="true"></i><span>&nbsp;&nbsp;下一篇</span></a>
+            </li>
+            
+            <li class="toggle-toc">
+                <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false"
+                    title="文章目录" role="button">
+                    <span>[&nbsp;</span><span>文章目录</span>
+                    <i class="text-collapsed icon icon-anchor"></i>
+                    <i class="text-in icon icon-close"></i>
+                    <span>]</span>
+                </a>
+            </li>
+        </ul>
+        <div class="bar-right">
+            <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter"
+                data-mobile-sites="weibo,qq,qzone"></div>
+        </div>
+    </div>
+</nav>
+
+
+</main><footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+<ul class="social-links">
+    <li><a href="https://github.com/wzgl998877/" target="_blank" title="github" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-github"></i></a></li>
+    <li><a href="https://wzgl998877.github.io/index.xml" target="_blank" title="rss" data-toggle=tooltip data-placement=top >
+            <i class="icon icon-rss"></i></a></li>
+</ul>
+  <div class="copyright">
+    &copy;2022  -
+    2025
+    <div class="publishby">
+        Theme by <a href="https://github.com/wzgl998877/" target="_blank"> microzheng </a>base on<a href="https://github.com/xiaoheiAh/hugo-theme-pure" target="_blank"> pure</a>.
+    </div>
+    
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_SVG"></script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+            showMathMenu: false, //disables context menu
+            tex2jax: {
+            inlineMath: [ ['$','$'], ['\\(','\\)'] ]
+           }
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+<script>
+    window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/highlight.min.js"></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/python.min.js" defer></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/javascript.min.js" defer></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/highlight.js/9.15.10/languages/java.min.js" defer></script><script>
+    hljs.configure({
+        tabReplace: '    ', 
+        classPrefix: ''     
+        
+    })
+    hljs.initHighlightingOnLoad();
+</script>
+<script src="https://wzgl998877.github.io/js/application.min.a94ab19cb63a95c8d7fbd7b85cab3ddeea8c369bdf75b9cab6708787ead123af.js"></script>
+<script src="https://wzgl998877.github.io/js/plugin.min.19c5bcb2fb0789ab4f2b7834e5ceb5e92635645605bab902c1024b25f1502364.js"></script>
+
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(未命名)',
+            },
+            ROOT_URL: 'https:\/\/wzgl998877.github.io\/',
+            CONTENT_URL: 'https:\/\/wzgl998877.github.io\/\/searchindex.json ',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script type="text/javascript" src="https://wzgl998877.github.io/js/insight.min.4a2d52de4bfff73e0c688404fe3d17c9a3ae12d9888e1e1ac9c690e4890de2ded50fe55f2b819c2ba55435a76f396f3ea6805765f0b0af5635cdf74ea459eab0.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+<script>
+    tocbot.init({
+        
+        tocSelector: '.js-toc',
+        
+        contentSelector: '.js-toc-content',
+        
+        headingSelector: 'h1, h2, h3',
+        
+        hasInnerContainers: true,
+    });
+</script>
+
+
+  </body>
+</html>
